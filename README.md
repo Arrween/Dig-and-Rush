@@ -7,10 +7,10 @@
 - MPONDO-TOUTOU Jacques-Gérard
 
 
-## Nature du projet :
+## Nature du projet
 Projet de fin d’études pour la L2 Informatique à Le Mans Université, année 2023-2024
 
-## Description :
+## Description
 Le projet prend comme modèle le jeu *Once upon a tower*. Un scroller vertical où l’objectif est de descendre au niveau le plus bas d’une tour (en 2D) en creusant les murs et sols tout en évitant les obstacles et les ennemis, il est aussi possible d'éliminer ces derniers. (cf : lien du descriptif du projet)
 
 ## Repères temporels
