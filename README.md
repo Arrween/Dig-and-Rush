@@ -4,7 +4,7 @@
 - BOULANGER Matthieu
 - GAROUI Ania
 - HARISON Yohan
-- MPONDO-TOUTOU Jacques-Gérard
+- MPONDO TOUTOU Jacques-Gérard
 
 
 ## Nature du projet
