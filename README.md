@@ -11,7 +11,7 @@
 Projet de fin d’études pour la L2 Informatique à Le Mans Université, année 2023-2024
 
 ## Description
-Le projet prend comme modèle le jeu *Once upon a tower*, un scroller vertical. L’objectif est de descendre une tour (en 2D) en évitant ou éliminant obstacles, pièges et ennemis et d’accumuler des points. Les points se gagnent par récupération de butin et élimination d’ennemis, et il est possible de les dépenser pour acquérir divers bonus. Le jeu peut se faire seul, contre l’ordinateur ou contre un adversaire en réseau. En multijoueur le jeu prend une dimension de course et le joueur en retard accumule des malus de score. Les plateformes visées sont par ordre de priorité Linux, Mac, Windows et les navigateurs.
+Le projet prend comme modèle le jeu Once Upon a Tower : un scroller vertical où l’objectif est de descendre une tour (en 2D) en évitant ou éliminant obstacles, pièges et ennemis tout en accumulant des points. Ces derniers se cumulent par récupération de butin ou élimination d’ennemis et peuvent être dépensés pour acquérir divers bonus. Il est possible de jouer seul, contre l’ordinateur ou contre un adversaire en réseau. Dans ce dernier cas, le jeu prend une dimension de course où le joueur en retard se retrouve pénalisé par des malus de score. Les plateformes visées sont par ordre de priorité Linux, Mac, Windows et les navigateurs.
 [Voir la description détaillée](https://docs.google.com/document/d/18fOWtZq61PdM3SZWS8LZH8lbjN7wQMiRBjIj4-iIxK8/)
 
 ## Repères temporels
