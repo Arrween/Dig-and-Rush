@@ -1,10 +1,10 @@
 # Scroller vertical
 
 ## Contributeurs
-- BOULANGER Matthieu
-- GAROUI Ania
-- HARISON Yohan
-- MPONDO TOUTOU Jacques-Gérard
+- [BOULANGER Matthieu](https://github.com/Idlusen)
+- [GAROUI Ania](https://github.com/Arrween)
+- [HARISON Yohan](https://github.com/aohyn)
+- [MPONDO TOUTOU Jacques-Gérard](https://github.com/stenfresh)
 
 
 ## Nature du projet
@@ -12,7 +12,7 @@ Projet de fin d’études pour la L2 Informatique à Le Mans Université, année
 
 ## Description
 Le projet prend comme modèle le jeu Once Upon a Tower : un scroller vertical où l’objectif est de descendre une tour (en 2D) en évitant ou éliminant obstacles, pièges et ennemis tout en accumulant des points. Ces derniers se cumulent par récupération de butin ou élimination d’ennemis et peuvent être dépensés pour acquérir divers bonus. Il est possible de jouer seul, contre l’ordinateur ou contre un adversaire en réseau. Dans ce dernier cas, le jeu prend une dimension de course où le joueur en retard se retrouve pénalisé par des malus de score. Les plateformes visées sont par ordre de priorité Linux, Mac, Windows et les navigateurs.
-[Voir la description détaillée](https://docs.google.com/document/d/18fOWtZq61PdM3SZWS8LZH8lbjN7wQMiRBjIj4-iIxK8/)
+[Voir la description détaillée](https://github.com/Idlusen/projet_l2/blob/main/description_d%C3%A9taill%C3%A9e.pdf)
 
 ## Repères temporels
 - **Date de création :** Semaine 3 / 19/01/2024
