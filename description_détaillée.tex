@@ -1,0 +1,29 @@
+\documentclass[10pt]{article}
+\usepackage{"../../../.config/latex_perso/général"}
+
+\title{Description détaillée du projet}
+\date{}
+
+\begin{document}
+\maketitle
+
+\section{Principe général}
+L’inspiration du projet vient du jeu \textit{Once Upon a Tower}. Il s’agit de descendre les étages d’une tour encombrés d’obstacles et habités par des créatures hostiles.
+Afin à la fois de se frayer un chemin, de détruire les obstacles et de neutraliser les ennemis, le personnage joueur est muni d’une capacité de creusage, qu’il pourra avantageusement remplacer par des capacités plus puissantes acquises via le ramassage de bonus ou achetées en boutique.
+
+\section{Gratification}
+Le but du joueur dans le mode de base est simplement d’accumuler des points, par la récupération de butin disséminé dans la tour à des endroits plus ou moins dangereux.
+Les points peuvent être dépensés à la boutique pour améliorer ses capacités, le score perdu à l’achat pouvant potentiellement faciliter le gain à long terme.
+
+\section{Mode multijoueur}
+Une fonctionnalité bonus de notre projet est l’ajout d’un mode multijoueur qui permettra de se mesurer à l’ordinateur ou à un autre joueur via le réseau.
+Dans ce mode, deux vues de la tour (une par joueur) sont disposées côte-à-côte, ce qui nous est permis par le format mobile du jeu initial ici adapté pour moniteur au format 16:9.
+L’objectif est d’aller plus vite que son adversaire, le joueur en retard étant alors pénalisé par une perte progressive de points.
+
+\section{Langues}
+Également en bonus, nous prévoyons de localiser le jeu en plusieurs langues, en priorité le français et l’anglais.
+
+\section{Plateformes}
+La cible prioritaire d’utilisation est Linux. Nous souhaitons cependant faire un portage sur Windows, Mac et certains navigateurs au moyen de l’outil emscripten.
+
+\end{document}
