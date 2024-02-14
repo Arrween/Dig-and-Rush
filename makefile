@@ -3,6 +3,7 @@ REP_SRC = src
 REP_OBJ = obj
 REP_DOC = doc
 NOM_PROG = jeu
+REPS = $(REP_BIN) $(REP_SRC) $(REP_OBJ) $(REP_DOC)
 SOURCES = $(wildcard $(REP_SRC)/*.c)
 OBJETS = $(SOURCES:$(REP_SRC)/%.c=$(REP_OBJ)/%.o)
 LIB_FLAGS = `sdl2-config --libs --cflags`
@@ -13,10 +14,15 @@ $(NOM_PROG) : $(OBJETS)
 $(OBJETS) : $(REP_OBJ)/%.o: $(REP_SRC)/%.c
 	gcc -o $@ -c $< -I$(REP_SRC)
 docs : $(SOURCES_DOC)
+reps :
+	mkdir $(REPS) 2>/dev/null || :
 
 clean :
 	rm $(REP_OBJ)/*
 remove : clean
 	rm $(REP_BIN)/*
 
-all : $(NOM_PROG) docs
+all : reps $(NOM_PROG) docs
+
+exe : all
+	$(REP_BIN)/$(NOM_PROG)
