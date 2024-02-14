@@ -6,7 +6,7 @@ NOM_PROG = jeu
 REPS = $(REP_BIN) $(REP_SRC) $(REP_OBJ) $(REP_DOC)
 SOURCES = $(wildcard $(REP_SRC)/*.c)
 OBJETS = $(SOURCES:$(REP_SRC)/%.c=$(REP_OBJ)/%.o)
-LIB_FLAGS = `sdl2-config --libs --cflags`
+LIB_FLAGS = `sdl2-config --libs --cflags` -lSDL2_image
 SOURCES_DOC = $(wildcard $(REP_DOC)/*.tex)
 
 $(NOM_PROG) : $(OBJETS)
