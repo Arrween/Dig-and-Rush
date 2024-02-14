@@ -1,0 +1,45 @@
+grille des éléments de décor
+    tableau de blocs
+
+bloc
+    position_tour x : int
+    position_tour y : int
+    type : énumération destructible/indestructible/vide/…
+
+état_joueur
+    position_écran x : int // axe gauche/droite, pas de y car vue centrée sur le joueur
+    position_tour y : int // origine de tous les position_tour
+    santé : int // ou mort en un coup ?
+    score/argent : int
+    aptitudes/armes : tableau de pointeurs sur type_aptitude // NULL si aptitude indisponible
+
+type_aptitude
+    effet : pointeur sur fonction
+
+ensemble des ennemis
+    tableau de état_ennemi
+
+état_ennemi
+    position_tour x : int
+    position_tour y : int
+    type : pointeur sur type_ennemi
+    santé : int // ou mort en un coup ?
+
+type_ennemi
+    ia : pointeur sur fonction
+    santé_max : int 
+    dégâts : int
+
+état_bonus
+    position_tour x : int
+    position_tour y : int
+    type : pointeur sur type_bonus
+
+type_bonus
+    aptitude_fournie : énumération
+    prix : int // si boutique
+
+état_butin
+    position_tour x : int
+    position_tour y : int
+    valeur : int
