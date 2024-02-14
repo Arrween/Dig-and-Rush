@@ -1,13 +1,20 @@
 #include <stdio.h>
+#include <stdio.h>
 #include <SDL2/SDL.h>
+
+#include "tour.h"
+#include "menu.h"
 
 #define TITRE_FENETRE "jeu projet L2"
 #define TAILLE_L 640
 #define TAILLE_H 480
+#define FPS 60
 
 int main() {
     SDL_Window *fenetre;
     SDL_Renderer *rend;
+    SDL_Event event;
+    int fin = 0;
 
     if (SDL_Init(SDL_INIT_VIDEO)) {
 	fprintf(stderr, "Erreur SDL_Init : %s\n", SDL_GetError());
@@ -29,8 +36,30 @@ int main() {
 	SDL_Quit();
 	exit(EXIT_FAILURE);
     }
-    SDL_RenderPresent(rend);
-    SDL_Delay(5000);
+
+    while (!fin) {
+        while (SDL_PollEvent(&event)) {
+            switch (event.type) {
+
+		case SDL_QUIT:
+		    fin = 1;
+		    break;
+
+		case SDL_KEYDOWN:
+		    switch (event.key.keysym.scancode) {
+			case SDL_SCANCODE_ESCAPE:
+			case SDL_SCANCODE_Q:
+			    fin = 1;
+			    break;
+			default:
+			    break;
+		    }
+	    }
+	}
+
+	SDL_RenderPresent(rend);
+	SDL_Delay(1000/FPS);
+    }
     SDL_DestroyRenderer(rend);
     SDL_DestroyWindow(fenetre);
     SDL_Quit();
