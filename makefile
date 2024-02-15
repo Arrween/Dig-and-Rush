@@ -2,7 +2,7 @@ REP_BIN = bin
 REP_SRC = src
 REP_OBJ = obj
 REP_DOC = doc
-NOM_PROG = jeu
+NOM_PROG = dignrush
 REPS = $(REP_BIN) $(REP_SRC) $(REP_OBJ) $(REP_DOC)
 
 SOURCES = $(wildcard $(REP_SRC)/*.c)

@@ -1,4 +1,4 @@
-# Scroller vertical
+# Dig & Rush
 
 ## Contributeurs
 - [BOULANGER Matthieu](https://github.com/Idlusen)
