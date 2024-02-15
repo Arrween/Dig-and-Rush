@@ -14,6 +14,8 @@ SOURCES_DOC = $(wildcard $(REP_DOC)/*.tex)
 TECTONIC := $(shell command -v tectonic 2> /dev/null)
 XELATEX := $(shell command -v xelatex 2> /dev/null)
 
+.PHONY = docs reps clean remove all
+
 $(NOM_PROG) : $(OBJETS)
 	gcc -o $(REP_BIN)/$@ $^ $(LIB_FLAGS)
 $(OBJETS) : $(REP_OBJ)/%.o: $(REP_SRC)/%.c
