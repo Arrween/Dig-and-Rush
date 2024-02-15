@@ -1,0 +1,142 @@
+\ProvidesPackage{général}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}     % pour les environnements théorème, proposition, etc.
+\usepackage{stmaryrd}   % juste pour les crochets d'intervalles d'entiers, [[1;n]]
+\usepackage{xfrac}
+
+\usepackage{geometry}
+
+% Corrections
+\usepackage{mleftright} % espaces fautives autour de \left( et \right) 
+\mleftright
+\usepackage{booktabs}   % tableaux de meilleure qualité, cf. doc
+\usepackage{microtype}  % gestion fine
+
+
+%%%%%%%%%%%%%%%%%%%%%
+%%%%  Scripting  %%%%
+%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage{xifthen}    % utilisation de condition si, alors dans les macros persos
+\usepackage{xparse}     % analyse syntaxique dans les macros persos
+%\usepackage{xstring}    % analyse de chaînes de caractères dans les macros persos
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%  Commandes perso  %%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\dsint}{\displaystyle\int}
+\newcommand{\abs}[1]{\left\lvert#1\right\rvert}     % valeur absolue
+\newcommand{\norme}[1]{\left\lVert#1\right\rVert}
+\newcommand{\ensemblenombres}[1]{\mathbb #1}
+\newcommand{\N}{\ensemblenombres N}
+\newcommand{\Z}{\ensemblenombres Z}
+\newcommand{\Q}{\ensemblenombres Q}
+\newcommand{\R}{\ensemblenombres R}
+\newcommand{\C}{\ensemblenombres C}
+\newcommand{\K}{\ensemblenombres K}
+\newcommand{\intervalle}[4]{\mathopen{#1}#2\mathclose{}\mathpunct{};#3\mathclose{#4}}
+% raccourcis pour les combinaisons ouvert/fermé d'intervalles
+\newcommand{\itvlff}[2]{\intervalle{[}{#1}{#2}{]}}
+\newcommand{\itvlof}[2]{\intervalle{]}{#1}{#2}{]}}
+\newcommand{\itvlfo}[2]{\intervalle{[}{#1}{#2}{[}}
+\newcommand{\itvloo}[2]{\intervalle{]}{#1}{#2}{[}}
+\newcommand{\itvlentier}[2]{\intervalle\llbracket{#1}{#2}\rrbracket}
+\newcommand{\enstq}[2]{\left\{\, #1\mathrel{}\middle|\mathrel{}#2\,\right\}}
+%\newcommand{\enstq}[2]{\left\{\, #1\mathrel{}\middle|\mathrel{}#2\right\,\}} % bourde ??
+\newcommand{\glgroup}{\mathrm{GL}}
+\newcommand{\spectre}{\mathrm{Sp}}
+\newcommand{\continues}{\mathcal{C}}
+\newcommand\ensmatrices[2]{\mathcal M_{#1}(#2)}
+
+\DeclareMathOperator{\Span}{\mathrm{Vec}} % s.e.v engendré
+\DeclareMathOperator{\Card}{Card}
+\DeclareMathOperator{\e}{\mathrm{e}} % exponentielle, e étant une constante elle n'est pas en italique
+\let\Re\relax
+\DeclareMathOperator{\Re}{\mathrm{Re}} % opérateur partie réelle
+\let\Im\relax
+\DeclareMathOperator{\Im}{\mathrm{Im}}
+\DeclareMathOperator{\sinc}{sinc}      % sinus cardinal
+% bidouille pour des vecteurs à une, deux ou trois composantes rapides, usage \VVec{a} ou \VVec{a}{b} ou \VVec{a}{b}{c}
+\DeclareDocumentCommand\VVec{ m g g g}{%
+    \ensuremath{ \begin{pmatrix} #1%
+        \IfNoValueF {#2} { \\ #2}%
+        \IfNoValueF {#3} { \\ #3}%
+        \IfNoValueF {#4} { \\ #4}%
+    \end{pmatrix}}%
+}
+% idem en smallmatrix
+\DeclareDocumentCommand\Vvec{ m g g g}{%
+    \ensuremath{\left( \begin{smallmatrix} #1%
+        \IfNoValueF {#2} { \\ #2}%
+        \IfNoValueF {#3} { \\ #3}%
+        \IfNoValueF {#4} { \\ #4}%
+    \end{smallmatrix}\right)}%
+}
+\newcommand{\matpassage}[2]{\mathrm{P}_{#1\rightarrow#2}}
+% définition d'une fonction mathématique : ensembles, usage \fonction{nom}{ensembledépart}{ensemblearrivée}
+\newcommand{\fonction}[3]{%
+    \ensuremath{%
+        #1 \colon #2 \to #3%
+        }%
+}
+% définition d'une fonction mathématique : expression, usage \fonctionexpr{nom}{variables}{expression}
+\newcommand{\fonctionexpr}[3]{%
+    \ensuremath{%
+    \ifthenelse{\equal{#1}{}}%
+        {#2 \mapsto #3}%
+        {#1 \colon #2 \mapsto #3}%
+    }%
+}
+\DeclareDocumentCommand\Pfrac{ m m }{%
+    \ensuremath{\left( \frac{#1}{#2} \right)}%
+}
+
+\let\underdot=\d % rename builtin command \d{} to \underdot{}
+%\renewcommand{\d}{\mathop{}\mathopen{}\mathrm{d}} % « d » de différentielle, redéfini par hyperref apparemment voir plus bas
+% dérivées droites de degré n (défaut 1) rapides, usage \dd{x}{t} donne dx/dt et \dd{2}{x}{t} d²x/dt²
+\newcommand{\dd}[3][]{%
+	\ifthenelse{\isempty{#1}}%
+	{\frac{\mathrm d #2}{\mathrm d #3}}%
+	{\frac{\mathrm d^#1 #2}{\mathrm d #3{}^#1}}%
+	}
+% idem en dérivées partielles
+\newcommand{\pd}[3][]{%
+	\ifthenelse{\isempty{#1}}%
+	{\frac{\partial #2}{\partial #3}}%
+	{\frac{\partial^#1 #2}{\partial #3{}^#1}}%
+	}
+% probas
+\DeclareMathOperator{\Supp}{\mathrm{Supp}}
+\DeclareMathOperator{\Var}{\mathrm{Var}}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%  Commandes de texte  %%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage[shortlabels]{enumitem}
+
+% bidouille pour en finir avec l'écriture exacte des siècles, usage \siecle{13} donne XIIIe siècle et \siecle{-4} IVe siècle av. J.-C.
+\newcommand{\siecle}[1]{%
+  \StrLeft{#1}{1}[\firstchar]%
+  \IfStrEq{#1}{1}%
+  {%
+  \IfStrEq{\firstchar}{-}%
+    {\StrSubstitute{#1}{-}{}[\temp]\textsc{\romannumeral \temp}\ier{}~siècle av. J.-C.}%
+    {\textsc{\romannumeral #1}\ier{}~siècle}}%
+  {%
+  \IfStrEq{\firstchar}{-}%
+    {\StrSubstitute{#1}{-}{}[\temp]\textsc{\romannumeral \temp}\ieme{}~siècle av. J.-C.}%
+    {\textsc{\romannumeral #1}\ieme{}~siècle}}%
+}
+
+
+
+% options PDF
+\usepackage[]{hyperref}
+
+\renewcommand{\d}{\mathop{}\mathopen{}\mathrm{d}} % « d » de différentielle, \d redéfini par hyperref ??
