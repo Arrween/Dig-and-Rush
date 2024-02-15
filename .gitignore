@@ -1,4 +1,6 @@
 *.swp
+bin/*
+doc/*pdf
 
 # Prerequisites
 *.d
