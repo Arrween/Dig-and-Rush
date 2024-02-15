@@ -15,6 +15,7 @@ TECTONIC := $(shell command -v tectonic 2> /dev/null)
 XELATEX := $(shell command -v xelatex 2> /dev/null)
 
 .PHONY = docs reps clean remove all
+.SILENT = reps
 
 $(NOM_PROG) : $(OBJETS)
 	gcc -o $(REP_BIN)/$@ $^ $(LIB_FLAGS)
@@ -26,10 +27,10 @@ ifdef XELATEX
 else ifdef TECTONIC
 	tectonic $<
 else
-	$(error "pas de compilateur TeX trouvé")
+	@echo "pas de compilateur TeX trouvé, docs .tex non compilées"
 endif
 reps :
-	mkdir $(REPS) 2>/dev/null || :
+	mkdir -p $(REPS)
 
 clean :
 	rm -f $(REP_OBJ)/*
