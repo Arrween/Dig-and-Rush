@@ -38,7 +38,7 @@ clean :
 remove : clean
 	rm $(REP_BIN)/*
 
-all : reps $(NOM_PROG) docs
+all : reps $(NOM_PROG)
 
 exe : all
 	$(REP_BIN)/$(NOM_PROG)
