@@ -48,9 +48,8 @@ reps :
 
 clean :
 	rm -f $(REP_OBJ)/*
-	rm -f $(REP_DOC)/*pdf
 remove : clean
-	rm $(REP_BIN)/*
+	rm $(REP_BIN)/$(NOM_BIN)
 
 all : reps $(NOM_BIN)
 
