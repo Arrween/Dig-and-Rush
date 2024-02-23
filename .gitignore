@@ -1,6 +1,11 @@
 *.swp
 bin/*
 
+# fichiers annexes TeX
+*.aux
+*.log
+*.out
+
 # Prerequisites
 *.d
 
