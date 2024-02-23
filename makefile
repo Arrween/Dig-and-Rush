@@ -7,7 +7,7 @@ REPS = $(REP_BIN) $(REP_SRC) $(REP_OBJ) $(REP_DOC)
 
 SOURCES = $(wildcard $(REP_SRC)/*.c)
 OBJETS = $(SOURCES:$(REP_SRC)/%.c=$(REP_OBJ)/%.o)
-LIB_FLAGS = `sdl2-config --libs --cflags` -lSDL2_image
+LIB_FLAGS = `sdl2-config --libs --cflags` -lSDL2_image -lSDL2_ttf
 SOURCES_DOC = $(wildcard $(REP_DOC)/*.tex)
 
 # vérifie présence de compilateurs TeX
