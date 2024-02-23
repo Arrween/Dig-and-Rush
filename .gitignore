@@ -1,5 +1,6 @@
 *.swp
 bin/*
+!bin/dignrush.sh
 
 # fichiers annexes TeX
 *.aux
