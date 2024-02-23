@@ -1,4 +1,4 @@
-#include <stdio.h>
+/*#include <stdio.h>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 
@@ -35,7 +35,7 @@ int main() {
 				    SDL_WINDOWPOS_CENTERED,
 				    TAILLE_L,
 				    TAILLE_H,
-				    SDL_WINDOW_FULLSCREEN))) {
+				    0))) {
         fprintf(stderr, "Erreur SDL_CreateWindow : %s\n", SDL_GetError());
         SDL_Quit();
         exit(EXIT_FAILURE);
@@ -50,7 +50,7 @@ int main() {
     }
 
     // Chargement de l'image PNG dans une texture
-    if (! (textureFond = IMG_LoadTexture(rend,"ressources/Menu/Background_Menu/Fond_Menu.png")) ){
+    if (! (textureFond = IMG_LoadTexture(rend,"../ressources/Menu/test.jpg")) ){
         fprintf(stderr, "Erreur lors du chargement de l'image : %s\n", IMG_GetError());
         SDL_DestroyRenderer(rend);
         SDL_DestroyWindow(fenetre);
@@ -95,3 +95,4 @@ int main() {
     SDL_Quit();
     exit(EXIT_SUCCESS);
 }
+*/

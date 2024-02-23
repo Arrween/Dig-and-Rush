@@ -1,0 +1,5 @@
+Pour mettre à jour le dossier :
+
+	git add fichiers_modifiés
+	git commit -m ["message"]
+	git push
