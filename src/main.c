@@ -3,14 +3,9 @@
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_ttf.h>
 
+#include "config.h"
 #include "tour.h"
 #include "menu.h"
-
-
-#define TITRE_FENETRE "Dig & Rush"
-#define TAILLE_L 640
-#define TAILLE_H 480
-#define FPS 60
 
 int main() {
     SDL_Window * fenetre;
@@ -103,6 +98,9 @@ int main() {
                     case SDL_SCANCODE_ESCAPE:
                     case SDL_SCANCODE_Q:
                         fin = 1;
+                        break;
+                    case SDL_SCANCODE_A:
+                        boucle_jeu(rend);
                         break;
                     default:
                         break;
