@@ -6,6 +6,8 @@
 #include "constantes.h"
 #include "tour.h"
 #include "menu.h"
+#include "ressources.h"
+#include "global.h"
 
 int main() {
     SDL_Window * fenetre;
@@ -30,9 +32,11 @@ int main() {
 
     // Création du renderer
     rend = creation_renderer(&fenetre);
+
+    init_ressources(rend);
         
     // Chargement de l'image PNG pour le fond dans une texture
-    texture_fond = chargement_image("ressources/Menu/Background_Menu/Fond_Menu.png", &rend, &fenetre);
+    texture_fond = recuperer_texture("fond_menu");
 
 
     // Initialisation de SDL_ttf pour le rendu du texte
@@ -115,7 +119,8 @@ int main() {
     }
     
     // Nettoyage
-
+    
+    detruire_ressources();
     SDL_DestroyTexture(texture_fond);
     SDL_DestroyTexture(texture_titre);
     SDL_FreeSurface(surface_titre);
