@@ -1,7 +1,7 @@
 #include <stdlib.h>
 
 #include "tour.h"
-#include "config.h"
+#include "constantes.h"
 #include "affichage.h"
 
 void boucle_jeu(SDL_Renderer * rend) {
