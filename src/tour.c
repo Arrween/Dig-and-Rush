@@ -5,6 +5,7 @@
 #include "tour.h"
 #include "constantes.h"
 #include "affichage.h"
+#include "ressources.h"
 
 void boucle_jeu(SDL_Renderer * rend) {
     SDL_Event event;
@@ -24,7 +25,7 @@ void boucle_jeu(SDL_Renderer * rend) {
     fond = SDL_CreateTexture(rend, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, TAILLE_L, TAILLE_H);
     fond_tour = SDL_CreateTexture(rend, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, largeur_tour, TAILLE_H);
     mur = SDL_CreateTexture(rend, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, largeur_mur, TAILLE_H);
-    perso = IMG_LoadTexture(rend, "ressources/Personnages/jackPerso.png");
+    perso = recuperer_texture("jack");
 
     SDL_SetRenderTarget(rend, fond);
     SDL_SetRenderDrawColor(rend, 30, 30, 30, 255);
