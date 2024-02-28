@@ -21,6 +21,7 @@ REP_SDLTTFINC = $(REP_SDLTTF)/include
 SOURCES = $(wildcard $(REP_SRC)/*.c)
 OBJETS = $(SOURCES:$(REP_SRC)/%.c=$(REP_OBJ)/%.o)
 LIB_FLAGS = `sdl2-config --libs --cflags` -lSDL2_image -lSDL2_ttf -L$(REP_SDLLIB) -L$(REP_SDLIMGLIB) -L$(REP_SDLTTFLIB)
+WARNING_FLAGS = -Wall
 SOURCES_DOC = $(wildcard $(REP_DOC)/*.tex)
 INCLUDES = -I$(REP_SRC) -I$(REP_SDLINC) -I$(REP_SDLIMGINC) -I$(REP_SDLTTFINC)
 
@@ -32,9 +33,9 @@ XELATEX := $(shell command -v xelatex 2> /dev/null)
 .SILENT = reps
 
 $(NOM_BIN) : $(OBJETS)
-	gcc -o $(REP_BIN)/$@ $^ $(LIB_FLAGS) $(INCLUDES)
+	gcc -o $(REP_BIN)/$@ $^ $(LIB_FLAGS) $(INCLUDES) $(WARNING_FLAGS)
 $(OBJETS) : $(REP_OBJ)/%.o: $(REP_SRC)/%.c
-	gcc -o $@ -c $<
+	gcc -o $@ -c $< $(WARNING_FLAGS)
 docs : $(SOURCES_DOC)
 ifdef XELATEX
 	xelatex $<
