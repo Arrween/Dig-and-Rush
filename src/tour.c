@@ -1,4 +1,6 @@
 #include <stdlib.h>
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_image.h>
 
 #include "tour.h"
 #include "constantes.h"
@@ -14,13 +16,15 @@ void boucle_jeu(SDL_Renderer * rend) {
     int largeur_tour = TAILLE_L/2;
     int x_tour = (TAILLE_L-largeur_tour)/2;
     int largeur_mur = TAILLE_L/2/8;
-    int largeur_perso = TAILLE_L/20;
-    int hauteur_perso = TAILLE_H/20;
+    int largeur_perso_src = 64;
+    int hauteur_perso_src = 64;
+    int largeur_perso = largeur_perso_src;
+    int hauteur_perso = hauteur_perso_src;
 
     fond = SDL_CreateTexture(rend, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, TAILLE_L, TAILLE_H);
     fond_tour = SDL_CreateTexture(rend, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, largeur_tour, TAILLE_H);
     mur = SDL_CreateTexture(rend, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, largeur_mur, TAILLE_H);
-    perso = SDL_CreateTexture(rend, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, largeur_perso, hauteur_perso);
+    perso = IMG_LoadTexture(rend, "ressources/Personnages/jackPerso.png");
 
     SDL_SetRenderTarget(rend, fond);
     SDL_SetRenderDrawColor(rend, 30, 30, 30, 255);
@@ -31,9 +35,6 @@ void boucle_jeu(SDL_Renderer * rend) {
     SDL_SetRenderTarget(rend, mur);
     SDL_SetRenderDrawColor(rend, 200, 200, 200, 255);
     SDL_RenderFillRect(rend, NULL);
-    SDL_SetRenderTarget(rend, perso);
-    SDL_SetRenderDrawColor(rend, 255, 0, 0, 255);
-    SDL_RenderFillRect(rend, NULL);
 
     SDL_SetRenderTarget(rend, NULL);
 
@@ -42,6 +43,10 @@ void boucle_jeu(SDL_Renderer * rend) {
     aff_mur_g = creer_affichage(mur, x_tour, 0, largeur_mur, TAILLE_H);
     aff_mur_d = creer_affichage(mur, x_tour + largeur_tour - largeur_mur, 0, largeur_mur, TAILLE_H);
     aff_perso = creer_affichage(perso, x_tour + 3*largeur_mur, TAILLE_H/5, largeur_perso, hauteur_perso);
+    aff_perso->rect_src->x = 0;
+    aff_perso->rect_src->y = 6*hauteur_perso_src;
+    aff_perso->rect_src->w = largeur_perso_src;
+    aff_perso->rect_src->h = hauteur_perso_src;
 
     while (!fin) {
         while (SDL_PollEvent(&event)) {
