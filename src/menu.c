@@ -11,7 +11,7 @@
 
 // Fonction qui initialise la SDL
 void initialiser_sdl(){
-    if (SDL_Init(SDL_INIT_VIDEO)) {
+    if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO)) {
         fprintf(stderr, "Erreur SDL_Init : %s\n", SDL_GetError());
         exit(EXIT_FAILURE);
     }

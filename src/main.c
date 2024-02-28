@@ -7,7 +7,6 @@
 #include "tour.h"
 #include "menu.h"
 #include "ressources.h"
-#include "global.h"
 
 int main() {
     SDL_Window * fenetre;
@@ -35,6 +34,10 @@ int main() {
 
     init_ressources(rend);
         
+    t_son * son_essai = recuperer_son("essai");
+    SDL_AudioDeviceID audio_device = SDL_OpenAudioDevice(NULL, 0, &(son_essai->spec), NULL, 0);
+    SDL_PauseAudioDevice(audio_device, 0);
+
     // Chargement de l'image PNG pour le fond dans une texture
     texture_fond = recuperer_texture("fond_menu");
 
@@ -106,6 +109,9 @@ int main() {
                     case SDL_SCANCODE_A:
                         boucle_jeu(rend);
                         break;
+                    case SDL_SCANCODE_E:
+                        SDL_QueueAudio(audio_device, son_essai->buffer, son_essai->length);
+                        break;
                     default:
                         break;
                 }
@@ -121,6 +127,7 @@ int main() {
     // Nettoyage
     
     detruire_ressources();
+    SDL_CloseAudioDevice(audio_device);
     SDL_DestroyTexture(texture_fond);
     SDL_DestroyTexture(texture_titre);
     SDL_FreeSurface(surface_titre);
