@@ -117,10 +117,12 @@ int main() {
     // Nettoyage
 
     SDL_DestroyTexture(texture_fond);
-    SDL_DestroyRenderer(rend);
-    SDL_DestroyWindow(fenetre);
     SDL_DestroyTexture(texture_titre);
     SDL_FreeSurface(surface_titre);
+    SDL_DestroyTexture(texture_jouer);
+    SDL_DestroyTexture(texture_quitter);
+    SDL_DestroyRenderer(rend);
+    SDL_DestroyWindow(fenetre);
     TTF_CloseFont(font);
     TTF_Quit();
     IMG_Quit();
