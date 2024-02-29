@@ -13,17 +13,21 @@ struct chargement {
     char id[TAILLE_MAX_ID];
 };
 
+struct chargement chargements_texs[] = {
+    {"ressources/Personnages/jackPerso.png", "jack"},
+    {"ressources/Menu/Background_Menu/Fond_Menu.png", "fond_menu"}
+};
+
+struct chargement chargements_sons[] = {
+    {"ressources/essais_audio/confirmation_001.wav", "essai"},
+};
+
 void init_ressources(SDL_Renderer * rend) {
     t_texture * ressource_tex;
     t_son * ressource_son;
     char chemin[TAILLE_MAX_CHEMIN];
     char id[TAILLE_MAX_ID];
     unsigned long i;
-
-    struct chargement chargements_texs[] = {
-        {"ressources/Personnages/jackPerso.png", "jack"},
-        {"ressources/Menu/Background_Menu/Fond_Menu.png", "fond_menu"}
-    };
 
     for (i = 0; i < sizeof(chargements_texs)/sizeof(*chargements_texs); i++) {
         strcpy(chemin, chargements_texs[i].chemin);
@@ -44,10 +48,6 @@ void init_ressources(SDL_Renderer * rend) {
                    "déjà présente, fichier « %s » non chargé\n", id, chemin);
         }
     }
-
-    struct chargement chargements_sons[] = {
-        {"ressources/essais_audio/confirmation_001.wav", "essai"},
-    };
 
     for (i = 0; i < sizeof(chargements_sons)/sizeof(*chargements_sons); i++) {
         strcpy(chemin, chargements_sons[i].chemin);
