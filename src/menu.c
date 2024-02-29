@@ -2,12 +2,9 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_ttf.h>
-#include "menu.h"
 
-#define TITRE_FENETRE "Dig & Rush"
-#define TAILLE_L 640
-#define TAILLE_H 480
-#define FPS 60
+#include "menu.h"
+#include "constantes.h"
 
 // Fonction qui initialise la SDL
 void initialiser_sdl(){
