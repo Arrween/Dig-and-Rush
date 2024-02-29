@@ -7,18 +7,40 @@
 #include "entite.h"
 #include "ressources.h"
 
+int a_collision(t_entite * e1, t_entite * e2) {
+    return SDL_HasIntersection(e1->affichage->rect_dst,
+                               e2->affichage->rect_dst);
+}
+
+void defiler(t_entite * e, int dy) {
+    e->affichage->rect_src->y += dy;
+}
+
 void boucle_jeu(SDL_Renderer * rend) {
     SDL_Event event;
     int fin = 0;
 
-    t_entite * fond, * fond_tour, * perso;
+    SDL_Texture * tex_obstacle;
+    t_entite * fond, * fond_tour, * perso, * obstacle;
 
     int largeur_tour = TAILLE_L/2;
     int x_tour = (TAILLE_L-largeur_tour)/2;
+    int x_mur_g = (int) (x_tour + largeur_tour * 0.07);
+    int x_mur_d = (int) (x_tour + largeur_tour * 0.93);
     int largeur_perso_src = 64;
     int hauteur_perso_src = 64;
     int largeur_perso = largeur_perso_src;
     int hauteur_perso = hauteur_perso_src;
+
+    tex_obstacle = SDL_CreateTexture(rend, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, TAILLE_L, TAILLE_H);
+
+    SDL_SetRenderTarget(rend, tex_obstacle);
+    SDL_SetRenderDrawColor(rend, 180, 180, 80, 255);
+    SDL_RenderFillRect(rend, NULL);
+    SDL_SetRenderTarget(rend, NULL);
+    obstacle = creer_entite_depuis_texture(tex_obstacle);
+    obstacle->changer_rect_dst(obstacle, x_mur_g, TAILLE_H*.8, x_mur_d-x_mur_g, TAILLE_H*.05);
+    obstacle->changer_pos(obstacle, 0, 80);
 
     fond = creer_entite("fond_menu");
 
@@ -50,6 +72,12 @@ void boucle_jeu(SDL_Renderer * rend) {
         fond->afficher(rend, fond);
         fond_tour->afficher(rend, fond_tour);
         perso->afficher(rend, perso);
+        obstacle->afficher(rend, obstacle);
+        
+        if (!a_collision(perso, obstacle)) {
+            obstacle->changer_pos_delta(obstacle, 0, -1);
+            defiler(fond_tour, 1);
+        }
 
         SDL_RenderPresent(rend);
         SDL_Delay(1000/FPS);
