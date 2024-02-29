@@ -15,7 +15,8 @@ struct chargement {
 
 struct chargement chargements_texs[] = {
     {"ressources/Personnages/jackPerso.png", "jack"},
-    {"ressources/Menu/Background_Menu/Fond_Menu.png", "fond_menu"}
+    {"ressources/Menu/Background_Menu/Fond_Menu.png", "fond_menu"},
+    {"ressources/essais_graphismes/tileset.png", "essai_fond_tour"}
 };
 
 struct chargement chargements_sons[] = {
