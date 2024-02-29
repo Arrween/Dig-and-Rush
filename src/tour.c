@@ -4,15 +4,16 @@
 
 #include "tour.h"
 #include "constantes.h"
-#include "affichage.h"
+#include "entite.h"
 #include "ressources.h"
 
 void boucle_jeu(SDL_Renderer * rend) {
     SDL_Event event;
     int fin = 0;
 
-    SDL_Texture * fond, * fond_tour, * mur, * perso;
-    t_affichage * aff_fond, * aff_fond_tour, * aff_mur_g, * aff_mur_d, * aff_perso;
+    SDL_Texture * tex_fond_tour, * tex_mur;
+    t_entite * fond, * perso;
+    t_entite * fond_tour, * mur_g, * mur_d;
 
     int largeur_tour = TAILLE_L/2;
     int x_tour = (TAILLE_L-largeur_tour)/2;
@@ -22,32 +23,30 @@ void boucle_jeu(SDL_Renderer * rend) {
     int largeur_perso = largeur_perso_src;
     int hauteur_perso = hauteur_perso_src;
 
-    fond = SDL_CreateTexture(rend, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, TAILLE_L, TAILLE_H);
-    fond_tour = SDL_CreateTexture(rend, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, largeur_tour, TAILLE_H);
-    mur = SDL_CreateTexture(rend, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, largeur_mur, TAILLE_H);
-    perso = recuperer_texture("jack");
+    tex_fond_tour = SDL_CreateTexture(rend, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, largeur_tour, TAILLE_H);
+    tex_mur = SDL_CreateTexture(rend, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, largeur_mur, TAILLE_H);
 
-    SDL_SetRenderTarget(rend, fond);
-    SDL_SetRenderDrawColor(rend, 30, 30, 30, 255);
-    SDL_RenderFillRect(rend, NULL);
-    SDL_SetRenderTarget(rend, fond_tour);
+    SDL_SetRenderTarget(rend, tex_fond_tour);
     SDL_SetRenderDrawColor(rend, 80, 80, 80, 255);
     SDL_RenderFillRect(rend, NULL);
-    SDL_SetRenderTarget(rend, mur);
+    SDL_SetRenderTarget(rend, tex_mur);
     SDL_SetRenderDrawColor(rend, 200, 200, 200, 255);
     SDL_RenderFillRect(rend, NULL);
-
     SDL_SetRenderTarget(rend, NULL);
 
-    aff_fond = creer_affichage(fond, -1, -1, -1, -1);
-    aff_fond_tour = creer_affichage(fond_tour, x_tour, 0, largeur_tour, TAILLE_H);
-    aff_mur_g = creer_affichage(mur, x_tour, 0, largeur_mur, TAILLE_H);
-    aff_mur_d = creer_affichage(mur, x_tour + largeur_tour - largeur_mur, 0, largeur_mur, TAILLE_H);
-    aff_perso = creer_affichage(perso, x_tour + 3*largeur_mur, TAILLE_H/5, largeur_perso, hauteur_perso);
-    aff_perso->rect_src->x = 0;
-    aff_perso->rect_src->y = 6*hauteur_perso_src;
-    aff_perso->rect_src->w = largeur_perso_src;
-    aff_perso->rect_src->h = hauteur_perso_src;
+    fond = creer_entite("fond_menu");
+
+    fond_tour = creer_entite_depuis_texture(tex_fond_tour);
+    fond_tour->changer_rect_dst(fond_tour,x_tour, 0, largeur_tour, TAILLE_H);
+    mur_g = creer_entite_depuis_texture(tex_mur);
+    mur_g->changer_rect_dst(mur_g, x_tour, 0, largeur_mur, TAILLE_H);
+    mur_d = creer_entite_depuis_texture(tex_mur);
+    mur_d->changer_rect_dst(mur_d, x_tour+largeur_tour-largeur_mur, 0, largeur_mur, TAILLE_H);
+
+    perso = creer_entite("jack");
+    perso->changer_dims_spritesheet(perso, 64, 64);
+    perso->changer_pos_spritesheet(perso, 0, 6);
+    perso->changer_rect_dst(perso, x_tour+3*largeur_mur, TAILLE_H/5, largeur_perso, hauteur_perso);
 
     while (!fin) {
         while (SDL_PollEvent(&event)) {
@@ -65,19 +64,19 @@ void boucle_jeu(SDL_Renderer * rend) {
 	    }
         SDL_RenderClear(rend);
 
-        aff_fond->render(rend, aff_fond);
-        aff_fond_tour->render(rend, aff_fond_tour);
-        aff_mur_g->render(rend, aff_mur_g);
-        aff_mur_d->render(rend, aff_mur_d);
-        aff_perso->render(rend, aff_perso);
+        fond->afficher(rend, fond);
+        fond_tour->afficher(rend, fond_tour);
+        mur_g->afficher(rend, mur_g);
+        mur_d->afficher(rend, mur_d);
+        perso->afficher(rend, perso);
 
         SDL_RenderPresent(rend);
         SDL_Delay(1000/FPS);
     }
 
-    detruire_affichage(&aff_fond);
-    detruire_affichage(&aff_fond_tour);
-    detruire_affichage(&aff_mur_g);
-    detruire_affichage(&aff_mur_d);
-    detruire_affichage(&aff_perso);
+    detruire_entite(&fond);
+    detruire_entite(&fond_tour);
+    detruire_entite(&mur_g);
+    detruire_entite(&mur_d);
+    detruire_entite(&perso);
 }
