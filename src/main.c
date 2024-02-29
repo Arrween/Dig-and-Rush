@@ -36,6 +36,8 @@ int main() {
         
     t_son * son_essai = recuperer_son("essai");
     SDL_AudioDeviceID audio_device = SDL_OpenAudioDevice(NULL, 0, &(son_essai->spec), NULL, 0);
+    uint8_t * buffer_essai_mix =  SDL_calloc(1, son_essai->length);
+    SDL_MixAudioFormat(buffer_essai_mix, son_essai->buffer, son_essai->spec.format, son_essai->length, SDL_MIX_MAXVOLUME/20);
     SDL_PauseAudioDevice(audio_device, 0);
 
     // Chargement de l'image PNG pour le fond dans une texture
@@ -110,7 +112,7 @@ int main() {
                         boucle_jeu(rend);
                         break;
                     case SDL_SCANCODE_E:
-                        SDL_QueueAudio(audio_device, son_essai->buffer, son_essai->length);
+                        SDL_QueueAudio(audio_device, buffer_essai_mix, son_essai->length);
                         break;
                     default:
                         break;
