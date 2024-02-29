@@ -20,6 +20,7 @@ REP_SDLTTFINC = $(REP_SDLTTF)/include
 
 SOURCES = $(wildcard $(REP_SRC)/*.c)
 OBJETS = $(SOURCES:$(REP_SRC)/%.c=$(REP_OBJ)/%.o)
+ENTETES = $(REP_SRC)/constantes.h
 LIB_FLAGS = `sdl2-config --libs --cflags` -lSDL2_image -lSDL2_ttf -L$(REP_SDLLIB) -L$(REP_SDLIMGLIB) -L$(REP_SDLTTFLIB)
 WARNING_FLAGS = -Wall -Wextra -Wconversion -Wno-sign-conversion -fanalyzer -fsanitize=undefined #-fsanitize=address
 SOURCES_DOC = $(wildcard $(REP_DOC)/*.tex)
@@ -34,7 +35,7 @@ XELATEX := $(shell command -v xelatex 2> /dev/null)
 
 $(NOM_BIN) : $(OBJETS)
 	gcc -o $(REP_BIN)/$@ $^ $(LIB_FLAGS) $(INCLUDES) $(WARNING_FLAGS)
-$(OBJETS) : $(REP_OBJ)/%.o: $(REP_SRC)/%.c
+$(OBJETS) : $(REP_OBJ)/%.o: $(REP_SRC)/%.c $(ENTETES)
 	gcc -o $@ -c $< $(WARNING_FLAGS)
 docs : $(SOURCES_DOC)
 ifdef XELATEX
