@@ -16,10 +16,16 @@ int main() {
     SDL_Renderer * rend;
     SDL_Event event;
     SDL_Texture * texture_fond ; // Texture pour l'image de fond
+    SDL_Texture *texture_logo; // Texture pour le logo de fond
+
+
     
     // Définition des boutons
     SDL_Rect jouer_btn = {TAILLE_L / 2 - 100, TAILLE_H / 2 - 60, 200, 50};
     SDL_Rect quitter_btn = {TAILLE_L / 2 - 100, TAILLE_H / 2, 200, 50};
+
+    // Définition du logo
+    SDL_Rect logo = {TAILLE_L / 2 - 200, TAILLE_H / 2 - 200, 400, 200};
     
     int fin = 0;
 
@@ -58,6 +64,16 @@ int main() {
 
     // Chargement de l'image PNG dans une texture
     if (! (texture_fond = IMG_LoadTexture(rend,"ressources/Menu/Background_Menu/Fond_Menu.png")) ){
+        fprintf(stderr, "Erreur lors du chargement de l'image : %s\n", IMG_GetError());
+        SDL_DestroyRenderer(rend);
+        SDL_DestroyWindow(fenetre);
+        IMG_Quit();
+        SDL_Quit();
+        exit(EXIT_FAILURE);
+    }
+
+    // Chargement de l'image logo dans une texture
+    if (! (texture_logo = IMG_LoadTexture(rend,"ressources/Menu/Nom_du_Jeu/logo.png")) ){
         fprintf(stderr, "Erreur lors du chargement de l'image : %s\n", IMG_GetError());
         SDL_DestroyRenderer(rend);
         SDL_DestroyWindow(fenetre);
@@ -113,6 +129,9 @@ int main() {
         // Dessiner la texture de fond
         SDL_RenderCopy(rend, texture_fond, NULL, NULL);
 
+        // Dessiner la texture du logo
+        SDL_RenderCopy(rend, texture_logo, NULL, &logo);
+
         // Dessiner les boutons
         SDL_SetRenderDrawColor(rend, 255, 255, 255, 255);
         SDL_RenderFillRect(rend, &jouer_btn);
@@ -156,6 +175,7 @@ int main() {
     SDL_DestroyRenderer(rend);
     SDL_DestroyWindow(fenetre);
     SDL_DestroyTexture(texture_titre);
+    SDL_DestroyTexture(texture_logo);
     SDL_FreeSurface(surface_titre);
     TTF_CloseFont(font);
     TTF_Quit();
