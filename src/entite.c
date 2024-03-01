@@ -62,7 +62,9 @@ void changer_pos_spritesheet_entite(t_entite * e, int x, int y) {
 
 void changer_pos_entite(t_entite * e, int x, int y) {
     e->pos_x = x > 0 ? (x < 100 ? x : 100) : 0;
-    e->pos_y = y > 0 ? (y < 100 ? y : 100) : 0;
+    // e->pos_y = y > 0 ? (y < 100 ? y : 100) : 0;
+    // e->pos_x = x;
+    e->pos_y = y;
 }
 
 void changer_pos_delta_entite(t_entite * e, int dx, int dy) {
