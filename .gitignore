@@ -1,10 +1,14 @@
 *.swp
 bin/*
+!bin/dignrush.sh
 
 # fichiers annexes TeX
 *.aux
 *.log
 *.out
+
+# mac
+.DS_Store
 
 # Prerequisites
 *.d

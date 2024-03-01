@@ -1,13 +1,13 @@
-/*#include <SDL2/SDL.h>
+#include <stdio.h>
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_image.h>
+#include <SDL2/SDL_ttf.h>
 
-typedef struct {
-    SDL_Rect rect ;       // Position et dimensions du bouton
-    const char * texte ;  // Texte du bouton
-    void (*action)() ;    // Fonctions à appeler lorsque le bouton est cliqué
-} BoutonMenu ;
 
-void jouer();
-void quitter();
-void afficherBoutons(SDL_Renderer * rend);
-void traiterEntrees() ;
-*/
+void initialiser_sdl();
+void initialiser_sdl_img();
+SDL_Window * creation_fenetre();
+SDL_Renderer * creation_renderer(SDL_Window ** fenetre);
+SDL_Texture * chargement_image(char * chemin, SDL_Renderer ** rend, SDL_Window ** fenetre);
+void initialiser_sdl_ttf();
+TTF_Font * chargement_font(char * chemin, int taille, SDL_Renderer ** rend, SDL_Window ** fenetre);
