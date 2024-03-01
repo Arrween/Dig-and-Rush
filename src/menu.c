@@ -5,7 +5,7 @@
 #include "menu.h"
 
 #define TITRE_FENETRE "Dig & Rush"
-#define TAILLE_L 640
+#define TAILLE_L 840
 #define TAILLE_H 480
 #define FPS 60
 
@@ -69,6 +69,34 @@ SDL_Texture * chargement_image(char * chemin, SDL_Renderer ** rend, SDL_Window *
     return texture_fond ;
 }
 
+// Fonction qui charge une surface SDL à partir d'un fichier image
+SDL_Surface * chargement_surface(char * chemin, SDL_Renderer ** rend, SDL_Window ** fenetre) {
+    SDL_Surface * surface;
+    if (!(surface = IMG_Load(chemin))) {
+        fprintf(stderr, "Erreur lors du chargement de l'image : %s\n", IMG_GetError());
+        SDL_DestroyRenderer(*rend);
+        SDL_DestroyWindow(*fenetre);
+        IMG_Quit();
+        SDL_Quit();
+        exit(EXIT_FAILURE);
+    }
+    return surface;
+}
+
+// Fonction pour convertir une surface en texture
+SDL_Texture * chargement_texture_from_surface(SDL_Renderer * renderer, SDL_Surface * surface, SDL_Window * window) {
+    SDL_Texture * texture = SDL_CreateTextureFromSurface(renderer, surface);
+    if (!texture) {
+        fprintf(stderr, "Erreur lors de la création de la texture : %s\n", SDL_GetError());
+        SDL_DestroyRenderer(renderer);
+        SDL_DestroyWindow(window);
+        IMG_Quit();
+        SDL_Quit();
+        exit(EXIT_FAILURE);
+    }
+    SDL_FreeSurface(surface); // Libérer la surface après la création de la texture
+    return texture;
+}
 // Fonction qui initialise la SDL_ttf
 void initialiser_sdl_ttf() {
     if (TTF_Init() == -1) {
