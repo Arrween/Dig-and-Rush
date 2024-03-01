@@ -8,8 +8,8 @@
 
 
 #define TITRE_FENETRE "Dig & Rush"
-#define TAILLE_L 840
-#define TAILLE_H 480
+#define TAILLE_L 1280
+#define TAILLE_H 720
 #define FPS 60
 
 enum { PAGE_MENU, PAGE_MENU_SERVEUR, PAGE_MENU_PARAMETRES, PAGE_MENU_PERSONNAGES };
@@ -65,19 +65,19 @@ int main() {
     /******************************************************************************************************************/
 
     //INITIALISATION ET DÉCLARATION DU RECTANGLE LOGO
-    SDL_Rect logo = {TAILLE_L * (0.5 - 0.238), TAILLE_H / 2 - TAILLE_H * 0.42, TAILLE_L * 0.476, TAILLE_H * 0.417};
+    SDL_Rect logo = {TAILLE_L * (0.5 - 0.238), TAILLE_H * (0.5 - 0.42), TAILLE_L * 0.476, TAILLE_H * 0.417};
 
 
     //INITIALISATION ET DÉCLARATION DES RECTANGLES BOUTONS
-    SDL_Rect parametres_btn = {TAILLE_L * 0.012, TAILLE_H * 0.021, 50, 50}; // Coordonnées et dimensions du bouton "Paramètres"
-    SDL_Rect volume_btn_on = {TAILLE_L * 0.095, TAILLE_H * 0.010, 55, 60}; // Coordonnées et dimensions du bouton "Volume"
-    SDL_Rect volume_btn_off = {TAILLE_L * 0.095, TAILLE_H * 0.010, 55, 60}; // Coordonnées et dimensions du bouton "Volume Off"
-    SDL_Rect personnages_btn = {TAILLE_L * 0.761, TAILLE_H * 0.010, 55, 60}; // Coordonnées et dimensions du bouton "Personnages"
-    SDL_Rect fullscreen_btn = {TAILLE_L * 0.892, TAILLE_H * 0.017, 55, 55};
-    SDL_Rect not_fullscreen_btn = {TAILLE_L * 0.892, TAILLE_H * 0.017, 55, 55};
-    SDL_Rect home_btn = {TAILLE_L * 0.012, TAILLE_H * 0.87, 55, 55};
-    SDL_Rect play_btn = {TAILLE_L * 0.67, TAILLE_H * 0.7, 169, 74};
-    SDL_Rect quit_btn = {TAILLE_L * 0.120, TAILLE_H * 0.7, 169, 74};
+    SDL_Rect parametres_btn = {TAILLE_L * 0.012, TAILLE_H * 0.021, TAILLE_L * 0.059, TAILLE_H * 0.104}; // Coordonnées et dimensions du bouton "Paramètres"
+    SDL_Rect volume_btn_on = {TAILLE_L * 0.095, TAILLE_H * 0.010,  TAILLE_L * 0.065, TAILLE_H * 0.125}; // Coordonnées et dimensions du bouton "Volume"
+    SDL_Rect volume_btn_off = {TAILLE_L * 0.095, TAILLE_H * 0.010,  TAILLE_L * 0.065, TAILLE_H * 0.125}; // Coordonnées et dimensions du bouton "Volume Off"
+    SDL_Rect personnages_btn = {TAILLE_L * 0.761, TAILLE_H * 0.010, TAILLE_L * 0.065, TAILLE_H * 0.125}; // Coordonnées et dimensions du bouton "Personnages"
+    SDL_Rect fullscreen_btn = {TAILLE_L * 0.892, TAILLE_H * 0.017, TAILLE_L * 0.065, TAILLE_H * 0.114};
+    SDL_Rect not_fullscreen_btn = {TAILLE_L * 0.892, TAILLE_H * 0.017, TAILLE_L * 0.065, TAILLE_H * 0.114};
+    SDL_Rect home_btn = {TAILLE_L * 0.012, TAILLE_H * 0.87, TAILLE_L * 0.065, TAILLE_H * 0.114};
+    SDL_Rect play_btn = {TAILLE_L * 0.67, TAILLE_H * 0.7, TAILLE_L * 0.201, TAILLE_H * 0.154};
+    SDL_Rect quit_btn = {TAILLE_L * 0.120, TAILLE_H * 0.7, TAILLE_L * 0.201, TAILLE_H * 0.154};
 
 
     /*****************************************************************************************************************/
@@ -450,6 +450,17 @@ int main() {
     SDL_DestroyTexture(texture_menu_serveur);
     SDL_DestroyTexture(texture_menu_personnages);
     SDL_DestroyTexture(texture_menu_parametre);
+
+    SDL_DestroyTexture(texture_bouton_parametre_sprite);
+    SDL_DestroyTexture(texture_bouton_volume_on_sprite);
+    SDL_DestroyTexture(texture_bouton_volume_off_sprite);
+    SDL_DestroyTexture(texture_bouton_personnages_sprite);
+    SDL_DestroyTexture(texture_bouton_fullscreen);
+    SDL_DestroyTexture(texture_bouton_not_fullscreen);
+    SDL_DestroyTexture(texture_bouton_home);
+    SDL_DestroyTexture(texture_bouton_play_sprite);
+    SDL_DestroyTexture(texture_bouton_quit_sprite);
+
     SDL_DestroyRenderer(rend);
     SDL_DestroyWindow(fenetre);
     IMG_Quit();
