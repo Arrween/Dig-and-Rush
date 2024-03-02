@@ -103,6 +103,7 @@ int main() {
 
     // Création du renderer
     rend = creation_renderer(&fenetre);
+    SDL_RenderSetLogicalSize(rend, TAILLE_L, TAILLE_H);
 
     //SURFACE
 

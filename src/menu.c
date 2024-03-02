@@ -31,7 +31,7 @@ SDL_Window * creation_fenetre(){
 				    SDL_WINDOWPOS_CENTERED,
 				    TAILLE_L,
 				    TAILLE_H,
-				    0))) {
+				    SDL_WINDOW_RESIZABLE))) {
         fprintf(stderr, "Erreur SDL_CreateWindow : %s\n", SDL_GetError());
         SDL_Quit();
         exit(EXIT_FAILURE);
