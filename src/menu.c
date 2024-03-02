@@ -5,6 +5,7 @@
 
 #include "menu.h"
 #include "constantes.h"
+#include "ressources.h"
 
 // Fonction qui initialise la SDL
 void initialiser_sdl(){
@@ -114,4 +115,36 @@ TTF_Font * chargement_font(char * chemin, int taille, SDL_Renderer ** rend, SDL_
             exit(EXIT_FAILURE);
         }
     return font ;
+}
+
+void action_parametres(t_etat * etat) {
+    etat->i_menu = PAGE_MENU_PARAMETRES;
+}
+void action_volume(t_etat * etat) {
+    if (etat->boutons[1]->texture == recuperer_texture("bouton_volume_off"))
+        etat->boutons[1]->texture = recuperer_texture("bouton_volume_on");
+    else
+        etat->boutons[1]->texture = recuperer_texture("bouton_volume_off");
+}
+void action_personnages(t_etat * etat) {
+    etat->i_menu = PAGE_MENU_PERSONNAGES;
+}
+void action_fullscreen(t_etat * etat) {
+    if (etat->boutons[0]->texture == recuperer_texture("bouton_fullscreen_off"))
+        etat->boutons[0]->texture = recuperer_texture("bouton_fullscreen_on");
+    else
+        etat->boutons[0]->texture = recuperer_texture("bouton_fullscreen_off");
+    etat->est_fullscreen = !etat->est_fullscreen;
+    SDL_SetWindowFullscreen(etat->fenetre, etat->est_fullscreen ? SDL_WINDOW_FULLSCREEN : 0);
+}
+void action_home(t_etat * etat) {
+    etat->i_menu = PAGE_MENU;
+}
+void action_jouer(t_etat * etat) {
+    etat->i_menu = PAGE_MENU_SERVEUR;
+}
+void action_quitter(t_etat * etat) {
+    etat->doit_quitter = SDL_TRUE;
+}
+void action_nulle(t_etat * etat) {
 }

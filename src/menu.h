@@ -23,3 +23,32 @@ extern SDL_Texture * chargement_texture_from_surface(SDL_Renderer * renderer, SD
 extern void initialiser_sdl_ttf(); // Fonction pour initialiser SDL_ttf
 
 extern TTF_Font * chargement_font(char * chemin, int taille, SDL_Renderer ** rend, SDL_Window ** fenetre); // Fonction pour charger une police TTF_Font
+
+// Données des boutons
+
+enum { PAGE_MENU, PAGE_MENU_SERVEUR, PAGE_MENU_PARAMETRES, PAGE_MENU_PERSONNAGES };
+
+typedef struct s_etat t_etat;
+typedef struct { 
+    SDL_Texture * texture;
+    SDL_Rect rect;
+    void (*action) (t_etat * etat);
+    char nom[100];
+} t_bouton;
+
+struct s_etat {
+    int doit_quitter;
+    int est_fullscreen;
+    int i_menu;
+    t_bouton ** boutons;
+    SDL_Window * fenetre;
+};
+
+void action_volume(t_etat *);
+void action_fullscreen(t_etat *);
+void action_home(t_etat *);
+void action_quitter(t_etat *);
+void action_jouer(t_etat *);
+void action_personnages(t_etat *);
+void action_parametres(t_etat *);
+void action_nulle(t_etat *);
