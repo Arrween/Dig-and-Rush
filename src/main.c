@@ -5,12 +5,8 @@
 
 #include "tour.h"
 #include "menu.h"
+#include "constantes.h"
 
-
-#define TITRE_FENETRE "Dig & Rush"
-#define TAILLE_L 1280
-#define TAILLE_H 720
-#define FPS 60
 
 enum { PAGE_MENU, PAGE_MENU_SERVEUR, PAGE_MENU_PARAMETRES, PAGE_MENU_PERSONNAGES };
 
