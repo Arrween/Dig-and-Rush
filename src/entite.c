@@ -18,8 +18,6 @@ void afficher_entite(SDL_Renderer * rend, t_entite * e) {
         rect_absolu.y = TAILLE_H * e->affichage->rect_dst->y/100;
         rect_absolu.w = largeur_zone_jeu * e->affichage->rect_dst->w/100;
         rect_absolu.h = TAILLE_H * e->affichage->rect_dst->h/100;
-        printf("%i %i %i %i\n", e->affichage->rect_dst->x, e->affichage->rect_dst->y, e->affichage->rect_dst->w, e->affichage->rect_dst->h);
-        printf("%i %i %i %i\n", rect_absolu.x, rect_absolu.y, rect_absolu.w, rect_absolu.h);
         SDL_RenderCopy(rend, e->affichage->texture, src,
                        &rect_absolu);
     }
