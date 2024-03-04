@@ -16,9 +16,9 @@ typedef struct s_entite {
     void (*changer_rect_src) (struct s_entite *, int, int, int, int);
     void (*changer_rect_dst) (struct s_entite *, int, int, int, int);
     void (*changer_sprite) (struct s_entite *, int, int);
-    void (*changer_pos) (struct s_entite *, int, int);
+    void (*deplacer) (struct s_entite *, int, int);
     void (*changer_dims) (struct s_entite *, int, int);
-    void (*changer_pos_delta) (struct s_entite *, int, int);
+    void (*deplacer_rel) (struct s_entite *, int, int);
 } t_entite;
 
 t_entite * creer_entite(const char *, int, int, int, int, int);

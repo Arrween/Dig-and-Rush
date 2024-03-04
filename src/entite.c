@@ -48,7 +48,7 @@ void changer_sprite(t_entite * e, int x, int y) {
     e->affichage->rect_src->y = y * e->affichage->rect_src->h;
 }
 
-void changer_pos_entite(t_entite * e, int x, int y) {
+void deplacer_entite(t_entite * e, int x, int y) {
     e->affichage->rect_dst->x = x >0 ? (x < 100 ? x : 100) : 0;
     e->affichage->rect_dst->y = y;
 }
@@ -58,8 +58,8 @@ void changer_dims(t_entite * e, int w, int h) {
     e->affichage->rect_dst->h = h;
 }
 
-void changer_pos_delta_entite(t_entite * e, int dx, int dy) {
-    changer_pos_entite(e, e->affichage->rect_dst->x + dx,
+void deplacer_rel_entite(t_entite * e, int dx, int dy) {
+    deplacer_entite(e, e->affichage->rect_dst->x + dx,
                            e->affichage->rect_dst->y + dy);
 }
 
@@ -75,16 +75,16 @@ t_entite * creer_entite_depuis_texture(SDL_Texture * texture,
     nouv->changer_rect_src = changer_rect_src_entite;
     nouv->changer_rect_dst = changer_rect_dst_entite;
     nouv->changer_sprite = changer_sprite;
-    nouv->changer_pos = changer_pos_entite;
+    nouv->deplacer = deplacer_entite;
     nouv->changer_dims = changer_dims;
-    nouv->changer_pos_delta = changer_pos_delta_entite;
+    nouv->deplacer_rel = deplacer_rel_entite;
 
     if (x == -1 && y == -1 && w == -1 && h == -1) {
         free(nouv->affichage->rect_dst);
         nouv->affichage->rect_dst = NULL;
     }
     else {
-        nouv->changer_pos(nouv, x, y);
+        nouv->deplacer(nouv, x, y);
         nouv->changer_dims(nouv, w, h);
     }
     nouv->est_relatif = est_relatif;

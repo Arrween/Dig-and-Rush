@@ -90,7 +90,7 @@ void boucle_jeu(SDL_Renderer * rend) {
         if (doit_deplacer_g || doit_deplacer_d) {
             int dx = doit_deplacer_g ? -1 : 1;
             int y_sprite_nouv = doit_deplacer_g ? 9 : 11;
-            perso->changer_pos_delta(perso, dx, 0);
+            perso->deplacer_rel(perso, dx, 0);
             if (y_sprite != y_sprite_nouv) {
                 x_sprite = 0;
                 y_sprite = y_sprite_nouv;
@@ -101,7 +101,7 @@ void boucle_jeu(SDL_Renderer * rend) {
         }
 
         if (!a_collision(perso, obstacle)) {
-            obstacle->changer_pos_delta(obstacle, 0, -1);
+            obstacle->deplacer_rel(obstacle, 0, -1);
             defiler(fond_tour, 1);
             repere_defilement++;
         }
