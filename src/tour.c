@@ -28,10 +28,8 @@ void boucle_jeu(SDL_Renderer * rend) {
     int x_tour = (TAILLE_L-largeur_tour)/2;
     int x_mur_g = (int) (x_tour + largeur_tour * 0.07);
     int x_mur_d = (int) (x_tour + largeur_tour * 0.93);
-    int largeur_perso_src = 64;
-    int hauteur_perso_src = 64;
-    int largeur_perso = largeur_perso_src;
-    int hauteur_perso = hauteur_perso_src;
+    int largeur_perso = 64;
+    int hauteur_perso = 64;
 
     tex_obstacle = SDL_CreateTexture(rend, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, TAILLE_L, TAILLE_H);
 
@@ -49,9 +47,8 @@ void boucle_jeu(SDL_Renderer * rend) {
     fond_tour->changer_rect_src(fond_tour, 0, 0, 48, 80);
     fond_tour->changer_rect_dst(fond_tour,x_tour, 0, largeur_tour, TAILLE_H);
 
-    perso = creer_entite("jack");
-    perso->changer_dims_spritesheet(perso, 64, 64);
-    perso->changer_pos_spritesheet(perso, 0, 6);
+    perso = creer_entite_depuis_spritesheet("jack");
+    perso->changer_sprite(perso, 0, 6);
     perso->changer_rect_dst(perso, x_tour+2*largeur_perso, TAILLE_H/5, largeur_perso, hauteur_perso);
     perso->changer_pos(perso, 40, 20);
 
@@ -85,11 +82,11 @@ void boucle_jeu(SDL_Renderer * rend) {
                     switch (event.key.keysym.scancode) {
                         case SDL_SCANCODE_A:
                             doit_deplacer_g = 0;
-                            perso->changer_pos_spritesheet(perso, 0, 6);
+                            perso->changer_sprite(perso, 0, 6);
                             break;
                         case SDL_SCANCODE_D:
                             doit_deplacer_d = 0;
-                            perso->changer_pos_spritesheet(perso, 0, 6);
+                            perso->changer_sprite(perso, 0, 6);
                             break;
                         default:
                             break;
@@ -113,7 +110,7 @@ void boucle_jeu(SDL_Renderer * rend) {
             }
             else
                 x_sprite = (x_sprite + 1) % 9;
-            perso->changer_pos_spritesheet(perso, x_sprite, y_sprite);
+            perso->changer_sprite(perso, x_sprite, y_sprite);
         }
 
         if (!a_collision(perso, obstacle)) {
