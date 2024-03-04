@@ -18,7 +18,7 @@ void defiler(t_entite * e, int dy) {
 
 void boucle_jeu(SDL_Renderer * rend) {
     SDL_Event event;
-    int fin = 0;
+    int doit_boucler = SDL_TRUE;
     int repere_defilement = 0;
 
     SDL_Texture * tex_obstacle;
@@ -60,7 +60,7 @@ void boucle_jeu(SDL_Renderer * rend) {
     int doit_deplacer_g = 0;
     int doit_deplacer_d = 0;
 
-    while (!fin) {
+    while (doit_boucler) {
         while (SDL_PollEvent(&event)) {
             switch (event.type) {
                 case SDL_KEYDOWN:
@@ -69,7 +69,7 @@ void boucle_jeu(SDL_Renderer * rend) {
                     switch (event.key.keysym.scancode) {
                         case SDL_SCANCODE_ESCAPE:
                         case SDL_SCANCODE_Q:
-                            fin = 1;
+                            doit_boucler = SDL_FALSE;
                             break;
                         case SDL_SCANCODE_A:
                             doit_deplacer_g = 1;
