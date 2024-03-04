@@ -6,6 +6,7 @@
 #include "constantes.h"
 #include "entite.h"
 #include "ressources.h"
+#include "spritesheets.h"
 
 int a_collision(t_entite * e1, t_entite * e2) {
     return SDL_HasIntersection(e1->affichage->rect_dst,
@@ -37,7 +38,7 @@ void boucle_jeu(SDL_Renderer * rend) {
     fond_tour->changer_rect_src(fond_tour, 0, 0, 48, 80);
 
     perso = creer_entite_depuis_spritesheet("jack", 40, 20, 18, 12, SDL_TRUE);
-    perso->changer_sprite(perso, 0, 6);
+    perso->changer_sprite(perso, 0, PERSO_CREUSER);
 
     int x_sprite = 0;
     int y_sprite = 0;
@@ -69,11 +70,11 @@ void boucle_jeu(SDL_Renderer * rend) {
                     switch (event.key.keysym.scancode) {
                         case SDL_SCANCODE_A:
                             doit_deplacer_g = 0;
-                            perso->changer_sprite(perso, 0, 6);
+                            perso->changer_sprite(perso, 0, PERSO_CREUSER);
                             break;
                         case SDL_SCANCODE_D:
                             doit_deplacer_d = 0;
-                            perso->changer_sprite(perso, 0, 6);
+                            perso->changer_sprite(perso, 0, PERSO_CREUSER);
                             break;
                         default:
                             break;
@@ -89,7 +90,8 @@ void boucle_jeu(SDL_Renderer * rend) {
         
         if (doit_deplacer_g || doit_deplacer_d) {
             int dx = doit_deplacer_g ? -1 : 1;
-            int y_sprite_nouv = doit_deplacer_g ? 9 : 11;
+            int y_sprite_nouv = doit_deplacer_g ?
+                            PERSO_PELLE_MARCHE_G : PERSO_PELLE_MARCHE_D;
             perso->deplacer_rel(perso, dx, 0);
             if (y_sprite != y_sprite_nouv) {
                 x_sprite = 0;
