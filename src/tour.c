@@ -24,33 +24,20 @@ void boucle_jeu(SDL_Renderer * rend) {
     SDL_Texture * tex_obstacle;
     t_entite * fond, * fond_tour, * perso, * obstacle;
 
-    int largeur_tour = TAILLE_L/2;
-    int x_tour = (TAILLE_L-largeur_tour)/2;
-    int x_mur_g = (int) (x_tour + largeur_tour * 0.07);
-    int x_mur_d = (int) (x_tour + largeur_tour * 0.93);
-    int largeur_perso = 64;
-    int hauteur_perso = 64;
-
     tex_obstacle = SDL_CreateTexture(rend, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, TAILLE_L, TAILLE_H);
-
     SDL_SetRenderTarget(rend, tex_obstacle);
     SDL_SetRenderDrawColor(rend, 180, 180, 80, 255);
     SDL_RenderFillRect(rend, NULL);
     SDL_SetRenderTarget(rend, NULL);
-    obstacle = creer_entite_depuis_texture(tex_obstacle);
-    obstacle->changer_rect_dst(obstacle, x_mur_g, TAILLE_H*.8, (x_mur_d-x_mur_g)/2, TAILLE_H*.05);
-    obstacle->changer_pos(obstacle, 0, 180);
+    obstacle = creer_entite_depuis_texture(tex_obstacle, 0, 110, 50, 5, SDL_TRUE);
 
-    fond = creer_entite("fond_menu");
+    fond = creer_entite("fond_menu", -1, -1, -1, -1, SDL_FALSE);
 
-    fond_tour = creer_entite("fond_tour");
+    fond_tour = creer_entite("fond_tour", 0, 0, 100, 100, SDL_TRUE);
     fond_tour->changer_rect_src(fond_tour, 0, 0, 48, 80);
-    fond_tour->changer_rect_dst(fond_tour,x_tour, 0, largeur_tour, TAILLE_H);
 
-    perso = creer_entite_depuis_spritesheet("jack");
+    perso = creer_entite_depuis_spritesheet("jack", 40, 20, 18, 12, SDL_TRUE);
     perso->changer_sprite(perso, 0, 6);
-    perso->changer_rect_dst(perso, x_tour+2*largeur_perso, TAILLE_H/5, largeur_perso, hauteur_perso);
-    perso->changer_pos(perso, 40, 20);
 
     int x_sprite = 0;
     int y_sprite = 0;
