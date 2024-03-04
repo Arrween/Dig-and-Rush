@@ -21,6 +21,7 @@ void boucle_jeu(SDL_Renderer * rend) {
     SDL_Event event;
     int doit_boucler = SDL_TRUE;
     int repere_defilement = 0;
+    int collision_detectee = SDL_FALSE;
 
     SDL_Texture * tex_obstacle;
     t_entite * fond, * fond_tour, * perso, * obstacle;
@@ -38,12 +39,12 @@ void boucle_jeu(SDL_Renderer * rend) {
     fond_tour->changer_rect_src(fond_tour, 0, 0, 48, 80);
 
     perso = creer_entite_depuis_spritesheet("jack", 40, 20, 18, 12, SDL_TRUE);
-    perso->changer_sprite(perso, 0, PERSO_CREUSER);
+    perso->changer_sprite(perso, X_PERSO_REPOS, Y_PERSO_REPOS);
 
     int x_sprite = 0;
     int y_sprite = 0;
-    int doit_deplacer_g = 0;
-    int doit_deplacer_d = 0;
+    int sens_regard = DROITE;
+    int est_en_deplacement = SDL_FALSE;
 
     while (doit_boucler) {
         while (SDL_PollEvent(&event)) {
@@ -57,10 +58,12 @@ void boucle_jeu(SDL_Renderer * rend) {
                             doit_boucler = SDL_FALSE;
                             break;
                         case SDL_SCANCODE_A:
-                            doit_deplacer_g = 1;
+                            sens_regard = GAUCHE;
+                            est_en_deplacement = SDL_TRUE;
                             break;
                         case SDL_SCANCODE_D:
-                            doit_deplacer_d = 1;
+                            sens_regard = DROITE;
+                            est_en_deplacement = SDL_TRUE;
                             break;
                         default:
                             break;
@@ -69,12 +72,8 @@ void boucle_jeu(SDL_Renderer * rend) {
                 case SDL_KEYUP:
                     switch (event.key.keysym.scancode) {
                         case SDL_SCANCODE_A:
-                            doit_deplacer_g = 0;
-                            perso->changer_sprite(perso, 0, PERSO_CREUSER);
-                            break;
                         case SDL_SCANCODE_D:
-                            doit_deplacer_d = 0;
-                            perso->changer_sprite(perso, 0, PERSO_CREUSER);
+                            est_en_deplacement = SDL_FALSE;
                             break;
                         default:
                             break;
@@ -88,21 +87,32 @@ void boucle_jeu(SDL_Renderer * rend) {
         perso->afficher(rend, perso);
         obstacle->afficher(rend, obstacle);
         
-        if (doit_deplacer_g || doit_deplacer_d) {
-            int dx = doit_deplacer_g ? -1 : 1;
-            int y_sprite_nouv = doit_deplacer_g ?
-                            PERSO_PELLE_MARCHE_G : PERSO_PELLE_MARCHE_D;
+        collision_detectee = a_collision(perso, obstacle);
+        if (est_en_deplacement) {
+            int dx = sens_regard == GAUCHE ? -1 : 1;
             perso->deplacer_rel(perso, dx, 0);
-            if (y_sprite != y_sprite_nouv) {
-                x_sprite = 0;
-                y_sprite = y_sprite_nouv;
+            if (collision_detectee) {
+                y_sprite = sens_regard == GAUCHE ?
+                            Y_PERSO_PELLE_MARCHE_G : Y_PERSO_PELLE_MARCHE_D;
+                x_sprite = (x_sprite + 1) % LONGUEUR_ANIM_MARCHE;
             }
-            else
-                x_sprite = (x_sprite + 1) % 9;
+            else {
+                y_sprite = sens_regard == GAUCHE ?
+                            Y_PERSO_CHUTE_G : Y_PERSO_CHUTE_D;
+                x_sprite = X_PERSO_CHUTE;
+            }
             perso->changer_sprite(perso, x_sprite, y_sprite);
         }
+        else {
+            if (collision_detectee)
+                perso->changer_sprite(perso, X_PERSO_REPOS, Y_PERSO_REPOS);
+            else
+                perso->changer_sprite(perso, X_PERSO_CHUTE,
+                                      sens_regard == GAUCHE ?
+                                        Y_PERSO_CHUTE_G : Y_PERSO_CHUTE_D);
+        }
 
-        if (!a_collision(perso, obstacle)) {
+        if (!collision_detectee) {
             obstacle->deplacer_rel(obstacle, 0, -1);
             defiler(fond_tour, 1);
             repere_defilement++;
