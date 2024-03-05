@@ -3,7 +3,7 @@
 #define TAILLE_H 480
 #define FPS 60
 
-#define VITESSE_CHUTE 1./2 // float en pixels par frame
+#define VITESSE_CHUTE 1./2 // float, en %age de la hauteur de jeu par frame
 
 #define COULEUR_HITBOX_R 255
 #define COULEUR_HITBOX_V 255
