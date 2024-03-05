@@ -106,7 +106,7 @@ SDL_Rect positionPersonnage;
 
  int frameWidth = 64;  // Largeur d'une frame dans la sprite sheet
  int frameHeight = 64; // Hauteur d'une frame dans la sprite sheet
- int frameCount = 700;   // Nombre total de frames dans la sprite sheet
+ int frameCount = 10;   // Nombre total de frames dans la sprite sheet
 
 
 // Centrer le personnage dans la fenêtre
@@ -126,74 +126,64 @@ int currentFrame = 0;
 
 
     while (!fin) {
-        while (SDL_PollEvent(&event)) {
-            switch (event.type) {
+    while (SDL_PollEvent(&event)) {
+        switch (event.type) {
+            case SDL_QUIT:
+                fin = 1;
+                break;
 
-		case SDL_QUIT:
-		    fin = 1;
-		    break;
+            case SDL_KEYDOWN:
+                switch (event.key.keysym.scancode) {
+                    case SDL_SCANCODE_ESCAPE:
+                    case SDL_SCANCODE_Q:
+                        fin = 1;
+                        break;
 
-		case SDL_KEYDOWN:
-		    switch (event.key.keysym.scancode) {
-			case SDL_SCANCODE_ESCAPE:
-			case SDL_SCANCODE_Q:
-			    fin = 1;
-			    break;
-			    
-			    
-			case SDL_SCANCODE_LEFT:
-			    direction = 1;
-                            positionPersonnage.x -= 15;  //modifier pour la vitesse de déplacement
-                            // Changer de frame pour l'animation
-        currentFrame = (currentFrame + 1) % frameCount;
+                    case SDL_SCANCODE_LEFT:
+                        direction = 1;
+                        positionPersonnage.x -= 15;
+                        // Changer de frame pour l'animation
+    			currentFrame = (currentFrame + 1) % frameCount;
+                        break;
 
-                            break;
-
-                        case SDL_SCANCODE_RIGHT:
+                    case SDL_SCANCODE_RIGHT:
                         direction = 2;
-                            positionPersonnage.x += 15;  //modifier pour la vitesse de déplacement
-                            // Changer de frame pour l'animation
-        currentFrame = (currentFrame + 1) % frameCount;
-                            
-                            break;
+                        positionPersonnage.x += 15;
+                        // Changer de frame pour l'animation
+    			currentFrame = (currentFrame + 1) % frameCount;
+                        break;
 
-                        case SDL_SCANCODE_UP:
+                    case SDL_SCANCODE_UP:
                         direction = 3;
-                            positionPersonnage.y -= 15;  //modifier pour la vitesse de déplacement
-                            // Changer de frame pour l'animation
-        currentFrame = (currentFrame + 1) % frameCount;
-                            break;
+                        positionPersonnage.y -= 15;
+                        break;
 
-                        case SDL_SCANCODE_DOWN:
+                    case SDL_SCANCODE_DOWN:
                         direction = 0;
-                            positionPersonnage.y += 15;  //modifier pour la vitesse de déplacement
-                            // Changer de frame pour l'animation
-        currentFrame = (currentFrame + 1) % frameCount;
-                            break;
-                            
-			default:
-			    break;
-		    }
-		    break;
-	    }
-	}
+                        positionPersonnage.y += 15;
+                        break;
+
+                    default:
+                        break;
+                }
+                break;
+        }
+    }
 
        // Nettoyer le renderer
 	SDL_RenderClear(rend);
 	
-	// Afficher la frame actuelle
-        SDL_Rect srcRect = { direction * frameWidth, currentFrame * frameHeight, frameWidth, frameHeight };
-        SDL_RenderCopy(rend, texturePersonnage, &srcRect, &positionPersonnage);
+    // Afficher la frame actuelle
+    SDL_Rect srcRect = { direction * frameWidth, currentFrame * frameHeight, frameWidth, frameHeight };
+    SDL_RenderCopy(rend, texturePersonnage, &srcRect, &positionPersonnage);
 
+    // Mettre à jour l'écran
+    SDL_RenderPresent(rend);
+    SDL_Delay(60 / FPS);
 
-	// Mettre à jour l'écran
-	SDL_RenderPresent(rend);
-	SDL_Delay(60/FPS);
-	
-	
-	
-	
-    }
+    
+}
+
     // Nettoyage
     //SDL_DestroyTexture(textureFond);
     SDL_DestroyRenderer(rend);
