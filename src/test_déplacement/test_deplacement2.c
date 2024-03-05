@@ -76,49 +76,47 @@ int main() {
     */
     
 //affichage personnage
-SDL_Surface *personnage = NULL;
-SDL_Texture *texturePersonnage = NULL;
 SDL_Rect positionPersonnage;
     
 
-// Charger l'image du personnage
-personnage = IMG_Load("../../ressources/Personnages/test_personnage.png");   
-if (!personnage) {
-    fprintf(stderr, "Erreur lors du chargement de l'image du personnage : %s\n", IMG_GetError());
-    SDL_DestroyRenderer(rend);
-    SDL_DestroyWindow(fenetre);
-    IMG_Quit();
-    SDL_Quit();
-    exit(EXIT_FAILURE);
-}
+  // Charger la sprite sheet
+    SDL_Surface *spriteSheet = IMG_Load("../../ressources/Personnages/yohanPerso.png");
+    if (!spriteSheet) {
+        fprintf(stderr, "Erreur lors du chargement de la sprite sheet : %s\n", IMG_GetError());
+        SDL_DestroyRenderer(rend);
+        SDL_DestroyWindow(fenetre);
+        IMG_Quit();
+        SDL_Quit();
+        exit(EXIT_FAILURE);
+    }
+
+    // Convertir la surface en texture
+    SDL_Texture *texturePersonnage = SDL_CreateTextureFromSurface(rend, spriteSheet);
+
+    if (!texturePersonnage) {
+        fprintf(stderr, "Erreur lors de la création de la texture du personnage : %s\n", SDL_GetError());
+        SDL_FreeSurface(spriteSheet);
+        SDL_DestroyRenderer(rend);
+        SDL_DestroyWindow(fenetre);
+        IMG_Quit();
+        SDL_Quit();
+        exit(EXIT_FAILURE);
+    }
 
 
-// Convertir la surface en texture
-texturePersonnage = SDL_CreateTextureFromSurface(rend, personnage);
+ int frameWidth = 64;  // Largeur d'une frame dans la sprite sheet
+ int frameHeight = 64; // Hauteur d'une frame dans la sprite sheet
+ int frameCount = 700;   // Nombre total de frames dans la sprite sheet
 
-if (!texturePersonnage) {
-    fprintf(stderr, "Erreur lors de la création de la texture du personnage : %s\n", SDL_GetError());
-    SDL_FreeSurface(personnage);
-    SDL_DestroyRenderer(rend);
-    SDL_DestroyWindow(fenetre);
-    IMG_Quit();
-    SDL_Quit();
-    exit(EXIT_FAILURE);
-}
-
-
-// Définir la taille du personnage (taille image)
-int nouvelleLargeur = 150;  // ajustez selon vos besoins
-int nouvelleHauteur = 150; // ajustez selon vos besoins
 
 // Centrer le personnage dans la fenêtre
-int personnageWidth, personnageHeight;
-SDL_QueryTexture(texturePersonnage, NULL, NULL, &personnageWidth, &personnageHeight);
-positionPersonnage.x = (TAILLE_L - nouvelleLargeur) / 2;
-positionPersonnage.y = (TAILLE_H - nouvelleHauteur) / 2;
-positionPersonnage.w = nouvelleLargeur;
-positionPersonnage.h = nouvelleHauteur;
+positionPersonnage.x = (TAILLE_L - frameWidth) / 2;
+positionPersonnage.y = (TAILLE_H - frameHeight) / 2;
+positionPersonnage.w = frameWidth;
+positionPersonnage.h = frameHeight;
 
+int currentFrame = 0;
+    int direction = 0; // 0: vers le bas, 1: vers la gauche, 2: vers la droite, 3: vers le haut
 
 
 
@@ -144,43 +142,57 @@ positionPersonnage.h = nouvelleHauteur;
 			    
 			    
 			case SDL_SCANCODE_LEFT:
+			    direction = 1;
                             positionPersonnage.x -= 15;  //modifier pour la vitesse de déplacement
+                            // Changer de frame pour l'animation
+        currentFrame = (currentFrame + 1) % frameCount;
+
                             break;
 
                         case SDL_SCANCODE_RIGHT:
+                        direction = 2;
                             positionPersonnage.x += 15;  //modifier pour la vitesse de déplacement
+                            // Changer de frame pour l'animation
+        currentFrame = (currentFrame + 1) % frameCount;
+                            
                             break;
 
                         case SDL_SCANCODE_UP:
+                        direction = 3;
                             positionPersonnage.y -= 15;  //modifier pour la vitesse de déplacement
+                            // Changer de frame pour l'animation
+        currentFrame = (currentFrame + 1) % frameCount;
                             break;
 
                         case SDL_SCANCODE_DOWN:
+                        direction = 0;
                             positionPersonnage.y += 15;  //modifier pour la vitesse de déplacement
+                            // Changer de frame pour l'animation
+        currentFrame = (currentFrame + 1) % frameCount;
                             break;
                             
 			default:
 			    break;
 		    }
+		    break;
 	    }
 	}
 
        // Nettoyer le renderer
 	SDL_RenderClear(rend);
 	
-	// Dessiner la texture de fond
-	// SDL_RenderCopy(rend, textureFond, NULL, NULL);
-	
-	// Affiche le personnage AVEC POSITION MAIS NE MARCHE PAS
-	SDL_RenderCopy(rend, texturePersonnage, NULL, &positionPersonnage);
-	
-	// Affiche le personnage SANS POSITION
-	//SDL_RenderCopy(rend, texturePersonnage, NULL, NULL);
+	// Afficher la frame actuelle
+        SDL_Rect srcRect = { direction * frameWidth, currentFrame * frameHeight, frameWidth, frameHeight };
+        SDL_RenderCopy(rend, texturePersonnage, &srcRect, &positionPersonnage);
 
 
 	// Mettre à jour l'écran
 	SDL_RenderPresent(rend);
-	SDL_Delay(1000/FPS);
+	SDL_Delay(60/FPS);
+	
+	
+	
+	
     }
     // Nettoyage
     //SDL_DestroyTexture(textureFond);
