@@ -21,6 +21,8 @@ void boucle_jeu(SDL_Renderer * rend) {
     SDL_Event event;
     int doit_boucler = SDL_TRUE;
     int repere_defilement = 0;
+    long long compteur_frames = 0;
+    int pas_defilement = 0;
 
     SDL_Texture * tex_obstacle;
     t_entite * fond, * fond_tour, * perso, * obstacle;
@@ -87,8 +89,14 @@ void boucle_jeu(SDL_Renderer * rend) {
         deplacer(perso);
 
         if (!perso->a_collision) {
-            obstacle->changer_pos_rel(obstacle, 0, -1);
-            defiler(fond_tour, 1);
+            if (VITESSE_CHUTE >= 1)
+                pas_defilement = (int) VITESSE_CHUTE;
+            else if (compteur_frames % (int) (1/(VITESSE_CHUTE)) == 0)
+                pas_defilement = 1;
+            else
+                pas_defilement = 0;
+            obstacle->changer_pos_rel(obstacle, 0, -pas_defilement);
+            defiler(fond_tour, pas_defilement);
             repere_defilement++;
         }
 
@@ -97,6 +105,7 @@ void boucle_jeu(SDL_Renderer * rend) {
 
         SDL_RenderPresent(rend);
         SDL_Delay(1000/FPS);
+        compteur_frames++;
     }
 
     detruire_entite(&fond);
