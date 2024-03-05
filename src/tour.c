@@ -25,7 +25,8 @@ void boucle_jeu(SDL_Renderer * rend) {
     int pas_defilement = 0;
 
     SDL_Texture * tex_obstacle;
-    t_entite * fond, * fond_tour, * perso, * obstacle;
+    t_entite * fond, * fond_tour, * perso, * obstacle, * obstacle2;
+    t_entite * obstacle3 = NULL, * obstacle4 = NULL;
 
     tex_obstacle = SDL_CreateTexture(rend, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, TAILLE_L, TAILLE_H);
     SDL_SetRenderTarget(rend, tex_obstacle);
@@ -33,6 +34,7 @@ void boucle_jeu(SDL_Renderer * rend) {
     SDL_RenderFillRect(rend, NULL);
     SDL_SetRenderTarget(rend, NULL);
     obstacle = creer_entite_depuis_texture(tex_obstacle, 0, 110, 50, 5, SDL_TRUE);
+    obstacle2 = creer_entite_depuis_texture(tex_obstacle, 50, 170, 50, 5, SDL_TRUE);
 
     fond = creer_entite("fond_menu", -1, -1, -1, -1, SDL_FALSE);
 
@@ -84,8 +86,11 @@ void boucle_jeu(SDL_Renderer * rend) {
         fond_tour->afficher(rend, fond_tour);
         perso->afficher(rend, perso);
         obstacle->afficher(rend, obstacle);
+        obstacle2->afficher(rend, obstacle2);
         
         verif_collision(perso, obstacle);
+        if (!perso->a_collision)
+            verif_collision(perso, obstacle2);
         deplacer(perso);
 
         if (!perso->a_collision) {
@@ -96,11 +101,23 @@ void boucle_jeu(SDL_Renderer * rend) {
             else
                 pas_defilement = 0;
             obstacle->changer_pos_rel(obstacle, 0, -pas_defilement);
+            obstacle2->changer_pos_rel(obstacle2, 0, -pas_defilement);
             defiler(fond_tour, pas_defilement);
-            repere_defilement++;
+            repere_defilement = repere_defilement + pas_defilement;
         }
 
         if (repere_defilement > 100) {
+            detruire_entite(&obstacle3);
+            detruire_entite(&obstacle4);
+            obstacle3 = creer_entite_depuis_texture(tex_obstacle, 0, 110, 50, 5, SDL_TRUE);
+            obstacle4 = creer_entite_depuis_texture(tex_obstacle, 50, 170, 50, 5, SDL_TRUE);
+        }
+        if (repere_defilement > 200) {
+            repere_defilement = 0;
+            detruire_entite(&obstacle);
+            detruire_entite(&obstacle2);
+            obstacle = creer_entite_depuis_texture(tex_obstacle, 0, 110, 50, 5, SDL_TRUE);
+            obstacle2 = creer_entite_depuis_texture(tex_obstacle, 50, 170, 50, 5, SDL_TRUE);
         }
 
         SDL_RenderPresent(rend);
@@ -111,4 +128,8 @@ void boucle_jeu(SDL_Renderer * rend) {
     detruire_entite(&fond);
     detruire_entite(&fond_tour);
     detruire_entite(&perso);
+    detruire_entite(&obstacle);
+    detruire_entite(&obstacle2);
+    detruire_entite(&obstacle3);
+    detruire_entite(&obstacle4);
 }
