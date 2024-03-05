@@ -189,8 +189,10 @@ t_entite * creer_entite(const char * id, int x, int y, int w, int h,
 }
 
 void detruire_entite(t_entite ** e) {
-    detruire_affichage(&((*e)->affichage));
-    free(*e);
+    if (*e) {
+        detruire_affichage(&((*e)->affichage));
+        free(*e);
+    }
     *e = NULL;
 }
 
@@ -216,11 +218,13 @@ t_affichage * creer_affichage(SDL_Texture * texture) {
 
 // ne pas détruire (*aff)->texture, detruire_ressources s’en charge
 void detruire_affichage(t_affichage ** affichage) {
-    if ((*affichage)->rect_src)
-        free((*affichage)->rect_src);
-    if ((*affichage)->rect_dst)
-        free((*affichage)->rect_dst);
-    if (*affichage)
-        free(*affichage);
+    if (*affichage) {
+        if ((*affichage)->rect_src)
+            free((*affichage)->rect_src);
+        if ((*affichage)->rect_dst)
+            free((*affichage)->rect_dst);
+        if (*affichage)
+            free(*affichage);
+    }
     *affichage = NULL;
 }
