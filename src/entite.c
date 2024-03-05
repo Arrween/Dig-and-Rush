@@ -157,7 +157,9 @@ t_entite * creer_entite_depuis_texture(SDL_Texture * texture,
         nouv->affichage->rect_dst = NULL;
     }
     else {
-        nouv->changer_pos(nouv, x, y);
+        // ne pas utiliser changer_pos_entite car nécessite hitbox, qui elle-même nécessite rect_dst
+        nouv->affichage->rect_dst->x = x;
+        nouv->affichage->rect_dst->y = y;
         nouv->changer_dims(nouv, w, h);
         changer_hitbox(nouv, 0, 0, 100, 100);
     }
