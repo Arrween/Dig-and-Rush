@@ -87,7 +87,7 @@ void boucle_jeu(SDL_Renderer * rend) {
         deplacer(perso);
 
         if (!perso->a_collision) {
-            obstacle->deplacer_rel(obstacle, 0, -1);
+            obstacle->changer_pos_rel(obstacle, 0, -1);
             defiler(fond_tour, 1);
             repere_defilement++;
         }
