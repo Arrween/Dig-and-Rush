@@ -45,6 +45,9 @@ void boucle_jeu(SDL_Renderer * rend) {
     int y_sprite = 0;
     int sens_regard = DROITE;
     int est_en_deplacement = SDL_FALSE;
+    changer_hitbox(perso, 26, 24, 51, 76);
+    perso->doit_afficher_hitbox = SDL_TRUE;
+    obstacle->doit_afficher_hitbox = SDL_TRUE;
 
     while (doit_boucler) {
         while (SDL_PollEvent(&event)) {
