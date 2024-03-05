@@ -1,5 +1,7 @@
 #include <SDL2/SDL.h>
 
+enum { REPOS, GAUCHE, DROITE, HAUT, BAS };
+
 typedef struct s_affichage {
     SDL_Texture * texture;
     SDL_Rect * rect_src;
@@ -14,6 +16,14 @@ typedef struct s_entite {
     int est_relatif;
     SDL_Rect hitbox;
     int doit_afficher_hitbox;
+
+    int a_collision;
+    int a_animations;
+    int deplacement;
+    int sens_regard;
+    int x_sprite;
+    int y_sprite;
+
     void (*afficher) (SDL_Renderer *, struct s_entite *);
     void (*changer_rect_src) (struct s_entite *, int, int, int, int);
     void (*changer_rect_dst) (struct s_entite *, int, int, int, int);
@@ -30,3 +40,4 @@ void detruire_entite(t_entite **);
 
 void changer_hitbox(t_entite *, int, int, int, int);
 SDL_Rect convertir_vers_absolu(SDL_Rect *, int, int, int, int);
+void deplacer(t_entite *);

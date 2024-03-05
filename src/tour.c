@@ -8,9 +8,9 @@
 #include "ressources.h"
 #include "spritesheets.h"
 
-int a_collision(t_entite * e1, t_entite * e2) {
-    return SDL_HasIntersection(e1->affichage->rect_dst,
-                               e2->affichage->rect_dst);
+void verif_collision(t_entite * e1, t_entite * e2) {
+    int a_collision = SDL_HasIntersection(&(e1->hitbox), &(e2->hitbox));
+    e1->a_collision = e2->a_collision = a_collision;
 }
 
 void defiler(t_entite * e, int dy) {
@@ -21,7 +21,6 @@ void boucle_jeu(SDL_Renderer * rend) {
     SDL_Event event;
     int doit_boucler = SDL_TRUE;
     int repere_defilement = 0;
-    int collision_detectee = SDL_FALSE;
 
     SDL_Texture * tex_obstacle;
     t_entite * fond, * fond_tour, * perso, * obstacle;
@@ -41,10 +40,6 @@ void boucle_jeu(SDL_Renderer * rend) {
     perso = creer_entite_depuis_spritesheet("jack", 40, 20, 18, 12, SDL_TRUE);
     perso->changer_sprite(perso, X_PERSO_REPOS, Y_PERSO_REPOS);
 
-    int x_sprite = 0;
-    int y_sprite = 0;
-    int sens_regard = DROITE;
-    int est_en_deplacement = SDL_FALSE;
     changer_hitbox(perso, 26, 24, 51, 76);
     perso->doit_afficher_hitbox = SDL_TRUE;
     obstacle->doit_afficher_hitbox = SDL_TRUE;
@@ -61,12 +56,10 @@ void boucle_jeu(SDL_Renderer * rend) {
                             doit_boucler = SDL_FALSE;
                             break;
                         case SDL_SCANCODE_A:
-                            sens_regard = GAUCHE;
-                            est_en_deplacement = SDL_TRUE;
+                            perso->deplacement = GAUCHE;
                             break;
                         case SDL_SCANCODE_D:
-                            sens_regard = DROITE;
-                            est_en_deplacement = SDL_TRUE;
+                            perso->deplacement = DROITE;
                             break;
                         default:
                             break;
@@ -76,7 +69,7 @@ void boucle_jeu(SDL_Renderer * rend) {
                     switch (event.key.keysym.scancode) {
                         case SDL_SCANCODE_A:
                         case SDL_SCANCODE_D:
-                            est_en_deplacement = SDL_FALSE;
+                            perso->deplacement = REPOS;
                             break;
                         default:
                             break;
@@ -90,32 +83,10 @@ void boucle_jeu(SDL_Renderer * rend) {
         perso->afficher(rend, perso);
         obstacle->afficher(rend, obstacle);
         
-        collision_detectee = a_collision(perso, obstacle);
-        if (est_en_deplacement) {
-            int dx = sens_regard == GAUCHE ? -1 : 1;
-            perso->deplacer_rel(perso, dx, 0);
-            if (collision_detectee) {
-                y_sprite = sens_regard == GAUCHE ?
-                            Y_PERSO_PELLE_MARCHE_G : Y_PERSO_PELLE_MARCHE_D;
-                x_sprite = (x_sprite + 1) % LONGUEUR_ANIM_MARCHE;
-            }
-            else {
-                y_sprite = sens_regard == GAUCHE ?
-                            Y_PERSO_CHUTE_G : Y_PERSO_CHUTE_D;
-                x_sprite = X_PERSO_CHUTE;
-            }
-            perso->changer_sprite(perso, x_sprite, y_sprite);
-        }
-        else {
-            if (collision_detectee)
-                perso->changer_sprite(perso, X_PERSO_REPOS, Y_PERSO_REPOS);
-            else
-                perso->changer_sprite(perso, X_PERSO_CHUTE,
-                                      sens_regard == GAUCHE ?
-                                        Y_PERSO_CHUTE_G : Y_PERSO_CHUTE_D);
-        }
+        verif_collision(perso, obstacle);
+        deplacer(perso);
 
-        if (!collision_detectee) {
+        if (!perso->a_collision) {
             obstacle->deplacer_rel(obstacle, 0, -1);
             defiler(fond_tour, 1);
             repere_defilement++;

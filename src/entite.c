@@ -2,7 +2,7 @@
 
 #include "entite.h"
 #include "ressources.h"
-
+#include "spritesheets.h"
 #include "constantes.h"
 
 SDL_Rect convertir_vers_absolu(SDL_Rect * rect, int x_abs, int y_abs,
@@ -104,6 +104,38 @@ void changer_hitbox(t_entite * e, int x, int y, int w, int h) {
         e->hitbox.h = dst_h * h/100;
 }
 
+void deplacer(t_entite * e) {
+    if (e->deplacement != REPOS) {
+        e->deplacer_rel(e,
+            e->deplacement == GAUCHE ? -1 : (e->deplacement == DROITE?1:0),
+            e->deplacement == HAUT ? -1 : (e->deplacement == BAS ? 1 : 0)
+        );
+        if (e->deplacement == GAUCHE || e->deplacement == DROITE)
+            e->sens_regard = e->deplacement;
+    }
+    if (e->deplacement && e->a_animations) {
+        if (e->a_collision) {
+            e->y_sprite = e->deplacement == GAUCHE ?
+                            Y_PERSO_PELLE_MARCHE_G : Y_PERSO_PELLE_MARCHE_D;
+            e->x_sprite = (e->x_sprite + 1) % LONGUEUR_ANIM_MARCHE;
+        }
+        else {
+            e->y_sprite = e->deplacement == GAUCHE ?
+                            Y_PERSO_CHUTE_G : Y_PERSO_CHUTE_D;
+            e->x_sprite = X_PERSO_CHUTE;
+        }
+        e->changer_sprite(e, e->x_sprite, e->y_sprite);
+    }
+    else if (e->a_animations) {
+        if (e->a_collision)
+            e->changer_sprite(e, X_PERSO_REPOS, Y_PERSO_REPOS);
+        else
+            e->changer_sprite(e, X_PERSO_CHUTE,
+                                      e->sens_regard == GAUCHE ?
+                                        Y_PERSO_CHUTE_G : Y_PERSO_CHUTE_D);
+    }
+}
+
 t_entite * creer_entite_depuis_texture(SDL_Texture * texture,
                                        int x, int y, int w, int h,
                                        int est_relatif) {
@@ -131,6 +163,9 @@ t_entite * creer_entite_depuis_texture(SDL_Texture * texture,
     }
     nouv->doit_afficher_hitbox = SDL_FALSE;
     nouv->est_relatif = est_relatif;
+    nouv->deplacement = REPOS;
+    nouv->sens_regard = DROITE;
+    nouv->x_sprite = nouv->y_sprite = 0;
 
     return nouv;
 }
