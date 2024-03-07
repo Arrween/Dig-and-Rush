@@ -106,7 +106,7 @@ SDL_Rect positionPersonnage;
 
  int frameWidth = 64;  // Largeur d'une frame dans la sprite sheet
  int frameHeight = 64; // Hauteur d'une frame dans la sprite sheet
- int frameCount = 10;   // Nombre total de frames dans la sprite sheet
+ int frameCount = 8;   // Nombre total de frames dans la sprite sheet
 
 
 // Centrer le personnage dans la fenêtre
@@ -140,27 +140,29 @@ int currentFrame = 0;
                         break;
 
                     case SDL_SCANCODE_LEFT:
-                        direction = 1;
-                        positionPersonnage.x -= 15;
+                        direction = 9;
+                        positionPersonnage.x -= 5;
                         // Changer de frame pour l'animation
     			currentFrame = (currentFrame + 1) % frameCount;
                         break;
 
                     case SDL_SCANCODE_RIGHT:
-                        direction = 2;
-                        positionPersonnage.x += 15;
+                        direction = 11;
+                        positionPersonnage.x += 5;
                         // Changer de frame pour l'animation
-    			currentFrame = (currentFrame + 1) % frameCount;
+                        currentFrame = (currentFrame + 1) % frameCount;
                         break;
 
                     case SDL_SCANCODE_UP:
-                        direction = 3;
+                        direction = 0;
                         positionPersonnage.y -= 15;
+                        currentFrame= 0;
                         break;
 
                     case SDL_SCANCODE_DOWN:
-                        direction = 0;
+                        direction = 2;
                         positionPersonnage.y += 15;
+                        currentFrame=0;
                         break;
 
                     default:
@@ -174,7 +176,7 @@ int currentFrame = 0;
 	SDL_RenderClear(rend);
 	
     // Afficher la frame actuelle
-    SDL_Rect srcRect = { direction * frameWidth, currentFrame * frameHeight, frameWidth, frameHeight };
+    SDL_Rect srcRect = { currentFrame * frameWidth, direction * frameHeight, frameWidth, frameHeight };
     SDL_RenderCopy(rend, texturePersonnage, &srcRect, &positionPersonnage);
 
     // Mettre à jour l'écran
