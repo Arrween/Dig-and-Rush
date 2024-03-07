@@ -139,6 +139,8 @@ int main() {
                             }
                         }
                     }
+                    break;
+
                 case SDL_KEYDOWN:
                     switch (event.key.keysym.scancode) {
                         case SDL_SCANCODE_ESCAPE:
@@ -154,6 +156,7 @@ int main() {
                         default:
                             break;
                     }
+                    break;
             }
         }
         
