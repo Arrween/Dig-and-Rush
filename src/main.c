@@ -3,11 +3,10 @@
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_ttf.h>
 
+#include "constantes.h"
 #include "tour.h"
 #include "menu.h"
-#include "constantes.h"
 #include "ressources.h"
-
 
 int main() {
     SDL_Window * fenetre;
@@ -28,6 +27,12 @@ int main() {
     SDL_RenderSetLogicalSize(rend, TAILLE_L, TAILLE_H);
 
     init_ressources(rend);
+        
+    t_son * son_essai = recuperer_son("essai");
+    SDL_AudioDeviceID audio_device = SDL_OpenAudioDevice(NULL, 0, &(son_essai->spec), NULL, 0);
+    uint8_t * buffer_essai_mix =  SDL_calloc(1, son_essai->length);
+    SDL_MixAudioFormat(buffer_essai_mix, son_essai->buffer, son_essai->spec.format, son_essai->length, SDL_MIX_MAXVOLUME/20);
+    SDL_PauseAudioDevice(audio_device, 0);
 
     t_bouton btn_titre = { recuperer_texture("menu_titre"),
             {TAILLE_L * (0.5 - 0.238),
@@ -140,11 +145,19 @@ int main() {
                         case SDL_SCANCODE_Q:
                             etat.doit_quitter = SDL_TRUE;
                             break;
+                        case SDL_SCANCODE_A:
+                            boucle_jeu(rend);
+                            break;
+                        case SDL_SCANCODE_E:
+                            SDL_QueueAudio(audio_device, buffer_essai_mix, son_essai->length);
+                            break;
                         default:
                             break;
                     }
             }
         }
+        
+        // Mettre à jour l'écran
         SDL_RenderClear(rend);
         SDL_RenderCopy(rend, fonds_menus[etat.i_menu], NULL, NULL);
         for (i_btn = 0; (btn = menus[etat.i_menu][i_btn]); i_btn++)
@@ -152,9 +165,12 @@ int main() {
         SDL_RenderPresent(rend);
         SDL_Delay(1000 / FPS);
     }
+//
+    // Nettoyage
 
     detruire_ressources();
 
+    SDL_CloseAudioDevice(audio_device);
     SDL_DestroyRenderer(rend);
     SDL_DestroyWindow(fenetre);
     IMG_Quit();
