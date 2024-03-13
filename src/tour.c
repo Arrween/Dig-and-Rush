@@ -59,6 +59,9 @@ void boucle_jeu(SDL_Renderer * rend) {
                         case SDL_SCANCODE_Q:
                             doit_boucler = FAUX;
                             break;
+                        case SDL_SCANCODE_H:
+                            perso->doit_afficher_hitbox = ! perso->doit_afficher_hitbox;
+                            break;
                         case SDL_SCANCODE_A:
                             perso->deplacement = GAUCHE;
                             break;
