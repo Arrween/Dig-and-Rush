@@ -19,7 +19,7 @@ void defiler(t_entite * e, int dy) {
 
 void boucle_jeu(SDL_Renderer * rend) {
     SDL_Event event;
-    int doit_boucler = SDL_TRUE;
+    int doit_boucler = VRAI;
     int repere_defilement = 0;
     long long compteur_frames = 0;
     int pas_defilement = 0;
@@ -33,20 +33,20 @@ void boucle_jeu(SDL_Renderer * rend) {
     SDL_SetRenderDrawColor(rend, 180, 180, 80, 255);
     SDL_RenderFillRect(rend, NULL);
     SDL_SetRenderTarget(rend, NULL);
-    obstacle = creer_entite_depuis_texture(tex_obstacle, 0, 110, 50, 5, SDL_TRUE);
-    obstacle2 = creer_entite_depuis_texture(tex_obstacle, 50, 170, 50, 5, SDL_TRUE);
+    obstacle = creer_entite_depuis_texture(tex_obstacle, 0, 110, 50, 5, VRAI);
+    obstacle2 = creer_entite_depuis_texture(tex_obstacle, 50, 170, 50, 5, VRAI);
 
-    fond = creer_entite("menu_fond", -1, -1, -1, -1, SDL_FALSE);
+    fond = creer_entite("menu_fond", -1, -1, -1, -1, FAUX);
 
-    fond_tour = creer_entite("fond_tour", 0, 0, 100, 100, SDL_TRUE);
+    fond_tour = creer_entite("fond_tour", 0, 0, 100, 100, VRAI);
     fond_tour->changer_rect_src(fond_tour, 0, 0, 48, 80);
 
-    perso = creer_entite_depuis_spritesheet("jack", 40, 20, 18, 12, SDL_TRUE);
+    perso = creer_entite_depuis_spritesheet("jack", 40, 20, 18, 12, VRAI);
     perso->changer_sprite(perso, X_PERSO_REPOS, Y_PERSO_REPOS);
 
     changer_hitbox(perso, 26, 24, 51, 76);
-    perso->doit_afficher_hitbox = SDL_TRUE;
-    obstacle->doit_afficher_hitbox = SDL_TRUE;
+    perso->doit_afficher_hitbox = VRAI;
+    obstacle->doit_afficher_hitbox = VRAI;
 
     while (doit_boucler) {
         while (SDL_PollEvent(&event)) {
@@ -57,7 +57,7 @@ void boucle_jeu(SDL_Renderer * rend) {
                     switch (event.key.keysym.scancode) {
                         case SDL_SCANCODE_ESCAPE:
                         case SDL_SCANCODE_Q:
-                            doit_boucler = SDL_FALSE;
+                            doit_boucler = FAUX;
                             break;
                         case SDL_SCANCODE_A:
                             perso->deplacement = GAUCHE;
@@ -109,15 +109,15 @@ void boucle_jeu(SDL_Renderer * rend) {
         if (repere_defilement > 100) {
             detruire_entite(&obstacle3);
             detruire_entite(&obstacle4);
-            obstacle3 = creer_entite_depuis_texture(tex_obstacle, 0, 110, 50, 5, SDL_TRUE);
-            obstacle4 = creer_entite_depuis_texture(tex_obstacle, 50, 170, 50, 5, SDL_TRUE);
+            obstacle3 = creer_entite_depuis_texture(tex_obstacle, 0, 110, 50, 5, VRAI);
+            obstacle4 = creer_entite_depuis_texture(tex_obstacle, 50, 170, 50, 5, VRAI);
         }
         if (repere_defilement > 200) {
             repere_defilement = 0;
             detruire_entite(&obstacle);
             detruire_entite(&obstacle2);
-            obstacle = creer_entite_depuis_texture(tex_obstacle, 0, 110, 50, 5, SDL_TRUE);
-            obstacle2 = creer_entite_depuis_texture(tex_obstacle, 50, 170, 50, 5, SDL_TRUE);
+            obstacle = creer_entite_depuis_texture(tex_obstacle, 0, 110, 50, 5, VRAI);
+            obstacle2 = creer_entite_depuis_texture(tex_obstacle, 50, 170, 50, 5, VRAI);
         }
 
         SDL_RenderPresent(rend);

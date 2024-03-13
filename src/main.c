@@ -113,8 +113,8 @@ int main() {
     };
 
     t_etat etat = {
-        SDL_FALSE,
-        SDL_FALSE,
+        FAUX,
+        FAUX,
         PAGE_MENU,
         menus[PAGE_MENU],
         fenetre
@@ -126,7 +126,7 @@ int main() {
         while (SDL_PollEvent(&event)) {
             switch (event.type) {
                 case SDL_QUIT:
-                    etat.doit_quitter = SDL_TRUE;
+                    etat.doit_quitter = VRAI;
                     break;
 
                 case SDL_MOUSEBUTTONDOWN:
@@ -145,7 +145,7 @@ int main() {
                     switch (event.key.keysym.scancode) {
                         case SDL_SCANCODE_ESCAPE:
                         case SDL_SCANCODE_Q:
-                            etat.doit_quitter = SDL_TRUE;
+                            etat.doit_quitter = VRAI;
                             break;
                         case SDL_SCANCODE_A:
                             boucle_jeu(rend);

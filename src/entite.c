@@ -163,7 +163,7 @@ t_entite * creer_entite_depuis_texture(SDL_Texture * texture,
         nouv->changer_dims(nouv, w, h);
         changer_hitbox(nouv, 0, 0, 100, 100);
     }
-    nouv->doit_afficher_hitbox = SDL_FALSE;
+    nouv->doit_afficher_hitbox = FAUX;
     nouv->est_relatif = est_relatif;
     nouv->deplacement = REPOS;
     nouv->sens_regard = DROITE;
@@ -179,7 +179,7 @@ t_entite * creer_entite_depuis_spritesheet(const char * id,
     t_entite * nouv = creer_entite_depuis_texture(spritesheet->texture, x, y, w, h, est_relatif);
     nouv->affichage->rect_src->w = spritesheet->sprite_l;
     nouv->affichage->rect_src->h = spritesheet->sprite_h;
-    nouv->a_animations = SDL_TRUE;
+    nouv->a_animations = VRAI;
     return nouv;
 }
 

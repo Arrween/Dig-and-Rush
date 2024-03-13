@@ -9,3 +9,6 @@
 #define COULEUR_HITBOX_V 255
 #define COULEUR_HITBOX_B 255
 #define COULEUR_HITBOX_A 255
+
+#define FAUX 0
+#define VRAI 1

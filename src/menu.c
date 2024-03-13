@@ -144,7 +144,7 @@ void action_jouer(t_etat * etat) {
     etat->i_menu = PAGE_MENU_SERVEUR;
 }
 void action_quitter(t_etat * etat) {
-    etat->doit_quitter = SDL_TRUE;
+    etat->doit_quitter = VRAI;
 }
 void action_nulle(t_etat * etat) {
 }
