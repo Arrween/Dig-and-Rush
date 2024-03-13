@@ -179,6 +179,7 @@ t_entite * creer_entite_depuis_spritesheet(const char * id,
     t_entite * nouv = creer_entite_depuis_texture(spritesheet->texture, x, y, w, h, est_relatif);
     nouv->affichage->rect_src->w = spritesheet->sprite_l;
     nouv->affichage->rect_src->h = spritesheet->sprite_h;
+    nouv->a_animations = SDL_TRUE;
     return nouv;
 }
 
