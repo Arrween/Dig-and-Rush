@@ -1,4 +1,5 @@
 #include <limits.h>
+#include <stdarg.h>
 
 #include "entite.h"
 #include "ressources.h"
@@ -113,9 +114,36 @@ void deplacer(t_entite * e) {
         if (e->deplacement == GAUCHE || e->deplacement == DROITE)
             e->sens_regard = e->deplacement;
     }
-    if (e->deplacement && e->a_animations) {
+}
+
+void definir_animations(t_entite * e, int n_animations, ...) {
+    if (n_animations <= 0)
+        return;
+    // À FAIRE : malloc dans creer et init avec REPOS, realloc avec definir_animations
+    e->animations = malloc(sizeof(t_animation) * n_animations);
+    va_list ap;
+    va_start(ap, n_animations);
+    for (int i = 0; i < n_animations; i++)
+        e->animations[i] = va_arg(ap, int);
+    e->n_animations = n_animations;
+}
+
+void animer(t_entite * e) {
+    int i;
+    for (i = 0; i < e->n_animations && e->animations[i] != e->animation_courante; i++);
+    if (i >= e->n_animations)
+        return;
+    if (e->animation_courante == REPOS) {
+        if (e->a_collision)
+            e->changer_sprite(e, X_PERSO_REPOS, Y_PERSO_REPOS);
+        else
+            e->changer_sprite(e, X_PERSO_CHUTE,
+                                      e->sens_regard == GAUCHE ?
+                                        Y_PERSO_CHUTE_G : Y_PERSO_CHUTE_D);
+    }
+    else if (e->animation_courante == DEPL_G || e->animation_courante == DEPL_D) {
         if (e->a_collision) {
-            e->y_sprite = e->deplacement == GAUCHE ?
+            e->y_sprite = e->animation_courante == DEPL_G ?
                             Y_PERSO_PELLE_MARCHE_G : Y_PERSO_PELLE_MARCHE_D;
             e->x_sprite = (e->x_sprite + 1) % LONGUEUR_ANIM_MARCHE;
         }
@@ -125,14 +153,6 @@ void deplacer(t_entite * e) {
             e->x_sprite = X_PERSO_CHUTE;
         }
         e->changer_sprite(e, e->x_sprite, e->y_sprite);
-    }
-    else if (e->a_animations) {
-        if (e->a_collision)
-            e->changer_sprite(e, X_PERSO_REPOS, Y_PERSO_REPOS);
-        else
-            e->changer_sprite(e, X_PERSO_CHUTE,
-                                      e->sens_regard == GAUCHE ?
-                                        Y_PERSO_CHUTE_G : Y_PERSO_CHUTE_D);
     }
 }
 
@@ -169,6 +189,9 @@ t_entite * creer_entite_depuis_texture(SDL_Texture * texture,
     nouv->sens_regard = DROITE;
     nouv->x_sprite = nouv->y_sprite = 0;
 
+    nouv->animations = NULL;
+    nouv->animation_courante = REPOS;
+
     return nouv;
 }
 
@@ -192,6 +215,8 @@ t_entite * creer_entite(const char * id, int x, int y, int w, int h,
 void detruire_entite(t_entite ** e) {
     if (*e) {
         detruire_affichage(&((*e)->affichage));
+        if ((*e)->animations)
+            free((*e)->animations);
         free(*e);
     }
     *e = NULL;
