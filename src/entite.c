@@ -128,8 +128,18 @@ void definir_animations(t_entite * e, int n_animations, ...) {
     e->n_animations = n_animations + 1;
 }
 
-void animer(t_entite * e) {
+int calculer_pas_anim(int compteur_frames, float vitesse_anim) {
+    if (vitesse_anim >= 1)
+        return (int) vitesse_anim;
+    else if (compteur_frames % (int) (1/(vitesse_anim)) == 0)
+        return 1;
+    else
+        return 0;
+}
+
+void animer(t_entite * e, int compteur_frames) {
     int i;
+    int pas_anim;
     for (i = 0; i < e->n_animations && e->animations[i] != e->animation_courante; i++);
     if (i >= e->n_animations)
         return;
@@ -143,9 +153,10 @@ void animer(t_entite * e) {
     }
     else if (e->animation_courante == DEPL_G || e->animation_courante == DEPL_D) {
         if (e->a_collision) {
+            pas_anim = calculer_pas_anim(compteur_frames, VITESSE_ANIM_MARCHE);
             e->y_sprite = e->animation_courante == DEPL_G ?
                             Y_PERSO_PELLE_MARCHE_G : Y_PERSO_PELLE_MARCHE_D;
-            e->x_sprite = (e->x_sprite + 1) % LONGUEUR_ANIM_MARCHE;
+            e->x_sprite = (e->x_sprite + pas_anim) % LONGUEUR_ANIM_MARCHE;
         }
         else {
             e->y_sprite = e->deplacement == GAUCHE ?
@@ -155,8 +166,9 @@ void animer(t_entite * e) {
         e->changer_sprite(e, e->x_sprite, e->y_sprite);
     }
     else if (e->animation_courante == CREUSER) {
+        pas_anim = calculer_pas_anim(compteur_frames, VITESSE_ANIM_CREUSAGE);
         e->y_sprite = Y_PERSO_CREUSER;
-        e->x_sprite = (e->x_sprite + 1) % LONGUEUR_ANIM_CREUSAGE;
+        e->x_sprite = (e->x_sprite + pas_anim) % LONGUEUR_ANIM_CREUSAGE;
         e->changer_sprite(e, e->x_sprite, e->y_sprite);
     }
 }

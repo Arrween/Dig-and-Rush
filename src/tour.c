@@ -102,7 +102,7 @@ void boucle_jeu(SDL_Renderer * rend) {
         if (!perso->a_collision)
             verif_collision(perso, obstacle2);
         deplacer(perso);
-        animer(perso);
+        animer(perso, compteur_frames);
 
         if (!perso->a_collision) {
             if (VITESSE_CHUTE >= 1)

@@ -47,5 +47,5 @@ void detruire_entite(t_entite **);
 void changer_hitbox(t_entite *, int, int, int, int);
 SDL_Rect convertir_vers_absolu(SDL_Rect *, int, int, int, int);
 void deplacer(t_entite *);
-void animer(t_entite *);
+void animer(t_entite *, int compteur_frames);
 void definir_animations(t_entite *, int, ...);
