@@ -101,9 +101,9 @@ int main() {
 
     t_bouton * menus[4][10] = {
         {&btn_fullscreen, &btn_volume, &btn_jouer, &btn_quitter, &btn_parametres, &btn_personnages, &btn_titre, NULL}, // menu principal
-        {&btn_fullscreen, &btn_volume, &btn_menu, &btn_parametres, &btn_personnages, &btn_titre, NULL}, // menu serveur
-        {&btn_fullscreen, &btn_volume, &btn_menu, &btn_personnages, &btn_titre, NULL}, // menu paramètres
-        {&btn_fullscreen, &btn_volume, &btn_menu, &btn_parametres, &btn_titre, NULL} // menu personnages
+        {&btn_fullscreen, &btn_volume, &btn_menu, &btn_parametres, &btn_personnages, NULL}, // menu serveur
+        {&btn_fullscreen, &btn_volume, &btn_menu, &btn_personnages, NULL}, // menu paramètres
+        {&btn_fullscreen, &btn_volume, &btn_menu, &btn_parametres, NULL} // menu personnages
     };
     SDL_Texture * fonds_menus[4] = {
         recuperer_texture("menu_fond"),
