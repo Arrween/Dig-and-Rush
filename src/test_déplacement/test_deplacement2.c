@@ -107,7 +107,7 @@ SDL_Rect positionPersonnage;
  int frameWidth = 64;  // Largeur d'une frame dans la sprite sheet
  int frameHeight = 64; // Hauteur d'une frame dans la sprite sheet
  int frameCount = 8;   // Nombre total de frames dans la sprite sheet
-
+ int frameCountAttaque = 18; // Nombre total de frames dans la sprite sheet POUR LES ATTAQUES
 
 // Centrer le personnage dans la fenêtre
 positionPersonnage.x = (TAILLE_L - frameWidth) / 2;
@@ -118,6 +118,8 @@ positionPersonnage.h = frameHeight;
 int currentFrame = 0;
     int direction = 0; // 0: vers le bas, 1: vers la gauche, 2: vers la droite, 3: vers le haut
 
+    int attaqueEnCours = 0; // Variable pour suivre l'état d'attaque
+    int attaqueFrame = 1;   // Commencer à partir de la deuxième image de la ligne d'attaque
 
 
 
@@ -164,7 +166,11 @@ int currentFrame = 0;
                         positionPersonnage.y += 15;
                         currentFrame=0;
                         break;
-
+                        
+			case SDL_SCANCODE_A:
+				// Déclencher l'animation d'attaque
+				attaqueEnCours = 1;
+			break;
                     default:
                         break;
                 }
@@ -174,16 +180,30 @@ int currentFrame = 0;
 
        // Nettoyer le renderer
 	SDL_RenderClear(rend);
-	
+
+
+// Gérer l'animation d'attaque
+        if (attaqueEnCours) {
+            SDL_Rect srcRect = { attaqueFrame * frameWidth, 31 * frameHeight, frameWidth, frameHeight };
+            SDL_RenderCopy(rend, texturePersonnage, &srcRect, &positionPersonnage);
+	 attaqueFrame = (attaqueFrame + 3) % frameCountAttaque;
+	 
+            if (attaqueFrame == 18) {
+                // Arrêter l'animation d'attaque après 18 frames
+                attaqueEnCours = 0;
+                attaqueFrame = 1; // Revenir à la deuxième image de la ligne d'attaque
+            }
+
+        }
+        
     // Afficher la frame actuelle
     SDL_Rect srcRect = { currentFrame * frameWidth, direction * frameHeight, frameWidth, frameHeight };
     SDL_RenderCopy(rend, texturePersonnage, &srcRect, &positionPersonnage);
-
     // Mettre à jour l'écran
     SDL_RenderPresent(rend);
     SDL_Delay(60 / FPS);
 
-    
+
 }
 
     // Nettoyage
