@@ -42,8 +42,7 @@ void boucle_jeu(SDL_Renderer * rend) {
     fond_tour->changer_rect_src(fond_tour, 0, 0, 48, 80);
 
     perso = creer_entite_depuis_spritesheet("jack", 40, 20, 18, 12, VRAI);
-    perso->changer_sprite(perso, X_PERSO_REPOS, Y_PERSO_REPOS);
-    definir_animations(perso, 4, REPOS, DEPL_G, DEPL_D, CREUSER);
+    definir_animations(perso, 3, DEPL_G, DEPL_D, CREUSER);
 
     changer_hitbox(perso, 26, 24, 51, 76);
     perso->doit_afficher_hitbox = VRAI;

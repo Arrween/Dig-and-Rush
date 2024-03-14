@@ -119,13 +119,13 @@ void deplacer(t_entite * e) {
 void definir_animations(t_entite * e, int n_animations, ...) {
     if (n_animations <= 0)
         return;
-    // À FAIRE : malloc dans creer et init avec REPOS, realloc avec definir_animations
-    e->animations = malloc(sizeof(t_animation) * n_animations);
+    e->animations = realloc(e->animations, sizeof(t_animation) * n_animations);
     va_list ap;
     va_start(ap, n_animations);
-    for (int i = 0; i < n_animations; i++)
+    // décalage de 1 car REPOS par défaut en position 0
+    for (int i = 1; i < n_animations + 1; i++)
         e->animations[i] = va_arg(ap, int);
-    e->n_animations = n_animations;
+    e->n_animations = n_animations + 1;
 }
 
 void animer(t_entite * e) {
@@ -194,7 +194,8 @@ t_entite * creer_entite_depuis_texture(SDL_Texture * texture,
     nouv->sens_regard = DROITE;
     nouv->x_sprite = nouv->y_sprite = 0;
 
-    nouv->animations = NULL;
+    nouv->animations = malloc(sizeof(t_animation));
+    nouv->animations[0] = REPOS;
     nouv->animation_courante = REPOS;
 
     return nouv;
