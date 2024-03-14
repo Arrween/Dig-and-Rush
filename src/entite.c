@@ -154,6 +154,11 @@ void animer(t_entite * e) {
         }
         e->changer_sprite(e, e->x_sprite, e->y_sprite);
     }
+    else if (e->animation_courante == CREUSER) {
+        e->y_sprite = Y_PERSO_CREUSER;
+        e->x_sprite = (e->x_sprite + 1) % LONGUEUR_ANIM_CREUSAGE;
+        e->changer_sprite(e, e->x_sprite, e->y_sprite);
+    }
 }
 
 t_entite * creer_entite_depuis_texture(SDL_Texture * texture,

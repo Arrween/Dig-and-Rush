@@ -43,7 +43,7 @@ void boucle_jeu(SDL_Renderer * rend) {
 
     perso = creer_entite_depuis_spritesheet("jack", 40, 20, 18, 12, VRAI);
     perso->changer_sprite(perso, X_PERSO_REPOS, Y_PERSO_REPOS);
-    definir_animations(perso, 3, REPOS, DEPL_G, DEPL_D);
+    definir_animations(perso, 4, REPOS, DEPL_G, DEPL_D, CREUSER);
 
     changer_hitbox(perso, 26, 24, 51, 76);
     perso->doit_afficher_hitbox = VRAI;
@@ -72,7 +72,8 @@ void boucle_jeu(SDL_Renderer * rend) {
                             perso->animation_courante = DEPL_D;
                             break;
                         case SDL_SCANCODE_S:
-                            // creuser
+                            if (perso->a_collision)
+                                perso->animation_courante = CREUSER;
                             break;
                         default:
                             break;
@@ -82,6 +83,7 @@ void boucle_jeu(SDL_Renderer * rend) {
                     switch (event.key.keysym.scancode) {
                         case SDL_SCANCODE_A:
                         case SDL_SCANCODE_D:
+                        case SDL_SCANCODE_S:
                             perso->deplacement = perso->animation_courante = REPOS;
                             break;
                         default:
