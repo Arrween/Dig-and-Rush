@@ -12,10 +12,6 @@ void verif_collision(t_entite * e1, t_entite * e2) {
     e1->a_collision = e2->a_collision = a_collision;
 }
 
-void defiler(t_entite * e, int dy) {
-    e->affichage->rect_src->y = (e->affichage->rect_src->y + dy) % 80;
-}
-
 void boucle_jeu(SDL_Renderer * rend) {
     SDL_Event event;
     int doit_boucler = VRAI;
