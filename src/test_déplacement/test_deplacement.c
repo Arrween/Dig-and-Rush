@@ -2,8 +2,8 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 
-#include "tour.h"
-#include "menu.h"
+// #include "tour.h"
+// #include "menu.h"
 
 #define TITRE_FENETRE "Dig & Rush"
 #define TAILLE_L 1000
@@ -82,7 +82,7 @@ SDL_Rect positionPersonnage;
     
 
 // Charger l'image du personnage
-personnage = IMG_Load("../ressources/Personnages/test_personnage.png");   
+personnage = IMG_Load("../../ressources/Personnages/test_personnage.png");   
 if (!personnage) {
     fprintf(stderr, "Erreur lors du chargement de l'image du personnage : %s\n", IMG_GetError());
     SDL_DestroyRenderer(rend);
@@ -141,6 +141,24 @@ positionPersonnage.h = nouvelleHauteur;
 			case SDL_SCANCODE_Q:
 			    fin = 1;
 			    break;
+			    
+			    
+			case SDL_SCANCODE_LEFT:
+                            positionPersonnage.x -= 15;  //modifier pour la vitesse de déplacement
+                            break;
+
+                        case SDL_SCANCODE_RIGHT:
+                            positionPersonnage.x += 15;  //modifier pour la vitesse de déplacement
+                            break;
+
+                        case SDL_SCANCODE_UP:
+                            positionPersonnage.y -= 15;  //modifier pour la vitesse de déplacement
+                            break;
+
+                        case SDL_SCANCODE_DOWN:
+                            positionPersonnage.y += 15;  //modifier pour la vitesse de déplacement
+                            break;
+                            
 			default:
 			    break;
 		    }

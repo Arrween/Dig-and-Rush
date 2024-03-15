@@ -3,98 +3,15 @@
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_ttf.h>
 
+#include "constantes.h"
 #include "tour.h"
 #include "menu.h"
-
-
-#define TITRE_FENETRE "Dig & Rush"
-#define TAILLE_L 1280
-#define TAILLE_H 720
-#define FPS 60
-
-enum { PAGE_MENU, PAGE_MENU_SERVEUR, PAGE_MENU_PARAMETRES, PAGE_MENU_PERSONNAGES };
-
+#include "ressources.h"
 
 int main() {
     SDL_Window * fenetre;
     SDL_Renderer * rend;
     SDL_Event event;
-
-
-
-    //INITIALISATION ET DÉCLARATION DES SURFACES
-
-    //BOUTONS
-    SDL_Surface *bouton_parametre_sprite;
-    SDL_Surface *bouton_volume_on_sprite;
-    SDL_Surface *bouton_volume_off_sprite;
-    SDL_Surface *bouton_personnages_sprite;
-    SDL_Surface *bouton_fullscreen_sprite;
-    SDL_Surface *bouton_not_fullscreen_sprite;
-    SDL_Surface *bouton_home_sprite;
-    SDL_Surface *bouton_play_sprite;
-    SDL_Surface *bouton_quit_sprite;
-
-    /******************************************************************************************************************/
-
-    //INITIALISATION ET DÉCLARATION DES TEXTURES 
-    SDL_Texture * texture_fond ; // Texture pour l'image de fond
-    SDL_Texture *texture_logo; 
-
-    //MENUS
-    SDL_Texture *texture_menu_serveur; // Nouvelle texture pour le fond du menu du serveur
-    SDL_Texture *texture_menu_parametre; // Nouvelle texture pour le fond du menu des paramètres
-    SDL_Texture *texture_menu_personnages;
-
-    /******************************************************************************************************************/
-
-    //INITIALISATION ET DÉCLARATION DES TEXTURES À PARTIR DES SURFACES
-
-    //BOUTONS
-    SDL_Texture *texture_bouton_parametre_sprite;
-    SDL_Texture *texture_bouton_volume_on_sprite;
-    SDL_Texture *texture_bouton_volume_off_sprite;
-    SDL_Texture *texture_bouton_personnages_sprite;
-    SDL_Texture *texture_bouton_fullscreen; // Charger la texture du bouton plein écran
-    SDL_Texture *texture_bouton_not_fullscreen; // Charger la texture du bouton plein écran
-    SDL_Texture *texture_bouton_home; // Charger la texture du bouton home
-    SDL_Texture *texture_bouton_play_sprite; // Charger la texture du bouton play
-    SDL_Texture *texture_bouton_quit_sprite; // Charger la texture du bouton quit
-
-
-    /******************************************************************************************************************/
-
-    //INITIALISATION ET DÉCLARATION DU RECTANGLE LOGO
-    SDL_Rect logo = {TAILLE_L * (0.5 - 0.238), TAILLE_H * (0.5 - 0.42), TAILLE_L * 0.476, TAILLE_H * 0.417};
-
-
-    //INITIALISATION ET DÉCLARATION DES RECTANGLES BOUTONS
-    SDL_Rect parametres_btn = {TAILLE_L * 0.012, TAILLE_H * 0.021, TAILLE_L * 0.059, TAILLE_H * 0.104}; // Coordonnées et dimensions du bouton "Paramètres"
-    SDL_Rect volume_btn_on = {TAILLE_L * 0.095, TAILLE_H * 0.010,  TAILLE_L * 0.065, TAILLE_H * 0.125}; // Coordonnées et dimensions du bouton "Volume"
-    SDL_Rect volume_btn_off = {TAILLE_L * 0.095, TAILLE_H * 0.010,  TAILLE_L * 0.065, TAILLE_H * 0.125}; // Coordonnées et dimensions du bouton "Volume Off"
-    SDL_Rect personnages_btn = {TAILLE_L * 0.761, TAILLE_H * 0.010, TAILLE_L * 0.065, TAILLE_H * 0.125}; // Coordonnées et dimensions du bouton "Personnages"
-    SDL_Rect fullscreen_btn = {TAILLE_L * 0.892, TAILLE_H * 0.017, TAILLE_L * 0.065, TAILLE_H * 0.114};
-    SDL_Rect not_fullscreen_btn = {TAILLE_L * 0.892, TAILLE_H * 0.017, TAILLE_L * 0.065, TAILLE_H * 0.114};
-    SDL_Rect home_btn = {TAILLE_L * 0.012, TAILLE_H * 0.87, TAILLE_L * 0.065, TAILLE_H * 0.114};
-    SDL_Rect play_btn = {TAILLE_L * 0.67, TAILLE_H * 0.7, TAILLE_L * 0.201, TAILLE_H * 0.154};
-    SDL_Rect quit_btn = {TAILLE_L * 0.120, TAILLE_H * 0.7, TAILLE_L * 0.201, TAILLE_H * 0.154};
-
-
-    /*****************************************************************************************************************/
-
-
-
-
-    //INITIALISATION ET DÉCLARATION DES VARIABLES
-    int fin = 0;
-    int page = PAGE_MENU;
-    
-    // Ajout d'une variable pour stocker l'état du son (activé ou désactivé)
-    int son_actif = 1; // Initialisation à "on"
-    int fullscreen = 0; // 0 pour le mode fenêtré, 1 pour le mode plein écran
-    int bouton_enfonce = 0; 
-
-
 
 
     initialiser_sdl();
@@ -107,6 +24,7 @@ int main() {
 
     // Création du renderer
     rend = creation_renderer(&fenetre);
+<<<<<<< HEAD
 
     //SURFACE
 
@@ -143,51 +61,124 @@ int main() {
   
   
     while (!fin) {
+=======
+    SDL_RenderSetLogicalSize(rend, TAILLE_L, TAILLE_H);
+
+    init_ressources(rend);
+        
+    t_son * son_essai = recuperer_son("essai");
+    SDL_AudioDeviceID audio_device = SDL_OpenAudioDevice(NULL, 0, &(son_essai->spec), NULL, 0);
+    uint8_t * buffer_essai_mix =  SDL_calloc(1, son_essai->length);
+    SDL_MixAudioFormat(buffer_essai_mix, son_essai->buffer, son_essai->spec.format, son_essai->length, SDL_MIX_MAXVOLUME/20);
+    SDL_PauseAudioDevice(audio_device, 0);
+
+    t_bouton btn_titre = { recuperer_texture("menu_titre"),
+            {TAILLE_L * (0.5 - 0.238),
+                TAILLE_H * (0.5 - 0.42),
+                TAILLE_L * 0.476,
+                TAILLE_H * 0.417},
+            action_nulle,
+            "TITRE"
+        };
+    t_bouton btn_parametres = { recuperer_texture("bouton_paramètres"),
+            {TAILLE_L * 0.012,
+                TAILLE_H * 0.021,
+                TAILLE_L * 0.059,
+                TAILLE_H * 0.104},
+            action_parametres,
+            "PARAMÈTRES"
+        };
+    t_bouton btn_volume = { recuperer_texture("bouton_volume_off"),
+            {TAILLE_L * 0.095,
+                TAILLE_H * 0.010,
+                TAILLE_L * 0.065,
+                TAILLE_H * 0.125},
+            action_volume,
+            "VOLUME"
+        };
+    t_bouton btn_personnages = { recuperer_texture("bouton_personnages"),
+            {TAILLE_L * 0.761,
+                TAILLE_H * 0.010,
+                TAILLE_L * 0.065,
+                TAILLE_H * 0.125},
+            action_personnages,
+            "PERSONNAGES"
+        };
+    t_bouton btn_fullscreen = { recuperer_texture("bouton_fullscreen_on"),
+            {TAILLE_L * 0.892,
+                TAILLE_H * 0.017,
+                TAILLE_L * 0.065,
+                TAILLE_H * 0.114},
+            action_fullscreen,
+            "FULLSCREEN"
+        };
+    t_bouton btn_menu = { recuperer_texture("bouton_menu"),
+            {TAILLE_L * 0.012,
+                TAILLE_H * 0.87,
+                TAILLE_L * 0.065,
+                TAILLE_H * 0.114},
+            action_home,
+            "HOME"
+        };
+    t_bouton btn_jouer = { recuperer_texture("bouton_jouer"),
+            {TAILLE_L * 0.67,
+                TAILLE_H * 0.7,
+                TAILLE_L * 0.201,
+                TAILLE_H * 0.154},
+            action_jouer,
+            "PLAY"
+        };
+    t_bouton btn_quitter = { recuperer_texture("bouton_quitter"),
+            {TAILLE_L * 0.12,
+                TAILLE_H * 0.7,
+                TAILLE_L * 0.201,
+                TAILLE_H * 0.154},
+            action_quitter,
+            "QUIT"
+        };
+
+    t_bouton * menus[4][10] = {
+        {&btn_fullscreen, &btn_volume, &btn_jouer, &btn_quitter, &btn_parametres, &btn_personnages, &btn_titre, NULL}, // menu principal
+        {&btn_fullscreen, &btn_volume, &btn_menu, &btn_parametres, &btn_personnages, NULL}, // menu serveur
+        {&btn_fullscreen, &btn_volume, &btn_menu, &btn_personnages, NULL}, // menu paramètres
+        {&btn_fullscreen, &btn_volume, &btn_menu, &btn_parametres, NULL} // menu personnages
+    };
+    SDL_Texture * fonds_menus[4] = {
+        recuperer_texture("menu_fond"),
+        recuperer_texture("menu_serveur"),
+        recuperer_texture("menu_paramètres"),
+        recuperer_texture("menu_personnages")
+    };
+
+    t_etat etat = {
+        FAUX,
+        FAUX,
+        PAGE_MENU,
+        menus[PAGE_MENU],
+        fenetre
+    };
+
+    int i_btn;
+    t_bouton * btn;
+    while (!etat.doit_quitter) {
+>>>>>>> 103bedee7b5811b630f5d9fa6378a498434d22ec
         while (SDL_PollEvent(&event)) {
             switch (event.type) {
                 case SDL_QUIT:
-                    fin = 1;
+                    etat.doit_quitter = VRAI;
                     break;
 
                 case SDL_MOUSEBUTTONDOWN:
-                    if (page == PAGE_MENU) {
-                        if (event.button.button == SDL_BUTTON_LEFT) {
-                            // Si l'utilisateur clique sur le bouton pour basculer entre le mode plein écran et le mode fenêtré
-                            if (event.button.x >= fullscreen_btn.x && event.button.x <= fullscreen_btn.x + fullscreen_btn.w &&
-                                event.button.y >= fullscreen_btn.y && event.button.y <= fullscreen_btn.y + fullscreen_btn.h) {
-                                fullscreen = !fullscreen; // Inverser le mode plein écran
-                                SDL_SetWindowFullscreen(fenetre, fullscreen ? SDL_WINDOW_FULLSCREEN : 0); // Activer ou désactiver le plein écran
-                            }
-
-                            else if (event.button.x >= play_btn.x && event.button.x <= play_btn.x + play_btn.w &&
-                                event.button.y >= play_btn.y && event.button.y <= play_btn.y + play_btn.h) {
-                                printf("Bouton PLAY cliqué.\n");
-                                bouton_enfonce = 1; // Marquer le bouton "Play" comme enfoncé
-                                page = PAGE_MENU_SERVEUR;
-                            } 
-                            else if (event.button.x >= quit_btn.x && event.button.x <= quit_btn.x + quit_btn.w &&
-                                       event.button.y >= quit_btn.y && event.button.y <= quit_btn.y + quit_btn.h) {
-                                printf("Bouton QUIT cliqué.\n");
-                                fin = 1;
-                            }
-                            else if (event.button.x >= volume_btn_on.x && event.button.x <= volume_btn_on.x + volume_btn_on.w &&
-                                       event.button.y >= volume_btn_on.y && event.button.y <= volume_btn_on.y + volume_btn_on.h) {
-                                printf("Bouton VOLUME cliqué.\n");
-                                // Inversion de l'état du son
-                                son_actif = !son_actif;
-                            }
-                            else if (event.button.x >= parametres_btn.x && event.button.x <= parametres_btn.x + parametres_btn.w &&
-                                       event.button.y >= parametres_btn.y && event.button.y <= parametres_btn.y + parametres_btn.h) {
-                                        printf("Bouton PARAMETRES cliqué.\n");
-                                        page = PAGE_MENU_PARAMETRES;
-                            }
-                            else if (event.button.x >= personnages_btn.x && event.button.x <= personnages_btn.x + personnages_btn.w &&
-                                       event.button.y >= personnages_btn.y && event.button.y <= personnages_btn.y + personnages_btn.h) {
-                                        printf("Bouton PERSONNAGE cliqué.\n");
-                                        page = PAGE_MENU_PERSONNAGES;
+                    if (event.button.button == SDL_BUTTON_LEFT) {
+                        SDL_Point pointeur = {event.button.x, event.button.y};
+                        for (i_btn = 0; (btn = menus[etat.i_menu][i_btn]); i_btn++) {
+                            if (SDL_PointInRect(&pointeur, &btn->rect)) {
+                                btn->action(&etat);
+                                printf("Bouton %s cliqué\n", btn->nom);
                             }
                         }
                     }
+<<<<<<< HEAD
 
                     else if (page == PAGE_MENU_SERVEUR){
                         if (event.button.button == SDL_BUTTON_LEFT) {
@@ -287,24 +278,32 @@ int main() {
                         //bouton_enfonce = 0;
                         //play_btn.y = TAILLE_H * 0.7;
                     }
+=======
+>>>>>>> 103bedee7b5811b630f5d9fa6378a498434d22ec
                     break;
-                
 
                 case SDL_KEYDOWN:
                     switch (event.key.keysym.scancode) {
                         case SDL_SCANCODE_ESCAPE:
                         case SDL_SCANCODE_Q:
-                            fin = 1;
+                            etat.doit_quitter = VRAI;
+                            break;
+                        case SDL_SCANCODE_A:
+                            boucle_jeu(rend);
+                            break;
+                        case SDL_SCANCODE_E:
+                            SDL_QueueAudio(audio_device, buffer_essai_mix, son_essai->length);
                             break;
                         default:
                             break;
                     }
                     break;
-                }
             }
         }
-
+        
+        // Mettre à jour l'écran
         SDL_RenderClear(rend);
+<<<<<<< HEAD
         if (page == PAGE_MENU) {
 
             SDL_RenderCopy(rend, texture_fond, NULL, NULL);
@@ -435,26 +434,20 @@ int main() {
 
 
 
+=======
+        SDL_RenderCopy(rend, fonds_menus[etat.i_menu], NULL, NULL);
+        for (i_btn = 0; (btn = menus[etat.i_menu][i_btn]); i_btn++)
+            SDL_RenderCopy(rend, btn->texture, NULL, &btn->rect);
+>>>>>>> 103bedee7b5811b630f5d9fa6378a498434d22ec
         SDL_RenderPresent(rend);
         SDL_Delay(1000 / FPS);
     }
+//
+    // Nettoyage
 
-    SDL_DestroyTexture(texture_fond);
-    SDL_DestroyTexture(texture_logo);
-    SDL_DestroyTexture(texture_menu_serveur);
-    SDL_DestroyTexture(texture_menu_personnages);
-    SDL_DestroyTexture(texture_menu_parametre);
+    detruire_ressources();
 
-    SDL_DestroyTexture(texture_bouton_parametre_sprite);
-    SDL_DestroyTexture(texture_bouton_volume_on_sprite);
-    SDL_DestroyTexture(texture_bouton_volume_off_sprite);
-    SDL_DestroyTexture(texture_bouton_personnages_sprite);
-    SDL_DestroyTexture(texture_bouton_fullscreen);
-    SDL_DestroyTexture(texture_bouton_not_fullscreen);
-    SDL_DestroyTexture(texture_bouton_home);
-    SDL_DestroyTexture(texture_bouton_play_sprite);
-    SDL_DestroyTexture(texture_bouton_quit_sprite);
-
+    SDL_CloseAudioDevice(audio_device);
     SDL_DestroyRenderer(rend);
     SDL_DestroyWindow(fenetre);
     IMG_Quit();

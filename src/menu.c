@@ -2,16 +2,14 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_ttf.h>
-#include "menu.h"
 
-#define TITRE_FENETRE "Dig & Rush"
-#define TAILLE_L 1280
-#define TAILLE_H 720
-#define FPS 60
+#include "menu.h"
+#include "constantes.h"
+#include "ressources.h"
 
 // Fonction qui initialise la SDL
 void initialiser_sdl(){
-    if (SDL_Init(SDL_INIT_VIDEO)) {
+    if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO)) {
         fprintf(stderr, "Erreur SDL_Init : %s\n", SDL_GetError());
         exit(EXIT_FAILURE);
     }
@@ -34,7 +32,7 @@ SDL_Window * creation_fenetre(){
 				    SDL_WINDOWPOS_CENTERED,
 				    TAILLE_L,
 				    TAILLE_H,
-				    0))) {
+				    SDL_WINDOW_RESIZABLE))) {
         fprintf(stderr, "Erreur SDL_CreateWindow : %s\n", SDL_GetError());
         SDL_Quit();
         exit(EXIT_FAILURE);
@@ -117,4 +115,36 @@ TTF_Font * chargement_font(char * chemin, int taille, SDL_Renderer ** rend, SDL_
             exit(EXIT_FAILURE);
         }
     return font ;
+}
+
+void action_parametres(t_etat * etat) {
+    etat->i_menu = PAGE_MENU_PARAMETRES;
+}
+void action_volume(t_etat * etat) {
+    if (etat->boutons[1]->texture == recuperer_texture("bouton_volume_off"))
+        etat->boutons[1]->texture = recuperer_texture("bouton_volume_on");
+    else
+        etat->boutons[1]->texture = recuperer_texture("bouton_volume_off");
+}
+void action_personnages(t_etat * etat) {
+    etat->i_menu = PAGE_MENU_PERSONNAGES;
+}
+void action_fullscreen(t_etat * etat) {
+    if (etat->boutons[0]->texture == recuperer_texture("bouton_fullscreen_off"))
+        etat->boutons[0]->texture = recuperer_texture("bouton_fullscreen_on");
+    else
+        etat->boutons[0]->texture = recuperer_texture("bouton_fullscreen_off");
+    etat->est_fullscreen = !etat->est_fullscreen;
+    SDL_SetWindowFullscreen(etat->fenetre, etat->est_fullscreen ? SDL_WINDOW_FULLSCREEN : 0);
+}
+void action_home(t_etat * etat) {
+    etat->i_menu = PAGE_MENU;
+}
+void action_jouer(t_etat * etat) {
+    etat->i_menu = PAGE_MENU_SERVEUR;
+}
+void action_quitter(t_etat * etat) {
+    etat->doit_quitter = VRAI;
+}
+void action_nulle(t_etat * etat) {
 }
