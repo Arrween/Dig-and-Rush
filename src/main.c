@@ -139,9 +139,7 @@ int main() {
     texture_menu_parametre = chargement_image("ressources/Menu/Background_Menu/menu_parametre.png", &rend, &fenetre);
     texture_menu_personnages = chargement_image("ressources/Menu/Background_Menu/menu_personnages.png", &rend, &fenetre);
 
-    
 
-  
   
   
     while (!fin) {
@@ -286,8 +284,8 @@ int main() {
                 case SDL_MOUSEBUTTONUP:
                     if(event.button.button == SDL_BUTTON_LEFT) {
                         //Remettre à 0 l'état enfoncé du bouton
-                        bouton_enfonce = 0;
-                        play_btn.y = TAILLE_H * 0.7;
+                        //bouton_enfonce = 0;
+                        //play_btn.y = TAILLE_H * 0.7;
                     }
                     break;
                 
@@ -309,11 +307,8 @@ int main() {
         SDL_RenderClear(rend);
         if (page == PAGE_MENU) {
 
-
             SDL_RenderCopy(rend, texture_fond, NULL, NULL);
             SDL_RenderCopy(rend, texture_logo, NULL, &logo);
-
-
 
             if (fullscreen) {
 
@@ -328,8 +323,6 @@ int main() {
 
             SDL_RenderCopy(rend, texture_bouton_parametre_sprite, NULL, &parametres_btn);
 
-
-
             // Affichage du bouton "Volume" en fonction de son état
             if (son_actif) {
                 SDL_RenderCopy(rend, texture_bouton_volume_on_sprite, NULL, &volume_btn_on);
@@ -341,8 +334,9 @@ int main() {
             SDL_RenderCopy(rend, texture_bouton_personnages_sprite, NULL, &personnages_btn);
             
             if(bouton_enfonce) {
-                play_btn.y *= 20;
+                play_btn.y += 2;
             }
+
             SDL_RenderCopy(rend, texture_bouton_play_sprite, NULL, &play_btn);
 
             SDL_RenderCopy(rend, texture_bouton_quit_sprite, NULL, &quit_btn);
