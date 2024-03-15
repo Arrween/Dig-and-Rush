@@ -14,7 +14,7 @@ void verif_collision(t_entite * e1, t_entite * e2) {
 }
 
 void defiler(t_entite * e, int dy) {
-    e->affichage->rect_src->y = (e->affichage->rect_src->y + dy) % 80;
+    e->affichage->rect_src->y = (e->affichage->rect_src->y + dy) % (e->affichage->rect_src->h/2);
 }
 
 void boucle_jeu(SDL_Renderer * rend) {
@@ -39,7 +39,7 @@ void boucle_jeu(SDL_Renderer * rend) {
     fond = creer_entite("menu_fond", -1, -1, -1, -1, FAUX);
 
     fond_tour = creer_entite("fond_tour", 0, 0, 100, 100, VRAI);
-    fond_tour->changer_rect_src(fond_tour, 0, 0, 48, 80);
+    fond_tour->changer_rect_src(fond_tour, 0, 0, 4802, 2872);
 
     perso = creer_entite_depuis_spritesheet("jack", 40, 20, 18, 12, VRAI);
     definir_animations(perso, 3, DEPL_G, DEPL_D, CREUSER);

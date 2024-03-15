@@ -37,7 +37,7 @@ struct chargement chargements_texs[] = {
     {"ressources/Menu/Boutons/bouton_quit.png", "bouton_quitter"},
 
     {"ressources/Personnages/jackPerso.png", "jack"},
-    {"ressources/img/fond_tour.png", "fond_tour"},
+    {"ressources/img/tour.png", "fond_tour"},
 };
 
 struct chargement_spritesheet chargements_spritesheets[] = {
