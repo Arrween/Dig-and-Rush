@@ -22,9 +22,10 @@ void boucle_jeu(SDL_Renderer * rend) {
     int repere_defilement = 0;
     long long compteur_frames = 0;
     int pas_defilement = 0;
+    int parite_defilement = 0;
 
     SDL_Texture * tex_obstacle;
-    t_entite * fond, * fond_tour, * perso, * obstacle, * obstacle2;
+    t_entite * fond, * fond_tour, * fond_tour_2, * perso, * obstacle, * obstacle2;
     t_entite * obstacle3 = NULL, * obstacle4 = NULL;
 
     tex_obstacle = SDL_CreateTexture(rend, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, TAILLE_L, TAILLE_H);
@@ -39,6 +40,8 @@ void boucle_jeu(SDL_Renderer * rend) {
 
     fond_tour = creer_entite("fond_tour", 0, 0, 100, 100, VRAI);
     fond_tour->changer_rect_src(fond_tour, 0, 0, 48, 80);
+    fond_tour_2 = creer_entite("fond_tour", 0, 100, 100, 100, VRAI);
+    fond_tour_2->changer_rect_src(fond_tour_2, 0, 0, 48, 80);
 
     perso = creer_entite_depuis_spritesheet("matt", 40, 20, 18, 12, VRAI);
 
@@ -96,6 +99,7 @@ void boucle_jeu(SDL_Renderer * rend) {
 
         fond->afficher(rend, fond);
         fond_tour->afficher(rend, fond_tour);
+        fond_tour_2->afficher(rend, fond_tour_2);
         perso->afficher(rend, perso);
         obstacle->afficher(rend, obstacle);
         obstacle2->afficher(rend, obstacle2);
@@ -117,22 +121,33 @@ void boucle_jeu(SDL_Renderer * rend) {
                 pas_defilement = 0;
             obstacle->changer_pos_rel(obstacle, 0, -pas_defilement);
             obstacle2->changer_pos_rel(obstacle2, 0, -pas_defilement);
-            defiler(fond_tour, pas_defilement);
+            fond_tour->changer_pos_rel(fond_tour, 0, -pas_defilement);
+            fond_tour_2->changer_pos_rel(fond_tour_2, 0, -pas_defilement);
             repere_defilement = repere_defilement + pas_defilement;
         }
 
-        if (repere_defilement > 100) {
+        if (repere_defilement >= 100 && parite_defilement == 0) {
+            parite_defilement = 1;
+            printf("création >100\n");
             detruire_entite(&obstacle3);
             detruire_entite(&obstacle4);
+            detruire_entite(&fond_tour);
             obstacle3 = creer_entite_depuis_texture(tex_obstacle, 0, 110, 50, 5, VRAI);
             obstacle4 = creer_entite_depuis_texture(tex_obstacle, 50, 170, 50, 5, VRAI);
+            fond_tour = creer_entite("fond_tour", 0, 100, 100, 100, VRAI);
+            fond_tour->changer_rect_src(fond_tour, 0, 0, 48, 80);
         }
-        if (repere_defilement > 200) {
+        if (repere_defilement >= 200 && parite_defilement == 1) {
+            parite_defilement = 0;
             repere_defilement = 0;
+            printf("création >200\n");
             detruire_entite(&obstacle);
             detruire_entite(&obstacle2);
+            detruire_entite(&fond_tour_2);
             obstacle = creer_entite_depuis_texture(tex_obstacle, 0, 110, 50, 5, VRAI);
             obstacle2 = creer_entite_depuis_texture(tex_obstacle, 50, 170, 50, 5, VRAI);
+            fond_tour_2 = creer_entite("fond_tour", 0, 100, 100, 100, VRAI);
+            fond_tour_2->changer_rect_src(fond_tour_2, 0, 0, 48, 80);
         }
 
         SDL_RenderPresent(rend);
@@ -142,6 +157,7 @@ void boucle_jeu(SDL_Renderer * rend) {
 
     detruire_entite(&fond);
     detruire_entite(&fond_tour);
+    detruire_entite(&fond_tour_2);
     detruire_entite(&perso);
     detruire_entite(&obstacle);
     detruire_entite(&obstacle2);
