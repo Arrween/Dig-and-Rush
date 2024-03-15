@@ -5,7 +5,6 @@
 #include "tour.h"
 #include "constantes.h"
 #include "entite.h"
-#include "ressources.h"
 #include "spritesheets.h"
 
 void verif_collision(t_entite * e1, t_entite * e2) {
@@ -13,9 +12,11 @@ void verif_collision(t_entite * e1, t_entite * e2) {
     e1->a_collision = e2->a_collision = a_collision;
 }
 
+
 void defiler(t_entite * e, int dy) {
     e->affichage->rect_src->y = (e->affichage->rect_src->y + dy) % (e->affichage->rect_src->h/2);
 }
+
 
 void boucle_jeu(SDL_Renderer * rend) {
     SDL_Event event;
@@ -23,9 +24,10 @@ void boucle_jeu(SDL_Renderer * rend) {
     int repere_defilement = 0;
     long long compteur_frames = 0;
     int pas_defilement = 0;
+    int parite_defilement = 0;
 
     SDL_Texture * tex_obstacle;
-    t_entite * fond, * fond_tour, * perso, * obstacle, * obstacle2;
+    t_entite * fond, * fond_tour, * fond_tour_2, * perso, * obstacle, * obstacle2;
     t_entite * obstacle3 = NULL, * obstacle4 = NULL;
 
     tex_obstacle = SDL_CreateTexture(rend, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, TAILLE_L, TAILLE_H);
@@ -39,10 +41,12 @@ void boucle_jeu(SDL_Renderer * rend) {
     fond = creer_entite("menu_fond", -1, -1, -1, -1, FAUX);
 
     fond_tour = creer_entite("fond_tour", 0, 0, 100, 100, VRAI);
-    fond_tour->changer_rect_src(fond_tour, 0, 0, 4802, 2872);
+    fond_tour->changer_rect_src(fond_tour, 0, 0, 48, 80);
+    fond_tour_2 = creer_entite("fond_tour", 0, 100, 100, 100, VRAI);
+    fond_tour_2->changer_rect_src(fond_tour_2, 0, 0, 48, 80);
 
-    perso = creer_entite_depuis_spritesheet("jack", 40, 20, 18, 12, VRAI);
-    definir_animations(perso, 3, DEPL_G, DEPL_D, CREUSER);
+
+    perso = creer_entite_depuis_spritesheet("matt", 40, 20, 18, 12, VRAI);
 
     changer_hitbox(perso, 26, 24, 51, 76);
     perso->doit_afficher_hitbox = VRAI;
@@ -64,15 +68,17 @@ void boucle_jeu(SDL_Renderer * rend) {
                             break;
                         case SDL_SCANCODE_A:
                             perso->deplacement = GAUCHE;
-                            perso->animation_courante = DEPL_G;
+                            if (perso->a_collision)
+                                changer_animation(perso, DEPL_G);
                             break;
                         case SDL_SCANCODE_D:
                             perso->deplacement = DROITE;
-                            perso->animation_courante = DEPL_D;
+                            if (perso->a_collision)
+                                changer_animation(perso, DEPL_D);
                             break;
                         case SDL_SCANCODE_S:
                             if (perso->a_collision)
-                                perso->animation_courante = CREUSER;
+                                changer_animation(perso, CREUSER);
                             break;
                         default:
                             break;
@@ -83,7 +89,9 @@ void boucle_jeu(SDL_Renderer * rend) {
                         case SDL_SCANCODE_A:
                         case SDL_SCANCODE_D:
                         case SDL_SCANCODE_S:
-                            perso->deplacement = perso->animation_courante = REPOS;
+                            if (perso->a_collision)
+                                changer_animation(perso, REPOS);
+                            perso->deplacement = REPOS_MVT;
                             break;
                         default:
                             break;
@@ -94,13 +102,16 @@ void boucle_jeu(SDL_Renderer * rend) {
 
         fond->afficher(rend, fond);
         fond_tour->afficher(rend, fond_tour);
+        fond_tour_2->afficher(rend, fond_tour_2);
         perso->afficher(rend, perso);
         obstacle->afficher(rend, obstacle);
         obstacle2->afficher(rend, obstacle2);
         
         verif_collision(perso, obstacle);
-        if (!perso->a_collision)
+        if (! perso->a_collision)
             verif_collision(perso, obstacle2);
+        if (! perso->a_collision)
+            changer_animation(perso, perso->sens_regard == GAUCHE ? CHUTE_G : CHUTE_D);
         deplacer(perso);
         animer(perso, compteur_frames);
 
@@ -113,22 +124,35 @@ void boucle_jeu(SDL_Renderer * rend) {
                 pas_defilement = 0;
             obstacle->changer_pos_rel(obstacle, 0, -pas_defilement);
             obstacle2->changer_pos_rel(obstacle2, 0, -pas_defilement);
-            defiler(fond_tour, pas_defilement);
+            fond_tour->changer_pos_rel(fond_tour, 0, -pas_defilement);
+            fond_tour_2->changer_pos_rel(fond_tour_2, 0, -pas_defilement);
             repere_defilement = repere_defilement + pas_defilement;
         }
 
-        if (repere_defilement > 100) {
+        if (repere_defilement >= 100 && parite_defilement == 0) {
+            parite_defilement = 1;
             detruire_entite(&obstacle3);
             detruire_entite(&obstacle4);
+            detruire_entite(&fond_tour);
             obstacle3 = creer_entite_depuis_texture(tex_obstacle, 0, 110, 50, 5, VRAI);
             obstacle4 = creer_entite_depuis_texture(tex_obstacle, 50, 170, 50, 5, VRAI);
+            fond_tour = creer_entite("fond_tour",
+                             0, fond_tour_2->rect_dst->y + fond_tour_2->rect_dst->h,
+                             100, 100, VRAI);
+            fond_tour->changer_rect_src(fond_tour, 0, 0, 48, 80);
         }
-        if (repere_defilement > 200) {
+        if (repere_defilement >= 200 && parite_defilement == 1) {
+            parite_defilement = 0;
             repere_defilement = 0;
             detruire_entite(&obstacle);
             detruire_entite(&obstacle2);
+            detruire_entite(&fond_tour_2);
             obstacle = creer_entite_depuis_texture(tex_obstacle, 0, 110, 50, 5, VRAI);
             obstacle2 = creer_entite_depuis_texture(tex_obstacle, 50, 170, 50, 5, VRAI);
+            fond_tour_2 = creer_entite("fond_tour",
+                             0, fond_tour->rect_dst->y + fond_tour->rect_dst->h,
+                             100, 100, VRAI);
+            fond_tour_2->changer_rect_src(fond_tour_2, 0, 0, 48, 80);
         }
 
         SDL_RenderPresent(rend);
@@ -138,6 +162,7 @@ void boucle_jeu(SDL_Renderer * rend) {
 
     detruire_entite(&fond);
     detruire_entite(&fond_tour);
+    detruire_entite(&fond_tour_2);
     detruire_entite(&perso);
     detruire_entite(&obstacle);
     detruire_entite(&obstacle2);
