@@ -24,44 +24,6 @@ int main() {
 
     // Création du renderer
     rend = creation_renderer(&fenetre);
-<<<<<<< HEAD
-
-    //SURFACE
-
-    bouton_parametre_sprite = chargement_surface("ressources/Menu/Boutons/bouton_parametre.png", &rend, &fenetre);
-    bouton_volume_on_sprite = chargement_surface("ressources/Menu/Boutons/bouton_volume_on.png", &rend, &fenetre);
-    bouton_volume_off_sprite = chargement_surface("ressources/Menu/Boutons/bouton_volume_off.png", &rend, &fenetre);
-    bouton_personnages_sprite = chargement_surface("ressources/Menu/Boutons/bouton_personnages.png", &rend, &fenetre);
-    bouton_fullscreen_sprite = chargement_surface("ressources/Menu/Boutons/bouton_fullscreen.png", &rend, &fenetre);
-    bouton_not_fullscreen_sprite = chargement_surface("ressources/Menu/Boutons/bouton_not_fullscreen.png", &rend, &fenetre);
-    bouton_home_sprite = chargement_surface("ressources/Menu/Boutons/bouton_home.png", &rend, &fenetre);
-    bouton_play_sprite = chargement_surface("ressources/Menu/Boutons/bouton_play.png", &rend, &fenetre);
-    bouton_quit_sprite = chargement_surface("ressources/Menu/Boutons/bouton_quit.png", &rend, &fenetre);
-
-    //TEXTURE À PARTIR D'UNE SURFACE
-    texture_bouton_parametre_sprite = chargement_texture_from_surface(rend, bouton_parametre_sprite, fenetre);
-    texture_bouton_volume_on_sprite = chargement_texture_from_surface(rend, bouton_volume_on_sprite, fenetre);
-    texture_bouton_volume_off_sprite = chargement_texture_from_surface(rend, bouton_volume_off_sprite, fenetre);
-    texture_bouton_personnages_sprite = chargement_texture_from_surface(rend, bouton_personnages_sprite, fenetre);
-    texture_bouton_fullscreen = chargement_texture_from_surface(rend, bouton_fullscreen_sprite, fenetre);
-    texture_bouton_not_fullscreen = chargement_texture_from_surface(rend, bouton_not_fullscreen_sprite, fenetre);
-    texture_bouton_home = chargement_texture_from_surface(rend, bouton_home_sprite, fenetre);
-    texture_bouton_play_sprite = chargement_texture_from_surface(rend, bouton_play_sprite, fenetre);
-    texture_bouton_quit_sprite = chargement_texture_from_surface(rend, bouton_quit_sprite, fenetre);
-
-    //TEXTURE
-    // Chargement de l'image PNG pour le fond dans une texture
-    texture_fond = chargement_image("ressources/Menu/Background_Menu/Fond_Menu.png", &rend, &fenetre);
-    texture_logo = chargement_image("ressources/Menu/Nom_du_Jeu/logo.png", &rend, &fenetre);
-    texture_menu_serveur = chargement_image("ressources/Menu/Background_Menu/choix_serveur.png", &rend, &fenetre);
-    texture_menu_parametre = chargement_image("ressources/Menu/Background_Menu/menu_parametre.png", &rend, &fenetre);
-    texture_menu_personnages = chargement_image("ressources/Menu/Background_Menu/menu_personnages.png", &rend, &fenetre);
-
-
-  
-  
-    while (!fin) {
-=======
     SDL_RenderSetLogicalSize(rend, TAILLE_L, TAILLE_H);
 
     init_ressources(rend);
@@ -161,7 +123,6 @@ int main() {
     int i_btn;
     t_bouton * btn;
     while (!etat.doit_quitter) {
->>>>>>> 103bedee7b5811b630f5d9fa6378a498434d22ec
         while (SDL_PollEvent(&event)) {
             switch (event.type) {
                 case SDL_QUIT:
@@ -178,108 +139,6 @@ int main() {
                             }
                         }
                     }
-<<<<<<< HEAD
-
-                    else if (page == PAGE_MENU_SERVEUR){
-                        if (event.button.button == SDL_BUTTON_LEFT) {
-                            // Si l'utilisateur clique sur le bouton pour basculer entre le mode plein écran et le mode fenêtré
-                            if (event.button.x >= fullscreen_btn.x && event.button.x <= fullscreen_btn.x + fullscreen_btn.w &&
-                                event.button.y >= fullscreen_btn.y && event.button.y <= fullscreen_btn.y + fullscreen_btn.h) {
-                                fullscreen = !fullscreen; // Inverser le mode plein écran
-                                SDL_SetWindowFullscreen(fenetre, fullscreen ? SDL_WINDOW_FULLSCREEN : 0); // Activer ou désactiver le plein écran
-                            }
-                            else if (event.button.x >= volume_btn_on.x && event.button.x <= volume_btn_on.x + volume_btn_on.w &&
-                                        event.button.y >= volume_btn_on.y && event.button.y <= volume_btn_on.y + volume_btn_on.h) {
-                                    printf("Bouton VOLUME cliqué.\n");
-                                    // Inversion de l'état du son
-                                    son_actif = !son_actif;
-                                }
-                            else if (event.button.x >= parametres_btn.x && event.button.x <= parametres_btn.x + parametres_btn.w &&
-                                    event.button.y >= parametres_btn.y && event.button.y <= parametres_btn.y + parametres_btn.h) {
-                                        printf("Bouton PARAMETRES cliqué.\n");
-                                        page = PAGE_MENU_PARAMETRES;
-                                }
-                            else if (event.button.x >= home_btn.x && event.button.x <= home_btn.x + home_btn.w &&
-                                    event.button.y >= home_btn.y && event.button.y <= home_btn.y + home_btn.h) {
-                                        printf("Bouton HOME cliqué.\n");
-                                        page = PAGE_MENU;
-                                }
-                            else if (event.button.x >= personnages_btn.x && event.button.x <= personnages_btn.x + personnages_btn.w &&
-                                    event.button.y >= personnages_btn.y && event.button.y <= personnages_btn.y + personnages_btn.h) {
-                                        printf("Bouton PERSONNAGE cliqué.\n");
-                                        page = PAGE_MENU_PERSONNAGES;
-                                }
-
-                        }                        
-
-                    }
-
-                    else if (page == PAGE_MENU_PARAMETRES) {
-                        if(event.button.button == SDL_BUTTON_LEFT){
-                            // Si l'utilisateur clique sur le bouton pour basculer entre le mode plein écran et le mode fenêtré
-                            if (event.button.x >= fullscreen_btn.x && event.button.x <= fullscreen_btn.x + fullscreen_btn.w &&
-                                event.button.y >= fullscreen_btn.y && event.button.y <= fullscreen_btn.y + fullscreen_btn.h) {
-                                fullscreen = !fullscreen; // Inverser le mode plein écran
-                                SDL_SetWindowFullscreen(fenetre, fullscreen ? SDL_WINDOW_FULLSCREEN : 0); // Activer ou désactiver le plein écran
-                            }
-                            else if (event.button.x >= volume_btn_on.x && event.button.x <= volume_btn_on.x + volume_btn_on.w &&
-                                       event.button.y >= volume_btn_on.y && event.button.y <= volume_btn_on.y + volume_btn_on.h) {
-                                printf("Bouton VOLUME cliqué.\n");
-                                // Inversion de l'état du son
-                                son_actif = !son_actif;
-                            }
-
-                            else if (event.button.x >= home_btn.x && event.button.x <= home_btn.x + home_btn.w &&
-                                    event.button.y >= home_btn.y && event.button.y <= home_btn.y + home_btn.h) {
-                                        printf("Bouton HOME cliqué.\n");
-                                        page = PAGE_MENU;
-                                }
-                            else if (event.button.x >= personnages_btn.x && event.button.x <= personnages_btn.x + personnages_btn.w &&
-                                    event.button.y >= personnages_btn.y && event.button.y <= personnages_btn.y + personnages_btn.h) {
-                                        printf("Bouton PERSONNAGE cliqué.\n");
-                                        page = PAGE_MENU_PERSONNAGES;
-                                }
-                            }
-                    }
-
-                    else if (page == PAGE_MENU_PERSONNAGES) {
-                        if(event.button.button == SDL_BUTTON_LEFT){
-                            // Si l'utilisateur clique sur le bouton pour basculer entre le mode plein écran et le mode fenêtré
-                            if (event.button.x >= fullscreen_btn.x && event.button.x <= fullscreen_btn.x + fullscreen_btn.w &&
-                                event.button.y >= fullscreen_btn.y && event.button.y <= fullscreen_btn.y + fullscreen_btn.h) {
-                                fullscreen = !fullscreen; // Inverser le mode plein écran
-                                SDL_SetWindowFullscreen(fenetre, fullscreen ? SDL_WINDOW_FULLSCREEN : 0); // Activer ou désactiver le plein écran
-                            }
-                            else if (event.button.x >= volume_btn_on.x && event.button.x <= volume_btn_on.x + volume_btn_on.w &&
-                                    event.button.y >= volume_btn_on.y && event.button.y <= volume_btn_on.y + volume_btn_on.h) {
-                                printf("Bouton VOLUME cliqué.\n");
-                                // Inversion de l'état du son
-                                son_actif = !son_actif;
-                            }
-                            else if (event.button.x >= parametres_btn.x && event.button.x <= parametres_btn.x + parametres_btn.w &&
-                                        event.button.y >= parametres_btn.y && event.button.y <= parametres_btn.y + parametres_btn.h) {
-                                    printf("Bouton PARAMETRES cliqué.\n");
-                                    page = PAGE_MENU_PARAMETRES;
-                            }
-                            else if (event.button.x >= home_btn.x && event.button.x <= home_btn.x + home_btn.w &&
-                                    event.button.y >= home_btn.y && event.button.y <= home_btn.y + home_btn.h) {
-                                        printf("Bouton HOME cliqué.\n");
-                                        page = PAGE_MENU;
-                            }
-
-                        }
-
-
-                    break;
-                
-                case SDL_MOUSEBUTTONUP:
-                    if(event.button.button == SDL_BUTTON_LEFT) {
-                        //Remettre à 0 l'état enfoncé du bouton
-                        //bouton_enfonce = 0;
-                        //play_btn.y = TAILLE_H * 0.7;
-                    }
-=======
->>>>>>> 103bedee7b5811b630f5d9fa6378a498434d22ec
                     break;
 
                 case SDL_KEYDOWN:
@@ -303,142 +162,9 @@ int main() {
         
         // Mettre à jour l'écran
         SDL_RenderClear(rend);
-<<<<<<< HEAD
-        if (page == PAGE_MENU) {
-
-            SDL_RenderCopy(rend, texture_fond, NULL, NULL);
-            SDL_RenderCopy(rend, texture_logo, NULL, &logo);
-
-            if (fullscreen) {
-
-                SDL_RenderCopy(rend, texture_bouton_not_fullscreen, NULL, &not_fullscreen_btn);
-            
-            } else {
-
-                // Afficher le bouton plein écran
-                SDL_RenderCopy(rend, texture_bouton_fullscreen, NULL, &fullscreen_btn);
-            }
-
-
-            SDL_RenderCopy(rend, texture_bouton_parametre_sprite, NULL, &parametres_btn);
-
-            // Affichage du bouton "Volume" en fonction de son état
-            if (son_actif) {
-                SDL_RenderCopy(rend, texture_bouton_volume_on_sprite, NULL, &volume_btn_on);
-            } else {
-                // Afficher le bouton "Volume" désactivé si vous avez une texture pour cela
-                SDL_RenderCopy(rend, texture_bouton_volume_off_sprite, NULL, &volume_btn_off);
-            }
-
-            SDL_RenderCopy(rend, texture_bouton_personnages_sprite, NULL, &personnages_btn);
-            
-            if(bouton_enfonce) {
-                play_btn.y += 2;
-            }
-
-            SDL_RenderCopy(rend, texture_bouton_play_sprite, NULL, &play_btn);
-
-            SDL_RenderCopy(rend, texture_bouton_quit_sprite, NULL, &quit_btn);
-
-
-
-        } else if (page == PAGE_MENU_SERVEUR) {
-            
-            // Afficher le fond du menu serveur
-            SDL_RenderCopy(rend, texture_menu_serveur, NULL, NULL);
-            SDL_RenderCopy(rend, texture_bouton_parametre_sprite, NULL, &parametres_btn);
-
-
-
-
-            if (fullscreen) {
-                
-                SDL_RenderCopy(rend, texture_bouton_not_fullscreen, NULL, &not_fullscreen_btn);
-            
-            } else {
-
-                // Afficher le bouton plein écran
-                SDL_RenderCopy(rend, texture_bouton_fullscreen, NULL, &fullscreen_btn);
-            }
-
-            // Affichage du bouton "Volume" en fonction de son état
-            if (son_actif) {
-                SDL_RenderCopy(rend, texture_bouton_volume_on_sprite, NULL, &volume_btn_on);
-            } else {
-                // Afficher le bouton "Volume" désactivé si vous avez une texture pour cela
-                SDL_RenderCopy(rend, texture_bouton_volume_off_sprite, NULL, &volume_btn_off);
-            }
-
-            SDL_RenderCopy(rend, texture_bouton_personnages_sprite, NULL, &personnages_btn);
-            SDL_RenderCopy(rend, texture_bouton_home, NULL, &home_btn);
-
-
-        } else if( page == PAGE_MENU_PARAMETRES ) { 
-            //Afficher le fond du menu paramètre
-            SDL_RenderCopy(rend, texture_menu_parametre, NULL, NULL);
-            SDL_RenderCopy(rend, texture_bouton_parametre_sprite, NULL, &parametres_btn);
-            SDL_RenderCopy(rend, texture_bouton_home, NULL, &home_btn);
-
-
-            if (fullscreen) {
-                
-                SDL_RenderCopy(rend, texture_bouton_not_fullscreen, NULL, &not_fullscreen_btn);
-            
-            } else {
-
-                // Afficher le bouton plein écran
-                SDL_RenderCopy(rend, texture_bouton_fullscreen, NULL, &fullscreen_btn);
-            }
-
-            // Affichage du bouton "Volume" en fonction de son état
-            if (son_actif) {
-                SDL_RenderCopy(rend, texture_bouton_volume_on_sprite, NULL, &volume_btn_on);
-            } else {
-                // Afficher le bouton "Volume" désactivé si vous avez une texture pour cela
-                SDL_RenderCopy(rend, texture_bouton_volume_off_sprite, NULL, &volume_btn_off);
-            }
-
-            SDL_RenderCopy(rend, texture_bouton_personnages_sprite, NULL, &personnages_btn);
-            SDL_RenderCopy(rend, texture_bouton_home, NULL, &home_btn);
-
-        }
-
-        else if (page == PAGE_MENU_PERSONNAGES) {
-
-            // Afficher le fond du menu personnages
-
-            SDL_RenderCopy(rend, texture_menu_personnages, NULL, NULL);
-            SDL_RenderCopy(rend, texture_bouton_parametre_sprite, NULL, &parametres_btn);
-            SDL_RenderCopy(rend, texture_bouton_home, NULL, &home_btn);
-
-            if (fullscreen) {
-
-                SDL_RenderCopy(rend, texture_bouton_not_fullscreen, NULL, &not_fullscreen_btn);
-
-            } else {
-                // Afficher le bouton plein écran
-                SDL_RenderCopy(rend, texture_bouton_fullscreen, NULL, &fullscreen_btn);
-            }
-            // Affichage du bouton "Volume" en fonction de son état
-            if (son_actif) {
-                SDL_RenderCopy(rend, texture_bouton_volume_on_sprite, NULL, &volume_btn_on);
-            } else {
-                // Afficher le bouton "Volume" désactivé si vous avez une texture pour cela
-                SDL_RenderCopy(rend, texture_bouton_volume_off_sprite, NULL, &volume_btn_off);
-            }
-
-            //SDL_RenderCopy(rend, texture_bouton_personnages_sprite, NULL, &personnages_btn);
-            SDL_RenderCopy(rend, texture_bouton_home, NULL, &home_btn);
-
-        }
-
-
-
-=======
         SDL_RenderCopy(rend, fonds_menus[etat.i_menu], NULL, NULL);
         for (i_btn = 0; (btn = menus[etat.i_menu][i_btn]); i_btn++)
             SDL_RenderCopy(rend, btn->texture, NULL, &btn->rect);
->>>>>>> 103bedee7b5811b630f5d9fa6378a498434d22ec
         SDL_RenderPresent(rend);
         SDL_Delay(1000 / FPS);
     }
