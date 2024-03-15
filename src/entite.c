@@ -1,5 +1,4 @@
 #include <limits.h>
-#include <stdarg.h>
 
 #include "entite.h"
 #include "spritesheets.h"
@@ -23,19 +22,19 @@ void afficher_entite(SDL_Renderer * rend, t_entite * e) {
     int x_mur_d = (int) (x_tour + largeur_tour * 0.93);
     int largeur_zone_jeu = x_mur_d - x_mur_g;
 
-    SDL_Rect * src = e->affichage->rect_src->x != -1 ?
-                                        e->affichage->rect_src : NULL;
+    SDL_Rect * src = e->rect_src->x != -1 ?
+                                        e->rect_src : NULL;
     if (e->est_relatif) {
-        SDL_Rect rect_absolu = convertir_vers_absolu(e->affichage->rect_dst,
+        SDL_Rect rect_absolu = convertir_vers_absolu(e->rect_dst,
                                                      x_tour, 0,
                                                      largeur_zone_jeu,
                                                      TAILLE_H);
-        SDL_RenderCopy(rend, e->affichage->texture, src,
+        SDL_RenderCopy(rend, e->texture, src,
                        &rect_absolu);
     }
     else
-        SDL_RenderCopy(rend, e->affichage->texture, src,
-                       e->affichage->rect_dst);
+        SDL_RenderCopy(rend, e->texture, src,
+                       e->rect_dst);
     if (e->doit_afficher_hitbox) {
         SDL_Rect rect_absolu = convertir_vers_absolu(&(e->hitbox),
                                                      x_tour, 0,
@@ -55,45 +54,45 @@ void changer_rect(SDL_Rect * rect, int x, int y, int w, int h) {
 }
 
 void changer_rect_src_entite(t_entite * e, int x, int y, int w, int h) {
-    changer_rect(e->affichage->rect_src, x, y, w, h);
+    changer_rect(e->rect_src, x, y, w, h);
 }
 
 void changer_rect_dst_entite(t_entite * e, int x, int y, int w, int h) {
-    changer_rect(e->affichage->rect_dst, x, y, w, h);
+    changer_rect(e->rect_dst, x, y, w, h);
 }
 
 void changer_sprite(t_entite * e, int x, int y) {
-    e->affichage->rect_src->x = x;
-    e->affichage->rect_src->y = y;
+    e->rect_src->x = x;
+    e->rect_src->y = y;
 }
 
 void changer_pos_entite(t_entite * e, int x, int y) {
-    int xx = e->affichage->rect_dst->x;
-    int yy = e->affichage->rect_dst->y;
+    int xx = e->rect_dst->x;
+    int yy = e->rect_dst->y;
     int nouv_hitbox_x = e->hitbox.x + x - xx;
     if (nouv_hitbox_x > 0 && nouv_hitbox_x < 100) {
-        e->affichage->rect_dst->x = x;
+        e->rect_dst->x = x;
         e->hitbox.x = nouv_hitbox_x;
     }
-    e->affichage->rect_dst->y = y;
+    e->rect_dst->y = y;
     e->hitbox.y += y - yy;
 }
 
 void changer_dims(t_entite * e, int w, int h) {
-    e->affichage->rect_dst->w = w;
-    e->affichage->rect_dst->h = h;
+    e->rect_dst->w = w;
+    e->rect_dst->h = h;
 }
 
 void changer_pos_rel_entite(t_entite * e, int dx, int dy) {
-    changer_pos_entite(e, e->affichage->rect_dst->x + dx,
-                           e->affichage->rect_dst->y + dy);
+    changer_pos_entite(e, e->rect_dst->x + dx,
+                           e->rect_dst->y + dy);
 }
 
 void changer_hitbox(t_entite * e, int x, int y, int w, int h) {
-    int dst_x = e->affichage->rect_dst->x;
-    int dst_y = e->affichage->rect_dst->y;
-    int dst_w = e->affichage->rect_dst->w;
-    int dst_h = e->affichage->rect_dst->h;
+    int dst_x = e->rect_dst->x;
+    int dst_y = e->rect_dst->y;
+    int dst_w = e->rect_dst->w;
+    int dst_h = e->rect_dst->h;
     if (x > INT_MIN)
         e->hitbox.x = dst_x + dst_w * x/100;
     if (y > INT_MIN)
@@ -145,10 +144,10 @@ void changer_animation(t_entite * e, t_id_anim id_anim) {
     t_animation * anim = recuperer_animation(e->animations, e->n_animations, id_anim);
     if (anim) {
         e->animation_courante = anim;
-        e->affichage->rect_src->x = anim->x_sprite_ini;
-        e->affichage->rect_src->y = anim->y_sprite;
-        e->affichage->rect_src->w = anim->w_sprite;
-        e->affichage->rect_src->h = anim->h_sprite;
+        e->rect_src->x = anim->x_sprite_ini;
+        e->rect_src->y = anim->y_sprite;
+        e->rect_src->w = anim->w_sprite;
+        e->rect_src->h = anim->h_sprite;
     }
 }
 
@@ -158,7 +157,17 @@ t_entite * creer_entite_depuis_texture(SDL_Texture * texture,
     t_entite * nouv;
     nouv = malloc(sizeof(t_entite));
 
-    nouv->affichage = creer_affichage(texture);
+    nouv->texture = texture;
+    nouv->rect_src = malloc(sizeof(SDL_Rect));
+    nouv->rect_dst = malloc(sizeof(SDL_Rect));
+    nouv->rect_src->x = -1;
+    nouv->rect_src->y = -1;
+    nouv->rect_src->w = -1;
+    nouv->rect_src->h = -1;
+    nouv->rect_dst->x = -1;
+    nouv->rect_dst->y = -1;
+    nouv->rect_dst->w = -1;
+    nouv->rect_dst->h = -1;
 
     nouv->afficher = afficher_entite;
     nouv->changer_rect_src = changer_rect_src_entite;
@@ -169,13 +178,13 @@ t_entite * creer_entite_depuis_texture(SDL_Texture * texture,
     nouv->changer_pos_rel = changer_pos_rel_entite;
 
     if (x == -1 && y == -1 && w == -1 && h == -1) {
-        free(nouv->affichage->rect_dst);
-        nouv->affichage->rect_dst = NULL;
+        free(nouv->rect_dst);
+        nouv->rect_dst = NULL;
     }
     else {
         // ne pas utiliser changer_pos_entite car nécessite hitbox, qui elle-même nécessite rect_dst
-        nouv->affichage->rect_dst->x = x;
-        nouv->affichage->rect_dst->y = y;
+        nouv->rect_dst->x = x;
+        nouv->rect_dst->y = y;
         nouv->changer_dims(nouv, w, h);
         changer_hitbox(nouv, 0, 0, 100, 100);
     }
@@ -208,43 +217,14 @@ t_entite * creer_entite(const char * id, int x, int y, int w, int h,
     return creer_entite_depuis_texture(texture, x, y, w, h, est_relatif);
 }
 
+// ne pas détruire (*e)->texture, detruire_ressources s’en charge
 void detruire_entite(t_entite ** e) {
     if (*e) {
-        detruire_affichage(&((*e)->affichage));
+        if ((*e)->rect_src)
+            free((*e)->rect_src);
+        if ((*e)->rect_dst)
+            free((*e)->rect_dst);
         free(*e);
     }
     *e = NULL;
-}
-
-t_affichage * creer_affichage(SDL_Texture * texture) {
-    t_affichage * nouv = malloc(sizeof(t_affichage));
-
-    nouv->texture = texture;
-    nouv->rect_src = malloc(sizeof(SDL_Rect));
-    nouv->rect_dst = malloc(sizeof(SDL_Rect));
-
-    nouv->rect_src->x = -1;
-    nouv->rect_src->y = -1;
-    nouv->rect_src->w = -1;
-    nouv->rect_src->h = -1;
-
-    nouv->rect_dst->x = -1;
-    nouv->rect_dst->y = -1;
-    nouv->rect_dst->w = -1;
-    nouv->rect_dst->h = -1;
-
-    return nouv;
-}
-
-// ne pas détruire (*aff)->texture, detruire_ressources s’en charge
-void detruire_affichage(t_affichage ** affichage) {
-    if (*affichage) {
-        if ((*affichage)->rect_src)
-            free((*affichage)->rect_src);
-        if ((*affichage)->rect_dst)
-            free((*affichage)->rect_dst);
-        if (*affichage)
-            free(*affichage);
-    }
-    *affichage = NULL;
 }

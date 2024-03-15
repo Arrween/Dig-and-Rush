@@ -3,17 +3,11 @@
 
 enum { REPOS_MVT, GAUCHE, DROITE, HAUT, BAS };
 
-typedef struct s_affichage {
+typedef struct s_entite {
     SDL_Texture * texture;
     SDL_Rect * rect_src;
     SDL_Rect * rect_dst;
-} t_affichage;
 
-t_affichage* creer_affichage(SDL_Texture *);
-void detruire_affichage(t_affichage **);
-
-typedef struct s_entite {
-    t_affichage * affichage;
     int est_relatif;
     SDL_Rect hitbox;
     int doit_afficher_hitbox;

@@ -130,7 +130,7 @@ void boucle_jeu(SDL_Renderer * rend) {
             obstacle3 = creer_entite_depuis_texture(tex_obstacle, 0, 110, 50, 5, VRAI);
             obstacle4 = creer_entite_depuis_texture(tex_obstacle, 50, 170, 50, 5, VRAI);
             fond_tour = creer_entite("fond_tour",
-                             0, fond_tour_2->affichage->rect_dst->y + fond_tour_2->affichage->rect_dst->h,
+                             0, fond_tour_2->rect_dst->y + fond_tour_2->rect_dst->h,
                              100, 100, VRAI);
             fond_tour->changer_rect_src(fond_tour, 0, 0, 48, 80);
         }
@@ -143,7 +143,7 @@ void boucle_jeu(SDL_Renderer * rend) {
             obstacle = creer_entite_depuis_texture(tex_obstacle, 0, 110, 50, 5, VRAI);
             obstacle2 = creer_entite_depuis_texture(tex_obstacle, 50, 170, 50, 5, VRAI);
             fond_tour_2 = creer_entite("fond_tour",
-                             0, fond_tour->affichage->rect_dst->y + fond_tour->affichage->rect_dst->h,
+                             0, fond_tour->rect_dst->y + fond_tour->rect_dst->h,
                              100, 100, VRAI);
             fond_tour_2->changer_rect_src(fond_tour_2, 0, 0, 48, 80);
         }
