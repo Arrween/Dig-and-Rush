@@ -2,7 +2,6 @@
 #include <stdarg.h>
 
 #include "entite.h"
-#include "ressources.h"
 #include "spritesheets.h"
 #include "constantes.h"
 
@@ -64,8 +63,8 @@ void changer_rect_dst_entite(t_entite * e, int x, int y, int w, int h) {
 }
 
 void changer_sprite(t_entite * e, int x, int y) {
-    e->affichage->rect_src->x = x * e->affichage->rect_src->w;
-    e->affichage->rect_src->y = y * e->affichage->rect_src->h;
+    e->affichage->rect_src->x = x;
+    e->affichage->rect_src->y = y;
 }
 
 void changer_pos_entite(t_entite * e, int x, int y) {
@@ -106,7 +105,7 @@ void changer_hitbox(t_entite * e, int x, int y, int w, int h) {
 }
 
 void deplacer(t_entite * e) {
-    if (e->deplacement != REPOS) {
+    if (e->deplacement != REPOS_MVT) {
         e->changer_pos_rel(e,
             e->deplacement == GAUCHE ? -1 : (e->deplacement == DROITE?1:0),
             e->deplacement == HAUT ? -1 : (e->deplacement == BAS ? 1 : 0)
@@ -116,19 +115,7 @@ void deplacer(t_entite * e) {
     }
 }
 
-void definir_animations(t_entite * e, int n_animations, ...) {
-    if (n_animations <= 0)
-        return;
-    e->animations = realloc(e->animations, sizeof(t_animation) * n_animations);
-    va_list ap;
-    va_start(ap, n_animations);
-    // décalage de 1 car REPOS par défaut en position 0
-    for (int i = 1; i < n_animations + 1; i++)
-        e->animations[i] = va_arg(ap, int);
-    e->n_animations = n_animations + 1;
-}
-
-int calculer_pas_anim(int compteur_frames, float vitesse_anim) {
+int calculer_pas_anim(long long int compteur_frames, float vitesse_anim) {
     if (vitesse_anim >= 1)
         return (int) vitesse_anim;
     else if (compteur_frames % (int) (1/(vitesse_anim)) == 0)
@@ -137,39 +124,31 @@ int calculer_pas_anim(int compteur_frames, float vitesse_anim) {
         return 0;
 }
 
-void animer(t_entite * e, int compteur_frames) {
-    int i;
+void animer(t_entite * e, long long int compteur_frames) {
     int pas_anim;
-    for (i = 0; i < e->n_animations && e->animations[i] != e->animation_courante; i++);
-    if (i >= e->n_animations)
-        return;
-    if (e->animation_courante == REPOS) {
-        if (e->a_collision)
-            e->changer_sprite(e, X_PERSO_REPOS, Y_PERSO_REPOS);
-        else
-            e->changer_sprite(e, X_PERSO_CHUTE,
-                                      e->sens_regard == GAUCHE ?
-                                        Y_PERSO_CHUTE_G : Y_PERSO_CHUTE_D);
-    }
-    else if (e->animation_courante == DEPL_G || e->animation_courante == DEPL_D) {
-        if (e->a_collision) {
-            pas_anim = calculer_pas_anim(compteur_frames, VITESSE_ANIM_MARCHE);
-            e->y_sprite = e->animation_courante == DEPL_G ?
-                            Y_PERSO_PELLE_MARCHE_G : Y_PERSO_PELLE_MARCHE_D;
-            e->x_sprite = (e->x_sprite + pas_anim) % LONGUEUR_ANIM_MARCHE;
-        }
-        else {
-            e->y_sprite = e->deplacement == GAUCHE ?
-                            Y_PERSO_CHUTE_G : Y_PERSO_CHUTE_D;
-            e->x_sprite = X_PERSO_CHUTE;
-        }
-        e->changer_sprite(e, e->x_sprite, e->y_sprite);
-    }
-    else if (e->animation_courante == CREUSER) {
-        pas_anim = calculer_pas_anim(compteur_frames, VITESSE_ANIM_CREUSAGE);
-        e->y_sprite = Y_PERSO_CREUSER;
-        e->x_sprite = (e->x_sprite + pas_anim) % LONGUEUR_ANIM_CREUSAGE;
-        e->changer_sprite(e, e->x_sprite, e->y_sprite);
+    t_animation * anim = e->animation_courante;
+
+    if (anim->longueur == 1*anim->w_sprite)
+        pas_anim = 0;
+    else
+        pas_anim = calculer_pas_anim(compteur_frames, anim->vitesse_anim);
+
+    if (! e->a_collision || anim->id == REPOS)
+        e->x_sprite = anim->x_sprite_ini;
+    else
+        e->x_sprite = (e->x_sprite + pas_anim) % anim->longueur;
+    e->y_sprite = anim->y_sprite;
+    e->changer_sprite(e, e->x_sprite * anim->w_sprite, e->y_sprite);
+}
+
+void changer_animation(t_entite * e, t_id_anim id_anim) {
+    t_animation * anim = recuperer_animation(e->animations, e->n_animations, id_anim);
+    if (anim) {
+        e->animation_courante = anim;
+        e->affichage->rect_src->x = anim->x_sprite_ini;
+        e->affichage->rect_src->y = anim->y_sprite;
+        e->affichage->rect_src->w = anim->w_sprite;
+        e->affichage->rect_src->h = anim->h_sprite;
     }
 }
 
@@ -206,9 +185,8 @@ t_entite * creer_entite_depuis_texture(SDL_Texture * texture,
     nouv->sens_regard = DROITE;
     nouv->x_sprite = nouv->y_sprite = 0;
 
-    nouv->animations = malloc(sizeof(t_animation));
-    nouv->animations[0] = REPOS;
-    nouv->animation_courante = REPOS;
+    nouv->n_animations = 0;
+    nouv->animations = NULL;
 
     return nouv;
 }
@@ -218,9 +196,9 @@ t_entite * creer_entite_depuis_spritesheet(const char * id,
                                            int est_relatif) {
     t_spritesheet * spritesheet = recuperer_spritesheet(id);
     t_entite * nouv = creer_entite_depuis_texture(spritesheet->texture, x, y, w, h, est_relatif);
-    nouv->affichage->rect_src->w = spritesheet->sprite_l;
-    nouv->affichage->rect_src->h = spritesheet->sprite_h;
-    nouv->a_animations = VRAI;
+    nouv->animations = spritesheet->animations;
+    nouv->n_animations = spritesheet->n_animations;
+    changer_animation(nouv, REPOS);
     return nouv;
 }
 
@@ -233,8 +211,6 @@ t_entite * creer_entite(const char * id, int x, int y, int w, int h,
 void detruire_entite(t_entite ** e) {
     if (*e) {
         detruire_affichage(&((*e)->affichage));
-        if ((*e)->animations)
-            free((*e)->animations);
         free(*e);
     }
     *e = NULL;

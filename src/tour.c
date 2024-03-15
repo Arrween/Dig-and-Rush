@@ -5,7 +5,6 @@
 #include "tour.h"
 #include "constantes.h"
 #include "entite.h"
-#include "ressources.h"
 #include "spritesheets.h"
 
 void verif_collision(t_entite * e1, t_entite * e2) {
@@ -41,8 +40,7 @@ void boucle_jeu(SDL_Renderer * rend) {
     fond_tour = creer_entite("fond_tour", 0, 0, 100, 100, VRAI);
     fond_tour->changer_rect_src(fond_tour, 0, 0, 48, 80);
 
-    perso = creer_entite_depuis_spritesheet("jack", 40, 20, 18, 12, VRAI);
-    definir_animations(perso, 3, DEPL_G, DEPL_D, CREUSER);
+    perso = creer_entite_depuis_spritesheet("matt", 40, 20, 18, 12, VRAI);
 
     changer_hitbox(perso, 26, 24, 51, 76);
     perso->doit_afficher_hitbox = VRAI;
@@ -64,15 +62,17 @@ void boucle_jeu(SDL_Renderer * rend) {
                             break;
                         case SDL_SCANCODE_A:
                             perso->deplacement = GAUCHE;
-                            perso->animation_courante = DEPL_G;
+                            if (perso->a_collision)
+                                changer_animation(perso, DEPL_G);
                             break;
                         case SDL_SCANCODE_D:
                             perso->deplacement = DROITE;
-                            perso->animation_courante = DEPL_D;
+                            if (perso->a_collision)
+                                changer_animation(perso, DEPL_D);
                             break;
                         case SDL_SCANCODE_S:
                             if (perso->a_collision)
-                                perso->animation_courante = CREUSER;
+                                changer_animation(perso, CREUSER);
                             break;
                         default:
                             break;
@@ -83,7 +83,9 @@ void boucle_jeu(SDL_Renderer * rend) {
                         case SDL_SCANCODE_A:
                         case SDL_SCANCODE_D:
                         case SDL_SCANCODE_S:
-                            perso->deplacement = perso->animation_courante = REPOS;
+                            if (perso->a_collision)
+                                changer_animation(perso, REPOS);
+                            perso->deplacement = REPOS_MVT;
                             break;
                         default:
                             break;
@@ -99,8 +101,10 @@ void boucle_jeu(SDL_Renderer * rend) {
         obstacle2->afficher(rend, obstacle2);
         
         verif_collision(perso, obstacle);
-        if (!perso->a_collision)
+        if (! perso->a_collision)
             verif_collision(perso, obstacle2);
+        if (! perso->a_collision)
+            changer_animation(perso, perso->sens_regard == GAUCHE ? CHUTE_G : CHUTE_D);
         deplacer(perso);
         animer(perso, compteur_frames);
 
