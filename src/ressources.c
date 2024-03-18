@@ -16,8 +16,8 @@ struct chargement {
 
 struct chargement_spritesheet {
     char chemin[TAILLE_MAX_CHEMIN];
-    int sprite_l, sprite_h;
     char id[TAILLE_MAX_ID];
+    t_animation animations[100];
 };
 
 struct chargement chargements_texs[] = {
@@ -37,16 +37,47 @@ struct chargement chargements_texs[] = {
     {"ressources/Menu/Boutons/bouton_quit.png", "bouton_quitter"},
 
     {"ressources/Personnages/jackPerso.png", "jack"},
-    {"ressources/img/fond_tour.png", "fond_tour"},
+    {"ressources/img/tour.png", "fond_tour"},
 };
 
 struct chargement_spritesheet chargements_spritesheets[] = {
-    {"ressources/Personnages/jackPerso.png", 64, 64, "jack"},
+    {"ressources/Personnages/MatthieuPerso.png", "matt", 
+            {
+                {REPOS, 0, 6*64, 64, 64, 0, 0, 1*64, 1.},
+                {CHUTE_G, 5, 1*64, 64, 64, 0, 0, 1, 1.},
+                {CHUTE_D, 5, 3*64, 64, 64, 0, 0, 1, 1.},
+                {DEPL_G, 0, 9*64, 64, 64, 0, 0, 9, 1/5.},
+                {DEPL_D, 0, 11*64, 64, 64, 0, 0, 9, 1/5.},
+                {ATTQ_G, 0, 20*64, 128, 128, 10, 10, 3, 1.},
+                {CREUSER, 0, 6*64, 64, 64, 0, 0, 8, 1./6},
+                {FIN_TAB_ANIMS, 0, 0, 0, 0, 0, 0, 0, 0.}
+            }
+    },
 };
 
 struct chargement chargements_sons[] = {
     {"ressources/essais_audio/confirmation_001.wav", "essai"},
 };
+
+t_animation * recuperer_animation(t_animation ** anims, int n_anims, t_id_anim id) {
+    for (int i = 0; i < n_anims; i++) {
+        if (anims[i]->id == id)
+            return anims[i];
+    }
+    return NULL;
+}
+
+void copier_animation(t_animation * dest, t_animation src) {
+    dest->id = src.id;
+    dest->x_sprite_ini = src.x_sprite_ini;
+    dest->y_sprite = src.y_sprite;
+    dest->w_sprite = src.w_sprite;
+    dest->h_sprite = src.h_sprite;
+    dest->decalage_dest_x = src.decalage_dest_x;
+    dest->decalage_dest_y = src.decalage_dest_y;
+    dest->longueur = src.longueur;
+    dest->vitesse_anim = src.vitesse_anim;
+}
 
 void init_ressources(SDL_Renderer * rend) {
     t_texture * ressource_tex;
@@ -86,8 +117,15 @@ void init_ressources(SDL_Renderer * rend) {
                 fprintf(stderr, "Erreur lors du chargement d’une spritesheet"
                             " : %s\n", IMG_GetError());
             }
-            ressource_spritesheet->sprite_l = charg_sheet.sprite_l;
-            ressource_spritesheet->sprite_h = charg_sheet.sprite_h;
+            ressource_spritesheet->animations = NULL;
+            int i_anim;
+            for (i_anim = 0; charg_sheet.animations[i_anim].id != FIN_TAB_ANIMS; i_anim++) {
+                ressource_spritesheet->animations = realloc(ressource_spritesheet->animations,
+                                                            sizeof(t_animation*) * i_anim + 1);
+                ressource_spritesheet->animations[i_anim] = malloc(sizeof(t_animation));
+                copier_animation(ressource_spritesheet->animations[i_anim], charg_sheet.animations[i_anim]);
+            }
+            ressource_spritesheet->n_animations = i_anim + 1;
             strcpy(ressource_spritesheet->id, charg_sheet.id);
             HASH_ADD_STR(spritesheets, id, ressource_spritesheet);
         }
@@ -163,6 +201,9 @@ void detruire_ressources() {
     }
     HASH_ITER(hh, spritesheets, sheet_courant, sheet_tmp) {
         SDL_DestroyTexture(sheet_courant->texture);
+        // À FAIRE détruire les éléments…
+        if (sheet_courant->animations)
+            free(sheet_courant->animations);
         free(sheet_courant);
     }
     HASH_ITER(hh, sons, son_courant, son_tmp) {
