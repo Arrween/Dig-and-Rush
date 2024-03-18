@@ -1,0 +1,57 @@
+\doxysection{entite.\+h}
+\hypertarget{entite_8h_source}{}\label{entite_8h_source}\index{/info/etu/l2info/s2105787/Documents/PROJET/projet\_l2/src/entite.h@{/info/etu/l2info/s2105787/Documents/PROJET/projet\_l2/src/entite.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#include\ <SDL2/SDL.h>}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{keyword}{enum}\ \{\ REPS,\ GAUCHE,\ DROITE,\ HAUT,\ BAS\ \};}
+\DoxyCodeLine{00004\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{enum}\ \{\ REPOS,\ DEPL\_G,\ DEPL\_D,\ CREUSER\ \}\ t\_animation;}
+\DoxyCodeLine{00005\ }
+\DoxyCodeLine{00006\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structs__affichage}{s\_affichage}}\ \{}
+\DoxyCodeLine{00007\ \ \ \ \ SDL\_Texture\ *\ texture;}
+\DoxyCodeLine{00008\ \ \ \ \ SDL\_Rect\ *\ rect\_src;}
+\DoxyCodeLine{00009\ \ \ \ \ SDL\_Rect\ *\ rect\_dst;}
+\DoxyCodeLine{00010\ \}\ \mbox{\hyperlink{structs__affichage}{t\_affichage}};}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \mbox{\hyperlink{structs__affichage}{t\_affichage}}*\ creer\_affichage(SDL\_Texture\ *);}
+\DoxyCodeLine{00013\ \textcolor{keywordtype}{void}\ detruire\_affichage(\mbox{\hyperlink{structs__affichage}{t\_affichage}}\ **);}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structs__entite}{s\_entite}}\ \{}
+\DoxyCodeLine{00016\ \ \ \ \ \mbox{\hyperlink{structs__affichage}{t\_affichage}}\ *\ affichage;}
+\DoxyCodeLine{00017\ \ \ \ \ \textcolor{keywordtype}{int}\ est\_relatif;}
+\DoxyCodeLine{00018\ \ \ \ \ SDL\_Rect\ hitbox;}
+\DoxyCodeLine{00019\ \ \ \ \ \textcolor{keywordtype}{int}\ doit\_afficher\_hitbox;}
+\DoxyCodeLine{00020\ }
+\DoxyCodeLine{00021\ \ \ \ \ \textcolor{keywordtype}{int}\ a\_collision;}
+\DoxyCodeLine{00022\ \ \ \ \ \textcolor{keywordtype}{int}\ a\_animations;}
+\DoxyCodeLine{00023\ \ \ \ \ \textcolor{keywordtype}{int}\ deplacement;}
+\DoxyCodeLine{00024\ \ \ \ \ \textcolor{keywordtype}{int}\ sens\_regard;}
+\DoxyCodeLine{00025\ \ \ \ \ \textcolor{keywordtype}{int}\ x\_sprite;}
+\DoxyCodeLine{00026\ \ \ \ \ \textcolor{keywordtype}{int}\ y\_sprite;}
+\DoxyCodeLine{00027\ }
+\DoxyCodeLine{00028\ \ \ \ \ t\_animation\ *\ animations;}
+\DoxyCodeLine{00029\ \ \ \ \ \textcolor{keywordtype}{int}\ n\_animations;}
+\DoxyCodeLine{00030\ \ \ \ \ t\_animation\ animation\_courante;}
+\DoxyCodeLine{00031\ }
+\DoxyCodeLine{00032\ \ \ \ \ void\ (*afficher)\ (SDL\_Renderer\ *,\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structs__entite}{s\_entite}}\ *);}
+\DoxyCodeLine{00033\ \ \ \ \ void\ (*changer\_rect\_src)\ (\textcolor{keyword}{struct\ }\mbox{\hyperlink{structs__entite}{s\_entite}}\ *,\ int,\ int,\ int,\ int);}
+\DoxyCodeLine{00034\ \ \ \ \ void\ (*changer\_rect\_dst)\ (\textcolor{keyword}{struct\ }\mbox{\hyperlink{structs__entite}{s\_entite}}\ *,\ int,\ int,\ int,\ int);}
+\DoxyCodeLine{00035\ \ \ \ \ void\ (*changer\_sprite)\ (\textcolor{keyword}{struct\ }\mbox{\hyperlink{structs__entite}{s\_entite}}\ *,\ int,\ int);}
+\DoxyCodeLine{00036\ \ \ \ \ void\ (*changer\_pos)\ (\textcolor{keyword}{struct\ }\mbox{\hyperlink{structs__entite}{s\_entite}}\ *,\ int,\ int);}
+\DoxyCodeLine{00037\ \ \ \ \ void\ (*changer\_dims)\ (\textcolor{keyword}{struct\ }\mbox{\hyperlink{structs__entite}{s\_entite}}\ *,\ int,\ int);}
+\DoxyCodeLine{00038\ \ \ \ \ void\ (*changer\_pos\_rel)\ (\textcolor{keyword}{struct\ }\mbox{\hyperlink{structs__entite}{s\_entite}}\ *,\ int,\ int);}
+\DoxyCodeLine{00039\ \ \ \ \ void\ (*creuser)\ (\textcolor{keyword}{struct\ }\mbox{\hyperlink{structs__entite}{s\_entite}}\ *);}
+\DoxyCodeLine{00040\ \}\ \mbox{\hyperlink{structs__entite}{t\_entite}};}
+\DoxyCodeLine{00041\ }
+\DoxyCodeLine{00042\ \mbox{\hyperlink{structs__entite}{t\_entite}}\ *\ creer\_entite(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *,\ \textcolor{keywordtype}{int},\ \textcolor{keywordtype}{int},\ \textcolor{keywordtype}{int},\ \textcolor{keywordtype}{int},\ \textcolor{keywordtype}{int});}
+\DoxyCodeLine{00043\ \mbox{\hyperlink{structs__entite}{t\_entite}}\ *\ creer\_entite\_depuis\_texture(SDL\_Texture\ *,\ \textcolor{keywordtype}{int},\ \textcolor{keywordtype}{int},\ \textcolor{keywordtype}{int},\ \textcolor{keywordtype}{int},\ \textcolor{keywordtype}{int});}
+\DoxyCodeLine{00044\ \mbox{\hyperlink{structs__entite}{t\_entite}}\ *\ creer\_entite\_depuis\_spritesheet(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *,\ \textcolor{keywordtype}{int},\ \textcolor{keywordtype}{int},\ \textcolor{keywordtype}{int},\ \textcolor{keywordtype}{int},\ \textcolor{keywordtype}{int});}
+\DoxyCodeLine{00045\ \textcolor{keywordtype}{void}\ detruire\_entite(\mbox{\hyperlink{structs__entite}{t\_entite}}\ **);}
+\DoxyCodeLine{00046\ }
+\DoxyCodeLine{00047\ \textcolor{keywordtype}{void}\ changer\_hitbox(\mbox{\hyperlink{structs__entite}{t\_entite}}\ *,\ \textcolor{keywordtype}{int},\ \textcolor{keywordtype}{int},\ \textcolor{keywordtype}{int},\ \textcolor{keywordtype}{int});}
+\DoxyCodeLine{00048\ SDL\_Rect\ convertir\_vers\_absolu(SDL\_Rect\ *,\ \textcolor{keywordtype}{int},\ \textcolor{keywordtype}{int},\ \textcolor{keywordtype}{int},\ \textcolor{keywordtype}{int});}
+\DoxyCodeLine{00049\ \textcolor{keywordtype}{void}\ deplacer(\mbox{\hyperlink{structs__entite}{t\_entite}}\ *);}
+\DoxyCodeLine{00050\ \textcolor{keywordtype}{void}\ animer(\mbox{\hyperlink{structs__entite}{t\_entite}}\ *,\ \textcolor{keywordtype}{int}\ compteur\_frames);}
+\DoxyCodeLine{00051\ \textcolor{keywordtype}{void}\ definir\_animations(\mbox{\hyperlink{structs__entite}{t\_entite}}\ *,\ \textcolor{keywordtype}{int},\ ...);}
+
+\end{DoxyCode}
