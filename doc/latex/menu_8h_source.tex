@@ -1,0 +1,60 @@
+\doxysection{menu.\+h}
+\hypertarget{menu_8h_source}{}\label{menu_8h_source}\index{/info/etu/l2info/s2105787/Documents/PROJET/projet\_l2/src/menu.h@{/info/etu/l2info/s2105787/Documents/PROJET/projet\_l2/src/menu.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#include\ <stdio.h>}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#include\ <SDL2/SDL.h>}}
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <SDL2/SDL\_image.h>}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <SDL2/SDL\_ttf.h>}}
+\DoxyCodeLine{00005\ }
+\DoxyCodeLine{00006\ \textcolor{comment}{//\ Déclarations\ des\ fonctions\ externes}}
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00008\ \textcolor{keyword}{extern}\ \textcolor{keywordtype}{void}\ initialiser\_sdl();\ \textcolor{comment}{//\ Fonction\ pour\ initialiser\ SDL}}
+\DoxyCodeLine{00009\ }
+\DoxyCodeLine{00010\ \textcolor{keyword}{extern}\ \textcolor{keywordtype}{void}\ initialiser\_sdl\_img();\ \textcolor{comment}{//\ Fonction\ pour\ initialiser\ SDL\_image}}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \textcolor{keyword}{extern}\ SDL\_Window\ *\ creation\_fenetre();\ \textcolor{comment}{//\ Fonction\ pour\ créer\ une\ fenêtre\ SDL}}
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00014\ \textcolor{keyword}{extern}\ SDL\_Renderer\ *\ creation\_renderer(SDL\_Window\ **\ fenetre);\ \textcolor{comment}{//\ Fonction\ pour\ créer\ un\ renderer\ SDL}}
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00016\ \textcolor{keyword}{extern}\ SDL\_Texture\ *\ chargement\_image(\textcolor{keywordtype}{char}\ *\ chemin,\ SDL\_Renderer\ **\ rend,\ SDL\_Window\ **\ fenetre);\ \textcolor{comment}{//\ Fonction\ pour\ charger\ une\ image\ SDL\_Texture}}
+\DoxyCodeLine{00017\ }
+\DoxyCodeLine{00018\ \textcolor{keyword}{extern}\ SDL\_Surface\ *\ chargement\_surface(\textcolor{keywordtype}{char}\ *\ chemin,\ SDL\_Renderer\ **\ rend,\ SDL\_Window\ **\ fenetre);}
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00020\ \textcolor{keyword}{extern}\ SDL\_Texture\ *\ chargement\_texture\_from\_surface(SDL\_Renderer\ *\ renderer,\ SDL\_Surface\ *\ surface,\ SDL\_Window\ *\ window);}
+\DoxyCodeLine{00021\ }
+\DoxyCodeLine{00022\ }
+\DoxyCodeLine{00023\ \textcolor{keyword}{extern}\ \textcolor{keywordtype}{void}\ initialiser\_sdl\_ttf();\ \textcolor{comment}{//\ Fonction\ pour\ initialiser\ SDL\_ttf}}
+\DoxyCodeLine{00024\ }
+\DoxyCodeLine{00025\ \textcolor{keyword}{extern}\ TTF\_Font\ *\ chargement\_font(\textcolor{keywordtype}{char}\ *\ chemin,\ \textcolor{keywordtype}{int}\ taille,\ SDL\_Renderer\ **\ rend,\ SDL\_Window\ **\ fenetre);\ \textcolor{comment}{//\ Fonction\ pour\ charger\ une\ police\ TTF\_Font}}
+\DoxyCodeLine{00026\ }
+\DoxyCodeLine{00027\ \textcolor{comment}{//\ Données\ des\ boutons}}
+\DoxyCodeLine{00028\ }
+\DoxyCodeLine{00029\ \textcolor{keyword}{enum}\ \{\ PAGE\_MENU,\ PAGE\_MENU\_SERVEUR,\ PAGE\_MENU\_PARAMETRES,\ PAGE\_MENU\_PERSONNAGES\ \};}
+\DoxyCodeLine{00030\ }
+\DoxyCodeLine{00031\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structs__etat}{s\_etat}}\ \mbox{\hyperlink{structs__etat}{t\_etat}};}
+\DoxyCodeLine{00032\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\{\ }
+\DoxyCodeLine{00033\ \ \ \ \ SDL\_Texture\ *\ texture;}
+\DoxyCodeLine{00034\ \ \ \ \ SDL\_Rect\ rect;}
+\DoxyCodeLine{00035\ \ \ \ \ void\ (*action)\ (\mbox{\hyperlink{structs__etat}{t\_etat}}\ *\ etat);}
+\DoxyCodeLine{00036\ \ \ \ \ \textcolor{keywordtype}{char}\ nom[100];}
+\DoxyCodeLine{00037\ \}\ \mbox{\hyperlink{structt__bouton}{t\_bouton}};}
+\DoxyCodeLine{00038\ }
+\DoxyCodeLine{00039\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structs__etat}{s\_etat}}\ \{}
+\DoxyCodeLine{00040\ \ \ \ \ \textcolor{keywordtype}{int}\ doit\_quitter;}
+\DoxyCodeLine{00041\ \ \ \ \ \textcolor{keywordtype}{int}\ est\_fullscreen;}
+\DoxyCodeLine{00042\ \ \ \ \ \textcolor{keywordtype}{int}\ i\_menu;}
+\DoxyCodeLine{00043\ \ \ \ \ \mbox{\hyperlink{structt__bouton}{t\_bouton}}\ **\ boutons;}
+\DoxyCodeLine{00044\ \ \ \ \ SDL\_Window\ *\ fenetre;}
+\DoxyCodeLine{00045\ \};}
+\DoxyCodeLine{00046\ }
+\DoxyCodeLine{00047\ \textcolor{keywordtype}{void}\ action\_volume(\mbox{\hyperlink{structs__etat}{t\_etat}}\ *);}
+\DoxyCodeLine{00048\ \textcolor{keywordtype}{void}\ action\_fullscreen(\mbox{\hyperlink{structs__etat}{t\_etat}}\ *);}
+\DoxyCodeLine{00049\ \textcolor{keywordtype}{void}\ action\_home(\mbox{\hyperlink{structs__etat}{t\_etat}}\ *);}
+\DoxyCodeLine{00050\ \textcolor{keywordtype}{void}\ action\_quitter(\mbox{\hyperlink{structs__etat}{t\_etat}}\ *);}
+\DoxyCodeLine{00051\ \textcolor{keywordtype}{void}\ action\_jouer(\mbox{\hyperlink{structs__etat}{t\_etat}}\ *);}
+\DoxyCodeLine{00052\ \textcolor{keywordtype}{void}\ action\_personnages(\mbox{\hyperlink{structs__etat}{t\_etat}}\ *);}
+\DoxyCodeLine{00053\ \textcolor{keywordtype}{void}\ action\_parametres(\mbox{\hyperlink{structs__etat}{t\_etat}}\ *);}
+\DoxyCodeLine{00054\ \textcolor{keywordtype}{void}\ action\_nulle(\mbox{\hyperlink{structs__etat}{t\_etat}}\ *);}
+
+\end{DoxyCode}

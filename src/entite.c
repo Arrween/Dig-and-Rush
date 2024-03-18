@@ -4,6 +4,17 @@
 #include "spritesheets.h"
 #include "constantes.h"
 
+/**
+ * @brief Convertit des coordonnées relatives en coordonnées absolues.
+ * @param rect Le rectangle avec les coordonnées relatives.
+ * @param x_abs La position X absolue de base.
+ * @param y_abs La position Y absolue de base.
+ * @param w_abs La largeur absolue de base.
+ * @param h_abs La hauteur absolue de base.
+ * @return SDL_Rect Le rectangle avec les coordonnées absolues calculées.
+ */
+
+
 SDL_Rect convertir_vers_absolu(SDL_Rect * rect, int x_abs, int y_abs,
                                                 int w_abs, int h_abs) {
     SDL_Rect retour;
@@ -13,6 +24,26 @@ SDL_Rect convertir_vers_absolu(SDL_Rect * rect, int x_abs, int y_abs,
     retour.h = h_abs * rect->h/100;
     return retour;
 }
+
+/**
+ * @brief Affiche une entité à l'écran en utilisant SDL.
+ * 
+ * Cette fonction prend en charge l'affichage d'entités (comme des personnages, objets, etc.)
+ * sur le rendu spécifié en paramètre. Elle gère à la fois les entités avec position
+ * relative (par rapport à une zone de jeu définie) et absolue.
+ * 
+ * @param rend Pointeur vers le rendu SDL où l'entité sera affichée.
+ * @param e Pointeur vers l'entité à afficher.
+ * 
+ * Les étapes principales sont :
+ * 1. Calcul des coordonnées et dimensions pour l'affichage de l'entité et sa hitbox,
+ *    en tenant compte de la configuration de la zone de jeu.
+ * 2. Si l'entité doit être affichée avec une position relative, conversion de sa position
+ *    et dimension à une position absolue sur l'écran.
+ * 3. Affichage de l'entité à l'aide de SDL_RenderCopy.
+ * 4. Si l'entité doit afficher sa hitbox, celle-ci est dessinée autour de l'entité
+ *    en utilisant une couleur spécifique.
+*/
 
 void afficher_entite(SDL_Renderer * rend, t_entite * e) {
 
@@ -46,6 +77,12 @@ void afficher_entite(SDL_Renderer * rend, t_entite * e) {
     }
 }
 
+/*
+ * 
+ *
+ *
+ *
+ */
 void changer_rect(SDL_Rect * rect, int x, int y, int w, int h) {
     rect->x = x;
     rect->y = y;
