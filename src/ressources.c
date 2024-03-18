@@ -39,6 +39,7 @@ struct chargement chargements_texs[] = {
     {"ressources/Personnages/jackPerso.png", "jack"},
     {"ressources/img/tour.png", "fond_tour"},
     {"ressources/Tour/Arriere_plan/Clouds/cloud1.png", "fond_jeu"},
+
 };
 
 struct chargement_spritesheet chargements_spritesheets[] = {
