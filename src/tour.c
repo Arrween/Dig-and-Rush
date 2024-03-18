@@ -35,9 +35,7 @@ void boucle_jeu(SDL_Renderer * rend) {
     fond = creer_entite("menu_fond", -1, -1, -1, -1, FAUX);
 
     fond_tour = creer_entite("fond_tour", 0, 0, 100, 100, VRAI);
-    fond_tour->changer_rect_src(fond_tour, 0, 0, 48, 80);
     fond_tour_2 = creer_entite("fond_tour", 0, 100, 100, 100, VRAI);
-    fond_tour_2->changer_rect_src(fond_tour_2, 0, 0, 48, 80);
 
 
     perso = creer_entite_depuis_spritesheet("matt", 40, 20, 18, 12, VRAI);
@@ -133,7 +131,6 @@ void boucle_jeu(SDL_Renderer * rend) {
             fond_tour = creer_entite("fond_tour",
                              0, fond_tour_2->rect_dst->y + fond_tour_2->rect_dst->h,
                              100, 100, VRAI);
-            fond_tour->changer_rect_src(fond_tour, 0, 0, 48, 80);
         }
         if (repere_defilement >= 200 && parite_defilement == 1) {
             parite_defilement = 0;
@@ -146,7 +143,6 @@ void boucle_jeu(SDL_Renderer * rend) {
             fond_tour_2 = creer_entite("fond_tour",
                              0, fond_tour->rect_dst->y + fond_tour->rect_dst->h,
                              100, 100, VRAI);
-            fond_tour_2->changer_rect_src(fond_tour_2, 0, 0, 48, 80);
         }
 
         SDL_RenderPresent(rend);
