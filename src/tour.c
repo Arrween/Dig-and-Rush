@@ -61,7 +61,7 @@ void boucle_jeu(SDL_Renderer * rend) {
     obstacle_terre2 = creer_entite_depuis_texture(tex_obstacle_terre, 60, 170, 10, 10, VRAI); // Taille ajustée pour être carrée
 
     // Initialisation des entités de fond et de personnage
-    fond = creer_entite("menu_fond", -1, -1, -1, -1, FAUX);
+    fond = creer_entite("fond_jeu", -1, -1, -1, -1, FAUX);
     fond_tour = creer_entite("fond_tour", 0, 0, 100, 100, VRAI);
     fond_tour_2 = creer_entite("fond_tour", 0, 100, 100, 100, VRAI);
 
