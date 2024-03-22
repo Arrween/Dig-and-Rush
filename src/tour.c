@@ -1,4 +1,4 @@
-#include <stdlib.h>
+#include <stdlib.h>                                                                                           
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 
@@ -6,6 +6,8 @@
 #include "constantes.h"
 #include "entite.h"
 #include "spritesheets.h"
+
+
 
 // Vérifie si deux entités se chevauchent
 void verif_collision(t_entite * e1, t_entite * e2) {
@@ -20,7 +22,9 @@ void boucle_jeu(SDL_Renderer * rend) {
     long long compteur_frames = 0;
     int pas_defilement = 0;
     int parite_defilement = 0;
+    const int DUREE_CREUSER = 8; // Nombre de frames de l'animation "creuser"
 
+	//obstacle -> case pierre obstacle_terre -> case en terre
     // Textures pour les obstacles
     SDL_Texture * tex_obstacle, * tex_obstacle_terre;
     t_entite * fond, * fond_tour, * fond_tour_2, * perso;
@@ -101,8 +105,25 @@ void boucle_jeu(SDL_Renderer * rend) {
                                 changer_animation(perso, DEPL_D);
                             break;
                         case SDL_SCANCODE_S:
-                            if (perso->a_collision)
-                                changer_animation(perso, CREUSER);
+                            if (perso->a_collision){
+                                changer_animation(perso, CREUSER); 
+                                if (obstacle_terre != NULL && SDL_HasIntersection(&(perso->hitbox), &(obstacle_terre->hitbox))) 
+                                {
+                                detruire_entite(&obstacle_terre);
+                                }
+                                if (obstacle_terre2 != NULL && SDL_HasIntersection(&(perso->hitbox), &(obstacle_terre2->hitbox))) 
+                                {
+                                detruire_entite(&obstacle_terre2);
+                                }
+                                if (obstacle_terre3 != NULL && SDL_HasIntersection(&(perso->hitbox), &(obstacle_terre3->hitbox))) 
+                                {
+                                detruire_entite(&obstacle_terre3);
+                                }
+                                if (obstacle_terre4 != NULL && SDL_HasIntersection(&(perso->hitbox), &(obstacle_terre4->hitbox))) 
+                                {
+                                detruire_entite(&obstacle_terre4);
+                                }
+                                }
                             break;
                         case SDL_SCANCODE_W:
                             if (perso->a_collision) {
@@ -140,18 +161,20 @@ void boucle_jeu(SDL_Renderer * rend) {
         perso->afficher(rend, perso);
         obstacle->afficher(rend, obstacle);
         obstacle2->afficher(rend, obstacle2);
-        obstacle_terre->afficher(rend, obstacle_terre);
-        obstacle_terre2->afficher(rend, obstacle_terre2);
+        if (obstacle_terre)
+	        obstacle_terre->afficher(rend, obstacle_terre);
+	if (obstacle_terre2)
+        	obstacle_terre2->afficher(rend, obstacle_terre2);
 
         // Gestion des collisions
         verif_collision(perso, obstacle);
         if (!perso->a_collision) {
             verif_collision(perso, obstacle2);
         }
-        if (!perso->a_collision) {
+        if (!perso->a_collision && obstacle_terre) {
             verif_collision(perso, obstacle_terre);
         }
-        if (!perso->a_collision) {
+        if (!perso->a_collision && obstacle_terre2) {
             verif_collision(perso, obstacle_terre2);
         }
 
@@ -175,7 +198,9 @@ void boucle_jeu(SDL_Renderer * rend) {
             // Déplacement relatif des obstacles pour simuler le défilement
             obstacle->changer_pos_rel(obstacle, 0, -pas_defilement);
             obstacle2->changer_pos_rel(obstacle2, 0, -pas_defilement);
-            obstacle_terre->changer_pos_rel(obstacle_terre, 0, -pas_defilement);
+            if (obstacle_terre)
+	            obstacle_terre->changer_pos_rel(obstacle_terre, 0, -pas_defilement);
+            if (obstacle_terre2)
             obstacle_terre2->changer_pos_rel(obstacle_terre2, 0, -pas_defilement);
             fond_tour->changer_pos_rel(fond_tour, 0, -pas_defilement);
             fond_tour_2->changer_pos_rel(fond_tour_2, 0, -pas_defilement);
