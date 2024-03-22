@@ -54,7 +54,7 @@ else
 endif
 docs_doxy: $(DOXYFILE)
 	@echo "\n>>>> Génération de la doc Doxygen…\n"
-	doxygen -g $<
+	doxygen $<
 reps :
 	mkdir -p $(REPS)
 
