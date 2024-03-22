@@ -1,10 +1,10 @@
 # Dig & Rush
 
 ## Contributeurs
-- [BOULANGER Matthieu](https://github.com/Idlusen)
-- [GAROUI Ania](https://github.com/Arrween)
-- [HARISON Yohan](https://github.com/aohyn)
-- [MPONDO TOUTOU Jacques-Gérard](https://github.com/stenfresh)
+- [BOULANGER Matthieu](https://github.com/Idlusen) (Idlusen)
+- [GAROUI Ania](https://github.com/Arrween) (Arrween)
+- [HARISON Yohan](https://github.com/aohyn) (aohyn)
+- [MPONDO TOUTOU Jacques-Gérard](https://github.com/stenfresh) (stenfresh)
 
 
 ## Nature du projet
