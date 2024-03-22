@@ -37,8 +37,8 @@ struct chargement chargements_texs[] = {
     {"ressources/Menu/Boutons/bouton_quit.png", "bouton_quitter"},
 
     {"ressources/Personnages/jackPerso.png", "jack"},
-    {"ressources/img/tour.png", "fond_tour"},
-    {"ressources/Tour/Arriere_plan/Clouds/cloud1.png", "fond_jeu"},
+    {"ressources/Tour/Arriere_plan/fond.jpg", "fond_tour"},
+    {"ressources/Tour/Arriere_plan/fond_jeu.png", "fond_jeu"},
 
 };
 

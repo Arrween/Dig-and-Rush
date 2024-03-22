@@ -1,1 +1,1 @@
-void boucle_jeu(SDL_Renderer *);
+int boucle_jeu(SDL_Renderer *);
