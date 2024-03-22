@@ -114,6 +114,14 @@ int boucle_jeu(SDL_Renderer * rend) {
                             if (perso->a_collision)
                                 changer_animation(perso, CREUSER);
                             break;
+                        case SDL_SCANCODE_W:
+                            if (perso->a_collision) {
+                                if (perso->sens_regard == GAUCHE)
+                                    changer_animation(perso, ATTQ_G);
+                                else if (perso->sens_regard == DROITE)
+                                    changer_animation(perso, ATTQ_D);
+                            }
+                            break;
                         default:
                             break;
                     }
@@ -123,6 +131,7 @@ int boucle_jeu(SDL_Renderer * rend) {
                         case SDL_SCANCODE_A:
                         case SDL_SCANCODE_D:
                         case SDL_SCANCODE_S:
+                        case SDL_SCANCODE_W:
                             if (perso->a_collision)
                                 changer_animation(perso, REPOS);
                             perso->deplacement = REPOS_MVT;
