@@ -27,6 +27,8 @@ SOURCES_TEX = $(wildcard $(REP_DOC)/*.tex)
 DOXYFILE = $(REP_DOC)/Doxyfile
 INCLUDES = -I$(REP_SRC) -I$(REP_SDLINC) -I$(REP_SDLIMGINC) -I$(REP_SDLTTFINC)
 
+OUTIL_MESSAGE = outils/bannière.sh
+
 # vérifie présence de compilateurs TeX
 TECTONIC := $(shell command -v tectonic 2> /dev/null)
 XELATEX := $(shell command -v xelatex 2> /dev/null)
@@ -35,13 +37,13 @@ XELATEX := $(shell command -v xelatex 2> /dev/null)
 .SILENT = reps
 
 $(NOM_BIN) : $(OBJETS)
-	@echo "\n>>>> Compilation du jeu…\n"
+	@ $(OUTIL_MESSAGE) Compilation du jeu…
 	gcc -o $(REP_BIN)/$@ $^ $(LIB_FLAGS) $(INCLUDES) $(WARNING_FLAGS)
 $(OBJETS) : $(REP_OBJ)/%.o: $(REP_SRC)/%.c $(ENTETES)
 	gcc -o $@ -c $< $(WARNING_FLAGS)
 docs : docs_tex docs_doxy
 docs_tex: $(SOURCES_TEX)
-	@echo "\n>>>> Compilation des fichiers LaTeX…\n"
+	@ $(OUTIL_MESSAGE) Compilation des fichiers LaTeX…
 ifdef XELATEX
 	# se déplacer dans doc/ pour compiler doc/*.tex, le doc/ étant retiré par subst
 	# « -interaction batchmode » pour limiter la loquacité de xelatex
@@ -53,7 +55,7 @@ else
 	@echo "pas de compilateur TeX trouvé, docs .tex non compilées"
 endif
 docs_doxy: $(DOXYFILE)
-	@echo "\n>>>> Génération de la doc Doxygen…\n"
+	@ $(OUTIL_MESSAGE) Génération de la doc Doxygen…
 	doxygen $<
 reps :
 	mkdir -p $(REPS)
@@ -66,5 +68,5 @@ remove : clean
 all : reps $(NOM_BIN) docs
 
 exe : all
-	@echo "\n>>>> Lancement du jeu…\n"
+	@ $(OUTIL_MESSAGE) Lancement du jeu…
 	$(REP_BIN)/$(NOM_PROG)

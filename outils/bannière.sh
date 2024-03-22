@@ -12,6 +12,8 @@ n_colonnes="$(tput cols)"
 separateur="–"
 n_separateurs="$(expr $n_colonnes - 2 \* $l_remplissage - $l_texte)"
 
+echo
+
 for i in $(seq 1 $(expr $n_separateurs / 2))
 do
     echo -n "$separateur"
@@ -32,4 +34,5 @@ do
     echo -n "$separateur"
 done
 
+echo
 echo
