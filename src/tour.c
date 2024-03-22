@@ -7,19 +7,23 @@
 #include "entite.h"
 #include "spritesheets.h"
 
+#define N 10
+
 // Vérifie si deux entités se chevauchent
 void verif_collision(t_entite * e1, t_entite * e2) {
     int a_collision = SDL_HasIntersection(&(e1->hitbox), &(e2->hitbox));
     e1->a_collision = e2->a_collision = a_collision;
 }
 
-void boucle_jeu(SDL_Renderer * rend) {
+int boucle_jeu(SDL_Renderer * rend) {
     SDL_Event event;
     int doit_boucler = VRAI;
     int repere_defilement = 0;
     long long compteur_frames = 0;
     int pas_defilement = 0;
     int parite_defilement = 0;
+
+    int doit_quitter = FAUX;
 
     // Textures pour les obstacles
     SDL_Texture * tex_obstacle, * tex_obstacle_terre;
@@ -28,7 +32,7 @@ void boucle_jeu(SDL_Renderer * rend) {
     t_entite * obstacle_terre, * obstacle_terre2, * obstacle_terre3 = NULL, *obstacle_terre4 = NULL;
 
     // Chargement de l'image de blocs de pierre pour les obstacles
-    tex_obstacle = IMG_LoadTexture(rend, "ressources/Tour/Blocs/pierres_sombres/pierre.jpg");
+    tex_obstacle = IMG_LoadTexture(rend, "ressources/Tour/Blocs/pierres_claires/pierre_gpt2.png");
     if (!tex_obstacle) {
         printf("Erreur lors du chargement de l'image des blocs de pierre : %s\n", IMG_GetError());
         // Générer une texture de secours en cas d'échec
@@ -51,7 +55,9 @@ void boucle_jeu(SDL_Renderer * rend) {
         SDL_SetRenderTarget(rend, NULL);
     }
 
-    // Création des entités obstacles avec les images chargées
+    
+
+
     // Blocs de pierre
     obstacle = creer_entite_depuis_texture(tex_obstacle, 0, 110, 10, 10, VRAI); // Taille ajustée pour être carrée
     obstacle2 = creer_entite_depuis_texture(tex_obstacle, 50, 170, 10, 10, VRAI); // Taille ajustée pour être carrée
@@ -79,6 +85,10 @@ void boucle_jeu(SDL_Renderer * rend) {
         // Gestion des événements
         while (SDL_PollEvent(&event)) {
             switch (event.type) {
+                case SDL_QUIT:
+                    doit_boucler = FAUX;
+                    doit_quitter = VRAI ;
+                    break;
                 case SDL_KEYDOWN:
                     if (event.key.repeat) break;
                     // Gestion des touches du clavier
@@ -133,6 +143,7 @@ void boucle_jeu(SDL_Renderer * rend) {
         obstacle2->afficher(rend, obstacle2);
         obstacle_terre->afficher(rend, obstacle_terre);
         obstacle_terre2->afficher(rend, obstacle_terre2);
+
 
         // Gestion des collisions
         verif_collision(perso, obstacle);
@@ -227,4 +238,6 @@ void boucle_jeu(SDL_Renderer * rend) {
     detruire_entite(&obstacle_terre2);
     detruire_entite(&obstacle_terre3);
     detruire_entite(&obstacle_terre4);
+
+    return doit_quitter ;
 }

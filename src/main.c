@@ -148,7 +148,7 @@ int main() {
                             etat.doit_quitter = VRAI;
                             break;
                         case SDL_SCANCODE_A:
-                            boucle_jeu(rend);
+                            etat.doit_quitter = boucle_jeu(rend);
                             break;
                         case SDL_SCANCODE_E:
                             SDL_QueueAudio(audio_device, buffer_essai_mix, son_essai->length);
