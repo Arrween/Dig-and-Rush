@@ -56,7 +56,7 @@ else
 endif
 docs_doxy: $(DOXYFILE)
 	@ $(OUTIL_MESSAGE) Génération de la doc Doxygen…
-	doxygen $<
+	cd $(REP_DOC) && doxygen $(subst $(REP_DOC)/, , $<)
 reps :
 	mkdir -p $(REPS)
 
