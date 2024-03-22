@@ -21,11 +21,13 @@ REP_SDLTTFINC = $(REP_SDLTTF)/include
 SOURCES = $(wildcard $(REP_SRC)/*.c)
 OBJETS = $(SOURCES:$(REP_SRC)/%.c=$(REP_OBJ)/%.o)
 ENTETES = $(REP_SRC)/constantes.h
+INCLUDES = -I$(REP_SRC) -I$(REP_SDLINC) -I$(REP_SDLIMGINC) -I$(REP_SDLTTFINC)
 LIB_FLAGS = `sdl2-config --libs --cflags` -lSDL2_image -lSDL2_ttf -L$(REP_SDLLIB) -L$(REP_SDLIMGLIB) -L$(REP_SDLTTFLIB)
 WARNING_FLAGS = -Wall -Wextra -Wconversion -Wno-float-conversion -Wno-sign-conversion #-fanalyzer -fsanitize=undefined #-fsanitize=address
+DEBUG_FLAGS = 
+
 SOURCES_TEX = $(wildcard $(REP_DOC)/*.tex)
 DOXYFILE = $(REP_DOC)/Doxyfile
-INCLUDES = -I$(REP_SRC) -I$(REP_SDLINC) -I$(REP_SDLIMGINC) -I$(REP_SDLTTFINC)
 
 OUTIL_MESSAGE = outils/bannière.sh
 
@@ -38,9 +40,10 @@ XELATEX := $(shell command -v xelatex 2> /dev/null)
 
 $(NOM_BIN) : $(OBJETS)
 	@ $(OUTIL_MESSAGE) Compilation du jeu…
-	gcc -o $(REP_BIN)/$@ $^ $(LIB_FLAGS) $(INCLUDES) $(WARNING_FLAGS)
+	gcc -o $(REP_BIN)/$@ $^ $(LIB_FLAGS) $(INCLUDES) $(WARNING_FLAGS) $(DEBUG_FLAGS)
 $(OBJETS) : $(REP_OBJ)/%.o: $(REP_SRC)/%.c $(ENTETES)
-	gcc -o $@ -c $< $(WARNING_FLAGS)
+	gcc -o $@ -c $< $(WARNING_FLAGS) $(DEBUG_FLAGS)
+
 docs : docs_tex docs_doxy
 docs_tex: $(SOURCES_TEX)
 	@ $(OUTIL_MESSAGE) Compilation des fichiers LaTeX…
@@ -57,6 +60,7 @@ endif
 docs_doxy: $(DOXYFILE)
 	@ $(OUTIL_MESSAGE) Génération de la doc Doxygen…
 	cd $(REP_DOC) && doxygen $(subst $(REP_DOC)/, , $<)
+
 reps :
 	mkdir -p $(REPS)
 
@@ -66,6 +70,9 @@ remove : clean
 	rm $(REP_BIN)/$(NOM_BIN)
 
 all : reps $(NOM_BIN) docs
+
+debug : DEBUG_FLAGS += -g
+debug : $(NOM_BIN)
 
 exe : all
 	@ $(OUTIL_MESSAGE) Lancement du jeu…
