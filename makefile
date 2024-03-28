@@ -71,9 +71,11 @@ remove : clean
 
 all : reps $(NOM_BIN) docs
 
+jeu : $(NOM_BIN)
+
 debug : DEBUG_FLAGS += -g
 debug : $(NOM_BIN)
 
-exe : all
+exe : jeu
 	@ $(OUTIL_MESSAGE) Lancement du jeu…
 	$(REP_BIN)/$(NOM_PROG)
