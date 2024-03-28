@@ -48,11 +48,11 @@ docs : docs_tex docs_doxy
 docs_tex: $(SOURCES_TEX)
 	@ $(OUTIL_MESSAGE) Compilation des fichiers LaTeX…
 ifdef XELATEX
-	# se déplacer dans doc/ pour compiler doc/*.tex, le doc/ étant retiré par subst
-	# « -interaction batchmode » pour limiter la loquacité de xelatex
+	@# se déplacer dans doc/ pour compiler doc/*.tex, le doc/ étant retiré par subst
+	@# « -interaction batchmode » pour limiter la loquacité de xelatex
 	cd $(REP_DOC) && xelatex -interaction batchmode $(subst $(REP_DOC)/, , $<)
 else ifdef TECTONIC
-	# compilateur TeX alternatif utilisé chez Matthieu
+	@# compilateur TeX alternatif utilisé chez Matthieu
 	tectonic $<
 else
 	@echo "pas de compilateur TeX trouvé, docs .tex non compilées"
