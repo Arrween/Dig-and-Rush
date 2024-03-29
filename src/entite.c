@@ -4,6 +4,7 @@
  */
 
 #include <limits.h>
+#include <string.h>
 
 #include "entite.h"
 #include "spritesheets.h"
@@ -288,7 +289,9 @@ t_entite * creer_entite_depuis_spritesheet(const char * id,
 t_entite * creer_entite(const char * id, int x, int y, int w, int h,
                         int est_relatif) {
     SDL_Texture * texture = recuperer_texture(id);
-    return creer_entite_depuis_texture(texture, x, y, w, h, est_relatif);
+    t_entite * nouv = creer_entite_depuis_texture(texture, x, y, w, h, est_relatif);
+    strcpy(nouv->type, id);
+    return nouv;
 }
 
 // ne pas détruire (*e)->texture, detruire_ressources s’en charge

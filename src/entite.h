@@ -10,6 +10,8 @@ enum { REPOS_MVT, GAUCHE, DROITE, HAUT, BAS };
 *
 */
 typedef struct s_entite {
+    /** type de l’entité (bloc de terre, personnage, ennemi etc.) */
+    char type[100];
      /** pixels à afficher */
     SDL_Texture * texture;
     /** sous-rectangle à afficher de la texture */

@@ -1,11 +1,13 @@
-#include <stdlib.h>                                                                                           
+#include <stdlib.h>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
+#include <time.h>
 
 #include "tour.h"
 #include "constantes.h"
 #include "entite.h"
 #include "spritesheets.h"
+#include "morceaux_niveau.h"
 
 #define N 10
 
@@ -23,49 +25,14 @@ int boucle_jeu(SDL_Renderer * rend) {
     int pas_defilement = 0;
     int parite_defilement = 0;
     const int DUREE_CREUSER = 8; // Nombre de frames de l'animation "creuser"
+    srand(time(NULL));
 
     int doit_quitter = FAUX;
 
-    // Textures pour les obstacles
-    SDL_Texture * tex_obstacle, * tex_obstacle_terre;
     t_entite * fond, * fond_tour, * fond_tour_2, * perso;
-    t_entite * obstacle, * obstacle2, * obstacle3 = NULL, * obstacle4 = NULL;
-    t_entite * obstacle_terre, * obstacle_terre2, * obstacle_terre3 = NULL, *obstacle_terre4 = NULL;
 
-    // Chargement de l'image de blocs de pierre pour les obstacles
-    tex_obstacle = IMG_LoadTexture(rend, "ressources/Tour/Blocs/pierres_claires/pierre_gpt2.png");
-    if (!tex_obstacle) {
-        printf("Erreur lors du chargement de l'image des blocs de pierre : %s\n", IMG_GetError());
-        // Générer une texture de secours en cas d'échec
-        tex_obstacle = SDL_CreateTexture(rend, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, TAILLE_L, TAILLE_H);
-        SDL_SetRenderTarget(rend, tex_obstacle);
-        SDL_SetRenderDrawColor(rend, 180, 180, 80, 255);
-        SDL_RenderFillRect(rend, NULL);
-        SDL_SetRenderTarget(rend, NULL);
-    }
-
-    // Chargement de l'image de blocs de terre pour les obstacles
-    tex_obstacle_terre = IMG_LoadTexture(rend, "ressources/Tour/Blocs/terre/terre.jpg");
-    if (!tex_obstacle_terre) {
-        printf("Erreur lors du chargement de l'image des blocs de terre : %s\n", IMG_GetError());
-        // Générer une texture de secours en cas d'échec
-        tex_obstacle_terre = SDL_CreateTexture(rend, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, TAILLE_L, TAILLE_H);
-        SDL_SetRenderTarget(rend, tex_obstacle_terre);
-        SDL_SetRenderDrawColor(rend, 150, 75, 0, 255); // Couleur marron pour terre
-        SDL_RenderFillRect(rend, NULL);
-        SDL_SetRenderTarget(rend, NULL);
-    }
-
-    
-
-
-    // Blocs de pierre
-    obstacle = creer_entite_depuis_texture(tex_obstacle, 0, 110, 10, 10, VRAI); // Taille ajustée pour être carrée
-    obstacle2 = creer_entite_depuis_texture(tex_obstacle, 50, 170, 10, 10, VRAI); // Taille ajustée pour être carrée
-
-    // Blocs de terre
-    obstacle_terre = creer_entite_depuis_texture(tex_obstacle_terre, 10, 110, 10, 10, VRAI); // Taille ajustée pour être carrée
-    obstacle_terre2 = creer_entite_depuis_texture(tex_obstacle_terre, 60, 170, 10, 10, VRAI); // Taille ajustée pour être carrée
+    t_entite ** morceau_1 = choisir_morceau_niveau();
+    t_entite ** morceau_2 = choisir_morceau_niveau();
 
     // Initialisation des entités de fond et de personnage
     fond = creer_entite("fond_jeu", -1, -1, -1, -1, FAUX);
@@ -76,10 +43,6 @@ int boucle_jeu(SDL_Renderer * rend) {
     
     changer_hitbox(perso, 26, 24, 51, 76);
     perso->doit_afficher_hitbox = VRAI;
-
-    // Activation de l'affichage des hitbox pour les obstacles
-    obstacle->doit_afficher_hitbox = VRAI;
-    obstacle_terre->doit_afficher_hitbox = VRAI;
 
     // Boucle de jeu principale
     while (doit_boucler) {
@@ -114,22 +77,14 @@ int boucle_jeu(SDL_Renderer * rend) {
                         case SDL_SCANCODE_S:
                             if (perso->a_collision){
                                 changer_animation(perso, CREUSER); 
-                                if (obstacle_terre != NULL && SDL_HasIntersection(&(perso->hitbox), &(obstacle_terre->hitbox))) 
-                                {
-                                detruire_entite(&obstacle_terre);
-                                }
-                                if (obstacle_terre2 != NULL && SDL_HasIntersection(&(perso->hitbox), &(obstacle_terre2->hitbox))) 
-                                {
-                                detruire_entite(&obstacle_terre2);
-                                }
-                                if (obstacle_terre3 != NULL && SDL_HasIntersection(&(perso->hitbox), &(obstacle_terre3->hitbox))) 
-                                {
-                                detruire_entite(&obstacle_terre3);
-                                }
-                                if (obstacle_terre4 != NULL && SDL_HasIntersection(&(perso->hitbox), &(obstacle_terre4->hitbox))) 
-                                {
-                                detruire_entite(&obstacle_terre4);
-                                }
+                                for (int i = 0; morceau_1[i] != NULL; i++)
+                                    if (strcmp(morceau_1[i]->type, "bloc_terre") == 0)
+                                        if (morceau_1[i] != NULL && SDL_HasIntersection(&(perso->hitbox), &(morceau_1[i]->hitbox))) 
+                                            detruire_entite(&morceau_1[i]);
+                                for (int i = 0; morceau_2[i] != NULL; i++)
+                                    if (strcmp(morceau_2[i]->type, "bloc_terre") == 0)
+                                        if (morceau_2[i] != NULL && SDL_HasIntersection(&(perso->hitbox), &(morceau_2[i]->hitbox))) 
+                                            detruire_entite(&morceau_2[i]);
                                 }
                             break;
                         case SDL_SCANCODE_W:
@@ -166,25 +121,19 @@ int boucle_jeu(SDL_Renderer * rend) {
         fond_tour->afficher(rend, fond_tour);
         fond_tour_2->afficher(rend, fond_tour_2);
         perso->afficher(rend, perso);
-        obstacle->afficher(rend, obstacle);
-        obstacle2->afficher(rend, obstacle2);
-        if (obstacle_terre)
-	        obstacle_terre->afficher(rend, obstacle_terre);
-	if (obstacle_terre2)
-        	obstacle_terre2->afficher(rend, obstacle_terre2);
-
+        for (int i = 0; morceau_1[i] != NULL; i++)
+            morceau_1[i]->afficher(rend, morceau_1[i]);
+        for (int i = 0; morceau_2[i] != NULL; i++)
+            morceau_2[i]->afficher(rend, morceau_2[i]);
 
         // Gestion des collisions
-        verif_collision(perso, obstacle);
-        if (!perso->a_collision) {
-            verif_collision(perso, obstacle2);
-        }
-        if (!perso->a_collision && obstacle_terre) {
-            verif_collision(perso, obstacle_terre);
-        }
-        if (!perso->a_collision && obstacle_terre2) {
-            verif_collision(perso, obstacle_terre2);
-        }
+        perso->a_collision = FAUX;
+        for (int i = 0; morceau_1[i] != NULL; i++)
+            if (!perso->a_collision)
+                verif_collision(perso, morceau_1[i]);
+        for (int i = 0; morceau_2[i] != NULL; i++)
+            if (!perso->a_collision)
+                verif_collision(perso, morceau_2[i]);
 
         // Déplacement et animation du personnage
         if (! perso->a_collision)
@@ -204,12 +153,10 @@ int boucle_jeu(SDL_Renderer * rend) {
             }
 
             // Déplacement relatif des obstacles pour simuler le défilement
-            obstacle->changer_pos_rel(obstacle, 0, -pas_defilement);
-            obstacle2->changer_pos_rel(obstacle2, 0, -pas_defilement);
-            if (obstacle_terre)
-	            obstacle_terre->changer_pos_rel(obstacle_terre, 0, -pas_defilement);
-            if (obstacle_terre2)
-            obstacle_terre2->changer_pos_rel(obstacle_terre2, 0, -pas_defilement);
+            for (int i = 0; morceau_1[i] != NULL; i++)
+                morceau_1[i]->changer_pos_rel(morceau_1[i], 0, -pas_defilement);
+            for (int i = 0; morceau_2[i] != NULL; i++)
+                morceau_2[i]->changer_pos_rel(morceau_2[i], 0, -pas_defilement);
             fond_tour->changer_pos_rel(fond_tour, 0, -pas_defilement);
             fond_tour_2->changer_pos_rel(fond_tour_2, 0, -pas_defilement);
 
@@ -219,16 +166,11 @@ int boucle_jeu(SDL_Renderer * rend) {
         // Recréation des obstacles pour simuler un nouveau set d'obstacles après un certain défilement
         if (repere_defilement > 100 && parite_defilement == 0) {
             parite_defilement = 1;
-            detruire_entite(&obstacle3);
-            detruire_entite(&obstacle4);
             detruire_entite(&fond_tour);
-            obstacle3 = creer_entite_depuis_texture(tex_obstacle, 0, 110, 10, 10, VRAI);
-            obstacle4 = creer_entite_depuis_texture(tex_obstacle, 50, 170, 10, 10, VRAI);
 
-            detruire_entite(&obstacle_terre3);
-            detruire_entite(&obstacle_terre4);
-            obstacle_terre3 = creer_entite_depuis_texture(tex_obstacle_terre, 10, 110, 10, 10, VRAI);
-            obstacle_terre4 = creer_entite_depuis_texture(tex_obstacle_terre, 60, 170, 10, 10, VRAI);
+            for (int i = 0; morceau_2[i] != NULL; i++)
+                detruire_entite(&morceau_2[i]);
+            morceau_2 = choisir_morceau_niveau();
             fond_tour = creer_entite("fond_tour",
                              0, fond_tour_2->rect_dst->y + fond_tour_2->rect_dst->h,
                              100, 100, VRAI);
@@ -236,16 +178,11 @@ int boucle_jeu(SDL_Renderer * rend) {
         if (repere_defilement >= 200 && parite_defilement == 1) {
             parite_defilement = 0;
             repere_defilement = 0;
-            detruire_entite(&obstacle);
-            detruire_entite(&obstacle2);
             detruire_entite(&fond_tour_2);
-            detruire_entite(&obstacle_terre);
-            detruire_entite(&obstacle_terre2);
+            for (int i = 0; morceau_1[i] != NULL; i++)
+                detruire_entite(&morceau_1[i]);
+            morceau_1 = choisir_morceau_niveau();
 
-            obstacle = creer_entite_depuis_texture(tex_obstacle, 0, 110, 10, 10, VRAI);
-            obstacle2 = creer_entite_depuis_texture(tex_obstacle, 50, 170, 10, 10, VRAI);
-            obstacle_terre = creer_entite_depuis_texture(tex_obstacle_terre, 10, 110, 10, 10, VRAI);
-            obstacle_terre2 = creer_entite_depuis_texture(tex_obstacle_terre, 60, 170, 10, 10, VRAI);
             fond_tour_2 = creer_entite("fond_tour",
                              0, fond_tour->rect_dst->y + fond_tour->rect_dst->h,
                              100, 100, VRAI);
@@ -261,14 +198,6 @@ int boucle_jeu(SDL_Renderer * rend) {
     detruire_entite(&fond_tour);
     detruire_entite(&fond_tour_2);
     detruire_entite(&perso);
-    detruire_entite(&obstacle);
-    detruire_entite(&obstacle2);
-    detruire_entite(&obstacle3);
-    detruire_entite(&obstacle4);
-    detruire_entite(&obstacle_terre);
-    detruire_entite(&obstacle_terre2);
-    detruire_entite(&obstacle_terre3);
-    detruire_entite(&obstacle_terre4);
 
     return doit_quitter ;
 }
