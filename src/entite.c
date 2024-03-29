@@ -1,3 +1,8 @@
+/**
+ *  \file entite.c
+ *  \brief Gestion des entités, tout objet devant être affiché
+ */
+
 #include <limits.h>
 
 #include "entite.h"
