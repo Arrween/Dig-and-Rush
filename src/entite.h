@@ -1,3 +1,6 @@
+#ifndef ENTITE_H
+#define ENTITE_H
+
 #include <SDL2/SDL.h>
 #include "ressources.h"
 
@@ -74,3 +77,5 @@ void deplacer(t_entite *);
 void animer(t_entite *, long long int compteur_frames);
 void definir_animations(t_entite *, int, ...);
 void changer_animation(t_entite *, t_id_anim);
+
+#endif

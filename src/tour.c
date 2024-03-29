@@ -6,8 +6,8 @@
 #include "tour.h"
 #include "constantes.h"
 #include "entite.h"
-#include "spritesheets.h"
 #include "morceaux_niveau.h"
+#include "listes.h"
 
 #define N 10
 
@@ -25,14 +25,20 @@ int boucle_jeu(SDL_Renderer * rend) {
     int pas_defilement = 0;
     int parite_defilement = 0;
     const int DUREE_CREUSER = 8; // Nombre de frames de l'animation "creuser"
+    int i_liste = 0;
+    t_entite * entite_courante;
+
     srand(time(NULL));
+
+    init_liste(i_liste);
 
     int doit_quitter = FAUX;
 
     t_entite * fond, * fond_tour, * fond_tour_2, * perso;
 
-    t_entite ** morceau_1 = choisir_morceau_niveau();
-    t_entite ** morceau_2 = choisir_morceau_niveau();
+    t_entite ** morceau_niveau = choisir_morceau_niveau();
+    for (int i = 0; morceau_niveau[i] != NULL; i++)
+        ajout_droit(i_liste, morceau_niveau[i]);
 
     // Initialisation des entités de fond et de personnage
     fond = creer_entite("fond_jeu", -1, -1, -1, -1, FAUX);
@@ -62,6 +68,7 @@ int boucle_jeu(SDL_Renderer * rend) {
                             doit_boucler = FAUX;
                             break;
                         case SDL_SCANCODE_H:
+                            printf("taille liste demandée %i\n", taille_liste(i_liste));
                             perso->doit_afficher_hitbox = !perso->doit_afficher_hitbox;
                             break;
                         case SDL_SCANCODE_A:
@@ -77,15 +84,14 @@ int boucle_jeu(SDL_Renderer * rend) {
                         case SDL_SCANCODE_S:
                             if (perso->a_collision){
                                 changer_animation(perso, CREUSER); 
-                                for (int i = 0; morceau_1[i] != NULL; i++)
-                                    if (strcmp(morceau_1[i]->type, "bloc_terre") == 0)
-                                        if (morceau_1[i] != NULL && SDL_HasIntersection(&(perso->hitbox), &(morceau_1[i]->hitbox))) 
-                                            detruire_entite(&morceau_1[i]);
-                                for (int i = 0; morceau_2[i] != NULL; i++)
-                                    if (strcmp(morceau_2[i]->type, "bloc_terre") == 0)
-                                        if (morceau_2[i] != NULL && SDL_HasIntersection(&(perso->hitbox), &(morceau_2[i]->hitbox))) 
-                                            detruire_entite(&morceau_2[i]);
+                                en_tete(i_liste);
+                                while(!hors_liste(i_liste)) {
+                                    entite_courante = valeur_elt(i_liste);
+                                    if (strcmp(entite_courante->type, "bloc_terre") == 0 && SDL_HasIntersection(&(perso->hitbox), &(entite_courante->hitbox)))
+                                        oter_elt(i_liste);
+                                    suivant(i_liste);
                                 }
+                            }
                             break;
                         case SDL_SCANCODE_W:
                             if (perso->a_collision) {
@@ -121,19 +127,24 @@ int boucle_jeu(SDL_Renderer * rend) {
         fond_tour->afficher(rend, fond_tour);
         fond_tour_2->afficher(rend, fond_tour_2);
         perso->afficher(rend, perso);
-        for (int i = 0; morceau_1[i] != NULL; i++)
-            morceau_1[i]->afficher(rend, morceau_1[i]);
-        for (int i = 0; morceau_2[i] != NULL; i++)
-            morceau_2[i]->afficher(rend, morceau_2[i]);
+
+        en_tete(i_liste);
+        while (!hors_liste(i_liste)) {
+            entite_courante = valeur_elt(i_liste);
+            entite_courante->afficher(rend, entite_courante);
+            suivant(i_liste);
+        }
 
         // Gestion des collisions
         perso->a_collision = FAUX;
-        for (int i = 0; morceau_1[i] != NULL; i++)
+        en_tete(i_liste);
+        while (!hors_liste(i_liste)) {
+            entite_courante = valeur_elt(i_liste);
             if (!perso->a_collision)
-                verif_collision(perso, morceau_1[i]);
-        for (int i = 0; morceau_2[i] != NULL; i++)
-            if (!perso->a_collision)
-                verif_collision(perso, morceau_2[i]);
+                verif_collision(perso, entite_courante);
+            entite_courante->afficher(rend, entite_courante);
+            suivant(i_liste);
+        }
 
         // Déplacement et animation du personnage
         if (! perso->a_collision)
@@ -153,10 +164,13 @@ int boucle_jeu(SDL_Renderer * rend) {
             }
 
             // Déplacement relatif des obstacles pour simuler le défilement
-            for (int i = 0; morceau_1[i] != NULL; i++)
-                morceau_1[i]->changer_pos_rel(morceau_1[i], 0, -pas_defilement);
-            for (int i = 0; morceau_2[i] != NULL; i++)
-                morceau_2[i]->changer_pos_rel(morceau_2[i], 0, -pas_defilement);
+            en_tete(i_liste);
+            while (!hors_liste(i_liste)) {
+                entite_courante = valeur_elt(i_liste);
+                entite_courante->changer_pos_rel(entite_courante, 0, -pas_defilement);
+                suivant(i_liste);
+            }
+
             fond_tour->changer_pos_rel(fond_tour, 0, -pas_defilement);
             fond_tour_2->changer_pos_rel(fond_tour_2, 0, -pas_defilement);
 
@@ -168,9 +182,29 @@ int boucle_jeu(SDL_Renderer * rend) {
             parite_defilement = 1;
             detruire_entite(&fond_tour);
 
-            for (int i = 0; morceau_2[i] != NULL; i++)
-                detruire_entite(&morceau_2[i]);
-            morceau_2 = choisir_morceau_niveau();
+            printf("taille liste avant destructions %i\n", taille_liste(i_liste));
+            afficher_liste(i_liste);
+            en_tete(i_liste);
+            while (!hors_liste(i_liste)) {
+                entite_courante = valeur_elt(i_liste);
+                if (entite_courante->rect_dst->y + entite_courante->rect_dst->h < 0) {
+                    oter_elt(i_liste);
+                    detruire_entite(&entite_courante);
+                }
+                else
+                    suivant(i_liste);
+            }
+            printf("taille liste après destructions %i\n", taille_liste(i_liste));
+            afficher_liste(i_liste);
+
+            en_tete(i_liste);
+            morceau_niveau = choisir_morceau_niveau();
+            for (int i = 0; morceau_niveau[i] != NULL; i++)
+                ajout_droit(i_liste, morceau_niveau[i]);
+
+            printf("taille liste après remplissage %i\n", taille_liste(i_liste));
+            afficher_liste(i_liste);
+
             fond_tour = creer_entite("fond_tour",
                              0, fond_tour_2->rect_dst->y + fond_tour_2->rect_dst->h,
                              100, 100, VRAI);
@@ -179,9 +213,29 @@ int boucle_jeu(SDL_Renderer * rend) {
             parite_defilement = 0;
             repere_defilement = 0;
             detruire_entite(&fond_tour_2);
-            for (int i = 0; morceau_1[i] != NULL; i++)
-                detruire_entite(&morceau_1[i]);
-            morceau_1 = choisir_morceau_niveau();
+
+            printf("taille liste avant destructions %i\n", taille_liste(i_liste));
+            afficher_liste(i_liste);
+            en_tete(i_liste);
+            while (!hors_liste(i_liste)) {
+                entite_courante = valeur_elt(i_liste);
+                printf("%i + %i = %i\n", entite_courante->rect_dst->y, entite_courante->rect_dst->h, entite_courante->rect_dst->y + entite_courante->rect_dst->h);
+                if (entite_courante->rect_dst->y + entite_courante->rect_dst->h < 0) {
+                    oter_elt(i_liste);
+                    detruire_entite(&entite_courante);
+                }
+                else 
+                    suivant(i_liste);
+            }
+            printf("taille liste après destructions %i\n", taille_liste(i_liste));
+            afficher_liste(i_liste);
+
+            en_tete(i_liste);
+            morceau_niveau = choisir_morceau_niveau();
+            for (int i = 0; morceau_niveau[i] != NULL; i++)
+                ajout_droit(i_liste, morceau_niveau[i]);
+            printf("taille liste après remplissage %i\n", taille_liste(i_liste));
+            afficher_liste(i_liste);
 
             fond_tour_2 = creer_entite("fond_tour",
                              0, fond_tour->rect_dst->y + fond_tour->rect_dst->h,
