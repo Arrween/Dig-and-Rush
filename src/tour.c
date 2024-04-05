@@ -17,6 +17,33 @@ void verif_collision(t_entite * e1, t_entite * e2) {
     e1->a_collision = e2->a_collision = a_collision;
 }
 
+
+/**
+ * @brief vérifie qu’une entité peut creuser une autre entité selon leurs positions
+ * @param e entité essayant de creuser
+ * @param bloc entité qu’on essaye de creuser
+ * @return VRAI si l’entité `e` est en position de creuser l’entité `bloc`
+ */
+int verifier_peut_creuser(t_entite * e, t_entite * bloc) {
+    if (strcmp(bloc->type, "bloc_terre") != 0)
+        return FAUX;
+    int e_x1 = e->hitbox.x;
+    int e_x2 = e->hitbox.x + e->hitbox.w;
+    int e_y2 = e->hitbox.y + e->hitbox.h;
+    int b_x1 = bloc->hitbox.x;
+    int b_x2 = bloc->hitbox.x + bloc->hitbox.w;
+    int b_y1 = bloc->hitbox.y;
+    // définit le dépassement horizontal autorisé pour que le creusage soit possible
+    // en pourcentage de la largeur de l’entité
+    int depassement_x = e->hitbox.w * 0.4;
+    int depassement_y = 5;
+    return e_x1 >= b_x1 - depassement_x &&
+           e_x2 <= b_x2 + depassement_x &&
+           e_y2 >= b_y1 &&
+           e_y2 <= b_y1 + depassement_y;
+}
+
+
 int boucle_jeu(SDL_Renderer * rend) {
     SDL_Event event;
     int doit_boucler = VRAI;
@@ -84,7 +111,7 @@ int boucle_jeu(SDL_Renderer * rend) {
                                 en_queue(i_liste);
                                 while(!hors_liste(i_liste)) {
                                     entite_courante = valeur_elt(i_liste);
-                                    if (strcmp(entite_courante->type, "bloc_terre") == 0 && SDL_HasIntersection(&(perso->hitbox), &(entite_courante->hitbox)))
+                                    if (verifier_peut_creuser(perso, entite_courante))
                                         oter_elt(i_liste);
                                     else
                                         precedent(i_liste);
