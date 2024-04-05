@@ -61,17 +61,17 @@ void afficher_entite(SDL_Renderer * rend, t_entite * e) {
 
     SDL_Rect * src = e->rect_src->x != -1 ?
                                         e->rect_src : NULL;
+    SDL_Rect * dst = e->rect_dst->w != -1 ?
+                                        e->rect_dst : NULL;
     if (e->est_relatif) {
-        SDL_Rect rect_absolu = convertir_vers_absolu(e->rect_dst,
+        SDL_Rect rect_absolu = convertir_vers_absolu(dst,
                                                      x_tour, 0,
                                                      largeur_zone_jeu,
                                                      TAILLE_H);
-        SDL_RenderCopy(rend, e->texture, src,
-                       &rect_absolu);
+        SDL_RenderCopy(rend, e->texture, src, &rect_absolu);
     }
     else
-        SDL_RenderCopy(rend, e->texture, src,
-                       e->rect_dst);
+        SDL_RenderCopy(rend, e->texture, src, dst);
     if (e->doit_afficher_hitbox) {
         SDL_Rect rect_absolu = convertir_vers_absolu(&(e->hitbox),
                                                      x_tour, 0,
@@ -250,11 +250,7 @@ t_entite * creer_entite_depuis_texture(SDL_Texture * texture,
     nouv->changer_dims = changer_dims;
     nouv->changer_pos_rel = changer_pos_rel_entite;
 
-    if (x == -1 && y == -1 && w == -1 && h == -1) {
-        free(nouv->rect_dst);
-        nouv->rect_dst = NULL;
-    }
-    else {
+    if (!(x == -1 && y == -1 && w == -1 && h == -1)) {
         // ne pas utiliser changer_pos_entite car nécessite hitbox, qui elle-même nécessite rect_dst
         nouv->rect_dst->x = x;
         nouv->rect_dst->y = y;
