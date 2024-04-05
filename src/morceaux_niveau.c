@@ -5,16 +5,20 @@
 #include "constantes.h"
 #include "entite.h"
 #include "morceaux_niveau.h"
+#include "listes.h"
 
 t_entite ** (*fonctions_generation[N_MORCEAUX_NIVEAU])(void) = {
     generer_morceau_niveau_0,
     generer_morceau_niveau_1,
 };
 
-t_entite ** choisir_morceau_niveau() {
+void generer_morceau_niveau(int i_liste) {
     int choix = rand() % N_MORCEAUX_NIVEAU;
     printf("génération morceau de niveau %i\n", choix);
-    return fonctions_generation[choix]();
+    t_entite ** entites = fonctions_generation[choix]();
+    en_queue(i_liste);
+    for (int i = 0; entites[i] != NULL; i++)
+        ajout_droit(i_liste, entites[i]);
 }
 
 // génération par fonctions C plutôt que par parsage d’un fichier pour
