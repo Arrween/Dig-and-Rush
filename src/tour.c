@@ -11,12 +11,19 @@
 
 #define N 10
 
-// Vérifie les collisions d’une entité avec une liste d’autres
+/**
+ * @brief vérifie les collisions d’une entité avec une liste d’autres
+ * @param e1 entité possiblement en collision avec d’autres
+ * @param i_liste indice de la liste d’entités possiblement en collision avec `e1`
+ */
 void verif_collision(t_entite * e1, int i_liste, float * correction_defilement) {
+    // points haut gauche, haut droit etc., décalés sur l’axe vertical pour ne pas déclencher
+    // une collision à la fois sur la gauche, la droite et le bas
     SDL_FPoint e1_hg = {e1->hitbox.x, e1->hitbox.y + 0.05 * e1->hitbox.h};
     SDL_FPoint e1_hd = {e1->hitbox.x + e1->hitbox.w, e1->hitbox.y + 0.05 * e1->hitbox.h};
     SDL_FPoint e1_bg = {e1->hitbox.x, e1->hitbox.y + 0.8 * e1->hitbox.h};
     SDL_FPoint e1_bd = {e1->hitbox.x + e1->hitbox.w, e1->hitbox.y + 0.8 * e1->hitbox.h};
+    // point au milieu du bas de la hitbox
     SDL_FPoint e1_b = {e1->hitbox.x + 0.5 * e1->hitbox.w, e1->hitbox.y + e1->hitbox.h};
 
     e1->a_collision_g = FAUX;
@@ -28,15 +35,21 @@ void verif_collision(t_entite * e1, int i_liste, float * correction_defilement) 
     while (!hors_liste(i_liste)) {
         t_entite * e2 = valeur_elt(i_liste);
 
+        // il y a collision à gauche, droite ou en haut si les deux points correspondants sont
+        // dans la hitbox de l’entité candidate
         int collision_g = SDL_PointInFRect(&e1_hg, &(e2->hitbox)) || SDL_PointInFRect(&e1_bg, &(e2->hitbox));
         int collision_d = SDL_PointInFRect(&e1_hd, &(e2->hitbox)) || SDL_PointInFRect(&e1_bd, &(e2->hitbox));
         int collision_h = SDL_PointInFRect(&e1_hg, &(e2->hitbox)) || SDL_PointInFRect(&e1_hg, &(e2->hitbox));
+        // il y a collision en bas si le point au milieu du bas de la hitbox et dans la hitbox candidate
         int collision_b = SDL_PointInFRect(&e1_b, &(e2->hitbox));
+        // l’entité a une collision à gauche si elle est en collision à gauche avec au moins une entité de la liste
+        // idem pour droite, haut, bas
         e1->a_collision_g = e1->a_collision_g || collision_g;
         e1->a_collision_d = e1->a_collision_d || collision_d;
         e1->a_collision_h = e1->a_collision_h || collision_h;
         e1->a_collision_b = e1->a_collision_b || collision_b;
 
+        // replacement de l’entité si le chevauchement avec l’entité en collision est non négligeable
         if (collision_g && !collision_d) {
             float depassement = e2->hitbox.x + e2->hitbox.w - e1->hitbox.x;
             if (depassement >= 2)
@@ -47,6 +60,8 @@ void verif_collision(t_entite * e1, int i_liste, float * correction_defilement) 
             if (depassement <= -2)
                 e1->changer_pos_rel(e1, depassement, 0);
         }
+        // replacement pour le chevauchement par le bas, utilisation du défilement car on suppose ici
+        // que l’entité est le personnage joueur (à adapter quand nécessaire)
         if (collision_b) {
             float depassement = e2->hitbox.y - (e1->hitbox.y + e1->hitbox.h);
             if (depassement <= 0)
@@ -57,7 +72,6 @@ void verif_collision(t_entite * e1, int i_liste, float * correction_defilement) 
         suivant(i_liste);
     }
 }
-
 
 /**
  * @brief vérifie qu’une entité peut creuser une autre entité selon leurs positions
