@@ -20,7 +20,7 @@ typedef struct s_entite {
     /** sous-rectangle à afficher de la texture */
     SDL_Rect * rect_src;
     /** rectangle où afficher l’entité */
-    SDL_Rect * rect_dst;
+    SDL_FRect * rect_dst;
     /** stockage du décalage horizontal de la frame d’animation à appliquer au rectangle d’affichage, pour gérer des frames d’animations de tailles différentes sans avoir à définir manuellement des rectangles source adaptés à chacune (utilisé si l’entité est chargée d’une spritesheet) */
     int dec_x_dst_prec;
     /** voir dec_x_dst_prec */
@@ -34,7 +34,7 @@ typedef struct s_entite {
      /** booléen indiquant si le rect_dst est relatif à la zone de jeu (la tour) ou absolu (relatif à la fenêtre) */
     int est_relatif;
     /** rectangle utilisé pour le calcul des collisions */
-    SDL_Rect hitbox;
+    SDL_FRect hitbox;
     /** booléen régissant l’affichage du rectangle de collision */
     int doit_afficher_hitbox;
 
@@ -64,21 +64,21 @@ typedef struct s_entite {
 
     void (*afficher) (SDL_Renderer *, struct s_entite *);
     void (*changer_rect_src) (struct s_entite *, int, int, int, int);
-    void (*changer_rect_dst) (struct s_entite *, int, int, int, int);
+    void (*changer_rect_dst) (struct s_entite *, float, float, float, float);
     void (*changer_sprite) (struct s_entite *, int, int);
-    void (*changer_pos) (struct s_entite *, int, int);
-    void (*changer_dims) (struct s_entite *, int, int);
-    void (*changer_pos_rel) (struct s_entite *, int, int);
+    void (*changer_pos) (struct s_entite *, float, float);
+    void (*changer_dims) (struct s_entite *, float, float);
+    void (*changer_pos_rel) (struct s_entite *, float, float);
     void (*creuser) (struct s_entite *);
 } t_entite;
 
-t_entite * creer_entite(const char *, int, int, int, int, int);
-t_entite * creer_entite_depuis_texture(SDL_Texture *, int, int, int, int, int);
-t_entite * creer_entite_depuis_spritesheet(const char *, int, int, int, int, int);
+t_entite * creer_entite(const char *, float, float, float, float, int);
+t_entite * creer_entite_depuis_texture(SDL_Texture *, float, float, float, float, int);
+t_entite * creer_entite_depuis_spritesheet(const char *, float, float, float, float, int);
 void detruire_entite(t_entite **);
 
 void changer_hitbox(t_entite *, int, int, int, int);
-SDL_Rect convertir_vers_absolu(SDL_Rect *, int, int, int, int);
+SDL_FRect convertir_vers_absolu(SDL_FRect *, float, float, float, float);
 void deplacer(t_entite *);
 void animer(t_entite *, long long int compteur_frames);
 void definir_animations(t_entite *, int, ...);

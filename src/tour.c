@@ -12,12 +12,12 @@
 #define N 10
 
 // Vérifie les collisions d’une entité avec une liste d’autres
-void verif_collision(t_entite * e1, int i_liste) {
-    SDL_Point e1_hg = {e1->hitbox.x, e1->hitbox.y + 0.01 * e1->hitbox.h};
-    SDL_Point e1_hd = {e1->hitbox.x + e1->hitbox.w, e1->hitbox.y + 0.01 * e1->hitbox.h};
-    SDL_Point e1_bg = {e1->hitbox.x, e1->hitbox.y + 0.99 * e1->hitbox.h};
-    SDL_Point e1_bd = {e1->hitbox.x + e1->hitbox.w, e1->hitbox.y + 0.99 * e1->hitbox.h};
-    SDL_Point e1_b = {e1->hitbox.x + 0.5 * e1->hitbox.w, e1->hitbox.y + e1->hitbox.h};
+void verif_collision(t_entite * e1, int i_liste, float * correction_defilement) {
+    SDL_FPoint e1_hg = {e1->hitbox.x, e1->hitbox.y + 0.05 * e1->hitbox.h};
+    SDL_FPoint e1_hd = {e1->hitbox.x + e1->hitbox.w, e1->hitbox.y + 0.05 * e1->hitbox.h};
+    SDL_FPoint e1_bg = {e1->hitbox.x, e1->hitbox.y + 0.8 * e1->hitbox.h};
+    SDL_FPoint e1_bd = {e1->hitbox.x + e1->hitbox.w, e1->hitbox.y + 0.8 * e1->hitbox.h};
+    SDL_FPoint e1_b = {e1->hitbox.x + 0.5 * e1->hitbox.w, e1->hitbox.y + e1->hitbox.h};
 
     e1->a_collision_g = FAUX;
     e1->a_collision_d = FAUX;
@@ -28,10 +28,10 @@ void verif_collision(t_entite * e1, int i_liste) {
     while (!hors_liste(i_liste)) {
         t_entite * e2 = valeur_elt(i_liste);
 
-        int collision_g = SDL_PointInRect(&e1_hg, &(e2->hitbox)) || SDL_PointInRect(&e1_bg, &(e2->hitbox));
-        int collision_d = SDL_PointInRect(&e1_hd, &(e2->hitbox)) || SDL_PointInRect(&e1_bd, &(e2->hitbox));
-        int collision_h = SDL_PointInRect(&e1_hg, &(e2->hitbox)) || SDL_PointInRect(&e1_hg, &(e2->hitbox));
-        int collision_b = SDL_PointInRect(&e1_b, &(e2->hitbox));
+        int collision_g = SDL_PointInFRect(&e1_hg, &(e2->hitbox)) || SDL_PointInFRect(&e1_bg, &(e2->hitbox));
+        int collision_d = SDL_PointInFRect(&e1_hd, &(e2->hitbox)) || SDL_PointInFRect(&e1_bd, &(e2->hitbox));
+        int collision_h = SDL_PointInFRect(&e1_hg, &(e2->hitbox)) || SDL_PointInFRect(&e1_hg, &(e2->hitbox));
+        int collision_b = SDL_PointInFRect(&e1_b, &(e2->hitbox));
         e1->a_collision_g = e1->a_collision_g || collision_g;
         e1->a_collision_d = e1->a_collision_d || collision_d;
         e1->a_collision_h = e1->a_collision_h || collision_h;

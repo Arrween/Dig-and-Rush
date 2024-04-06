@@ -21,9 +21,9 @@
  */
 
 
-SDL_Rect convertir_vers_absolu(SDL_Rect * rect, int x_abs, int y_abs,
-                                                int w_abs, int h_abs) {
-    SDL_Rect retour;
+SDL_FRect convertir_vers_absolu(SDL_FRect * rect, float x_abs, float y_abs,
+                                                float w_abs, float h_abs) {
+    SDL_FRect retour;
     retour.x = x_abs + w_abs * rect->x/100;
     retour.y = y_abs + h_abs * rect->y/100;
     retour.w = w_abs * rect->w/100;
@@ -53,33 +53,33 @@ SDL_Rect convertir_vers_absolu(SDL_Rect * rect, int x_abs, int y_abs,
 
 void afficher_entite(SDL_Renderer * rend, t_entite * e) {
 
-    int largeur_tour = TAILLE_L/2;
-    int x_tour = (TAILLE_L-largeur_tour)/2;
-    int x_mur_g = (int) (x_tour + largeur_tour * 0.07);
-    int x_mur_d = (int) (x_tour + largeur_tour * 0.93);
-    int largeur_zone_jeu = x_mur_d - x_mur_g;
+    float largeur_tour = TAILLE_L/2;
+    float x_tour = (TAILLE_L-largeur_tour)/2;
+    float x_mur_g = (x_tour + largeur_tour * 0.07);
+    float x_mur_d = (x_tour + largeur_tour * 0.93);
+    float largeur_zone_jeu = x_mur_d - x_mur_g;
 
-    SDL_Rect * src = e->rect_src->x != -1 ?
+    SDL_Rect * src = e->rect_src->w >= 0 ?
                                         e->rect_src : NULL;
-    SDL_Rect * dst = e->rect_dst->w != -1 ?
+    SDL_FRect * dst = e->rect_dst->w >= 0 ?
                                         e->rect_dst : NULL;
     if (e->est_relatif) {
-        SDL_Rect rect_absolu = convertir_vers_absolu(dst,
+        SDL_FRect rect_absolu = convertir_vers_absolu(dst,
                                                      x_tour, 0,
                                                      largeur_zone_jeu,
                                                      TAILLE_H);
-        SDL_RenderCopy(rend, e->texture, src, &rect_absolu);
+        SDL_RenderCopyF(rend, e->texture, src, &rect_absolu);
     }
     else
-        SDL_RenderCopy(rend, e->texture, src, dst);
+        SDL_RenderCopyF(rend, e->texture, src, dst);
     if (e->doit_afficher_hitbox) {
-        SDL_Rect rect_absolu = convertir_vers_absolu(&(e->hitbox),
+        SDL_FRect rect_absolu = convertir_vers_absolu(&(e->hitbox),
                                                      x_tour, 0,
                                                      largeur_zone_jeu,
                                                      TAILLE_H);
         SDL_SetRenderDrawColor(rend, COULEUR_HITBOX_R, COULEUR_HITBOX_V,
                                COULEUR_HITBOX_B, COULEUR_HITBOX_A);
-        SDL_RenderDrawRect(rend, &rect_absolu);
+        SDL_RenderDrawRectF(rend, &rect_absolu);
     }
 }
 
@@ -89,7 +89,7 @@ void afficher_entite(SDL_Renderer * rend, t_entite * e) {
  *
  *
  */
-void changer_rect(SDL_Rect * rect, int x, int y, int w, int h) {
+void changer_rect(SDL_FRect * rect, float x, float y, float w, float h) {
     rect->x = x;
     rect->y = y;
     rect->w = w;
@@ -97,10 +97,10 @@ void changer_rect(SDL_Rect * rect, int x, int y, int w, int h) {
 }
 
 void changer_rect_src_entite(t_entite * e, int x, int y, int w, int h) {
-    changer_rect(e->rect_src, x, y, w, h);
+    changer_rect((SDL_FRect*)e->rect_src, (float)x, (float)y, (float)w, (float)h);
 }
 
-void changer_rect_dst_entite(t_entite * e, int x, int y, int w, int h) {
+void changer_rect_dst_entite(t_entite * e, float x, float y, float w, float h) {
     changer_rect(e->rect_dst, x, y, w, h);
 }
 
@@ -109,10 +109,10 @@ void changer_sprite(t_entite * e, int x, int y) {
     e->rect_src->y = y;
 }
 
-void changer_pos_entite(t_entite * e, int x, int y) {
-    int xx = e->rect_dst->x;
-    int yy = e->rect_dst->y;
-    int nouv_hitbox_x = e->hitbox.x + x - xx;
+void changer_pos_entite(t_entite * e, float x, float y) {
+    float xx = e->rect_dst->x;
+    float yy = e->rect_dst->y;
+    float nouv_hitbox_x = e->hitbox.x + x - xx;
     if (nouv_hitbox_x > 0 && nouv_hitbox_x < 100) {
         e->rect_dst->x = x;
         e->hitbox.x = nouv_hitbox_x;
@@ -121,29 +121,29 @@ void changer_pos_entite(t_entite * e, int x, int y) {
     e->hitbox.y += y - yy;
 }
 
-void changer_dims(t_entite * e, int w, int h) {
+void changer_dims(t_entite * e, float w, float h) {
     e->rect_dst->w = w;
     e->rect_dst->h = h;
 }
 
-void changer_pos_rel_entite(t_entite * e, int dx, int dy) {
+void changer_pos_rel_entite(t_entite * e, float dx, float dy) {
     changer_pos_entite(e, e->rect_dst->x + dx,
                            e->rect_dst->y + dy);
 }
 
 void changer_hitbox(t_entite * e, int x, int y, int w, int h) {
-    int dst_x = e->rect_dst->x;
-    int dst_y = e->rect_dst->y;
-    int dst_w = e->rect_dst->w;
-    int dst_h = e->rect_dst->h;
+    float dst_x = e->rect_dst->x;
+    float dst_y = e->rect_dst->y;
+    float dst_w = e->rect_dst->w;
+    float dst_h = e->rect_dst->h;
     if (x > INT_MIN)
-        e->hitbox.x = dst_x + dst_w * x/100;
+        e->hitbox.x = dst_x + dst_w * (float)x/100;
     if (y > INT_MIN)
-        e->hitbox.y = dst_y + dst_h * y/100;
+        e->hitbox.y = dst_y + dst_h * (float)y/100;
     if (w > -1)
-        e->hitbox.w = dst_w * w/100;
+        e->hitbox.w = dst_w * (float)w/100;
     if (h > -1)
-        e->hitbox.h = dst_h * h/100;
+        e->hitbox.h = dst_h * (float)h/100;
 }
 
 void deplacer(t_entite * e) {
@@ -232,7 +232,7 @@ void changer_animation(t_entite * e, t_id_anim id_anim) {
 }
 
 t_entite * creer_entite_depuis_texture(SDL_Texture * texture,
-                                       int x, int y, int w, int h,
+                                       float x, float y, float w, float h,
                                        int est_relatif) {
     t_entite * nouv;
     nouv = malloc(sizeof(t_entite));
@@ -257,13 +257,12 @@ t_entite * creer_entite_depuis_texture(SDL_Texture * texture,
     nouv->changer_dims = changer_dims;
     nouv->changer_pos_rel = changer_pos_rel_entite;
 
-    if (!(x == -1 && y == -1 && w == -1 && h == -1)) {
-        // ne pas utiliser changer_pos_entite car nécessite hitbox, qui elle-même nécessite rect_dst
-        nouv->rect_dst->x = x;
-        nouv->rect_dst->y = y;
-        nouv->changer_dims(nouv, w, h);
-        changer_hitbox(nouv, 0, 0, 100, 100);
-    }
+    // ne pas utiliser changer_pos_entite car nécessite hitbox, qui elle-même nécessite rect_dst
+    nouv->rect_dst->x = x;
+    nouv->rect_dst->y = y;
+    nouv->changer_dims(nouv, w, h);
+    changer_hitbox(nouv, 0, 0, 100, 100);
+
     nouv->doit_afficher_hitbox = FAUX;
     nouv->est_relatif = est_relatif;
     nouv->deplacement = REPOS;
@@ -279,7 +278,7 @@ t_entite * creer_entite_depuis_texture(SDL_Texture * texture,
 }
 
 t_entite * creer_entite_depuis_spritesheet(const char * id,
-                                           int x, int y, int w, int h,
+                                           float x, float y, float w, float h,
                                            int est_relatif) {
     t_spritesheet * spritesheet = recuperer_spritesheet(id);
     t_entite * nouv = creer_entite_depuis_texture(spritesheet->texture, x, y, w, h, est_relatif);
@@ -289,7 +288,7 @@ t_entite * creer_entite_depuis_spritesheet(const char * id,
     return nouv;
 }
 
-t_entite * creer_entite(const char * id, int x, int y, int w, int h,
+t_entite * creer_entite(const char * id, float x, float y, float w, float h,
                         int est_relatif) {
     SDL_Texture * texture = recuperer_texture(id);
     t_entite * nouv = creer_entite_depuis_texture(texture, x, y, w, h, est_relatif);
