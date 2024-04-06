@@ -78,7 +78,7 @@ t_entite * creer_entite_depuis_spritesheet(const char *, float, float, float, fl
 void detruire_entite(t_entite **);
 
 void changer_hitbox(t_entite *, int, int, int, int);
-SDL_FRect convertir_vers_absolu(SDL_FRect *, float, float, float, float);
+SDL_FRect convertir_vers_absolu(SDL_FRect *, SDL_FRect);
 void deplacer(t_entite *);
 void animer(t_entite *, long long int compteur_frames);
 void definir_animations(t_entite *, int, ...);

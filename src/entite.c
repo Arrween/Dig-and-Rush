@@ -10,24 +10,20 @@
 #include "spritesheets.h"
 #include "constantes.h"
 
+
 /**
  * @brief Convertit des coordonnées relatives en coordonnées absolues.
  * @param rect Le rectangle avec les coordonnées relatives.
- * @param x_abs La position X absolue de base.
- * @param y_abs La position Y absolue de base.
- * @param w_abs La largeur absolue de base.
- * @param h_abs La hauteur absolue de base.
+ * @param rect_abs Le rectangle avec les coordonnées absolues de base
  * @return SDL_Rect Le rectangle avec les coordonnées absolues calculées.
  */
 
-
-SDL_FRect convertir_vers_absolu(SDL_FRect * rect, float x_abs, float y_abs,
-                                                float w_abs, float h_abs) {
+SDL_FRect convertir_vers_absolu(SDL_FRect * rect, SDL_FRect rect_abs) {
     SDL_FRect retour;
-    retour.x = x_abs + w_abs * rect->x/100;
-    retour.y = y_abs + h_abs * rect->y/100;
-    retour.w = w_abs * rect->w/100;
-    retour.h = h_abs * rect->h/100;
+    retour.x = rect_abs.x + rect_abs.w * rect->x/100;
+    retour.y = rect_abs.y + rect_abs.h * rect->y/100;
+    retour.w = rect_abs.w * rect->w/100;
+    retour.h = rect_abs.h * rect->h/100;
     return retour;
 }
 
@@ -53,30 +49,18 @@ SDL_FRect convertir_vers_absolu(SDL_FRect * rect, float x_abs, float y_abs,
 
 void afficher_entite(SDL_Renderer * rend, t_entite * e) {
 
-    float largeur_tour = TAILLE_L/2;
-    float x_tour = (TAILLE_L-largeur_tour)/2;
-    float x_mur_g = (x_tour + largeur_tour * 0.07);
-    float x_mur_d = (x_tour + largeur_tour * 0.93);
-    float largeur_zone_jeu = x_mur_d - x_mur_g;
+    SDL_FRect zone_jeu = {TAILLE_L/4, 0, TAILLE_L/2, TAILLE_H};
 
-    SDL_Rect * src = e->rect_src->w >= 0 ?
-                                        e->rect_src : NULL;
-    SDL_FRect * dst = e->rect_dst->w >= 0 ?
-                                        e->rect_dst : NULL;
+    SDL_Rect * src = e->rect_src->w >= 0 ? e->rect_src : NULL;
+    SDL_FRect * dst = e->rect_dst->w >= 0 ? e->rect_dst : NULL;
     if (e->est_relatif) {
-        SDL_FRect rect_absolu = convertir_vers_absolu(dst,
-                                                     x_tour, 0,
-                                                     largeur_zone_jeu,
-                                                     TAILLE_H);
+        SDL_FRect rect_absolu = convertir_vers_absolu(dst, zone_jeu);
         SDL_RenderCopyF(rend, e->texture, src, &rect_absolu);
     }
     else
         SDL_RenderCopyF(rend, e->texture, src, dst);
     if (e->doit_afficher_hitbox) {
-        SDL_FRect rect_absolu = convertir_vers_absolu(&(e->hitbox),
-                                                     x_tour, 0,
-                                                     largeur_zone_jeu,
-                                                     TAILLE_H);
+        SDL_FRect rect_absolu = convertir_vers_absolu(&(e->hitbox), zone_jeu);
         SDL_SetRenderDrawColor(rend, COULEUR_HITBOX_R, COULEUR_HITBOX_V,
                                COULEUR_HITBOX_B, COULEUR_HITBOX_A);
         SDL_RenderDrawRectF(rend, &rect_absolu);
