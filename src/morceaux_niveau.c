@@ -19,6 +19,7 @@ void generer_morceau_niveau(int i_liste) {
     en_queue(i_liste);
     for (int i = 0; entites[i] != NULL; i++)
         ajout_droit(i_liste, entites[i]);
+    free(entites);
 }
 
 // génération par fonctions C plutôt que par parsage d’un fichier pour
@@ -51,4 +52,21 @@ t_entite ** generer_morceau_niveau_1(void) {
     entites[8] = NULL;
 
     return entites;
+}
+
+void generer_murs(int i_liste) {
+    int n_blocs_mur = 20;
+    int n_blocs_total = n_blocs_mur * 2 * 2; // une rangée fois deux côtés fois deux écrans à générer
+    t_entite * entites[n_blocs_total];
+
+    for (int i = 0; i < n_blocs_mur; i++) {
+        entites[i] = creer_entite("bloc_pierre", 0, i*5, 5, 5, VRAI); // côté gauche
+        entites[n_blocs_mur + i] = creer_entite("bloc_pierre", 0, (n_blocs_mur+i)*5, 5, 5, VRAI); // côté gauche écran du dessous
+        entites[n_blocs_mur*2 + i] = creer_entite("bloc_pierre", 95, i*5, 5, 5, VRAI); // côté droit
+        entites[n_blocs_mur*3 + i] = creer_entite("bloc_pierre", 95, (n_blocs_mur+i)*5, 5, 5, VRAI); // côté droit écran du dessous
+    }
+
+    en_queue(i_liste);
+    for (int i = 0; i < n_blocs_total; i++)
+        ajout_droit(i_liste, entites[i]);
 }

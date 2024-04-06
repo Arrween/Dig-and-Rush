@@ -125,6 +125,8 @@ int boucle_jeu(SDL_Renderer * rend) {
     
     generer_morceau_niveau(i_liste);
 
+    generer_murs(i_liste);
+
     changer_hitbox(perso, 26, 22, 51, 74);
     perso->doit_afficher_hitbox = VRAI;
 
@@ -276,6 +278,7 @@ int boucle_jeu(SDL_Renderer * rend) {
             }
 
             generer_morceau_niveau(i_liste);
+            generer_murs(i_liste);
         }
 
         SDL_RenderPresent(rend);
