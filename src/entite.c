@@ -147,11 +147,18 @@ void changer_hitbox(t_entite * e, int x, int y, int w, int h) {
 }
 
 void deplacer(t_entite * e) {
+    int depl_x = 0;
+    int depl_y = 0;
+    if (e->deplacement == GAUCHE && !e->a_collision_g)
+        depl_x = -1;
+    if (e->deplacement == DROITE && !e->a_collision_d)
+        depl_x = 1;
+    if (e->deplacement == HAUT && !e->a_collision_h)
+        depl_y = -1;
+    if (e->deplacement == BAS && !e->a_collision_b)
+        depl_y = 1;
     if (e->deplacement != REPOS_MVT) {
-        e->changer_pos_rel(e,
-            e->deplacement == GAUCHE ? -1 : (e->deplacement == DROITE?1:0),
-            e->deplacement == HAUT ? -1 : (e->deplacement == BAS ? 1 : 0)
-        );
+        e->changer_pos_rel(e, depl_x, depl_y);
         if (e->deplacement == GAUCHE || e->deplacement == DROITE)
             e->sens_regard = e->deplacement;
     }
@@ -175,7 +182,7 @@ void animer(t_entite * e, long long int compteur_frames) {
     else
         pas_anim = calculer_pas_anim(compteur_frames, anim->vitesse_anim);
 
-    if (! e->a_collision || anim->id == REPOS)
+    if (! e->a_collision_b || anim->id == REPOS)
         e->x_sprite = anim->x_sprite_ini;
     else
         e->x_sprite = (e->x_sprite + pas_anim) % anim->longueur;

@@ -11,10 +11,46 @@
 
 #define N 10
 
-// Vérifie si deux entités se chevauchent
-void verif_collision(t_entite * e1, t_entite * e2) {
-    int a_collision = SDL_HasIntersection(&(e1->hitbox), &(e2->hitbox));
-    e1->a_collision = e2->a_collision = a_collision;
+// Vérifie les collisions d’une entité avec une liste d’autres
+void verif_collision(t_entite * e1, int i_liste) {
+    SDL_Point e1_hg = {e1->hitbox.x, e1->hitbox.y + 0.01 * e1->hitbox.h};
+    SDL_Point e1_hd = {e1->hitbox.x + e1->hitbox.w, e1->hitbox.y + 0.01 * e1->hitbox.h};
+    SDL_Point e1_bg = {e1->hitbox.x, e1->hitbox.y + 0.99 * e1->hitbox.h};
+    SDL_Point e1_bd = {e1->hitbox.x + e1->hitbox.w, e1->hitbox.y + 0.99 * e1->hitbox.h};
+    SDL_Point e1_b = {e1->hitbox.x + 0.5 * e1->hitbox.w, e1->hitbox.y + e1->hitbox.h};
+
+    e1->a_collision_g = FAUX;
+    e1->a_collision_d = FAUX;
+    e1->a_collision_h = FAUX;
+    e1->a_collision_b = FAUX;
+
+    en_tete(i_liste);
+    while (!hors_liste(i_liste)) {
+        t_entite * e2 = valeur_elt(i_liste);
+
+        int collision_g = SDL_PointInRect(&e1_hg, &(e2->hitbox)) || SDL_PointInRect(&e1_bg, &(e2->hitbox));
+        int collision_d = SDL_PointInRect(&e1_hd, &(e2->hitbox)) || SDL_PointInRect(&e1_bd, &(e2->hitbox));
+        int collision_h = SDL_PointInRect(&e1_hg, &(e2->hitbox)) || SDL_PointInRect(&e1_hg, &(e2->hitbox));
+        int collision_b = SDL_PointInRect(&e1_b, &(e2->hitbox));
+        e1->a_collision_g = e1->a_collision_g || collision_g;
+        e1->a_collision_d = e1->a_collision_d || collision_d;
+        e1->a_collision_h = e1->a_collision_h || collision_h;
+        e1->a_collision_b = e1->a_collision_b || collision_b;
+
+        if (collision_g && !collision_d) {
+            int depassement = e2->hitbox.x + e2->hitbox.w - e1->hitbox.x;
+            if (depassement >= 2)
+                e1->changer_pos_rel(e1, depassement, 0);
+        }
+        if (collision_d && !collision_g) {
+            int depassement = e2->hitbox.x - (e1->hitbox.x + e1->hitbox.w);
+            if (depassement <= -2)
+                e1->changer_pos_rel(e1, depassement, 0);
+        }
+
+
+        suivant(i_liste);
+    }
 }
 
 
@@ -97,16 +133,16 @@ int boucle_jeu(SDL_Renderer * rend) {
                             break;
                         case SDL_SCANCODE_A:
                             perso->deplacement = GAUCHE;
-                            if (perso->a_collision)
+                            if (perso->a_collision_b)
                                 changer_animation(perso, DEPL_G);
                             break;
                         case SDL_SCANCODE_D:
                             perso->deplacement = DROITE;
-                            if (perso->a_collision)
+                            if (perso->a_collision_b)
                                 changer_animation(perso, DEPL_D);
                             break;
                         case SDL_SCANCODE_S:
-                            if (perso->a_collision){
+                            if (perso->a_collision_b){
                                 changer_animation(perso, CREUSER); 
                                 en_queue(i_liste);
                                 while(!hors_liste(i_liste)) {
@@ -119,7 +155,7 @@ int boucle_jeu(SDL_Renderer * rend) {
                             }
                             break;
                         case SDL_SCANCODE_W:
-                            if (perso->a_collision) {
+                            if (perso->a_collision_b) {
                                 if (perso->sens_regard == GAUCHE)
                                     changer_animation(perso, ATTQ_G);
                                 else if (perso->sens_regard == DROITE)
@@ -136,7 +172,7 @@ int boucle_jeu(SDL_Renderer * rend) {
                         case SDL_SCANCODE_D:
                         case SDL_SCANCODE_S:
                         case SDL_SCANCODE_W:
-                            if (perso->a_collision)
+                            if (perso->a_collision_b)
                                 changer_animation(perso, REPOS);
                             perso->deplacement = REPOS_MVT;
                             break;
@@ -154,26 +190,24 @@ int boucle_jeu(SDL_Renderer * rend) {
         fond_tour_2->afficher(rend, fond_tour_2);
         perso->afficher(rend, perso);
 
-        perso->a_collision = FAUX;
         en_tete(i_liste);
         while (!hors_liste(i_liste)) {
             entite_courante = valeur_elt(i_liste);
-            // affichage des entités
             entite_courante->afficher(rend, entite_courante);
-            // Gestion des collisions
-            if (!perso->a_collision)
-                verif_collision(perso, entite_courante);
             suivant(i_liste);
         }
 
+        // Gestion des collisions
+        verif_collision(perso, i_liste);
+
         // Déplacement et animation du personnage
-        if (! perso->a_collision)
+        if (! perso->a_collision_b)
             changer_animation(perso, perso->sens_regard == GAUCHE ? CHUTE_G : CHUTE_D);
         deplacer(perso);
         animer(perso, compteur_frames);
 
         // Logique de défilement des obstacles
-        if (!perso->a_collision) {
+        if (!perso->a_collision_b) {
             // Calcul du pas de défilement en fonction de la vitesse de chute et du compteur de frames
             if (VITESSE_CHUTE >= 1) {
                 pas_defilement = (int)VITESSE_CHUTE;

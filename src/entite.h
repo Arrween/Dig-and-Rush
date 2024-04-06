@@ -38,8 +38,14 @@ typedef struct s_entite {
     /** booléen régissant l’affichage du rectangle de collision */
     int doit_afficher_hitbox;
 
-     /** booléen indiquant si l’entité est en collision avec une autre */
-    int a_collision;
+     /** booléen indiquant si l’entité est en collision avec une autre à sa gauche */
+    int a_collision_g;
+     /** booléen indiquant si l’entité est en collision avec une autre à sa droite */
+    int a_collision_d;
+     /** booléen indiquant si l’entité est en collision avec une autre au-dessus */
+    int a_collision_h;
+     /** booléen indiquant si l’entité est en collision avec une autre au-dessous */
+    int a_collision_b;
     /** sens vers lequel se déplace l’entité */
     int deplacement;
     /** sens (gauche ou droite) vers lequel regarde l’entité */

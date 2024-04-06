@@ -29,9 +29,9 @@ t_entite ** generer_morceau_niveau_0(void) {
     t_entite ** entites = malloc(sizeof(t_entite*) * (n_entites+1)); // « +1 » pour ajouter un marqueur de fin de tableau NULL
 
     // tailles ajustées pour être carrées
-    entites[0] = creer_entite("bloc_pierre", 0, 110, 10, 10, VRAI);
+    entites[0] = creer_entite("bloc_pierre", 0, 110, 20, 10, VRAI);
     entites[1] = creer_entite("bloc_pierre", 50, 170, 10, 10, VRAI);
-    entites[2] = creer_entite("bloc_terre", 10, 110, 10, 10, VRAI);
+    entites[2] = creer_entite("bloc_terre", 20, 110, 10, 10, VRAI);
     entites[3] = creer_entite("bloc_terre", 60, 170, 10, 10, VRAI);
     entites[4] = NULL;
 
@@ -39,13 +39,16 @@ t_entite ** generer_morceau_niveau_0(void) {
 }
 
 t_entite ** generer_morceau_niveau_1(void) {
-    int n_entites = 6;
+    int n_entites = 8;
     t_entite ** entites = malloc(sizeof(t_entite*) * (n_entites+1)); // « +1 » pour ajouter un marqueur de fin de tableau NULL
 
-    for (int i = 0; i < n_entites; i++) {
+    for (int i = 0; i < n_entites/2; i++) {
         entites[i] = creer_entite("bloc_terre", 10*i, 100 + i*5, 10, 10, VRAI);
     }
-    entites[6] = NULL;
+    for (int i = n_entites/2; i < n_entites; i++) {
+        entites[i] = creer_entite("bloc_terre", 10*i, 100 + (n_entites-i)*5, 10, 10, VRAI);
+    }
+    entites[8] = NULL;
 
     return entites;
 }
