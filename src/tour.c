@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
+#include <SDL2/SDL_ttf.h>
 #include <time.h>
 
 #include "tour.h"
@@ -121,17 +122,37 @@ int boucle_jeu(SDL_Renderer * rend) {
     fond_tour = creer_entite("fond_tour", 0, 0, 100, 100, VRAI);
     fond_tour_2 = creer_entite("fond_tour", 0, 100, 100, 100, VRAI);
 
-    perso = creer_entite_depuis_spritesheet("matt", 40, 20, 18, 12, VRAI);
+    perso = creer_entite_depuis_spritesheet("matt", 40, 20, 15, 12, VRAI);
     
-    generer_morceau_niveau(i_liste);
+    generer_morceau_niveau(i_liste, -1);
 
     generer_murs(i_liste);
 
     changer_hitbox(perso, 26, 22, 51, 74);
+
     perso->doit_afficher_hitbox = VRAI;
+    int lumiere_est_allumee = VRAI;
+
+    // texture pour afficher une ombre quand la lumière est éteinte
+    SDL_Texture * tex_ombre = SDL_CreateTexture(rend, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_STREAMING, TAILLE_L, TAILLE_H);
+    SDL_SetTextureBlendMode(tex_ombre, SDL_BLENDMODE_BLEND);
+    SDL_PixelFormat * format = SDL_AllocFormat(SDL_PIXELFORMAT_RGBA8888);
+    SDL_SetRenderDrawBlendMode(rend, SDL_BLENDMODE_BLEND);
+
+    // compteur de FPS
+    TTF_Init();
+    SDL_Color couleur_fps = {0,0,0,255};
+    TTF_Font * police = TTF_OpenFont("ressources/Menu/Police/font1.ttf", 50);
+    SDL_Surface * surface_fps = TTF_RenderText_Solid(police, "", couleur_fps);
+    SDL_Rect dst_fps = {20, TAILLE_H-40, 100, 30};
+
+    // chronométrage du temps de chaque frame
+    clock_t chrono_deb, chrono_fin;
+    int microsec_par_frame;
 
     // Boucle de jeu principale
     while (doit_boucler) {
+        chrono_deb = clock();
         // Gestion des événements
         while (SDL_PollEvent(&event)) {
             switch (event.type) {
@@ -149,6 +170,9 @@ int boucle_jeu(SDL_Renderer * rend) {
                             break;
                         case SDL_SCANCODE_H:
                             perso->doit_afficher_hitbox = !perso->doit_afficher_hitbox;
+                            break;
+                        case SDL_SCANCODE_L:
+                            lumiere_est_allumee = !lumiere_est_allumee;
                             break;
                         case SDL_SCANCODE_A:
                             perso->deplacement = GAUCHE;
@@ -204,6 +228,11 @@ int boucle_jeu(SDL_Renderer * rend) {
         // Affichage des entités
         SDL_RenderClear(rend);
 
+        detruire_entite(&fond);
+        if (lumiere_est_allumee)
+            fond = creer_entite("fond_jeu", -1, -1, -1, -1, FAUX);
+        else
+            fond = creer_entite("fond_jeu_nuit", -1, -1, -1, -1, FAUX);
         fond->afficher(rend, fond);
         fond_tour->afficher(rend, fond_tour);
         fond_tour_2->afficher(rend, fond_tour_2);
@@ -215,6 +244,36 @@ int boucle_jeu(SDL_Renderer * rend) {
             entite_courante->afficher(rend, entite_courante);
             suivant(i_liste);
         }
+
+        if (!lumiere_est_allumee) {
+            Uint32 * pixels;
+            int pitch;
+            SDL_LockTexture(tex_ombre, NULL, (void**)&pixels, &pitch);
+            SDL_FRect zone_jeu = {TAILLE_L/4, 0, TAILLE_L/2, TAILLE_H};
+            SDL_FRect rect_perso_abs = convertir_vers_absolu(perso->rect_dst, zone_jeu);
+            for (int i = zone_jeu.x; i < zone_jeu.x + zone_jeu.w; i++) {
+                for (int j = zone_jeu.y; j < zone_jeu.y + zone_jeu.h; j++) {
+                    int x = (i-(rect_perso_abs.x+rect_perso_abs.w/2));
+                    int y = (j-(rect_perso_abs.y+rect_perso_abs.h/2));
+                    int distance = x*x + y*y;
+                    int rayon = 60;
+                    if (distance > rayon*rayon) {
+                        float alpha = ((float)(distance - rayon*rayon)) / (TAILLE_L/2*TAILLE_L/2 + TAILLE_H/2*TAILLE_H/2) * 255. * 6.;
+                        pixels[j * TAILLE_L + i] = SDL_MapRGBA(format, 0, 0, 0, alpha < 255 ? alpha : 255);
+                    }
+                    else
+                        pixels[j * TAILLE_L + i] = SDL_MapRGBA(format, 0, 0, 0, 0);
+                }
+            }
+            // SDL_FreeFormat(format);
+            SDL_UnlockTexture(tex_ombre);
+            SDL_RenderCopy(rend, tex_ombre, NULL, NULL);
+        }
+
+        SDL_Texture * tex_fps = SDL_CreateTextureFromSurface(rend, surface_fps);
+        SDL_RenderCopy(rend, tex_fps, NULL, &dst_fps);
+
+        SDL_RenderPresent(rend);
 
         // Gestion des collisions
         float correction_defilement = 0;
@@ -277,13 +336,25 @@ int boucle_jeu(SDL_Renderer * rend) {
                     precedent(i_liste);
             }
 
-            generer_morceau_niveau(i_liste);
+            generer_morceau_niveau(i_liste, -1);
             generer_murs(i_liste);
         }
 
-        SDL_RenderPresent(rend);
-        SDL_Delay(1000 / FPS); // Contrôle du taux de rafraîchissement
         compteur_frames++;
+
+        chrono_fin = clock();
+        microsec_par_frame = (chrono_fin - chrono_deb) * 1000000 / CLOCKS_PER_SEC;
+        // printf("%i μs\n", microsec_par_frame);
+        char txt_fps[30];
+        if (compteur_frames % 10 == 0) {
+            sprintf(txt_fps, "%.2f FPS", 1000000./microsec_par_frame);
+            SDL_FreeSurface(surface_fps);
+            surface_fps = TTF_RenderText_Solid(police, txt_fps, couleur_fps);
+        }
+
+        int attente = 1000 / FPS - microsec_par_frame/1000;
+
+        SDL_Delay(attente > 0 ? attente : 0); // Contrôle du taux de rafraîchissement
     }
 
     // Libération des ressources
