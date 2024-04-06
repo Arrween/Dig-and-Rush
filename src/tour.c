@@ -47,6 +47,11 @@ void verif_collision(t_entite * e1, int i_liste, float * correction_defilement) 
             if (depassement <= -2)
                 e1->changer_pos_rel(e1, depassement, 0);
         }
+        if (collision_b) {
+            float depassement = e2->hitbox.y - (e1->hitbox.y + e1->hitbox.h);
+            if (depassement <= 0)
+                *correction_defilement = depassement;
+        }
 
 
         suivant(i_liste);
@@ -85,7 +90,7 @@ int boucle_jeu(SDL_Renderer * rend) {
     int doit_boucler = VRAI;
     int repere_defilement = 0;
     long long compteur_frames = 0;
-    int pas_defilement = 0;
+    float pas_defilement = 0;
     int parite_defilement = 0;
     const int DUREE_CREUSER = 8; // Nombre de frames de l'animation "creuser"
     int i_liste = 0;
@@ -108,7 +113,7 @@ int boucle_jeu(SDL_Renderer * rend) {
     
     generer_morceau_niveau(i_liste);
 
-    changer_hitbox(perso, 26, 24, 51, 76);
+    changer_hitbox(perso, 26, 22, 51, 74);
     perso->doit_afficher_hitbox = VRAI;
 
     // Boucle de jeu principale
@@ -198,7 +203,8 @@ int boucle_jeu(SDL_Renderer * rend) {
         }
 
         // Gestion des collisions
-        verif_collision(perso, i_liste);
+        float correction_defilement = 0;
+        verif_collision(perso, i_liste, &correction_defilement);
 
         // Déplacement et animation du personnage
         if (! perso->a_collision_b)
@@ -210,25 +216,29 @@ int boucle_jeu(SDL_Renderer * rend) {
         if (!perso->a_collision_b) {
             // Calcul du pas de défilement en fonction de la vitesse de chute et du compteur de frames
             if (VITESSE_CHUTE >= 1) {
-                pas_defilement = (int)VITESSE_CHUTE;
+                pas_defilement = VITESSE_CHUTE;
             } else if (compteur_frames % (int)(1 / (VITESSE_CHUTE)) == 0) {
                 pas_defilement = 1;
             } else {
                 pas_defilement = 0;
             }
+            repere_defilement += pas_defilement;
+        }
+        else {
+            pas_defilement = correction_defilement;
+        }
 
-            // Déplacement relatif des obstacles pour simuler le défilement
-            en_tete(i_liste);
-            while (!hors_liste(i_liste)) {
-                entite_courante = valeur_elt(i_liste);
-                entite_courante->changer_pos_rel(entite_courante, 0, -pas_defilement);
-                suivant(i_liste);
-            }
+        // Déplacement relatif des obstacles pour simuler le défilement
+        en_tete(i_liste);
+        while (!hors_liste(i_liste)) {
+            entite_courante = valeur_elt(i_liste);
+            entite_courante->changer_pos_rel(entite_courante, 0, -pas_defilement);
+            suivant(i_liste);
+        }
 
+        if (!perso->a_collision_b) {
             fond_tour->changer_pos_rel(fond_tour, 0, -pas_defilement);
             fond_tour_2->changer_pos_rel(fond_tour_2, 0, -pas_defilement);
-
-            repere_defilement += pas_defilement;
         }
 
         // Recréation des obstacles pour simuler un nouveau set d'obstacles après un certain défilement
