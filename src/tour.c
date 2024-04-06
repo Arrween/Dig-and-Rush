@@ -38,12 +38,12 @@ void verif_collision(t_entite * e1, int i_liste, float * correction_defilement) 
         e1->a_collision_b = e1->a_collision_b || collision_b;
 
         if (collision_g && !collision_d) {
-            int depassement = e2->hitbox.x + e2->hitbox.w - e1->hitbox.x;
+            float depassement = e2->hitbox.x + e2->hitbox.w - e1->hitbox.x;
             if (depassement >= 2)
                 e1->changer_pos_rel(e1, depassement, 0);
         }
         if (collision_d && !collision_g) {
-            int depassement = e2->hitbox.x - (e1->hitbox.x + e1->hitbox.w);
+            float depassement = e2->hitbox.x - (e1->hitbox.x + e1->hitbox.w);
             if (depassement <= -2)
                 e1->changer_pos_rel(e1, depassement, 0);
         }
@@ -88,10 +88,8 @@ int verifier_peut_creuser(t_entite * e, t_entite * bloc) {
 int boucle_jeu(SDL_Renderer * rend) {
     SDL_Event event;
     int doit_boucler = VRAI;
-    int repere_defilement = 0;
     long long compteur_frames = 0;
     float pas_defilement = 0;
-    int parite_defilement = 0;
     const int DUREE_CREUSER = 8; // Nombre de frames de l'animation "creuser"
     int i_liste = 0;
     t_entite * entite_courante;
@@ -222,7 +220,6 @@ int boucle_jeu(SDL_Renderer * rend) {
             } else {
                 pas_defilement = 0;
             }
-            repere_defilement += pas_defilement;
         }
         else {
             pas_defilement = correction_defilement;
@@ -235,39 +232,24 @@ int boucle_jeu(SDL_Renderer * rend) {
             entite_courante->changer_pos_rel(entite_courante, 0, -pas_defilement);
             suivant(i_liste);
         }
-
         if (!perso->a_collision_b) {
             fond_tour->changer_pos_rel(fond_tour, 0, -pas_defilement);
             fond_tour_2->changer_pos_rel(fond_tour_2, 0, -pas_defilement);
         }
 
-        // Recréation des obstacles pour simuler un nouveau set d'obstacles après un certain défilement
-        if (repere_defilement > 100 && parite_defilement == 0) {
-            parite_defilement = 1;
-
+        // Génération de nouvelles entités et des fonds de tour alternés une fois qu’une hauteur de tour a défilé
+        float bas_fond_tour = fond_tour->rect_dst->y + fond_tour->rect_dst->h;
+        float bas_fond_tour_2 = fond_tour_2->rect_dst->y + fond_tour_2->rect_dst->h;
+        if (bas_fond_tour < 0) {
             detruire_entite(&fond_tour);
-            en_queue(i_liste);
-            while (!hors_liste(i_liste)) {
-                entite_courante = valeur_elt(i_liste);
-                if (entite_courante->rect_dst->y + entite_courante->rect_dst->h < 0) {
-                    oter_elt(i_liste);
-                    detruire_entite(&entite_courante);
-                }
-                else
-                    precedent(i_liste);
-            }
-
-            generer_morceau_niveau(i_liste);
-
-            fond_tour = creer_entite("fond_tour",
-                             0, fond_tour_2->rect_dst->y + fond_tour_2->rect_dst->h,
-                             100, 100, VRAI);
+            fond_tour = creer_entite("fond_tour", 0, bas_fond_tour_2, 100, 100, VRAI);
         }
-        if (repere_defilement >= 200 && parite_defilement == 1) {
-            parite_defilement = 0;
-            repere_defilement = 0;
-
+        if (bas_fond_tour_2 < 0) {
             detruire_entite(&fond_tour_2);
+            fond_tour_2 = creer_entite("fond_tour", 0, bas_fond_tour, 100, 100, VRAI);
+        }
+        if (bas_fond_tour < 0 || bas_fond_tour_2 < 0) {
+            // suppression des entités ayant défilé au-dessus de la zone de jeu
             en_queue(i_liste);
             while (!hors_liste(i_liste)) {
                 entite_courante = valeur_elt(i_liste);
@@ -280,9 +262,6 @@ int boucle_jeu(SDL_Renderer * rend) {
             }
 
             generer_morceau_niveau(i_liste);
-            fond_tour_2 = creer_entite("fond_tour",
-                             0, fond_tour->rect_dst->y + fond_tour->rect_dst->h,
-                             100, 100, VRAI);
         }
 
         SDL_RenderPresent(rend);
