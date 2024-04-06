@@ -147,8 +147,8 @@ void changer_hitbox(t_entite * e, int x, int y, int w, int h) {
 }
 
 void deplacer(t_entite * e) {
-    int depl_x = 0;
-    int depl_y = 0;
+    float depl_x = 0;
+    float depl_y = 0;
     if (e->deplacement == GAUCHE && !e->a_collision_g)
         depl_x = -1;
     if (e->deplacement == DROITE && !e->a_collision_d)
