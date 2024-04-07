@@ -250,11 +250,17 @@ t_entite * creer_entite_depuis_texture(SDL_Texture * texture,
     nouv->dec_y_dst_prec = 0;
     nouv->doit_restaurer_dst = FAUX;
 
+    nouv->a_collision_g = FAUX;
+    nouv->a_collision_d = FAUX;
+    nouv->a_collision_b = FAUX;
+    nouv->a_collision_h = FAUX;
+
     nouv->n_animations = 0;
     nouv->animations = NULL;
 
     nouv->destructible = NULL;
     nouv->est_obstacle = FAUX;
+    nouv->pnj = NULL;
 
     return nouv;
 }

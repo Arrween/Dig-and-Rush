@@ -7,6 +7,7 @@
 #include "entite.h"
 #include "entite_destructible.h"
 #include "entite_obstacle.h"
+#include "entite_pnj.h"
 #include "listes.h"
 
 #define LARGEUR_MUR 5
@@ -19,6 +20,7 @@ void (*fonctions_generation[N_MORCEAUX_NIVEAU])(void) = {
 void generer_morceau_niveau(int choix) {
     if (choix < 0 || choix >= N_MORCEAUX_NIVEAU)
         choix = rand() % N_MORCEAUX_NIVEAU;
+    choix = 0;
     printf("génération morceau de niveau %i\n", choix);
     fonctions_generation[choix]();
 }
@@ -33,11 +35,14 @@ void generer_morceau_niveau_0(void) {
     en_queue(I_LISTE_ENTITES);
 
     ajout_droit(I_LISTE_ENTITES, creer_entite_obstacle("bloc_pierre", 0, 110, 20, 10, VRAI));
-    ajout_droit(I_LISTE_ENTITES, creer_entite_obstacle("bloc_pierre", 50, 170, 10, 10, VRAI));
+    ajout_droit(I_LISTE_ENTITES, creer_entite_obstacle("bloc_pierre", 30, 160, 10, 10, VRAI));
+    ajout_droit(I_LISTE_ENTITES, creer_entite_obstacle("bloc_pierre", 40, 170, 25, 10, VRAI));
     ajout_droit(I_LISTE_ENTITES, creer_entite_destructible("bloc_terre", 20, 110, 20, 10, VRAI));
-    ajout_droit(I_LISTE_ENTITES, creer_entite_destructible("bloc_terre", 60, 170, 10, 10, VRAI));
+    ajout_droit(I_LISTE_ENTITES, creer_entite_destructible("bloc_terre", 65, 170, 25, 10, VRAI));
 
-    nouv = creer_entite_depuis_spritesheet("squelette", 55, 150, 20, 20, VRAI);
+    nouv = creer_entite_pnj_depuis_spritesheet("squelette", 55, 150, 20, 20, VRAI);
+    nouv->pnj->x_patrouille_g = 40;
+    nouv->pnj->x_patrouille_d = 90;
     changer_hitbox(nouv, 20, 50, 50, 50);
     nouv->doit_afficher_hitbox = VRAI;
     ajout_droit(I_LISTE_ENTITES, nouv);

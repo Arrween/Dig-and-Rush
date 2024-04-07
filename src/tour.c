@@ -8,6 +8,7 @@
 #include "constantes.h"
 #include "entite.h"
 #include "entite_destructible.h"
+#include "entite_pnj.h"
 #include "morceaux_niveau.h"
 #include "listes.h"
 
@@ -23,6 +24,7 @@
 /**
  * @brief vérifie les collisions d’une entité avec les obstacles
  * @param e1 entité possiblement en collision
+ * @param correction_defilement valeur à retourner si `e1` est le personnage joueur
  */
 void verif_collision(t_entite * e1, float * correction_defilement) {
     // points haut gauche, haut droit etc., décalés sur l’axe vertical pour ne pas déclencher
@@ -75,7 +77,7 @@ void verif_collision(t_entite * e1, float * correction_defilement) {
         }
         // replacement pour le chevauchement par le bas, utilisation du défilement car on suppose ici
         // que l’entité est le personnage joueur (à adapter quand nécessaire)
-        if (collision_b) {
+        if (correction_defilement != NULL && collision_b) {
             float depassement = e2->hitbox.y - (e1->hitbox.y + e1->hitbox.h);
             if (depassement <= 0)
                 *correction_defilement = depassement;
@@ -358,6 +360,23 @@ int boucle_jeu(SDL_Renderer * rend) {
             changer_animation(perso, perso->sens_regard == GAUCHE ? CHUTE_G : CHUTE_D);
         deplacer(perso);
         animer(perso, compteur_frames);
+
+        // évolution du comportement des pnj
+        t_entite * pnjs[100]; // tableau temporaire pour stocker les pnjs trouvés car la vérification de collision interfère avec le parcours de la liste
+        int n_pnjs = 0;
+        en_tete(I_LISTE_ENTITES);
+        while (!hors_liste(I_LISTE_ENTITES)) {
+            t_entite * elem = valeur_elt(I_LISTE_ENTITES);
+            if (elem->pnj)
+                pnjs[n_pnjs++] = elem;
+            suivant(I_LISTE_ENTITES);
+        }
+        for (int i = 0; i < n_pnjs; i++) {
+            verif_collision(pnjs[i], NULL);
+            pnjs[i]->pnj->comportement(pnjs[i]);
+            deplacer(pnjs[i]);
+            animer(pnjs[i], compteur_frames);
+        }
 
         // Logique de défilement des obstacles
         if (!perso->a_collision_b) {

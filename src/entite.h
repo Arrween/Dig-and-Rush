@@ -69,6 +69,8 @@ typedef struct s_entite {
     t_destructible * destructible;
     /** booléen indiquant si l’entité est un obstacle */
     int est_obstacle;
+    /** sous-structure affectée si l’entité est un personnage non-joueur */
+    t_pnj * pnj;
 
 } t_entite;
 
