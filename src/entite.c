@@ -253,6 +253,8 @@ t_entite * creer_entite_depuis_texture(SDL_Texture * texture,
     nouv->sens_regard = DROITE;
     nouv->x_sprite = nouv->y_sprite = 0;
 
+    nouv->dec_x_dst_prec = 0;
+    nouv->dec_y_dst_prec = 0;
     nouv->doit_restaurer_dst = FAUX;
 
     nouv->n_animations = 0;
