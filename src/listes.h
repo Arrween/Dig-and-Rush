@@ -1,7 +1,9 @@
-#include "entite.h"
+#define I_LISTE_ENTITES 0
+#define I_LISTE_DESTRUCTIBLES 1
 
 typedef struct elem { struct elem *pred, *succ; void * val; } t_elem;
 typedef struct { t_elem *drapeau, *ec; } t_liste;
+
 void init_liste(int i);
 int liste_vide(int i);
 int hors_liste(int i);

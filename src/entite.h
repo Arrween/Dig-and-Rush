@@ -9,6 +9,7 @@
 */
 enum { REPOS_MVT, GAUCHE, DROITE, HAUT, BAS };
 
+typedef struct s_destructible t_destructible;
 /** \brief Objet général pour toute entité affichée à l’écran
 *
 */
@@ -61,6 +62,10 @@ typedef struct s_entite {
     int n_animations;
     /** position courante dans le tableau `animations` */
     t_animation * animation_courante;
+
+    /** sous-structure affectée si l’entité est destructible */
+    t_destructible * destructible;
+
 } t_entite;
 
 t_entite * creer_entite(const char *, float, float, float, float, int);

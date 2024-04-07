@@ -7,6 +7,7 @@
 #include "tour.h"
 #include "constantes.h"
 #include "entite.h"
+#include "entite_destructible.h"
 #include "morceaux_niveau.h"
 #include "listes.h"
 
@@ -88,8 +89,6 @@ void verif_collision(t_entite * e1, int i_liste, float * correction_defilement) 
  * @return VRAI si l’entité `e` est en position de creuser l’entité `bloc`
  */
 int verifier_peut_creuser(t_entite * e, t_entite * bloc) {
-    if (strcmp(bloc->type, "bloc_terre") != 0)
-        return FAUX;
     int e_x1 = e->hitbox.x;
     int e_x2 = e->hitbox.x + e->hitbox.w;
     int e_y2 = e->hitbox.y + e->hitbox.h;
@@ -161,12 +160,10 @@ int boucle_jeu(SDL_Renderer * rend) {
     long long compteur_frames = 0;
     float pas_defilement = 0;
     const int DUREE_CREUSER = 8; // Nombre de frames de l'animation "creuser"
-    int i_liste = 0;
-    t_entite * entite_courante;
 
     srand(time(NULL));
 
-    init_liste(i_liste);
+    init_liste(I_LISTE_ENTITES);
 
     int doit_quitter = FAUX;
 
@@ -181,9 +178,9 @@ int boucle_jeu(SDL_Renderer * rend) {
 
     perso = creer_entite_depuis_spritesheet("matt", 40, 20, 15, 12, VRAI);
     
-    generer_morceau_niveau(i_liste, -1);
+    generer_morceau_niveau(-1);
 
-    generer_murs(i_liste);
+    generer_murs();
 
     changer_hitbox(perso, 26, 22, 51, 74);
 
@@ -250,13 +247,16 @@ int boucle_jeu(SDL_Renderer * rend) {
                         case SDL_SCANCODE_S:
                             if (perso->a_collision_b){
                                 changer_animation(perso, CREUSER); 
-                                en_queue(i_liste);
-                                while(!hors_liste(i_liste)) {
-                                    entite_courante = valeur_elt(i_liste);
-                                    if (verifier_peut_creuser(perso, entite_courante))
-                                        oter_elt(i_liste);
+                                en_queue(I_LISTE_ENTITES);
+                                while(!hors_liste(I_LISTE_ENTITES)) {
+                                    t_entite * elem = valeur_elt(I_LISTE_ENTITES);
+                                    if (elem->destructible && verifier_peut_creuser(perso, elem)) {
+                                        elem->destructible->action_destruction();
+                                        oter_elt(I_LISTE_ENTITES);
+                                        detruire_entite(&elem);
+                                    }
                                     else
-                                        precedent(i_liste);
+                                        precedent(I_LISTE_ENTITES);
                                 }
                             }
                             break;
@@ -330,11 +330,11 @@ int boucle_jeu(SDL_Renderer * rend) {
         afficher_entite(rend, fond_tour_2);
         afficher_entite(rend, perso);
 
-        en_tete(i_liste);
-        while (!hors_liste(i_liste)) {
-            entite_courante = valeur_elt(i_liste);
-            afficher_entite(rend, entite_courante);
-            suivant(i_liste);
+        en_tete(I_LISTE_ENTITES);
+        while (!hors_liste(I_LISTE_ENTITES)) {
+            t_entite * elem =  valeur_elt(I_LISTE_ENTITES);
+            afficher_entite(rend, elem);
+            suivant(I_LISTE_ENTITES);
         }
 
         SDL_RenderCopy(rend, tex_ombre, NULL, NULL);
@@ -347,7 +347,7 @@ int boucle_jeu(SDL_Renderer * rend) {
 
         // Gestion des collisions
         float correction_defilement = 0;
-        verif_collision(perso, i_liste, &correction_defilement);
+        verif_collision(perso, I_LISTE_ENTITES, &correction_defilement);
 
         // Déplacement et animation du personnage
         if (! perso->a_collision_b)
@@ -371,11 +371,11 @@ int boucle_jeu(SDL_Renderer * rend) {
         }
 
         // Déplacement relatif des obstacles pour simuler le défilement
-        en_tete(i_liste);
-        while (!hors_liste(i_liste)) {
-            entite_courante = valeur_elt(i_liste);
-            changer_pos_rel(entite_courante, 0, -pas_defilement);
-            suivant(i_liste);
+        en_tete(I_LISTE_ENTITES);
+        while (!hors_liste(I_LISTE_ENTITES)) {
+            t_entite * elem = valeur_elt(I_LISTE_ENTITES);
+            changer_pos_rel(elem, 0, -pas_defilement);
+            suivant(I_LISTE_ENTITES);
         }
         if (!perso->a_collision_b) {
             changer_pos_rel(fond_tour, 0, -pas_defilement);
@@ -395,19 +395,19 @@ int boucle_jeu(SDL_Renderer * rend) {
         }
         if (bas_fond_tour < 0 || bas_fond_tour_2 < 0) {
             // suppression des entités ayant défilé au-dessus de la zone de jeu
-            en_queue(i_liste);
-            while (!hors_liste(i_liste)) {
-                entite_courante = valeur_elt(i_liste);
-                if (entite_courante->rect_dst->y + entite_courante->rect_dst->h < 0) {
-                    oter_elt(i_liste);
-                    detruire_entite(&entite_courante);
+            en_queue(I_LISTE_ENTITES);
+            while (!hors_liste(I_LISTE_ENTITES)) {
+                t_entite * elem = valeur_elt(I_LISTE_ENTITES);
+                if (elem->rect_dst->y + elem->rect_dst->h < 0) {
+                    oter_elt(I_LISTE_ENTITES);
+                    detruire_entite(&elem);
                 }
                 else
-                    precedent(i_liste);
+                    precedent(I_LISTE_ENTITES);
             }
 
-            generer_morceau_niveau(i_liste, -1);
-            generer_murs(i_liste);
+            generer_morceau_niveau(-1);
+            generer_murs();
         }
 
         compteur_frames++;
@@ -428,11 +428,11 @@ int boucle_jeu(SDL_Renderer * rend) {
     }
 
     // Libération des ressources
-    en_queue(i_liste);
-    while (!hors_liste(i_liste)) {
-        entite_courante = valeur_elt(i_liste);
-        detruire_entite(&entite_courante);
-        oter_elt(i_liste);
+    en_queue(I_LISTE_ENTITES);
+    while (!hors_liste(I_LISTE_ENTITES)) {
+        t_entite * elem = valeur_elt(I_LISTE_ENTITES);
+        detruire_entite(&elem);
+        oter_elt(I_LISTE_ENTITES);
     }
     detruire_entite(&fond);
     detruire_entite(&fond_tour);
