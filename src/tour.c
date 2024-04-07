@@ -10,10 +10,13 @@
 #include "morceaux_niveau.h"
 #include "listes.h"
 
-#define MAX_RAYON_OMBRE (TAILLE_H*2./3)
+#define MAX_RAYON_OMBRE (TAILLE_H)
 #define FACTEUR_MIN_RAYON_OMBRE 4 // multipli par la largeur du personnage
 #define FACTEUR_OBSCURCISSEMENT 6.
 #define PAS_RAYON_OMBRE 18
+
+#define PAS_ALPHA_FOND 7
+
 #define N 10
 
 /**
@@ -168,9 +171,11 @@ int boucle_jeu(SDL_Renderer * rend) {
     int doit_quitter = FAUX;
 
     t_entite * fond, * fond_tour, * fond_tour_2, * perso;
+    t_entite * fond_nuit;
 
     // Initialisation des entités de fond et de personnage
     fond = creer_entite("fond_jeu", -1, -1, -1, -1, FAUX);
+    fond_nuit = creer_entite("fond_jeu_nuit", -1, -1, -1, -1, FAUX);
     fond_tour = creer_entite("fond_tour", 0, 0, 100, 100, VRAI);
     fond_tour_2 = creer_entite("fond_tour", 0, 100, 100, 100, VRAI);
 
@@ -184,14 +189,16 @@ int boucle_jeu(SDL_Renderer * rend) {
 
     perso->doit_afficher_hitbox = VRAI;
     int lumiere_est_allumee = VRAI;
-    int lumiere_est_allumee_prec = VRAI;
+    int lumiere_est_allumee_prec = FAUX;
 
     // texture pour afficher une ombre quand la lumière est éteinte
     SDL_FRect zone_jeu = {TAILLE_L/4, 0, TAILLE_L/2, TAILLE_H};
     SDL_Texture * tex_ombre = SDL_CreateTexture(rend, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_STREAMING, TAILLE_L, TAILLE_H);
     SDL_SetTextureBlendMode(tex_ombre, SDL_BLENDMODE_BLEND);
-    SDL_SetRenderDrawBlendMode(rend, SDL_BLENDMODE_BLEND);
-    int rayon_ombre = MAX_RAYON_OMBRE;
+    int rayon_ombre = FACTEUR_MIN_RAYON_OMBRE * perso->rect_dst->w;
+    SDL_SetTextureBlendMode(fond->texture, SDL_BLENDMODE_BLEND);
+    SDL_SetTextureBlendMode(fond_nuit->texture, SDL_BLENDMODE_BLEND);
+    int alpha_fond = 0;
 
     // compteur de FPS
     TTF_Init();
@@ -283,12 +290,41 @@ int boucle_jeu(SDL_Renderer * rend) {
         // Affichage des entités
         SDL_RenderClear(rend);
 
-        detruire_entite(&fond);
-        if (lumiere_est_allumee)
-            fond = creer_entite("fond_jeu", -1, -1, -1, -1, FAUX);
-        else
-            fond = creer_entite("fond_jeu_nuit", -1, -1, -1, -1, FAUX);
+        if (lumiere_est_allumee && !lumiere_est_allumee_prec) {
+            alpha_fond += PAS_ALPHA_FOND;
+            if (alpha_fond >= 255)
+                alpha_fond = 255;
+
+            rayon_ombre += PAS_RAYON_OMBRE;
+            if (rayon_ombre >= MAX_RAYON_OMBRE)
+                rayon_ombre = MAX_RAYON_OMBRE;
+            calculer_ombre(tex_ombre, rayon_ombre, perso, zone_jeu);
+
+            if (alpha_fond >= 255 && rayon_ombre >= MAX_RAYON_OMBRE)
+                lumiere_est_allumee_prec = VRAI;
+        }
+        else if (!lumiere_est_allumee && lumiere_est_allumee_prec) {
+            alpha_fond -= PAS_ALPHA_FOND;
+            if (alpha_fond <= 0)
+                alpha_fond = 0;
+
+            rayon_ombre -= PAS_RAYON_OMBRE;
+            if (rayon_ombre <= FACTEUR_MIN_RAYON_OMBRE*perso->rect_dst->w)
+                rayon_ombre = FACTEUR_MIN_RAYON_OMBRE * perso->rect_dst->w;
+            calculer_ombre(tex_ombre, rayon_ombre, perso, zone_jeu);
+
+            if (alpha_fond <= 0 && rayon_ombre <= FACTEUR_MIN_RAYON_OMBRE*perso->rect_dst->w)
+                lumiere_est_allumee_prec = FAUX;
+        }
+        else if (!lumiere_est_allumee) {
+            calculer_ombre(tex_ombre, rayon_ombre, perso, zone_jeu);
+        }
+
+        SDL_SetTextureAlphaMod(fond->texture, alpha_fond);
+        SDL_SetTextureAlphaMod(fond_nuit->texture, 255-alpha_fond);
         fond->afficher(rend, fond);
+        fond_nuit->afficher(rend, fond_nuit);
+
         fond_tour->afficher(rend, fond_tour);
         fond_tour_2->afficher(rend, fond_tour_2);
         perso->afficher(rend, perso);
@@ -300,25 +336,7 @@ int boucle_jeu(SDL_Renderer * rend) {
             suivant(i_liste);
         }
 
-        if (!lumiere_est_allumee) {
-            if (lumiere_est_allumee_prec) {
-                lumiere_est_allumee_prec = FAUX;
-                rayon_ombre = MAX_RAYON_OMBRE;
-            }
-            else {
-                if (rayon_ombre >= FACTEUR_MIN_RAYON_OMBRE*perso->rect_dst->w)
-                    rayon_ombre -= PAS_RAYON_OMBRE;
-            }
-            calculer_ombre(tex_ombre, rayon_ombre, perso, zone_jeu);
-            SDL_RenderCopy(rend, tex_ombre, NULL, NULL);
-        }
-        if (lumiere_est_allumee) {
-            if (rayon_ombre <= MAX_RAYON_OMBRE) {
-                rayon_ombre += PAS_RAYON_OMBRE;
-                calculer_ombre(tex_ombre, rayon_ombre, perso, zone_jeu);
-                SDL_RenderCopy(rend, tex_ombre, NULL, NULL);
-            }
-        }
+        SDL_RenderCopy(rend, tex_ombre, NULL, NULL);
 
         SDL_Texture * tex_fps = SDL_CreateTextureFromSurface(rend, surface_fps);
         SDL_RenderCopy(rend, tex_fps, NULL, &dst_fps);
