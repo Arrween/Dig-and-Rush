@@ -10,6 +10,7 @@
 #include "spritesheets.h"
 #include "constantes.h"
 
+int numeros_entites = 0;
 
 /**
  * @brief Convertit des coordonnées relatives en coordonnées absolues.
@@ -266,6 +267,8 @@ t_entite * creer_entite_depuis_spritesheet(const char * id,
     nouv->animations = spritesheet->animations;
     nouv->n_animations = spritesheet->n_animations;
     changer_animation(nouv, REPOS);
+    strcpy(nouv->type, id);
+    nouv->numero = numeros_entites++;
     return nouv;
 }
 
@@ -274,6 +277,7 @@ t_entite * creer_entite(const char * id, float x, float y, float w, float h,
     SDL_Texture * texture = recuperer_texture(id);
     t_entite * nouv = creer_entite_depuis_texture(texture, x, y, w, h, est_relatif);
     strcpy(nouv->type, id);
+    nouv->numero = numeros_entites++;
     return nouv;
 }
 

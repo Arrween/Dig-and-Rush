@@ -10,10 +10,12 @@
 enum { REPOS_MVT, GAUCHE, DROITE, HAUT, BAS };
 
 typedef struct s_destructible t_destructible;
+typedef struct s_pnj t_pnj;
 /** \brief Objet général pour toute entité affichée à l’écran
 *
 */
 typedef struct s_entite {
+    int numero;
     /** type de l’entité (bloc de terre, personnage, ennemi etc.) */
     char type[100];
      /** pixels à afficher */
