@@ -206,6 +206,7 @@ int boucle_jeu(SDL_Renderer * rend) {
     TTF_Font * police = TTF_OpenFont("ressources/Menu/Police/font1.ttf", 50);
     SDL_Surface * surface_fps = TTF_RenderText_Solid(police, "", couleur_fps);
     SDL_Rect dst_fps = {20, TAILLE_H-40, 100, 30};
+    SDL_Texture * tex_fps = NULL;
 
     // chronométrage du temps de chaque frame
     clock_t chrono_deb, chrono_fin;
@@ -338,7 +339,8 @@ int boucle_jeu(SDL_Renderer * rend) {
 
         SDL_RenderCopy(rend, tex_ombre, NULL, NULL);
 
-        SDL_Texture * tex_fps = SDL_CreateTextureFromSurface(rend, surface_fps);
+        SDL_DestroyTexture(tex_fps);
+        tex_fps = SDL_CreateTextureFromSurface(rend, surface_fps);
         SDL_RenderCopy(rend, tex_fps, NULL, &dst_fps);
 
         SDL_RenderPresent(rend);
