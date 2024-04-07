@@ -10,6 +10,10 @@
 #include "morceaux_niveau.h"
 #include "listes.h"
 
+#define MAX_RAYON_OMBRE (TAILLE_H*2./3)
+#define FACTEUR_MIN_RAYON_OMBRE 4 // multipli par la largeur du personnage
+#define FACTEUR_OBSCURCISSEMENT 6.
+#define PAS_RAYON_OMBRE 18
 #define N 10
 
 /**
@@ -99,6 +103,54 @@ int verifier_peut_creuser(t_entite * e, t_entite * bloc) {
            e_y2 <= b_y1 + depassement_y;
 }
 
+void calculer_ombre(SDL_Texture * tex_ombre, int rayon,
+                    t_entite * perso,
+                    SDL_FRect rect_zone) {
+    SDL_PixelFormat * format = SDL_AllocFormat(SDL_PIXELFORMAT_RGBA8888);
+    Uint32 * pixels;
+    int pitch;
+    // permettre d’écrire les pixels de la texture
+    SDL_LockTexture(tex_ombre, NULL, (void**)&pixels, &pitch);
+
+    SDL_FRect rect_perso_abs;
+
+    // gestion manuelle du décalage pour les animations d’attaque, pas idéal
+    float w, h;
+    if (perso->animation_courante->id == ATTQ_G || perso->animation_courante->id == ATTQ_D) {
+        SDL_FRect rect_perso_decale = {perso->rect_dst->x + perso->animation_courante->decalage_dest_x, perso->rect_dst->y + perso->animation_courante->decalage_dest_y, perso->rect_dst->w, perso->rect_dst->h};
+        rect_perso_abs = convertir_vers_absolu(&rect_perso_decale, rect_zone);
+        w = rect_perso_abs.w / 3;
+        h = rect_perso_abs.h / 3;
+    }
+    else {
+        rect_perso_abs = convertir_vers_absolu(perso->rect_dst, rect_zone);
+        w = rect_perso_abs.w;
+        h = rect_perso_abs.h;
+    }
+
+    for (int i = rect_zone.x; i < rect_zone.x + rect_zone.w; i++) {
+        for (int j = rect_zone.y; j < rect_zone.y + rect_zone.h; j++) {
+            int dx = (i-(rect_perso_abs.x+w/2));
+            int dy = (j-(rect_perso_abs.y+h/2));
+            int carre_distance = dx*dx + dy*dy;
+            // si la distance euclidienne entre le point (i,j) de la zone
+            // de jeu et le centre du personnage est plus grande que `rayon`
+            // écrire un pixel d’autant moins transparent qu’il est loin
+            if (carre_distance > rayon*rayon) {
+                float alpha = ((float)(carre_distance - rayon*rayon)) / (TAILLE_L/2*TAILLE_L/2 + TAILLE_H/2*TAILLE_H/2) * 255. * FACTEUR_OBSCURCISSEMENT;
+                pixels[j * TAILLE_L + i] = SDL_MapRGBA(format, 0, 0, 0, alpha < 255 ? alpha : 255);
+            }
+            // sinon écrire un pixel transparent
+            else
+                pixels[j * TAILLE_L + i] = SDL_MapRGBA(format, 0, 0, 0, 0);
+        }
+    }
+
+    // fin de l’écriture des pixels
+    SDL_UnlockTexture(tex_ombre);
+    SDL_FreeFormat(format);
+}
+
 
 int boucle_jeu(SDL_Renderer * rend) {
     SDL_Event event;
@@ -132,12 +184,14 @@ int boucle_jeu(SDL_Renderer * rend) {
 
     perso->doit_afficher_hitbox = VRAI;
     int lumiere_est_allumee = VRAI;
+    int lumiere_est_allumee_prec = VRAI;
 
     // texture pour afficher une ombre quand la lumière est éteinte
+    SDL_FRect zone_jeu = {TAILLE_L/4, 0, TAILLE_L/2, TAILLE_H};
     SDL_Texture * tex_ombre = SDL_CreateTexture(rend, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_STREAMING, TAILLE_L, TAILLE_H);
     SDL_SetTextureBlendMode(tex_ombre, SDL_BLENDMODE_BLEND);
-    SDL_PixelFormat * format = SDL_AllocFormat(SDL_PIXELFORMAT_RGBA8888);
     SDL_SetRenderDrawBlendMode(rend, SDL_BLENDMODE_BLEND);
+    int rayon_ombre = MAX_RAYON_OMBRE;
 
     // compteur de FPS
     TTF_Init();
@@ -173,6 +227,7 @@ int boucle_jeu(SDL_Renderer * rend) {
                             break;
                         case SDL_SCANCODE_L:
                             lumiere_est_allumee = !lumiere_est_allumee;
+                            lumiere_est_allumee_prec = !lumiere_est_allumee;
                             break;
                         case SDL_SCANCODE_A:
                             perso->deplacement = GAUCHE;
@@ -246,28 +301,23 @@ int boucle_jeu(SDL_Renderer * rend) {
         }
 
         if (!lumiere_est_allumee) {
-            Uint32 * pixels;
-            int pitch;
-            SDL_LockTexture(tex_ombre, NULL, (void**)&pixels, &pitch);
-            SDL_FRect zone_jeu = {TAILLE_L/4, 0, TAILLE_L/2, TAILLE_H};
-            SDL_FRect rect_perso_abs = convertir_vers_absolu(perso->rect_dst, zone_jeu);
-            for (int i = zone_jeu.x; i < zone_jeu.x + zone_jeu.w; i++) {
-                for (int j = zone_jeu.y; j < zone_jeu.y + zone_jeu.h; j++) {
-                    int x = (i-(rect_perso_abs.x+rect_perso_abs.w/2));
-                    int y = (j-(rect_perso_abs.y+rect_perso_abs.h/2));
-                    int distance = x*x + y*y;
-                    int rayon = 60;
-                    if (distance > rayon*rayon) {
-                        float alpha = ((float)(distance - rayon*rayon)) / (TAILLE_L/2*TAILLE_L/2 + TAILLE_H/2*TAILLE_H/2) * 255. * 6.;
-                        pixels[j * TAILLE_L + i] = SDL_MapRGBA(format, 0, 0, 0, alpha < 255 ? alpha : 255);
-                    }
-                    else
-                        pixels[j * TAILLE_L + i] = SDL_MapRGBA(format, 0, 0, 0, 0);
-                }
+            if (lumiere_est_allumee_prec) {
+                lumiere_est_allumee_prec = FAUX;
+                rayon_ombre = MAX_RAYON_OMBRE;
             }
-            // SDL_FreeFormat(format);
-            SDL_UnlockTexture(tex_ombre);
+            else {
+                if (rayon_ombre >= FACTEUR_MIN_RAYON_OMBRE*perso->rect_dst->w)
+                    rayon_ombre -= PAS_RAYON_OMBRE;
+            }
+            calculer_ombre(tex_ombre, rayon_ombre, perso, zone_jeu);
             SDL_RenderCopy(rend, tex_ombre, NULL, NULL);
+        }
+        if (lumiere_est_allumee) {
+            if (rayon_ombre <= MAX_RAYON_OMBRE) {
+                rayon_ombre += PAS_RAYON_OMBRE;
+                calculer_ombre(tex_ombre, rayon_ombre, perso, zone_jeu);
+                SDL_RenderCopy(rend, tex_ombre, NULL, NULL);
+            }
         }
 
         SDL_Texture * tex_fps = SDL_CreateTextureFromSurface(rend, surface_fps);
