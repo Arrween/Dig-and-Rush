@@ -1,7 +1,6 @@
 #ifndef ENTITE_DESTRUCTIBLE_H
 #define ENTITE_DESTRUCTIBLE_H
 
-#include <SDL2/SDL.h>
 #include "entite.h"
 
 struct s_destructible {

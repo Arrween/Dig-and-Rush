@@ -253,6 +253,7 @@ t_entite * creer_entite_depuis_texture(SDL_Texture * texture,
     nouv->animations = NULL;
 
     nouv->destructible = NULL;
+    nouv->est_obstacle = FAUX;
 
     return nouv;
 }

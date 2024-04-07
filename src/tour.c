@@ -21,11 +21,10 @@
 #define N 10
 
 /**
- * @brief vérifie les collisions d’une entité avec une liste d’autres
- * @param e1 entité possiblement en collision avec d’autres
- * @param i_liste indice de la liste d’entités possiblement en collision avec `e1`
+ * @brief vérifie les collisions d’une entité avec les obstacles
+ * @param e1 entité possiblement en collision
  */
-void verif_collision(t_entite * e1, int i_liste, float * correction_defilement) {
+void verif_collision(t_entite * e1, float * correction_defilement) {
     // points haut gauche, haut droit etc., décalés sur l’axe vertical pour ne pas déclencher
     // une collision à la fois sur la gauche, la droite et le bas
     SDL_FPoint e1_hg = {e1->hitbox.x, e1->hitbox.y + 0.05 * e1->hitbox.h};
@@ -40,9 +39,14 @@ void verif_collision(t_entite * e1, int i_liste, float * correction_defilement) 
     e1->a_collision_h = FAUX;
     e1->a_collision_b = FAUX;
 
-    en_tete(i_liste);
-    while (!hors_liste(i_liste)) {
-        t_entite * e2 = valeur_elt(i_liste);
+    en_tete(I_LISTE_ENTITES);
+    while (!hors_liste(I_LISTE_ENTITES)) {
+        t_entite * e2 = valeur_elt(I_LISTE_ENTITES);
+        
+        if (!e2->est_obstacle) {
+            suivant(I_LISTE_ENTITES);
+            continue;
+        }
 
         // il y a collision à gauche, droite ou en haut si les deux points correspondants sont
         // dans la hitbox de l’entité candidate
@@ -78,7 +82,7 @@ void verif_collision(t_entite * e1, int i_liste, float * correction_defilement) 
         }
 
 
-        suivant(i_liste);
+        suivant(I_LISTE_ENTITES);
     }
 }
 
@@ -288,7 +292,6 @@ int boucle_jeu(SDL_Renderer * rend) {
             }
         }
 
-        // Affichage des entités
         SDL_RenderClear(rend);
 
         if (lumiere_est_allumee && !lumiere_est_allumee_prec) {
@@ -321,6 +324,7 @@ int boucle_jeu(SDL_Renderer * rend) {
             calculer_ombre(tex_ombre, rayon_ombre, perso, zone_jeu);
         }
 
+        // Affichage des entités
         SDL_SetTextureAlphaMod(fond->texture, alpha_fond);
         SDL_SetTextureAlphaMod(fond_nuit->texture, 255-alpha_fond);
         afficher_entite(rend, fond);
@@ -347,7 +351,7 @@ int boucle_jeu(SDL_Renderer * rend) {
 
         // Gestion des collisions
         float correction_defilement = 0;
-        verif_collision(perso, I_LISTE_ENTITES, &correction_defilement);
+        verif_collision(perso, &correction_defilement);
 
         // Déplacement et animation du personnage
         if (! perso->a_collision_b)

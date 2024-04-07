@@ -65,6 +65,8 @@ typedef struct s_entite {
 
     /** sous-structure affectée si l’entité est destructible */
     t_destructible * destructible;
+    /** booléen indiquant si l’entité est un obstacle */
+    int est_obstacle;
 
 } t_entite;
 

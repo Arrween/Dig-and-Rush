@@ -6,6 +6,7 @@
 #include "constantes.h"
 #include "entite.h"
 #include "entite_destructible.h"
+#include "entite_obstacle.h"
 #include "listes.h"
 
 #define LARGEUR_MUR 5
@@ -31,8 +32,8 @@ void generer_morceau_niveau_0(void) {
 
     en_queue(I_LISTE_ENTITES);
 
-    ajout_droit(I_LISTE_ENTITES, creer_entite("bloc_pierre", 0, 110, 20, 10, VRAI));
-    ajout_droit(I_LISTE_ENTITES, creer_entite("bloc_pierre", 50, 170, 10, 10, VRAI));
+    ajout_droit(I_LISTE_ENTITES, creer_entite_obstacle("bloc_pierre", 0, 110, 20, 10, VRAI));
+    ajout_droit(I_LISTE_ENTITES, creer_entite_obstacle("bloc_pierre", 50, 170, 10, 10, VRAI));
     ajout_droit(I_LISTE_ENTITES, creer_entite_destructible("bloc_terre", 20, 110, 20, 10, VRAI));
     ajout_droit(I_LISTE_ENTITES, creer_entite_destructible("bloc_terre", 60, 170, 10, 10, VRAI));
 
@@ -57,9 +58,9 @@ void generer_murs(void) {
 
     en_queue(I_LISTE_ENTITES);
     for (int i = 0; i < n_blocs_mur; i++) {
-        ajout_droit(I_LISTE_ENTITES, creer_entite("bloc_pierre", 0, i*5, LARGEUR_MUR, 5, VRAI)); // côté gauche
-        ajout_droit(I_LISTE_ENTITES, creer_entite("bloc_pierre", 0, (n_blocs_mur+i)*5, LARGEUR_MUR, 5, VRAI)); // côté gauche écran du dessous
-        ajout_droit(I_LISTE_ENTITES, creer_entite("bloc_pierre", 95, i*5, LARGEUR_MUR, 5, VRAI)); // côté droit
-        ajout_droit(I_LISTE_ENTITES, creer_entite("bloc_pierre", 95, (n_blocs_mur+i)*5, LARGEUR_MUR, 5, VRAI)); // côté droit écran du dessous
+        ajout_droit(I_LISTE_ENTITES, creer_entite_obstacle("bloc_pierre", 0, i*5, LARGEUR_MUR, 5, VRAI)); // côté gauche
+        ajout_droit(I_LISTE_ENTITES, creer_entite_obstacle("bloc_pierre", 0, (n_blocs_mur+i)*5, LARGEUR_MUR, 5, VRAI)); // côté gauche écran du dessous
+        ajout_droit(I_LISTE_ENTITES, creer_entite_obstacle("bloc_pierre", 95, i*5, LARGEUR_MUR, 5, VRAI)); // côté droit
+        ajout_droit(I_LISTE_ENTITES, creer_entite_obstacle("bloc_pierre", 95, (n_blocs_mur+i)*5, LARGEUR_MUR, 5, VRAI)); // côté droit écran du dessous
     }
 }
