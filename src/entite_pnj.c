@@ -9,6 +9,8 @@ void comportement_oisif(t_entite * pnj) {
 }
 
 void comportement_patrouille(t_entite * pnj) {
+    if (pnj->pnj->est_mort)
+        return;
     if (pnj->deplacement == REPOS_MVT || pnj->deplacement == DROITE && pnj->hitbox.x + pnj->hitbox.w >= pnj->pnj->x_patrouille_d) {
         pnj->deplacement = GAUCHE;
         changer_animation(pnj, DEPL_G);
@@ -27,6 +29,7 @@ t_pnj * creer_pnj(char * id) {
         nouv->comportement = comportement_oisif;
     nouv->x_patrouille_g = 0;
     nouv->x_patrouille_d = 100;
+    nouv->est_mort = FAUX;
     return nouv;
 }
 

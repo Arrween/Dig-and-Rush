@@ -88,6 +88,23 @@ void verif_collision(t_entite * e1, float * correction_defilement) {
     }
 }
 
+void porter_coup(t_entite * e) {
+    en_tete(I_LISTE_ENTITES);
+    while (!hors_liste(I_LISTE_ENTITES)) {
+        t_entite * elem = valeur_elt(I_LISTE_ENTITES);
+        if (elem->pnj) {
+            // SDL_FRect hitbox_attaque = e->animation_courante->hitboxes_attaque[e->x_sprite];
+            if (!elem->pnj->est_mort && SDL_HasIntersectionF(&e->hitbox, &elem->hitbox)) {
+                elem->id_animation_suivante = ANIM_MORT_STATIQUE;
+                changer_animation(elem, ANIM_MORT);
+                elem->deplacement = REPOS_MVT;
+                elem->pnj->est_mort = VRAI;
+            }
+        }
+        suivant(I_LISTE_ENTITES);
+    }
+}
+
 /**
  * @brief vérifie qu’une entité peut creuser une autre entité selon leurs positions
  * @param e entité essayant de creuser
@@ -273,6 +290,7 @@ int boucle_jeu(SDL_Renderer * rend) {
                                     changer_animation(perso, ATTQ_G);
                                 else if (perso->sens_regard == DROITE)
                                     changer_animation(perso, ATTQ_D);
+                                porter_coup(perso);
                             }
                             break;
                         default:

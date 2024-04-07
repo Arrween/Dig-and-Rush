@@ -1,4 +1,5 @@
 #include "uthash.h"
+#include <SDL2/SDL.h>
 
 #define TAILLE_MAX_CHEMIN 200
 #define TAILLE_MAX_ID 100
@@ -11,7 +12,7 @@ typedef struct {
 
 extern t_texture * textures;
 
-typedef enum { FIN_TAB_ANIMS, REPOS, CHUTE_G, CHUTE_D, DEPL_G, DEPL_D, CREUSER, ATTQ_G, ATTQ_D } t_id_anim;
+typedef enum { ANIM_NULLE, REPOS, CHUTE_G, CHUTE_D, DEPL_G, DEPL_D, CREUSER, ATTQ_G, ATTQ_D, ANIM_MORT, ANIM_MORT_STATIQUE } t_id_anim;
 
 typedef struct {
     t_id_anim id;
@@ -23,6 +24,7 @@ typedef struct {
     int decalage_dest_y;
     int longueur;
     float vitesse_anim;
+    SDL_FRect * hitboxes_attaque;
 } t_animation;
 
 

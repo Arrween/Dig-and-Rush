@@ -46,27 +46,29 @@ struct chargement chargements_texs[] = {
 };
 
 struct chargement_spritesheet chargements_spritesheets[] = {
-    {"ressources/Personnages/MatthieuPerso.png", "matt", 
+    {"ressources/Personnages/matthieuPerso2.png", "matt", 
             {
-                {REPOS, 0, 6*64, 64, 64, 0, 0, 1*64, 1.},
-                {CHUTE_G, 5, 1*64, 64, 64, 0, 0, 1, 1.},
-                {CHUTE_D, 5, 3*64, 64, 64, 0, 0, 1, 1.},
-                {DEPL_G, 0, 9*64, 64, 64, 0, 0, 9, 1/5.},
-                {DEPL_D, 0, 11*64, 64, 64, 0, 0, 9, 1/5.},
-                {ATTQ_G, 0, 20*64+1*192, 192, 192, 17, 24, 6, 1/3.},
-                {ATTQ_D, 0, 20*64+3*192, 192, 192, 17, 24, 6, 1/3.},
-                {CREUSER, 0, 6*64, 64, 64, 0, 0, 8, 1./6},
-                {FIN_TAB_ANIMS, 0, 0, 0, 0, 0, 0, 0, 0.}
+                {REPOS, 0, 6*64, 64, 64, 0, 0, 1*64, 1., NULL},
+                {CHUTE_G, 5, 1*64, 64, 64, 0, 0, 1, 1., NULL},
+                {CHUTE_D, 5, 3*64, 64, 64, 0, 0, 1, 1., NULL},
+                {DEPL_G, 0, 9*64, 64, 64, 0, 0, 9, 1/5., NULL},
+                {DEPL_D, 0, 11*64, 64, 64, 0, 0, 9, 1/5., NULL},
+                {ATTQ_G, 0, 5*64, 64, 64, 0, 0, 8, 1/3., NULL},
+                {ATTQ_D, 0, 7*64, 64, 64, 0, 0, 8, 1/3., NULL},
+                {CREUSER, 0, 6*64, 64, 64, 0, 0, 8, 1./6, NULL},
+                {ANIM_NULLE, 0, 0, 0, 0, 0, 0, 0, 0., NULL}
             }
     },
     {"ressources/Personnages/squelette_craftpix.png", "squelette", 
             {
-                {REPOS, 0, 5*128, 128, 128, 0, 0, 1, 1.},
-                {DEPL_G, 0, 17*128, 128, 128, 0, 0, 8, 1/2.},
-                {DEPL_D, 0, 8*128, 128, 128, 0, 0, 8, 1/2.},
-                {ATTQ_G, 0, 1*128, 128, 128, 0, 0, 4, 1/3.},
-                {ATTQ_D, 0, 10*128, 128, 128, 0, 0, 4, 1/3.},
-                {FIN_TAB_ANIMS, 0, 0, 0, 0, 0, 0, 0, 0.}
+                {REPOS, 0, 5*128, 128, 128, 0, 0, 1, 1., NULL},
+                {DEPL_G, 0, 17*128, 128, 128, 0, 0, 8, 1/2., NULL},
+                {DEPL_D, 0, 8*128, 128, 128, 0, 0, 8, 1/2., NULL},
+                {ATTQ_G, 0, 1*128, 128, 128, 0, 0, 4, 1/3., NULL},
+                {ATTQ_D, 0, 10*128, 128, 128, 0, 0, 4, 1/3., NULL},
+                {ANIM_MORT, 0, 3*128, 128, 128, 0, 0, 3, 1/8., NULL},
+                {ANIM_MORT_STATIQUE, 2, 3*128, 128, 128, 0, 0, 1, 1, NULL},
+                {ANIM_NULLE, 0, 0, 0, 0, 0, 0, 0, 0., NULL}
             }
     },
 };
@@ -93,6 +95,7 @@ void copier_animation(t_animation * dest, t_animation src) {
     dest->decalage_dest_y = src.decalage_dest_y;
     dest->longueur = src.longueur;
     dest->vitesse_anim = src.vitesse_anim;
+    dest->hitboxes_attaque = src.hitboxes_attaque;
 }
 
 void init_ressources(SDL_Renderer * rend) {
@@ -135,7 +138,7 @@ void init_ressources(SDL_Renderer * rend) {
             }
             ressource_spritesheet->animations = NULL;
             int i_anim;
-            for (i_anim = 0; charg_sheet.animations[i_anim].id != FIN_TAB_ANIMS; i_anim++) {
+            for (i_anim = 0; charg_sheet.animations[i_anim].id != ANIM_NULLE; i_anim++) {
                 ressource_spritesheet->animations = realloc(ressource_spritesheet->animations,
                                                             sizeof(t_animation*) * i_anim + 1);
                 ressource_spritesheet->animations[i_anim] = malloc(sizeof(t_animation));

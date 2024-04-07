@@ -38,12 +38,12 @@ void generer_morceau_niveau_0(void) {
     ajout_droit(I_LISTE_ENTITES, creer_entite_obstacle("bloc_pierre", 30, 160, 10, 10, VRAI));
     ajout_droit(I_LISTE_ENTITES, creer_entite_obstacle("bloc_pierre", 40, 170, 25, 10, VRAI));
     ajout_droit(I_LISTE_ENTITES, creer_entite_destructible("bloc_terre", 20, 110, 20, 10, VRAI));
-    ajout_droit(I_LISTE_ENTITES, creer_entite_destructible("bloc_terre", 65, 170, 25, 10, VRAI));
+    ajout_droit(I_LISTE_ENTITES, creer_entite_destructible("bloc_terre", 65, 170, 22, 10, VRAI));
 
     nouv = creer_entite_pnj_depuis_spritesheet("squelette", 55, 150, 20, 20, VRAI);
     nouv->vitesse = 1./2;
     nouv->pnj->x_patrouille_g = 40;
-    nouv->pnj->x_patrouille_d = 90;
+    nouv->pnj->x_patrouille_d = 87;
     changer_hitbox(nouv, 20, 50, 50, 50);
     ajout_droit(I_LISTE_ENTITES, nouv);
 }
