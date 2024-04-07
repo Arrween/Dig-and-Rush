@@ -61,12 +61,12 @@ void verif_collision(t_entite * e1, int i_liste, float * correction_defilement) 
         if (collision_g && !collision_d) {
             float depassement = e2->hitbox.x + e2->hitbox.w - e1->hitbox.x;
             if (depassement >= 2)
-                e1->changer_pos_rel(e1, depassement, 0);
+                changer_pos_rel(e1, depassement, 0);
         }
         if (collision_d && !collision_g) {
             float depassement = e2->hitbox.x - (e1->hitbox.x + e1->hitbox.w);
             if (depassement <= -2)
-                e1->changer_pos_rel(e1, depassement, 0);
+                changer_pos_rel(e1, depassement, 0);
         }
         // replacement pour le chevauchement par le bas, utilisation du défilement car on suppose ici
         // que l’entité est le personnage joueur (à adapter quand nécessaire)
@@ -323,17 +323,17 @@ int boucle_jeu(SDL_Renderer * rend) {
 
         SDL_SetTextureAlphaMod(fond->texture, alpha_fond);
         SDL_SetTextureAlphaMod(fond_nuit->texture, 255-alpha_fond);
-        fond->afficher(rend, fond);
-        fond_nuit->afficher(rend, fond_nuit);
+        afficher_entite(rend, fond);
+        afficher_entite(rend, fond_nuit);
 
-        fond_tour->afficher(rend, fond_tour);
-        fond_tour_2->afficher(rend, fond_tour_2);
-        perso->afficher(rend, perso);
+        afficher_entite(rend, fond_tour);
+        afficher_entite(rend, fond_tour_2);
+        afficher_entite(rend, perso);
 
         en_tete(i_liste);
         while (!hors_liste(i_liste)) {
             entite_courante = valeur_elt(i_liste);
-            entite_courante->afficher(rend, entite_courante);
+            afficher_entite(rend, entite_courante);
             suivant(i_liste);
         }
 
@@ -374,12 +374,12 @@ int boucle_jeu(SDL_Renderer * rend) {
         en_tete(i_liste);
         while (!hors_liste(i_liste)) {
             entite_courante = valeur_elt(i_liste);
-            entite_courante->changer_pos_rel(entite_courante, 0, -pas_defilement);
+            changer_pos_rel(entite_courante, 0, -pas_defilement);
             suivant(i_liste);
         }
         if (!perso->a_collision_b) {
-            fond_tour->changer_pos_rel(fond_tour, 0, -pas_defilement);
-            fond_tour_2->changer_pos_rel(fond_tour_2, 0, -pas_defilement);
+            changer_pos_rel(fond_tour, 0, -pas_defilement);
+            changer_pos_rel(fond_tour_2, 0, -pas_defilement);
         }
 
         // Génération de nouvelles entités et des fonds de tour alternés une fois qu’une hauteur de tour a défilé

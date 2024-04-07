@@ -110,7 +110,7 @@ void changer_dims(t_entite * e, float w, float h) {
     e->rect_dst->h = h;
 }
 
-void changer_pos_rel_entite(t_entite * e, float dx, float dy) {
+void changer_pos_rel(t_entite * e, float dx, float dy) {
     changer_pos_entite(e, e->rect_dst->x + dx,
                            e->rect_dst->y + dy);
 }
@@ -142,7 +142,7 @@ void deplacer(t_entite * e) {
     if (e->deplacement == BAS && !e->a_collision_b)
         depl_y = 1;
     if (e->deplacement != REPOS_MVT) {
-        e->changer_pos_rel(e, depl_x, depl_y);
+        changer_pos_rel(e, depl_x, depl_y);
         if (e->deplacement == GAUCHE || e->deplacement == DROITE)
             e->sens_regard = e->deplacement;
     }
@@ -171,7 +171,7 @@ void animer(t_entite * e, long long int compteur_frames) {
     else
         e->x_sprite = (e->x_sprite + pas_anim) % anim->longueur;
     e->y_sprite = anim->y_sprite;
-    e->changer_sprite(e, e->x_sprite * anim->w_sprite, e->y_sprite);
+    changer_sprite(e, e->x_sprite * anim->w_sprite, e->y_sprite);
 }
 
 void changer_animation(t_entite * e, t_id_anim id_anim) {
@@ -233,18 +233,10 @@ t_entite * creer_entite_depuis_texture(SDL_Texture * texture,
     nouv->rect_dst->w = -1;
     nouv->rect_dst->h = -1;
 
-    nouv->afficher = afficher_entite;
-    nouv->changer_rect_src = changer_rect_src_entite;
-    nouv->changer_rect_dst = changer_rect_dst_entite;
-    nouv->changer_sprite = changer_sprite;
-    nouv->changer_pos = changer_pos_entite;
-    nouv->changer_dims = changer_dims;
-    nouv->changer_pos_rel = changer_pos_rel_entite;
-
     // ne pas utiliser changer_pos_entite car nécessite hitbox, qui elle-même nécessite rect_dst
     nouv->rect_dst->x = x;
     nouv->rect_dst->y = y;
-    nouv->changer_dims(nouv, w, h);
+    changer_dims(nouv, w, h);
     changer_hitbox(nouv, 0, 0, 100, 100);
 
     nouv->doit_afficher_hitbox = FAUX;

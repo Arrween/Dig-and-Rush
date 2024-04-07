@@ -61,15 +61,6 @@ typedef struct s_entite {
     int n_animations;
     /** position courante dans le tableau `animations` */
     t_animation * animation_courante;
-
-    void (*afficher) (SDL_Renderer *, struct s_entite *);
-    void (*changer_rect_src) (struct s_entite *, int, int, int, int);
-    void (*changer_rect_dst) (struct s_entite *, float, float, float, float);
-    void (*changer_sprite) (struct s_entite *, int, int);
-    void (*changer_pos) (struct s_entite *, float, float);
-    void (*changer_dims) (struct s_entite *, float, float);
-    void (*changer_pos_rel) (struct s_entite *, float, float);
-    void (*creuser) (struct s_entite *);
 } t_entite;
 
 t_entite * creer_entite(const char *, float, float, float, float, int);
@@ -77,6 +68,8 @@ t_entite * creer_entite_depuis_texture(SDL_Texture *, float, float, float, float
 t_entite * creer_entite_depuis_spritesheet(const char *, float, float, float, float, int);
 void detruire_entite(t_entite **);
 
+void afficher_entite(SDL_Renderer*, t_entite*);
+extern void changer_pos_rel(t_entite*, float, float);
 void changer_hitbox(t_entite *, int, int, int, int);
 SDL_FRect convertir_vers_absolu(SDL_FRect *, SDL_FRect);
 void deplacer(t_entite *);

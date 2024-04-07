@@ -2,8 +2,8 @@
 #include <stdlib.h>
 #include "listes.h"
 
-#define T_MAX_LISTES 100
-t_liste listes[T_MAX_LISTES];
+#define N_MAX_LISTES 100
+t_liste listes[N_MAX_LISTES];
 
 void init_liste(int i) {
     listes[i].drapeau = malloc(sizeof(t_elem));
@@ -37,13 +37,13 @@ void precedent(int i) {
         listes[i].ec = listes[i].ec->pred;
 }
 
-t_entite * valeur_elt(int i) {
+void * valeur_elt(int i) {
     if (!hors_liste(i))
         return listes[i].ec->val;
     return NULL;
 }
 
-void modif_elt(int i, t_entite * v) {
+void modif_elt(int i, void * v) {
     if (!hors_liste(i))
         listes[i].ec->val = v;
 }
@@ -59,7 +59,7 @@ void oter_elt(int i) {
     }
 }
 
-void ajout_droit(int i, t_entite * v) {
+void ajout_droit(int i, void * v) {
     t_elem *nouv = malloc(sizeof(t_elem));
     if (!hors_liste(i) || liste_vide(i)) {
         nouv->val = v;
@@ -71,7 +71,7 @@ void ajout_droit(int i, t_entite * v) {
     }
 }
 
-void ajout_gauche(int i, t_entite * v) {
+void ajout_gauche(int i, void * v) {
     t_elem *nouv = malloc(sizeof(t_elem));
     if (!hors_liste(i) || liste_vide(i)) {
         nouv->val = v;
@@ -99,24 +99,13 @@ int taille_liste(int i) {
     return taille;
 }
 
-void afficher_liste(int i) {
-    t_entite * elem;
-    en_tete(i);
-    printf("affichage liste %i\n", i);
-    while (!hors_liste(i)) {
-        elem = valeur_elt(i);
-        printf("%s %i\n", elem->type, elem->rect_dst->y+elem->rect_dst->h);
-        suivant(i);
-    }
-}
-
-void ajout_entite(int i, char * id, int x, int y, int w, int h, int est_relatif) {
-    t_entite * nouv = creer_entite(id, x, y, w, h, est_relatif);
-    en_queue(i);
-    ajout_droit(i, nouv);
-}
-void ajout_entite_depuis_spritesheet(int i, char * id, int x, int y, int w, int h, int est_relatif) {
-    t_entite * nouv = creer_entite_depuis_spritesheet(id, x, y, w, h, est_relatif);
-    en_queue(i);
-    ajout_droit(i, nouv);
-}
+// void afficher_liste(int i) {
+//     void * elem;
+//     en_tete(i);
+//     printf("affichage liste %i\n", i);
+//     while (!hors_liste(i)) {
+//         elem = valeur_elt(i);
+//         printf("%s %i\n", elem->type, elem->rect_dst->y+elem->rect_dst->h);
+//         suivant(i);
+//     }
+// }
