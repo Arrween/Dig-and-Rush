@@ -59,6 +59,16 @@ struct chargement_spritesheet chargements_spritesheets[] = {
                 {FIN_TAB_ANIMS, 0, 0, 0, 0, 0, 0, 0, 0.}
             }
     },
+    {"ressources/Personnages/squelette_craftpix.png", "squelette", 
+            {
+                {REPOS, 0, 5*128, 128, 128, 0, 0, 1, 1.},
+                {DEPL_G, 0, 10*128, 128, 128, 0, 0, 8, 1/5.},
+                {DEPL_D, 0, 10*128, 128, 128, 0, 0, 8, 1/5.},
+                {ATTQ_G, 0, 1*128, 128, 128, 0, 0, 4, 1/3.},
+                {ATTQ_D, 0, 1*128, 128, 128, 0, 0, 4, 1/3.},
+                {FIN_TAB_ANIMS, 0, 0, 0, 0, 0, 0, 0, 0.}
+            }
+    },
 };
 
 struct chargement chargements_sons[] = {

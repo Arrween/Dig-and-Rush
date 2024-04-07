@@ -35,7 +35,10 @@ int generer_morceau_niveau_0(t_entite * entites[MAX_ENTITES]) {
     entites[1] = creer_entite("bloc_pierre", 50, 170, 10, 10, VRAI);
     entites[2] = creer_entite("bloc_terre", 20, 110, 10, 10, VRAI);
     entites[3] = creer_entite("bloc_terre", 60, 170, 10, 10, VRAI);
-    entites[4] = NULL;
+    entites[4] = creer_entite_depuis_spritesheet("squelette", 55, 150, 20, 20, VRAI);
+    changer_hitbox(entites[4], 20, 50, 50, 50);
+    entites[4]->doit_afficher_hitbox = VRAI;
+    entites[5] = NULL;
     return VRAI;
 }
 
