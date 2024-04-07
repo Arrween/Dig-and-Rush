@@ -170,17 +170,24 @@ void animer(t_entite * e, long long int compteur_frames) {
     else
         pas_anim = calculer_pas_selon_vitesse(compteur_frames, anim->vitesse_anim);
 
-    if (! e->a_collision_b || anim->id == REPOS)
+    if (anim->longueur == 1)
         e->x_sprite = anim->x_sprite_ini;
     else
         e->x_sprite = (e->x_sprite + pas_anim) % anim->longueur;
     e->y_sprite = anim->y_sprite;
+
     changer_sprite(e, e->x_sprite * anim->w_sprite, e->y_sprite);
+    if (e->id_animation_suivante != ANIM_NULLE && e->x_sprite == anim->longueur - 1) {
+        changer_animation(e, e->id_animation_suivante);
+        e->id_animation_suivante = ANIM_NULLE;
+    }
 }
 
 void changer_animation(t_entite * e, t_id_anim id_anim) {
     t_animation * anim = recuperer_animation(e->animations, e->n_animations, id_anim);
     if (anim) {
+        e->x_sprite = 0;
+
         if (anim->decalage_dest_x != 0 || anim->decalage_dest_y != 0)
             e->doit_restaurer_dst = VRAI;
         if (anim->decalage_dest_x != 0)
@@ -262,6 +269,7 @@ t_entite * creer_entite_depuis_texture(SDL_Texture * texture,
 
     nouv->n_animations = 0;
     nouv->animations = NULL;
+    nouv->id_animation_suivante = ANIM_NULLE;
 
     nouv->destructible = NULL;
     nouv->est_obstacle = FAUX;

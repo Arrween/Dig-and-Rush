@@ -65,6 +65,8 @@ typedef struct s_entite {
     /** position courante dans le tableau `animations` */
     t_animation * animation_courante;
 
+    t_id_anim id_animation_suivante;
+
     /** vitesse de déplacement en pourcentage de la zone de jeu frame d’affichage */
     float vitesse;
 
