@@ -65,6 +65,9 @@ typedef struct s_entite {
     /** position courante dans le tableau `animations` */
     t_animation * animation_courante;
 
+    /** vitesse de déplacement en pourcentage de la zone de jeu frame d’affichage */
+    float vitesse;
+
     /** sous-structure affectée si l’entité est destructible */
     t_destructible * destructible;
     /** booléen indiquant si l’entité est un obstacle */
@@ -83,7 +86,7 @@ void afficher_entite(SDL_Renderer*, t_entite*);
 extern void changer_pos_rel(t_entite*, float, float);
 void changer_hitbox(t_entite *, int, int, int, int);
 SDL_FRect convertir_vers_absolu(SDL_FRect *, SDL_FRect);
-void deplacer(t_entite *);
+void deplacer(t_entite *, long long int);
 void animer(t_entite *, long long int compteur_frames);
 void definir_animations(t_entite *, int, ...);
 void changer_animation(t_entite *, t_id_anim);

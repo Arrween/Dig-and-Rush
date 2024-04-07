@@ -131,7 +131,16 @@ void changer_hitbox(t_entite * e, int x, int y, int w, int h) {
         e->hitbox.h = dst_h * (float)h/100;
 }
 
-void deplacer(t_entite * e) {
+int calculer_pas_selon_vitesse(long long int compteur_frames, float vitesse) {
+    if (vitesse >= 1)
+        return (int) vitesse;
+    else if (compteur_frames % (int) (1/(vitesse)) == 0)
+        return 1;
+    else
+        return 0;
+}
+
+void deplacer(t_entite * e, long long int compteur_frames) {
     float depl_x = 0;
     float depl_y = 0;
     if (e->deplacement == GAUCHE && !e->a_collision_g)
@@ -142,20 +151,14 @@ void deplacer(t_entite * e) {
         depl_y = -1;
     if (e->deplacement == BAS && !e->a_collision_b)
         depl_y = 1;
+    int pas = calculer_pas_selon_vitesse(compteur_frames, e->vitesse);
+    depl_x *= pas;
+    depl_y *= pas;
     if (e->deplacement != REPOS_MVT) {
         changer_pos_rel(e, depl_x, depl_y);
         if (e->deplacement == GAUCHE || e->deplacement == DROITE)
             e->sens_regard = e->deplacement;
     }
-}
-
-int calculer_pas_anim(long long int compteur_frames, float vitesse_anim) {
-    if (vitesse_anim >= 1)
-        return (int) vitesse_anim;
-    else if (compteur_frames % (int) (1/(vitesse_anim)) == 0)
-        return 1;
-    else
-        return 0;
 }
 
 void animer(t_entite * e, long long int compteur_frames) {
@@ -165,7 +168,7 @@ void animer(t_entite * e, long long int compteur_frames) {
     if (anim->longueur == 1*anim->w_sprite)
         pas_anim = 0;
     else
-        pas_anim = calculer_pas_anim(compteur_frames, anim->vitesse_anim);
+        pas_anim = calculer_pas_selon_vitesse(compteur_frames, anim->vitesse_anim);
 
     if (! e->a_collision_b || anim->id == REPOS)
         e->x_sprite = anim->x_sprite_ini;
@@ -245,6 +248,8 @@ t_entite * creer_entite_depuis_texture(SDL_Texture * texture,
     nouv->deplacement = REPOS;
     nouv->sens_regard = DROITE;
     nouv->x_sprite = nouv->y_sprite = 0;
+
+    nouv->vitesse = 0;
 
     nouv->dec_x_dst_prec = 0;
     nouv->dec_y_dst_prec = 0;

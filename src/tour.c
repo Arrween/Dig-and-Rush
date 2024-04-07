@@ -183,6 +183,7 @@ int boucle_jeu(SDL_Renderer * rend) {
     fond_tour_2 = creer_entite("fond_tour", 0, 100, 100, 100, VRAI);
 
     perso = creer_entite_depuis_spritesheet("matt", 40, 20, 15, 12, VRAI);
+    perso->vitesse = 1;
     
     generer_morceau_niveau(-1);
 
@@ -358,7 +359,7 @@ int boucle_jeu(SDL_Renderer * rend) {
         // Déplacement et animation du personnage
         if (! perso->a_collision_b)
             changer_animation(perso, perso->sens_regard == GAUCHE ? CHUTE_G : CHUTE_D);
-        deplacer(perso);
+        deplacer(perso, compteur_frames);
         animer(perso, compteur_frames);
 
         // évolution du comportement des pnj
@@ -374,7 +375,7 @@ int boucle_jeu(SDL_Renderer * rend) {
         for (int i = 0; i < n_pnjs; i++) {
             verif_collision(pnjs[i], NULL);
             pnjs[i]->pnj->comportement(pnjs[i]);
-            deplacer(pnjs[i]);
+            deplacer(pnjs[i], compteur_frames);
             animer(pnjs[i], compteur_frames);
         }
 
