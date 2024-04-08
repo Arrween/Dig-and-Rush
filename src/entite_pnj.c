@@ -24,6 +24,18 @@ void comportement_patrouille(t_entite * pnj) {
         pnj->deplacement = DROITE;
         changer_animation(pnj, DEPL_D);
     }
+    if (!pnj->a_collision_b) {
+        if (pnj->deplacement == GAUCHE) {
+            pnj->deplacement = DROITE;
+            changer_animation(pnj, DEPL_D);
+            changer_pos_rel(pnj, 1, 0);
+        }
+        else if (pnj->deplacement == DROITE) {
+            pnj->deplacement = GAUCHE;
+            changer_animation(pnj, DEPL_G);
+            changer_pos_rel(pnj, -1, 0);
+        }
+    }
 }
 
 t_pnj * creer_pnj(char * id) {

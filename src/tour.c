@@ -88,7 +88,7 @@ void verif_collision(t_entite * e1, float * correction_defilement) {
         // que l’entité est le personnage joueur (à adapter quand nécessaire)
         if (correction_defilement != NULL && collision_b) {
             float depassement = e2->hitbox.y - (e1->hitbox.y + e1->hitbox.h);
-            if (depassement <= 0)
+            if (depassement < 0)
                 *correction_defilement = depassement;
         }
 

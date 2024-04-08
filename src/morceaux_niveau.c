@@ -69,9 +69,9 @@ void generer_morceau_niveau_0(void) {
 
     nouv = creer_entite_pnj_depuis_spritesheet("squelette", 10, 130, 20, 20, VRAI);
     nouv->vitesse = 1./2;
-    nouv->pnj->x_patrouille_g = 40;
+    nouv->pnj->x_patrouille_g = 0;
     nouv->pnj->x_patrouille_d = 87;
-    changer_hitbox(nouv, 20, 50, 50, 50);
+    changer_hitbox(nouv, 20, 50, 50, 55);
     ajout_droit(I_LISTE_ENTITES, nouv);
 }
 
