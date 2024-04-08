@@ -210,6 +210,15 @@ t_son * recuperer_son(const char * id) {
     return ressource;
 }
 
+int jouer_son(int canal, const char * id, int repetitions) {
+    t_son * son = recuperer_son(id);
+    if (Mix_PlayChannel(canal, son->tampon, repetitions) == -1) {
+        fprintf(stderr, "Erreur Mix_PlayChannel : %s\n", Mix_GetError());
+        return -1;
+    }
+    return 0;
+}
+
 void detruire_ressources() {
     t_texture * tex_courant, * tex_tmp;
     t_spritesheet * sheet_courant, * sheet_tmp;

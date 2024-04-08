@@ -139,11 +139,7 @@ int main() {
         fenetre
     };
 
-    t_son * musique = recuperer_son("musique_menu");
-    t_son * son_confirmation = recuperer_son("confirmation");
-    t_son * son_coq = recuperer_son("coq");
-
-    Mix_PlayChannel(CANAL_MUSIQUE, musique->tampon, -1);
+    jouer_son(CANAL_MUSIQUE, "musique_menu", -1);
 
     int i_btn;
     t_bouton * btn;
@@ -173,7 +169,7 @@ int main() {
                             etat.doit_quitter = VRAI;
                             break;
                         case SDL_SCANCODE_A:
-                            Mix_PlayChannel(1, son_coq->tampon, 0);
+                            jouer_son(1, "coq", 0);
                             etat.doit_quitter = boucle_jeu(rend);
                             break;
                         default:

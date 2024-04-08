@@ -146,8 +146,7 @@ void action_home(t_etat * etat) {
 }
 void action_jouer(t_etat * etat) {
     etat->i_menu = PAGE_MENU_SERVEUR;
-    t_son * son = recuperer_son("confirmation");
-    Mix_PlayChannel(1, son->tampon, 0);
+    jouer_son(1, "confirmation", 0);
 }
 void action_quitter(t_etat * etat) {
     etat->doit_quitter = VRAI;
