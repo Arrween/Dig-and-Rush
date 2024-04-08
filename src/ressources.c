@@ -8,6 +8,7 @@
 t_texture * textures = NULL;
 t_spritesheet * spritesheets = NULL;
 t_son * sons = NULL;
+t_musique * musiques = NULL;
 
 struct chargement {
     char chemin[TAILLE_MAX_CHEMIN];
@@ -76,6 +77,9 @@ struct chargement_spritesheet chargements_spritesheets[] = {
 struct chargement chargements_sons[] = {
     {"ressources/essais_audio/confirmation_001.wav", "confirmation"},
     {"ressources/Audio/SFX/coq.mp3", "coq"},
+};
+
+struct chargement chargements_musiques[] = {
     {"ressources/Audio/Musique/musique_menu.mp3", "musique_menu"},
 };
 
@@ -104,6 +108,7 @@ void init_ressources(SDL_Renderer * rend) {
     t_texture * ressource_tex;
     t_spritesheet * ressource_spritesheet;
     t_son * ressource_son;
+    t_musique * ressource_mus;
     struct chargement charg;
     struct chargement_spritesheet charg_sheet;
     unsigned long i;
@@ -175,6 +180,25 @@ void init_ressources(SDL_Renderer * rend) {
                    charg.id, charg.chemin);
         }
     }
+
+    for (i = 0; i < sizeof(chargements_musiques)/sizeof(*chargements_musiques); i++) {
+        charg = chargements_musiques[i];
+        HASH_FIND_STR(musiques, charg.id, ressource_mus);
+        if (!ressource_mus) {
+            ressource_mus = malloc(sizeof(t_musique));
+            if (!(ressource_mus->tampon = Mix_LoadMUS(charg.chemin)))
+                SDL_LogError(SDL_LOG_CATEGORY_APPLICATION,
+                             "Erreur lors du chargement d’une musique"
+                             " : %s\n", Mix_GetError());
+            strcpy(ressource_mus->id, charg.id);
+            HASH_ADD_STR(musiques, id, ressource_mus);
+        }
+        else {
+            printf("Avertissement : ressource musique avec l’id « %s » "
+                   "déjà présente, fichier « %s » non chargé\n",
+                   charg.id, charg.chemin);
+        }
+    }
 }
 
 SDL_Texture * recuperer_texture(const char * id) {
@@ -201,22 +225,46 @@ t_spritesheet * recuperer_spritesheet(const char * id) {
     }
 }
 
-t_son * recuperer_son(const char * id) {
+t_son * recuperer_son(const char * id, int est_silencieux) {
     t_son * ressource;
     HASH_FIND_STR(sons, id, ressource);
-    if (!ressource)
+    if (!ressource && !est_silencieux)
         fprintf(stderr, "Avertissement : récupération d’une "
                 "ressource son inexistante « %s »\n", id);
     return ressource;
 }
 
-int jouer_son(int canal, const char * id, int repetitions) {
-    t_son * son = recuperer_son(id);
-    if (Mix_PlayChannel(canal, son->tampon, repetitions) == -1) {
-        fprintf(stderr, "Erreur Mix_PlayChannel : %s\n", Mix_GetError());
-        return -1;
+t_musique * recuperer_musique(const char * id, int est_silencieux) {
+    t_musique * ressource;
+    HASH_FIND_STR(musiques, id, ressource);
+    if (!ressource && !est_silencieux)
+        fprintf(stderr, "Avertissement : récupération d’une "
+                "ressource musique inexistante « %s »\n", id);
+    return ressource;
+}
+
+int jouer_audio(int canal, const char * id, int repetitions) {
+    t_son * son = recuperer_son(id, 1);
+    if (son) {
+        if (Mix_PlayChannel(canal, son->tampon, repetitions) == -1) {
+            fprintf(stderr, "Erreur Mix_PlayChannel : %s\n", Mix_GetError());
+            return -1;
+        }
+        return 0;
     }
-    return 0;
+
+    t_musique * musique = recuperer_musique(id, 1);
+    if (musique) {
+        if (Mix_PlayMusic(musique->tampon, repetitions) == -1) {
+            fprintf(stderr, "Erreur Mix_PlayChannel : %s\n", Mix_GetError());
+            return -1;
+        }
+        return 0;
+    }
+
+    fprintf(stderr, "Avertissement : tentaive de jouer une "
+            "ressource audio (son ou musique) inexistante « %s »\n", id);
+    return -2;
 }
 
 void detruire_ressources() {

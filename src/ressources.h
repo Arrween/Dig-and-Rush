@@ -47,14 +47,23 @@ typedef struct {
 
 extern t_son * sons;
 
+typedef struct {
+    Mix_Music * tampon;
+    char id[TAILLE_MAX_ID];
+    UT_hash_handle hh;
+} t_musique; 
+
+extern t_musique * musiques;
+
 void init_ressources(SDL_Renderer *);
 
 SDL_Texture * recuperer_texture(const char*);
 
 t_spritesheet * recuperer_spritesheet(const char*);
 
-t_son * recuperer_son(const char*);
-int jouer_son(int, const char*, int);
+t_son * recuperer_son(const char*, int);
+t_musique * recuperer_musique(const char*, int);
+int jouer_audio(int, const char*, int);
 
 t_animation * recuperer_animation(t_animation **, int, t_id_anim);
 

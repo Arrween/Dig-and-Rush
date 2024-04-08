@@ -49,7 +49,8 @@ int main() {
     }
     Mix_AllocateChannels(N_CANAUX);
     // réglage du volume, -1 pour tous les canaux
-    Mix_Volume(-1, MIX_MAX_VOLUME * FACTEUR_VOLUME_INI);
+    Mix_Volume(-1, MIX_MAX_VOLUME * FACTEUR_VOLUME_SONS_INI);
+    Mix_VolumeMusic(MIX_MAX_VOLUME * FACTEUR_VOLUME_MUSIQUE_INI);
 
     init_ressources(rend);
         
@@ -139,7 +140,7 @@ int main() {
         fenetre
     };
 
-    jouer_son(CANAL_MUSIQUE, "musique_menu", -1);
+    jouer_audio(0, "musique_menu", -1);
 
     int i_btn;
     t_bouton * btn;
@@ -169,7 +170,7 @@ int main() {
                             etat.doit_quitter = VRAI;
                             break;
                         case SDL_SCANCODE_A:
-                            jouer_son(1, "coq", 0);
+                            jouer_audio(0, "coq", 0);
                             etat.doit_quitter = boucle_jeu(rend);
                             break;
                         default:

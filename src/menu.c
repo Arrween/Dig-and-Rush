@@ -146,7 +146,7 @@ void action_home(t_etat * etat) {
 }
 void action_jouer(t_etat * etat) {
     etat->i_menu = PAGE_MENU_SERVEUR;
-    jouer_son(1, "confirmation", 0);
+    jouer_audio(0, "confirmation", 0);
 }
 void action_quitter(t_etat * etat) {
     etat->doit_quitter = VRAI;
