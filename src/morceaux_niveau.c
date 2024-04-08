@@ -20,7 +20,6 @@ void (*fonctions_generation[N_MORCEAUX_NIVEAU])(void) = {
 void generer_morceau_niveau(int choix) {
     if (choix < 0 || choix >= N_MORCEAUX_NIVEAU)
         choix = rand() % N_MORCEAUX_NIVEAU;
-    choix = 0;
     printf("génération morceau de niveau %i\n", choix);
     fonctions_generation[choix]();
 }
