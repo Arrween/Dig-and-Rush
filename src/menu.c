@@ -123,11 +123,13 @@ void action_parametres(t_etat * etat) {
 void action_volume(t_etat * etat) {
     if (etat->boutons[1]->texture == recuperer_texture("bouton_volume_off")) {
         etat->boutons[1]->texture = recuperer_texture("bouton_volume_on");
-        Mix_Pause(-1);
+        Mix_VolumeMusic(0);
+        Mix_Volume(-1, 0);
     }
     else {
         etat->boutons[1]->texture = recuperer_texture("bouton_volume_off");
-        Mix_Resume(-1);
+        Mix_VolumeMusic(MIX_MAX_VOLUME * FACTEUR_VOLUME_MUSIQUE_INI);
+        Mix_Volume(-1, MIX_MAX_VOLUME * FACTEUR_VOLUME_SONS_INI);
     }
 }
 void action_personnages(t_etat * etat) {
