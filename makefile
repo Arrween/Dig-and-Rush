@@ -10,18 +10,12 @@ REPS = $(REP_BIN) $(REP_SRC) $(REP_OBJ) $(REP_DOC) $(REP_LIB)
 REP_SDL = $(REP_LIB)/SDL2
 REP_SDLINC = $(REP_SDL)/include
 REP_SDLBIN = $(REP_SDL)/bin
-REP_SDLIMG = $(REP_LIB)/SDL2_image
-REP_SDLIMGLIB = $(REP_SDLIMG)/lib
-REP_SDLIMGINC = $(REP_SDLIMG)/include
-REP_SDLTTF = $(REP_LIB)/SDL2_ttf
-REP_SDLTTFLIB = $(REP_SDLTTF)/lib
-REP_SDLTTFINC = $(REP_SDLTTF)/include
 
 SOURCES = $(wildcard $(REP_SRC)/*.c)
 OBJETS = $(SOURCES:$(REP_SRC)/%.c=$(REP_OBJ)/%.o)
 ENTETES = $(REP_SRC)/constantes.h
-INCLUDES = -I$(REP_SRC) -I$(REP_SDLINC) # -I$(REP_SDLIMGINC) -I$(REP_SDLTTFINC)
-LIB_FLAGS = `$(REP_SDLBIN)/sdl2-config --libs --cflags` -lSDL2_mixer -lSDL2_image -lSDL2_ttf 
+INCLUDES = -I$(REP_SRC) -I$(REP_SDLINC)
+LIB_FLAGS = `$(REP_SDLBIN)/sdl2-config --libs --cflags` -lSDL2_image -lSDL2_ttf -lSDL2_mixer
 WARNING_FLAGS = -Wall -Wextra -Wconversion -Wno-float-conversion -Wno-sign-conversion #-fanalyzer -fsanitize=undefined #-fsanitize=address
 DEBUG_FLAGS = 
 
