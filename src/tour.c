@@ -284,6 +284,7 @@ int boucle_jeu(SDL_Renderer * rend) {
                                     t_entite * elem = valeur_elt(I_LISTE_ENTITES);
                                     if (elem->destructible && verifier_peut_creuser(perso, elem)) {
                                         elem->destructible->action_destruction();
+                                        jouer_audio(1, elem->destructible->id_son, 0);
                                         oter_elt(I_LISTE_ENTITES);
                                         detruire_entite(&elem);
                                     }

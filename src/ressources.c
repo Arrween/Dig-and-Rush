@@ -77,6 +77,7 @@ struct chargement_spritesheet chargements_spritesheets[] = {
 struct chargement chargements_sons[] = {
     {"ressources/essais_audio/confirmation_001.wav", "confirmation"},
     {"ressources/Audio/SFX/coq.mp3", "coq"},
+    {"ressources/Audio/SFX/destruction_bloc.flac", "destruction_bloc"},
 };
 
 struct chargement chargements_musiques[] = {
