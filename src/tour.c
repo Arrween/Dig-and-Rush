@@ -377,6 +377,8 @@ int boucle_jeu(SDL_Renderer * rend) {
         // Déplacement et animation du personnage
         if (! perso->a_collision_b)
             changer_animation(perso, perso->sens_regard == GAUCHE ? CHUTE_G : CHUTE_D);
+        else if (perso->animation_courante->id == CHUTE_G || perso->animation_courante->id == CHUTE_D)
+            changer_animation(perso, REPOS);
         deplacer(perso, compteur_frames);
         animer(perso, compteur_frames);
 
