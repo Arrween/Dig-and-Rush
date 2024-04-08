@@ -11,6 +11,19 @@
 
 int main() {
     printf("début du main\n");
+
+    // vérification des versions de SDL compilées et linkée
+    SDL_version compiled, linked;
+    SDL_VERSION(&compiled);
+    SDL_GetVersion(&linked);
+    if (compiled.major != linked.major ||
+        compiled.minor != linked.minor ||
+        compiled.patch != linked.patch)
+        SDL_Log("Attention utilise SDL comilée %u.%u.%u et"
+                "SDL linkée %u.%u.%u\n",
+                compiled.major, compiled.minor, compiled.patch,
+                linked.major, linked.minor, linked.patch);
+
     SDL_Window * fenetre;
     SDL_Renderer * rend;
     SDL_Event event;

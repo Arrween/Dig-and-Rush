@@ -8,7 +8,6 @@ NOM_PROG = dignrush.sh
 REPS = $(REP_BIN) $(REP_SRC) $(REP_OBJ) $(REP_DOC) $(REP_LIB)
 
 REP_SDL = $(REP_LIB)/SDL2
-REP_SDLLIB = $(REP_SDL)/lib
 REP_SDLINC = $(REP_SDL)/include
 REP_SDLBIN = $(REP_SDL)/bin
 REP_SDLIMG = $(REP_LIB)/SDL2_image
@@ -21,8 +20,8 @@ REP_SDLTTFINC = $(REP_SDLTTF)/include
 SOURCES = $(wildcard $(REP_SRC)/*.c)
 OBJETS = $(SOURCES:$(REP_SRC)/%.c=$(REP_OBJ)/%.o)
 ENTETES = $(REP_SRC)/constantes.h
-INCLUDES = -I$(REP_SRC) -I$(REP_SDLINC) -I$(REP_SDLIMGINC) -I$(REP_SDLTTFINC)
-LIB_FLAGS = `sdl2-config --libs --cflags` -lSDL2_image -lSDL2_ttf -L$(REP_SDLLIB) -L$(REP_SDLIMGLIB) -L$(REP_SDLTTFLIB) -lSDL2_mixer
+INCLUDES = -I$(REP_SRC) -I$(REP_SDLINC) # -I$(REP_SDLIMGINC) -I$(REP_SDLTTFINC)
+LIB_FLAGS = `$(REP_SDLBIN)/sdl2-config --libs --cflags` -lSDL2_mixer -lSDL2_image -lSDL2_ttf 
 WARNING_FLAGS = -Wall -Wextra -Wconversion -Wno-float-conversion -Wno-sign-conversion #-fanalyzer -fsanitize=undefined #-fsanitize=address
 DEBUG_FLAGS = 
 
@@ -42,7 +41,7 @@ $(NOM_BIN) : $(OBJETS)
 	@ $(OUTIL_MESSAGE) Compilation du jeu…
 	gcc -o $(REP_BIN)/$@ $^ $(LIB_FLAGS) $(INCLUDES) $(WARNING_FLAGS) $(DEBUG_FLAGS)
 $(OBJETS) : $(REP_OBJ)/%.o: $(REP_SRC)/%.c $(ENTETES)
-	gcc -o $@ -c $< $(WARNING_FLAGS) $(DEBUG_FLAGS)
+	gcc -o $@ -c $< $(WARNING_FLAGS) $(DEBUG_FLAGS) $(INCLUDES)
 
 docs : docs_tex docs_doxy
 docs_tex: $(SOURCES_TEX)
