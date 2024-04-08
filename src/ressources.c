@@ -272,6 +272,7 @@ void detruire_ressources() {
     t_texture * tex_courant, * tex_tmp;
     t_spritesheet * sheet_courant, * sheet_tmp;
     t_son * son_courant, * son_tmp;
+    t_musique * mus_courant, * mus_tmp;
     HASH_ITER(hh, textures, tex_courant, tex_tmp) {
         SDL_DestroyTexture(tex_courant->texture);
         free(tex_courant);
@@ -287,5 +288,8 @@ void detruire_ressources() {
         Mix_FreeChunk(son_courant->tampon);
         free(son_courant);
     }
-
+    HASH_ITER(hh, musiques, mus_courant, mus_tmp) {
+        Mix_FreeMusic(mus_courant->tampon);
+        free(mus_courant);
+    }
 }
