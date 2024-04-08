@@ -98,7 +98,7 @@ void verif_collision(t_entite * e1, float * correction_defilement) {
     }
 }
 
-void porter_coup(t_entite * e) {
+void porter_coup(t_entite * e, int * score) {
     en_tete(I_LISTE_ENTITES);
     while (!hors_liste(I_LISTE_ENTITES)) {
         t_entite * elem = valeur_elt(I_LISTE_ENTITES);
@@ -109,6 +109,7 @@ void porter_coup(t_entite * e) {
                 changer_animation(elem, ANIM_MORT);
                 elem->deplacement = REPOS_MVT;
                 elem->pnj->est_mort = VRAI;
+                *score += elem->pnj->valeur_vaincu;
             }
         }
         suivant(I_LISTE_ENTITES);
@@ -192,6 +193,8 @@ int boucle_jeu(SDL_Renderer * rend) {
     int doit_boucler = VRAI;
     long long compteur_frames = 0;
     float pas_defilement = 0;
+    int score = 0;
+    int score_prec = score;
 
     srand(time(NULL));
 
@@ -232,6 +235,9 @@ int boucle_jeu(SDL_Renderer * rend) {
 
     // compteur de FPS
     t_texte * texte_fps = creer_texte("police_defaut", 0, 0, 0, 255, 20, TAILLE_H-40, 100, 30);
+
+    t_texte * texte_score = creer_texte("police_defaut", 0, 0, 0, 255, 20, 20, 160, 50);
+    changer_texte(texte_score, "POINTS : %i", score);
 
     // chronométrage du temps de chaque frame
     clock_t chrono_deb, chrono_fin;
@@ -294,7 +300,7 @@ int boucle_jeu(SDL_Renderer * rend) {
                                     changer_animation(perso, ATTQ_G);
                                 else if (perso->sens_regard == DROITE)
                                     changer_animation(perso, ATTQ_D);
-                                porter_coup(perso);
+                                porter_coup(perso, &score);
                             }
                             break;
                         default:
@@ -369,6 +375,9 @@ int boucle_jeu(SDL_Renderer * rend) {
         SDL_RenderCopy(rend, tex_ombre, NULL, NULL);
 
         afficher_texte(rend, texte_fps);
+        if (score != score_prec)
+            changer_texte(texte_score, "POINTS : %i", score);
+        afficher_texte(rend, texte_score);
 
         SDL_RenderPresent(rend);
 
