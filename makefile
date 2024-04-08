@@ -11,12 +11,20 @@ REP_SDL = $(REP_LIB)/SDL2
 REP_SDLINC = $(REP_SDL)/include
 REP_SDLBIN = $(REP_SDL)/bin
 
+SYSTEME = $(shell uname)
+ifeq ($(SYSTEME), Linux)
+	# $(info flags de compilation pour linux…)
+	LIB_FLAGS = `$(REP_SDLBIN)/sdl2-config --libs --cflags` -lSDL2_image -lSDL2_ttf -lSDL2_mixer
+	INCLUDES = -I$(REP_SRC) -I$(REP_SDLINC)
+else ifeq ($(SYSTEME), Darwin)
+	# $(info flags de compilation pour mac…)
+	LIB_FLAGS = -L$(REP_SDL)/lib -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer
+	INCLUDES = -I$(REP_SRC)
+endif
+
 SOURCES = $(wildcard $(REP_SRC)/*.c)
 OBJETS = $(SOURCES:$(REP_SRC)/%.c=$(REP_OBJ)/%.o)
 ENTETES = $(REP_SRC)/constantes.h
-INCLUDES = -I$(REP_SRC) -I$(REP_SDLINC)
-#LIB_FLAGS = `$(REP_SDLBIN)/sdl2-config --libs --cflags` -lSDL2_image -lSDL2_ttf -lSDL2_mixer
-LIB_FLAGS = -L$(REP_SDL)/lib -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer
 WARNING_FLAGS = -Wall -Wextra # -Wconversion -Wno-float-conversion -Wno-sign-conversion #-fanalyzer -fsanitize=undefined #-fsanitize=address
 DEBUG_FLAGS = 
 
