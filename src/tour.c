@@ -21,6 +21,15 @@
 
 #define N 10
 
+SDL_bool SDL_PointInFRect(const SDL_FPoint* p, const SDL_FRect* r) {
+    if (p->x >= r->x && p->x < r->x + r->w &&
+        p->y >= r->y && p->y < r->y + r->h) {
+        return SDL_TRUE;
+    } else {
+        return SDL_FALSE;
+    }
+}
+
 /**
  * @brief vérifie les collisions d’une entité avec les obstacles
  * @param e1 entité possiblement en collision
