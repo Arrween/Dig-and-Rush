@@ -18,7 +18,7 @@ ifeq ($(SYSTEME), Linux)
 	INCLUDES = -I$(REP_SRC) -I$(REP_SDLINC)
 else ifeq ($(SYSTEME), Darwin)
 	# $(info flags de compilation pour mac…)
-	LIB_FLAGS = -L$(REP_SDL)/lib -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer
+	LIB_FLAGS = -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer
 	INCLUDES = -I$(REP_SRC)
 endif
 
