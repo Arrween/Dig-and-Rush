@@ -121,10 +121,14 @@ void action_parametres(t_etat * etat) {
     etat->i_menu = PAGE_MENU_PARAMETRES;
 }
 void action_volume(t_etat * etat) {
-    if (etat->boutons[1]->texture == recuperer_texture("bouton_volume_off"))
+    if (etat->boutons[1]->texture == recuperer_texture("bouton_volume_off")) {
         etat->boutons[1]->texture = recuperer_texture("bouton_volume_on");
-    else
+        Mix_Pause(-1);
+    }
+    else {
         etat->boutons[1]->texture = recuperer_texture("bouton_volume_off");
+        Mix_Resume(-1);
+    }
 }
 void action_personnages(t_etat * etat) {
     etat->i_menu = PAGE_MENU_PERSONNAGES;
@@ -142,6 +146,8 @@ void action_home(t_etat * etat) {
 }
 void action_jouer(t_etat * etat) {
     etat->i_menu = PAGE_MENU_SERVEUR;
+    t_son * son = recuperer_son("confirmation");
+    Mix_PlayChannel(1, son->tampon, 0);
 }
 void action_quitter(t_etat * etat) {
     etat->doit_quitter = VRAI;
