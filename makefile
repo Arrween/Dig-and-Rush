@@ -11,15 +11,18 @@ REP_SDL = $(REP_LIB)/SDL2
 REP_SDLINC = $(REP_SDL)/include
 REP_SDLBIN = $(REP_SDL)/bin
 
+# définition conditionnelle des linker flags et des includes selon le système
 SYSTEME = $(shell uname)
 ifeq ($(SYSTEME), Linux)
-	# $(info flags de compilation pour linux…)
-	LIB_FLAGS = `$(REP_SDLBIN)/sdl2-config --libs --cflags` -lSDL2_image -lSDL2_ttf -lSDL2_mixer
-	INCLUDES = -I$(REP_SRC) -I$(REP_SDLINC)
+$(info définition des flags de compilation pour linux…)
+LIB_FLAGS = `$(REP_SDLBIN)/sdl2-config --libs --cflags` -lSDL2_image -lSDL2_ttf -lSDL2_mixer
+INCLUDES = -I$(REP_SRC) -I$(REP_SDLINC)
 else ifeq ($(SYSTEME), Darwin)
-	# $(info flags de compilation pour mac…)
-	LIB_FLAGS = -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer
-	INCLUDES = -I$(REP_SRC)
+$(info définition des flags de compilation pour mac…)
+LIB_FLAGS = -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer
+INCLUDES = -I$(REP_SRC)
+else
+$(error système non pris en charge)
 endif
 
 SOURCES = $(wildcard $(REP_SRC)/*.c)
