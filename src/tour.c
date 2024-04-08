@@ -222,7 +222,6 @@ int boucle_jeu(SDL_Renderer * rend) {
     int alpha_fond = 0;
 
     // compteur de FPS
-    TTF_Init();
     SDL_Color couleur_fps = {0,0,0,255};
     TTF_Font * police = TTF_OpenFont("ressources/Menu/Police/font1.ttf", 50);
     SDL_Surface * surface_fps = TTF_RenderText_Solid(police, "", couleur_fps);

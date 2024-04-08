@@ -10,12 +10,33 @@
 #include "ressources.h"
 
 int main() {
+    printf("début du main\n");
     SDL_Window * fenetre;
     SDL_Renderer * rend;
     SDL_Event event;
 
 
     initialiser_sdl();
+
+    // Création de la fenêtre
+    fenetre = creation_fenetre();
+
+    // Création du renderer
+    rend = creation_renderer(&fenetre);
+    SDL_RenderSetLogicalSize(rend, TAILLE_L, TAILLE_H);
+
+    TTF_Init();
+
+    // écran de chargement
+    SDL_Color couleur_txt_chargement = {255,255,255,255};
+    TTF_Font * police = TTF_OpenFont("ressources/Menu/Police/font1.ttf", 50);
+    SDL_Surface * surface_txt_chargement = TTF_RenderText_Solid(police, "Chargement...", couleur_txt_chargement);
+    SDL_Rect dst_txt_chargement = {TAILLE_L/2 - 100, TAILLE_H/2 - 40, 200, 80};
+    SDL_Texture * tex_txt_chargement = SDL_CreateTextureFromSurface(rend, surface_txt_chargement);;
+    SDL_SetRenderDrawColor(rend, 0, 0, 0, 255);
+    SDL_RenderFillRect(rend, NULL);
+    SDL_RenderCopy(rend, tex_txt_chargement, NULL, &dst_txt_chargement);
+    SDL_RenderPresent(rend);
 
     // Initialisation de SDL_image pour le support des images PNG
     initialiser_sdl_img();
@@ -29,13 +50,6 @@ int main() {
     Mix_AllocateChannels(N_CANAUX);
     // réglage du volume, -1 pour tous les canaux
     Mix_Volume(-1, MIX_MAX_VOLUME * FACTEUR_VOLUME_INI);
-
-    // Création de la fenêtre
-    fenetre = creation_fenetre();
-
-    // Création du renderer
-    rend = creation_renderer(&fenetre);
-    SDL_RenderSetLogicalSize(rend, TAILLE_L, TAILLE_H);
 
     init_ressources(rend);
         
