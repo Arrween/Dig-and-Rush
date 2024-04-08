@@ -98,7 +98,7 @@ void verif_collision(t_entite * e1, float * correction_defilement) {
     }
 }
 
-void porter_coup(t_entite * e, int * score) {
+void porter_coup(t_entite * e, int * score, t_texte * texte_score) {
     en_tete(I_LISTE_ENTITES);
     while (!hors_liste(I_LISTE_ENTITES)) {
         t_entite * elem = valeur_elt(I_LISTE_ENTITES);
@@ -110,6 +110,7 @@ void porter_coup(t_entite * e, int * score) {
                 elem->deplacement = REPOS_MVT;
                 elem->pnj->est_mort = VRAI;
                 *score += elem->pnj->valeur_vaincu;
+                changer_texte(texte_score, "POINTS : %i", *score);
             }
         }
         suivant(I_LISTE_ENTITES);
@@ -194,7 +195,6 @@ int boucle_jeu(SDL_Renderer * rend) {
     long long compteur_frames = 0;
     float pas_defilement = 0;
     int score = 0;
-    int score_prec = score;
 
     srand(time(NULL));
 
@@ -300,7 +300,7 @@ int boucle_jeu(SDL_Renderer * rend) {
                                     changer_animation(perso, ATTQ_G);
                                 else if (perso->sens_regard == DROITE)
                                     changer_animation(perso, ATTQ_D);
-                                porter_coup(perso, &score);
+                                porter_coup(perso, &score, texte_score);
                             }
                             break;
                         default:
@@ -375,8 +375,6 @@ int boucle_jeu(SDL_Renderer * rend) {
         SDL_RenderCopy(rend, tex_ombre, NULL, NULL);
 
         afficher_texte(rend, texte_fps);
-        if (score != score_prec)
-            changer_texte(texte_score, "POINTS : %i", score);
         afficher_texte(rend, texte_score);
 
         SDL_RenderPresent(rend);
