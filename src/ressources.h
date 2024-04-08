@@ -1,3 +1,6 @@
+#ifndef RESSOURCES_H
+#define RESSOURCES_H
+
 #include "uthash.h"
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_mixer.h>
@@ -68,3 +71,5 @@ int jouer_audio(int, const char*, int);
 t_animation * recuperer_animation(t_animation **, int, t_id_anim);
 
 void detruire_ressources(void);
+
+#endif /* RESSOURCES_H */
