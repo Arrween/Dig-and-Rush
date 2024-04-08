@@ -11,6 +11,7 @@
 #include "entite_pnj.h"
 #include "morceaux_niveau.h"
 #include "listes.h"
+#include "texte.h"
 
 #define MAX_RAYON_OMBRE (TAILLE_H)
 #define FACTEUR_MIN_RAYON_OMBRE 4 // multipli par la largeur du personnage
@@ -230,11 +231,7 @@ int boucle_jeu(SDL_Renderer * rend) {
     int alpha_fond = 0;
 
     // compteur de FPS
-    SDL_Color couleur_fps = {0,0,0,255};
-    TTF_Font * police = recuperer_police("police_defaut");
-    SDL_Surface * surface_fps = TTF_RenderText_Solid(police, "", couleur_fps);
-    SDL_Rect dst_fps = {20, TAILLE_H-40, 100, 30};
-    SDL_Texture * tex_fps = NULL;
+    t_texte * texte_fps = creer_texte("police_defaut", 0, 0, 0, 255, 20, TAILLE_H-40, 100, 30);
 
     // chronométrage du temps de chaque frame
     clock_t chrono_deb, chrono_fin;
@@ -371,9 +368,7 @@ int boucle_jeu(SDL_Renderer * rend) {
 
         SDL_RenderCopy(rend, tex_ombre, NULL, NULL);
 
-        SDL_DestroyTexture(tex_fps);
-        tex_fps = SDL_CreateTextureFromSurface(rend, surface_fps);
-        SDL_RenderCopy(rend, tex_fps, NULL, &dst_fps);
+        afficher_texte(rend, texte_fps);
 
         SDL_RenderPresent(rend);
 
@@ -466,12 +461,8 @@ int boucle_jeu(SDL_Renderer * rend) {
         chrono_fin = clock();
         microsec_par_frame = (chrono_fin - chrono_deb) * 1000000 / CLOCKS_PER_SEC;
         // printf("%i μs\n", microsec_par_frame);
-        char txt_fps[30];
-        if (compteur_frames % 10 == 0) {
-            sprintf(txt_fps, "%.2f FPS", 1000000./microsec_par_frame);
-            SDL_FreeSurface(surface_fps);
-            surface_fps = TTF_RenderText_Solid(police, txt_fps, couleur_fps);
-        }
+        if (compteur_frames % 10 == 0)
+            changer_texte(texte_fps, "%.2f FPS", 1000000./microsec_par_frame);
 
         int attente = 1000 / FPS - microsec_par_frame/1000;
 
