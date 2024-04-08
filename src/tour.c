@@ -21,6 +21,15 @@
 
 #define N 10
 
+SDL_bool PointInFRect(const SDL_FPoint* p, const SDL_FRect* r) {
+    if (p->x >= r->x && p->x < r->x + r->w &&
+        p->y >= r->y && p->y < r->y + r->h) {
+        return SDL_TRUE;
+    } else {
+        return SDL_FALSE;
+    }
+}
+
 /**
  * @brief vérifie les collisions d’une entité avec les obstacles
  * @param e1 entité possiblement en collision
@@ -52,11 +61,11 @@ void verif_collision(t_entite * e1, float * correction_defilement) {
 
         // il y a collision à gauche, droite ou en haut si les deux points correspondants sont
         // dans la hitbox de l’entité candidate
-        int collision_g = SDL_PointInFRect(&e1_hg, &(e2->hitbox)) || SDL_PointInFRect(&e1_bg, &(e2->hitbox));
-        int collision_d = SDL_PointInFRect(&e1_hd, &(e2->hitbox)) || SDL_PointInFRect(&e1_bd, &(e2->hitbox));
-        int collision_h = SDL_PointInFRect(&e1_hg, &(e2->hitbox)) || SDL_PointInFRect(&e1_hg, &(e2->hitbox));
+        int collision_g = PointInFRect(&e1_hg, &(e2->hitbox)) || PointInFRect(&e1_bg, &(e2->hitbox));
+        int collision_d = PointInFRect(&e1_hd, &(e2->hitbox)) || PointInFRect(&e1_bd, &(e2->hitbox));
+        int collision_h = PointInFRect(&e1_hg, &(e2->hitbox)) || PointInFRect(&e1_hg, &(e2->hitbox));
         // il y a collision en bas si le point au milieu du bas de la hitbox et dans la hitbox candidate
-        int collision_b = SDL_PointInFRect(&e1_b, &(e2->hitbox));
+        int collision_b = PointInFRect(&e1_b, &(e2->hitbox));
         // l’entité a une collision à gauche si elle est en collision à gauche avec au moins une entité de la liste
         // idem pour droite, haut, bas
         e1->a_collision_g = e1->a_collision_g || collision_g;
