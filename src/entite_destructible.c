@@ -4,19 +4,17 @@
 #include "entite.h"
 #include "constantes.h"
 
-void action_destruction_essai(void) {
-    // printf("objet destructible détruit en jeu\n");
-}
-
-void init_destructible(t_destructible * d, char * id) {
-    if (strcmp(id, "bloc_terre") == 0)
-        strcpy(d->id_son, "destruction_bloc");
-}
-
+/** 
+* @brief crée un nouveau `t_destructible` et définit les valeurs par défaut de
+*       ses attributs en fonction du type de ressource
+* @param id identifiant de ressource utilisé pour distinguer les valeurs par défaut à affecter
+*/
 t_destructible * creer_destructible(char * id) {
     t_destructible * nouv = malloc(sizeof(t_destructible));
-    nouv->action_destruction = action_destruction_essai;
-    init_destructible(nouv, id);
+    if (strcmp(id, "bloc_terre") == 0)
+        strcpy(nouv->id_son, "destruction_bloc");
+    else
+        strcpy(nouv->id_son, "destruction_bloc");
     return nouv;
 }
 

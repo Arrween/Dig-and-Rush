@@ -38,12 +38,21 @@ void comportement_patrouille(t_entite * pnj) {
     }
 }
 
+/** 
+* @brief crée un nouveau `t_pnj` et définit les valeurs par défaut de
+*       ses attributs en fonction du type de ressource
+* @param id identifiant de ressource utilisé pour distinguer les valeurs par défaut à affecter
+*/
 t_pnj * creer_pnj(char * id) {
     t_pnj * nouv = malloc(sizeof(t_pnj));
-    if (strcmp(id, "squelette") == 0)
+    if (strcmp(id, "squelette") == 0) {
         nouv->comportement = comportement_patrouille;
-    else
+        nouv->valeur_vaincu = 10;
+    }
+    else {
         nouv->comportement = (void(*)(t_entite*)) comportement_oisif;
+        nouv->valeur_vaincu = 0;
+    }
     nouv->x_patrouille_g = 0;
     nouv->x_patrouille_d = 100;
     nouv->est_mort = FAUX;

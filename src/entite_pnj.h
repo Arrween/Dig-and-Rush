@@ -8,6 +8,7 @@ struct s_pnj {
     float x_patrouille_g;
     float x_patrouille_d;
     int est_mort;
+    int valeur_vaincu;
 };
 
 t_entite * creer_entite_pnj_depuis_spritesheet(char*, float, float, float, float, int);

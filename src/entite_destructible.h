@@ -5,7 +5,6 @@
 #include "constantes.h"
 
 struct s_destructible {
-    void (*action_destruction) (void);
     char id_son[TAILLE_MAX_ID];
 };
 
