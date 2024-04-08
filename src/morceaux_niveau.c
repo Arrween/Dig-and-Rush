@@ -33,13 +33,41 @@ void generer_morceau_niveau_0(void) {
 
     en_queue(I_LISTE_ENTITES);
 
-    ajout_droit(I_LISTE_ENTITES, creer_entite_obstacle("bloc_pierre", 0, 110, 20, 10, VRAI));
-    ajout_droit(I_LISTE_ENTITES, creer_entite_obstacle("bloc_pierre", 30, 160, 10, 10, VRAI));
-    ajout_droit(I_LISTE_ENTITES, creer_entite_obstacle("bloc_pierre", 40, 170, 25, 10, VRAI));
-    ajout_droit(I_LISTE_ENTITES, creer_entite_destructible("bloc_terre", 20, 110, 20, 10, VRAI));
-    ajout_droit(I_LISTE_ENTITES, creer_entite_destructible("bloc_terre", 65, 170, 22, 10, VRAI));
+    int i, x, y;
+    for (i=0, x=10, y=110; i<8; i++, x+=10){
+        if (i==6){
+            ajout_droit(I_LISTE_ENTITES, creer_entite_obstacle("bloc_pierre", x, y+20, 10, 10, VRAI));
+            ajout_droit(I_LISTE_ENTITES, creer_entite_destructible("bloc_terre", x, y+30, 10, 10, VRAI));
+            ajout_droit(I_LISTE_ENTITES, creer_entite_destructible("bloc_terre", x, y+40, 10, 10, VRAI));
+        }
+        
+        if (i==7){
+            ajout_droit(I_LISTE_ENTITES, creer_entite_obstacle("bloc_pierre", x, y+20, 10, 10, VRAI));
+            ajout_droit(I_LISTE_ENTITES, creer_entite_destructible("bloc_terre", x, y+30, 10, 10, VRAI));
+            ajout_droit(I_LISTE_ENTITES, creer_entite_obstacle("bloc_pierre", x, y+40, 10, 10, VRAI));
+        }
 
-    nouv = creer_entite_pnj_depuis_spritesheet("squelette", 55, 150, 20, 20, VRAI);
+        
+
+        else{
+            ajout_droit(I_LISTE_ENTITES, creer_entite_obstacle("bloc_pierre", x, y, 10, 10, VRAI));
+            if (i != 5 && i != 7)
+                ajout_droit(I_LISTE_ENTITES, creer_entite_obstacle("bloc_pierre", x, y+20, 10, 10, VRAI));
+            if (i==0)
+                ajout_droit(I_LISTE_ENTITES, creer_entite_destructible("bloc_terre", x, y+20, 10, 10, VRAI));
+
+            if (i==2 || i==3){
+                ajout_droit(I_LISTE_ENTITES, creer_entite_obstacle("bloc_pierre", x, y+60, 10, 10, VRAI));
+                ajout_droit(I_LISTE_ENTITES, creer_entite_obstacle("bloc_pierre", x, y+70, 10, 10, VRAI));
+            }
+            ajout_droit(I_LISTE_ENTITES, creer_entite_destructible("bloc_terre", x, y+40, 10, 10, VRAI));
+
+        }
+    }
+
+
+
+    nouv = creer_entite_pnj_depuis_spritesheet("squelette", 10, 130, 20, 20, VRAI);
     nouv->vitesse = 1./2;
     nouv->pnj->x_patrouille_g = 40;
     nouv->pnj->x_patrouille_d = 87;
@@ -64,7 +92,7 @@ void generer_murs(void) {
     for (int i = 0; i < n_blocs_mur; i++) {
         ajout_droit(I_LISTE_ENTITES, creer_entite_obstacle("bloc_pierre", 0, i*5, LARGEUR_MUR, 10, VRAI)); // côté gauche
         ajout_droit(I_LISTE_ENTITES, creer_entite_obstacle("bloc_pierre", 0, (n_blocs_mur+i)*5, LARGEUR_MUR, 10, VRAI)); // côté gauche écran du dessous
-        ajout_droit(I_LISTE_ENTITES, creer_entite_obstacle("bloc_pierre", 95, i*5, LARGEUR_MUR, 10, VRAI)); // côté droit
-        ajout_droit(I_LISTE_ENTITES, creer_entite_obstacle("bloc_pierre", 95, (n_blocs_mur+i)*5, LARGEUR_MUR, 10, VRAI)); // côté droit écran du dessous
+        ajout_droit(I_LISTE_ENTITES, creer_entite_obstacle("bloc_pierre", 90, i*5, LARGEUR_MUR, 10, VRAI)); // côté droit
+        ajout_droit(I_LISTE_ENTITES, creer_entite_obstacle("bloc_pierre", 90, (n_blocs_mur+i)*5, LARGEUR_MUR, 10, VRAI)); // côté droit écran du dessous
     }
 }
