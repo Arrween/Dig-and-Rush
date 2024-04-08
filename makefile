@@ -74,7 +74,7 @@ remove : clean
 
 all : reps $(NOM_BIN) docs
 
-jeu : $(NOM_BIN)
+jeu : reps $(NOM_BIN)
 
 debug : DEBUG_FLAGS += -g
 debug : $(NOM_BIN)
