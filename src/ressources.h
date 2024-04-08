@@ -1,5 +1,6 @@
 #include "uthash.h"
 #include <SDL2/SDL.h>
+#include <SDL2/SDL_mixer.h>
 
 #define TAILLE_MAX_CHEMIN 200
 #define TAILLE_MAX_ID 100
@@ -39,9 +40,7 @@ typedef struct {
 extern t_spritesheet * spritesheets;
 
 typedef struct {
-    SDL_AudioSpec spec;
-    uint32_t length;
-    uint8_t * buffer;
+    Mix_Chunk * tampon;
     char id[TAILLE_MAX_ID];
     UT_hash_handle hh;
 } t_son; 

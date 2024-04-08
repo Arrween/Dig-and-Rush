@@ -3,6 +3,11 @@
 #define TAILLE_H 720
 #define FPS 30
 
+#define FREQ_AUDIO 44100
+#define TAILLE_TAMPON_AUDIO 1024
+#define N_CANAUX 10
+#define CANAL_MUSIQUE 0
+#define FACTEUR_VOLUME_INI 0.04
 
 #define VITESSE_CHUTE 2./1 // float, en %age de la hauteur de jeu par frame
 

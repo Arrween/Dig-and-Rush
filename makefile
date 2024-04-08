@@ -22,7 +22,7 @@ SOURCES = $(wildcard $(REP_SRC)/*.c)
 OBJETS = $(SOURCES:$(REP_SRC)/%.c=$(REP_OBJ)/%.o)
 ENTETES = $(REP_SRC)/constantes.h
 INCLUDES = -I$(REP_SRC) -I$(REP_SDLINC) -I$(REP_SDLIMGINC) -I$(REP_SDLTTFINC)
-LIB_FLAGS = `sdl2-config --libs --cflags` -lSDL2_image -lSDL2_ttf -L$(REP_SDLLIB) -L$(REP_SDLIMGLIB) -L$(REP_SDLTTFLIB)
+LIB_FLAGS = `sdl2-config --libs --cflags` -lSDL2_image -lSDL2_ttf -L$(REP_SDLLIB) -L$(REP_SDLIMGLIB) -L$(REP_SDLTTFLIB) -lSDL2_mixer
 WARNING_FLAGS = -Wall -Wextra -Wconversion -Wno-float-conversion -Wno-sign-conversion #-fanalyzer -fsanitize=undefined #-fsanitize=address
 DEBUG_FLAGS = 
 

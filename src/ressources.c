@@ -74,7 +74,8 @@ struct chargement_spritesheet chargements_spritesheets[] = {
 };
 
 struct chargement chargements_sons[] = {
-    {"ressources/essais_audio/confirmation_001.wav", "essai"},
+    {"ressources/essais_audio/confirmation_001.wav", "confirmation"},
+    {"ressources/Audio/Musique/musique_menu.mp3", "musique_menu"},
 };
 
 t_animation * recuperer_animation(t_animation ** anims, int n_anims, t_id_anim id) {
@@ -160,12 +161,10 @@ void init_ressources(SDL_Renderer * rend) {
         HASH_FIND_STR(sons, charg.id, ressource_son);
         if (!ressource_son) {
             ressource_son = malloc(sizeof(t_son));
-            if (!SDL_LoadWAV(charg.chemin, &(ressource_son->spec),
-                                &(ressource_son->buffer),
-                                &(ressource_son->length))) {
-                fprintf(stderr, "Erreur lors du chargement d’un son"
-                                " : %s\n", IMG_GetError());
-            }
+            if (!(ressource_son->tampon = Mix_LoadWAV(charg.chemin)))
+                SDL_LogError(SDL_LOG_CATEGORY_APPLICATION,
+                             "Erreur lors du chargement d’un son"
+                             " : %s\n", Mix_GetError());
             strcpy(ressource_son->id, charg.id);
             HASH_ADD_STR(sons, id, ressource_son);
         }
@@ -226,7 +225,7 @@ void detruire_ressources() {
         free(sheet_courant);
     }
     HASH_ITER(hh, sons, son_courant, son_tmp) {
-        SDL_FreeWAV(son_courant->buffer);
+        Mix_FreeChunk(son_courant->tampon);
         free(son_courant);
     }
 

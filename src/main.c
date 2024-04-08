@@ -2,6 +2,7 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_ttf.h>
+#include <SDL2/SDL_mixer.h>
 
 #include "constantes.h"
 #include "tour.h"
@@ -19,6 +20,16 @@ int main() {
     // Initialisation de SDL_image pour le support des images PNG
     initialiser_sdl_img();
 
+    // initialiser l’audio
+    if (Mix_OpenAudio(FREQ_AUDIO, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, TAILLE_TAMPON_AUDIO) < 0) {
+        SDL_Log("Erreur initialisation SDL_mixer : %s", Mix_GetError());
+        SDL_Quit();
+        exit(EXIT_FAILURE);
+    }
+    Mix_AllocateChannels(N_CANAUX);
+    // réglage du volume, -1 pour tous les canaux
+    Mix_Volume(-1, MIX_MAX_VOLUME * FACTEUR_VOLUME_INI);
+
     // Création de la fenêtre
     fenetre = creation_fenetre();
 
@@ -28,12 +39,6 @@ int main() {
 
     init_ressources(rend);
         
-    t_son * son_essai = recuperer_son("essai");
-    SDL_AudioDeviceID audio_device = SDL_OpenAudioDevice(NULL, 0, &(son_essai->spec), NULL, 0);
-    uint8_t * buffer_essai_mix =  SDL_calloc(1, son_essai->length);
-    SDL_MixAudioFormat(buffer_essai_mix, son_essai->buffer, son_essai->spec.format, son_essai->length, SDL_MIX_MAXVOLUME/20);
-    SDL_PauseAudioDevice(audio_device, 0);
-
     t_bouton btn_titre = { recuperer_texture("menu_titre"),
             {TAILLE_L * (0.5 - 0.238),
                 TAILLE_H * (0.5 - 0.42),
@@ -120,6 +125,11 @@ int main() {
         fenetre
     };
 
+    t_son * son_confirmation = recuperer_son("confirmation");
+    t_son * musique = recuperer_son("musique_menu");
+
+    Mix_PlayChannel(CANAL_MUSIQUE, musique->tampon, -1);
+
     int i_btn;
     t_bouton * btn;
     while (!etat.doit_quitter) {
@@ -148,10 +158,8 @@ int main() {
                             etat.doit_quitter = VRAI;
                             break;
                         case SDL_SCANCODE_A:
+                            Mix_PlayChannel(1, son_confirmation->tampon, 0);
                             etat.doit_quitter = boucle_jeu(rend);
-                            break;
-                        case SDL_SCANCODE_E:
-                            SDL_QueueAudio(audio_device, buffer_essai_mix, son_essai->length);
                             break;
                         default:
                             break;
@@ -173,10 +181,10 @@ int main() {
 
     detruire_ressources();
 
-    SDL_CloseAudioDevice(audio_device);
     SDL_DestroyRenderer(rend);
     SDL_DestroyWindow(fenetre);
     IMG_Quit();
     SDL_Quit();
+    Mix_CloseAudio();
     exit(EXIT_SUCCESS);
 }
