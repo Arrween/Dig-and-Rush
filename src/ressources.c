@@ -256,7 +256,7 @@ int jouer_audio(int canal, const char * id, int repetitions) {
     t_musique * musique = recuperer_musique(id, 1);
     if (musique) {
         if (Mix_PlayMusic(musique->tampon, repetitions) == -1) {
-            fprintf(stderr, "Erreur Mix_PlayChannel : %s\n", Mix_GetError());
+            fprintf(stderr, "Erreur Mix_PlayMusic : %s\n", Mix_GetError());
             return -1;
         }
         return 0;
