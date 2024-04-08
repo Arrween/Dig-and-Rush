@@ -44,6 +44,9 @@ struct chargement chargements_texs[] = {
     {"ressources/Tour/Blocs/terre/terre.jpg", "bloc_terre"},
     {"ressources/Tour/Blocs/pierres_sombres/pierre.jpg", "bloc_pierre"},
 
+    //Selections personnages
+    {"ressources/Personnages/selections/koba.png", "koba"},
+
 };
 
 struct chargement_spritesheet chargements_spritesheets[] = {
@@ -60,6 +63,35 @@ struct chargement_spritesheet chargements_spritesheets[] = {
                 {ANIM_NULLE, 0, 0, 0, 0, 0, 0, 0, 0., NULL}
             }
     },
+    //Perso 2
+    {"ressources/Personnages/jackPerso.png", "jack", 
+        {
+            {REPOS, 0, 6*64, 64, 64, 0, 0, 1*64, 1., NULL},
+            {CHUTE_G, 5, 1*64, 64, 64, 0, 0, 1, 1., NULL},
+            {CHUTE_D, 5, 3*64, 64, 64, 0, 0, 1, 1., NULL},
+            {DEPL_G, 0, 9*64, 64, 64, 0, 0, 9, 1/5., NULL},
+            {DEPL_D, 0, 11*64, 64, 64, 0, 0, 9, 1/5., NULL},
+            {ATTQ_G, 0, 5*64, 64, 64, 0, 0, 8, 1/3., NULL},
+            {ATTQ_D, 0, 7*64, 64, 64, 0, 0, 8, 1/3., NULL},
+            {CREUSER, 0, 6*64, 64, 64, 0, 0, 8, 1./6, NULL},
+            {ANIM_NULLE, 0, 0, 0, 0, 0, 0, 0, 0., NULL}
+        }
+    },
+    //Perso 3
+    {"ressources/Personnages/yohanPerso.png", "yohan", 
+        {
+            {REPOS, 0, 6*64, 64, 64, 0, 0, 1*64, 1., NULL},
+            {CHUTE_G, 5, 1*64, 64, 64, 0, 0, 1, 1., NULL},
+            {CHUTE_D, 5, 3*64, 64, 64, 0, 0, 1, 1., NULL},
+            {DEPL_G, 0, 9*64, 64, 64, 0, 0, 9, 1/5., NULL},
+            {DEPL_D, 0, 11*64, 64, 64, 0, 0, 9, 1/5., NULL},
+            {ATTQ_G, 0, 5*64, 64, 64, 0, 0, 8, 1/3., NULL},
+            {ATTQ_D, 0, 7*64, 64, 64, 0, 0, 8, 1/3., NULL},
+            {CREUSER, 0, 6*64, 64, 64, 0, 0, 8, 1./6, NULL},
+            {ANIM_NULLE, 0, 0, 0, 0, 0, 0, 0, 0., NULL}
+        }
+    },
+    //Ennemie
     {"ressources/Personnages/squelette_craftpix.png", "squelette", 
             {
                 {REPOS, 0, 5*128, 128, 128, 0, 0, 1, 1., NULL},
@@ -71,7 +103,7 @@ struct chargement_spritesheet chargements_spritesheets[] = {
                 {ANIM_MORT_STATIQUE, 2, 3*128, 128, 128, 0, 0, 1, 1, NULL},
                 {ANIM_NULLE, 0, 0, 0, 0, 0, 0, 0, 0., NULL}
             }
-    },
+    }
 };
 
 struct chargement chargements_sons[] = {

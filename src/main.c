@@ -5,9 +5,21 @@
 #include <SDL2/SDL_mixer.h>
 
 #include "constantes.h"
+#include "entite.h"
 #include "tour.h"
 #include "menu.h"
 #include "ressources.h"
+#include "selection_personnages.h"
+
+#define MAX_PERSONNAGES 3 // Nombre maximum de personnages que vous souhaitez charger
+#define N 1 // Taille maximale du nom de fichier pour les textures des personnages
+
+
+Persos personnages; // Assurez-vous que MAX_PERSONNAGES est défini correctement
+char filename[N]; // Assurez-vous que N est défini correctement
+
+t_entite* matt;
+SDL_Rect mattRect = { 35, 33, 17, 17 }; // x, y, largeur, hauteur
 
 int main() {
     printf("début du main\n");
@@ -145,6 +157,15 @@ int main() {
 
     int i_btn;
     t_bouton * btn;
+    int mattSelectionne = 0; // Matt n'est pas sélectionné initialement
+
+    matt = creer_entite_depuis_spritesheet("matt", 35, 33.5, 17, 17, VRAI);
+    
+    // Afficher les personnages uniquement si le menu actuel est celui des personnages
+    if (etat.i_menu == PAGE_MENU_PERSONNAGES) {
+        afficher_images(rend, personnages);
+    }
+
     while (!etat.doit_quitter) {
         while (SDL_PollEvent(&event)) {
             switch (event.type) {
@@ -155,6 +176,12 @@ int main() {
                 case SDL_MOUSEBUTTONDOWN:
                     if (event.button.button == SDL_BUTTON_LEFT) {
                         SDL_Point pointeur = {event.button.x, event.button.y};
+                        // Vérifier si le clic se trouve à l'intérieur du rectangle de Matt
+                        if (SDL_PointInRect(&pointeur, &mattRect)) {
+                            // Gérer l'action lorsque Matt est cliqué
+                            mattSelectionne = !mattSelectionne; // Inverser l'état de sélection de Matt
+                        }                      
+                        
                         for (i_btn = 0; (btn = menus[etat.i_menu][i_btn]); i_btn++) {
                             if (SDL_PointInRect(&pointeur, &btn->rect)) {
                                 btn->action(&etat);
@@ -184,10 +211,42 @@ int main() {
         // Mettre à jour l'écran
         SDL_RenderClear(rend);
         SDL_RenderCopy(rend, fonds_menus[etat.i_menu], NULL, NULL);
-        for (i_btn = 0; (btn = menus[etat.i_menu][i_btn]); i_btn++)
-            SDL_RenderCopy(rend, btn->texture, NULL, &btn->rect);
-        SDL_RenderPresent(rend);
-        SDL_Delay(1000 / FPS);
+
+
+        if (etat.i_menu == PAGE_MENU_PERSONNAGES) {
+        afficher_persos(rend);
+        afficher_images(rend, personnages);
+        // Afficher Matt en fonction de son état de sélection
+        if (!mattSelectionne) {
+            // Sauvegarder la couleur actuelle du dessin
+            printf("MAtt");
+            SDL_Color couleurOriginale;
+            SDL_GetRenderDrawColor(rend, &couleurOriginale.r, &couleurOriginale.g, &couleurOriginale.b, &couleurOriginale.a);
+            
+            // Changer la couleur du dessin en rouge
+            SDL_SetRenderDrawColor(rend, 255, 0, 0, 255);
+            
+            // Dessiner un contour autour de Matt
+            SDL_RenderDrawRect(rend, &mattRect);
+            
+            // Rétablir la couleur originale du dessin
+            SDL_SetRenderDrawColor(rend, couleurOriginale.r, couleurOriginale.g, couleurOriginale.b, couleurOriginale.a);
+
+            // Afficher Matt avec un effet de sélection
+            // Vous pouvez implémenter cette fonctionnalité selon vos besoins
+            afficher_personnage_selectionne(rend, matt, mattSelectionne);
+        } else {
+            // Afficher Matt sans effet de sélection
+            afficher_personnage_selectionne(rend, matt, mattSelectionne);
+        }
+    }
+    
+    // Afficher les autres boutons du menu
+    for (i_btn = 0; (btn = menus[etat.i_menu][i_btn]); i_btn++)
+        SDL_RenderCopy(rend, btn->texture, NULL, &btn->rect);
+
+    SDL_RenderPresent(rend);
+    SDL_Delay(1000 / FPS);
     }
 //
     // Nettoyage
