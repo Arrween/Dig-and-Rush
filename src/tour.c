@@ -231,7 +231,7 @@ int boucle_jeu(SDL_Renderer * rend) {
 
     // compteur de FPS
     SDL_Color couleur_fps = {0,0,0,255};
-    TTF_Font * police = TTF_OpenFont("ressources/Menu/Police/font1.ttf", 50);
+    TTF_Font * police = recuperer_police("police_defaut");
     SDL_Surface * surface_fps = TTF_RenderText_Solid(police, "", couleur_fps);
     SDL_Rect dst_fps = {20, TAILLE_H-40, 100, 30};
     SDL_Texture * tex_fps = NULL;
@@ -282,7 +282,6 @@ int boucle_jeu(SDL_Renderer * rend) {
                                 while(!hors_liste(I_LISTE_ENTITES)) {
                                     t_entite * elem = valeur_elt(I_LISTE_ENTITES);
                                     if (elem->destructible && verifier_peut_creuser(perso, elem)) {
-                                        elem->destructible->action_destruction();
                                         jouer_audio(1, elem->destructible->id_son, 0);
                                         oter_elt(I_LISTE_ENTITES);
                                         detruire_entite(&elem);
