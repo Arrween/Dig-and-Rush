@@ -4,7 +4,7 @@
 #include "entite.h"
 #include "constantes.h"
 
-void comportement_oisif(t_entite * pnj) {
+void comportement_oisif(void) {
     return;
 }
 
@@ -12,13 +12,13 @@ void comportement_patrouille(t_entite * pnj) {
     if (pnj->pnj->est_mort)
         return;
     if (pnj->deplacement == REPOS_MVT
-        || pnj->deplacement == DROITE && pnj->hitbox.x + pnj->hitbox.w >= pnj->pnj->x_patrouille_d
+        || (pnj->deplacement == DROITE && pnj->hitbox.x + pnj->hitbox.w >= pnj->pnj->x_patrouille_d)
         || pnj->a_collision_d
         ) {
         pnj->deplacement = GAUCHE;
         changer_animation(pnj, DEPL_G);
     }
-    else if (pnj->deplacement == GAUCHE && pnj->hitbox.x <= pnj->pnj->x_patrouille_g
+    else if ((pnj->deplacement == GAUCHE && pnj->hitbox.x <= pnj->pnj->x_patrouille_g)
              || pnj->a_collision_g
              ) {
         pnj->deplacement = DROITE;
@@ -43,7 +43,7 @@ t_pnj * creer_pnj(char * id) {
     if (strcmp(id, "squelette") == 0)
         nouv->comportement = comportement_patrouille;
     else
-        nouv->comportement = comportement_oisif;
+        nouv->comportement = (void(*)(t_entite*)) comportement_oisif;
     nouv->x_patrouille_g = 0;
     nouv->x_patrouille_d = 100;
     nouv->est_mort = FAUX;

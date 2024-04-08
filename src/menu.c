@@ -153,5 +153,5 @@ void action_jouer(t_etat * etat) {
 void action_quitter(t_etat * etat) {
     etat->doit_quitter = VRAI;
 }
-void action_nulle(t_etat * etat) {
+void action_nulle(void) {
 }

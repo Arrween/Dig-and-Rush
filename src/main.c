@@ -60,7 +60,7 @@ int main() {
                 TAILLE_H * (0.5 - 0.42),
                 TAILLE_L * 0.476,
                 TAILLE_H * 0.417},
-            action_nulle,
+            (void(*)(t_etat*)) action_nulle,
             "TITRE"
         };
     t_bouton btn_parametres = { recuperer_texture("bouton_paramètres"),

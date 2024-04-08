@@ -191,7 +191,6 @@ int boucle_jeu(SDL_Renderer * rend) {
     int doit_boucler = VRAI;
     long long compteur_frames = 0;
     float pas_defilement = 0;
-    const int DUREE_CREUSER = 8; // Nombre de frames de l'animation "creuser"
 
     srand(time(NULL));
 
