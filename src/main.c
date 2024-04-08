@@ -193,6 +193,9 @@ int main() {
 
     detruire_ressources();
 
+    SDL_FreeSurface(surface_txt_chargement);
+    SDL_DestroyTexture(tex_txt_chargement);
+
     SDL_DestroyRenderer(rend);
     SDL_DestroyWindow(fenetre);
     IMG_Quit();
