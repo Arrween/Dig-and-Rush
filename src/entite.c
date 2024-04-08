@@ -116,7 +116,7 @@ void changer_pos_rel(t_entite * e, float dx, float dy) {
                            e->rect_dst->y + dy);
 }
 
-void changer_hitbox(t_entite * e, int x, int y, int w, int h) {
+void changer_hitbox(t_entite * e, float x, float y, float w, float h) {
     float dst_x = e->rect_dst->x;
     float dst_y = e->rect_dst->y;
     float dst_w = e->rect_dst->w;

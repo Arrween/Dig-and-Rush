@@ -215,7 +215,7 @@ int boucle_jeu(SDL_Renderer * rend) {
 
     generer_murs();
 
-    changer_hitbox(perso, 26, 22, 51, 74);
+    changer_hitbox(perso, 26, 22, 51, 73.4);
 
     perso->doit_afficher_hitbox = VRAI;
     int lumiere_est_allumee = VRAI;

@@ -86,7 +86,7 @@ void detruire_entite(t_entite **);
 
 void afficher_entite(SDL_Renderer*, t_entite*);
 extern void changer_pos_rel(t_entite*, float, float);
-void changer_hitbox(t_entite *, int, int, int, int);
+void changer_hitbox(t_entite *, float, float, float, float);
 SDL_FRect convertir_vers_absolu(SDL_FRect *, SDL_FRect);
 void deplacer(t_entite *, long long int);
 void animer(t_entite *, long long int compteur_frames);
