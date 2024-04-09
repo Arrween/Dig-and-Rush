@@ -102,6 +102,21 @@ void verif_collision(t_entite * e1, float * correction_defilement) {
     }
 }
 
+void creuser(t_entite * a_creuser) {
+    en_queue(I_LISTE_ENTITES);
+    while(!hors_liste(I_LISTE_ENTITES)) {
+        t_entite * elem = valeur_elt(I_LISTE_ENTITES);
+        if (a_creuser == elem && elem->destructible) {
+            jouer_audio(1, elem->destructible->id_son, 0);
+            oter_elt(I_LISTE_ENTITES);
+            detruire_entite(&elem);
+            break;
+        }
+        else
+            precedent(I_LISTE_ENTITES);
+    }
+}
+
 void porter_coup(t_entite * e, int * score, t_texte * texte_score) {
     en_tete(I_LISTE_ENTITES);
     while (!hors_liste(I_LISTE_ENTITES)) {
@@ -265,27 +280,21 @@ int boucle_jeu(SDL_Renderer * rend) {
                                 changer_animation(perso, CREUSER); 
                                 perso->deplacement_prec = perso->deplacement;
                                 perso->deplacement = REPOS_MVT;
-                                en_queue(I_LISTE_ENTITES);
-                                while(!hors_liste(I_LISTE_ENTITES)) {
-                                    t_entite * elem = valeur_elt(I_LISTE_ENTITES);
-                                    if (elem->destructible && perso->collisions.b == elem) {
-                                        jouer_audio(1, elem->destructible->id_son, 0);
-                                        oter_elt(I_LISTE_ENTITES);
-                                        detruire_entite(&elem);
-                                    }
-                                    else
-                                        precedent(I_LISTE_ENTITES);
-                                }
+                                creuser(perso->collisions.b);
                             }
                             break;
                         case SDL_SCANCODE_W:
                             if (perso->collisions.b) {
                                 perso->deplacement_prec = perso->deplacement;
                                 perso->deplacement = REPOS_MVT;
-                                if (perso->sens_regard == GAUCHE)
+                                if (perso->sens_regard == GAUCHE) {
                                     changer_animation(perso, ATTQ_G);
-                                else if (perso->sens_regard == DROITE)
+                                    creuser(perso->collisions.g);
+                                }
+                                else if (perso->sens_regard == DROITE) {
                                     changer_animation(perso, ATTQ_D);
+                                    creuser(perso->collisions.d);
+                                }
                                 porter_coup(perso, &score, texte_score);
                             }
                             break;
