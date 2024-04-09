@@ -59,7 +59,7 @@ struct chargement chargements_texs[] = {
 struct chargement_spritesheet chargements_spritesheets[] = {
     {"ressources/Personnages/matthieuPerso2.png", "matt", 
             {
-                {REPOS, 0, 6*64, 64, 64, 0, 0, 1*64, 1., NULL},
+                {REPOS, 0, 6*64, 64, 64, 0, 0, 1, 1., NULL},
                 {CHUTE_G, 5, 1*64, 64, 64, 0, 0, 1, 1., NULL},
                 {CHUTE_D, 5, 3*64, 64, 64, 0, 0, 1, 1., NULL},
                 {DEPL_G, 0, 9*64, 64, 64, 0, 0, 9, 1/5., NULL},
@@ -73,7 +73,7 @@ struct chargement_spritesheet chargements_spritesheets[] = {
     //Perso 2
     {"ressources/Personnages/jackPerso.png", "jack", 
         {
-            {REPOS, 0, 6*64, 64, 64, 0, 0, 1*64, 1., NULL},
+            {REPOS, 0, 6*64, 64, 64, 0, 0, 1, 1., NULL},
             {CHUTE_G, 5, 1*64, 64, 64, 0, 0, 1, 1., NULL},
             {CHUTE_D, 5, 3*64, 64, 64, 0, 0, 1, 1., NULL},
             {DEPL_G, 0, 9*64, 64, 64, 0, 0, 9, 1/5., NULL},
@@ -87,7 +87,7 @@ struct chargement_spritesheet chargements_spritesheets[] = {
     //Perso 3
     {"ressources/Personnages/yohanPerso.png", "yohan", 
         {
-            {REPOS, 0, 6*64, 64, 64, 0, 0, 1*64, 1., NULL},
+            {REPOS, 0, 6*64, 64, 64, 0, 0, 1, 1., NULL},
             {CHUTE_G, 5, 1*64, 64, 64, 0, 0, 1, 1., NULL},
             {CHUTE_D, 5, 3*64, 64, 64, 0, 0, 1, 1., NULL},
             {DEPL_G, 0, 9*64, 64, 64, 0, 0, 9, 1/5., NULL},

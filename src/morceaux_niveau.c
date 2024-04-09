@@ -15,13 +15,36 @@
 void (*fonctions_generation[N_MORCEAUX_NIVEAU])(void) = {
     generer_morceau_niveau_0,
     generer_morceau_niveau_1,
+    generer_morceau_niveau_2,
 };
 
+void enfiler_fonction(int i) {
+    int * i_fonction = malloc(sizeof(int));
+    *i_fonction = i;
+    printf("ajout à la file du morceau de niveau %i\n", i);
+    ajout_droit(I_LISTE_MORCEAUX_NIVEAU, i_fonction);
+}
+
 void generer_morceau_niveau(int choix) {
-    if (choix < 0 || choix >= N_MORCEAUX_NIVEAU)
-        choix = rand() % N_MORCEAUX_NIVEAU;
-    printf("génération morceau de niveau %i\n", choix);
-    fonctions_generation[choix]();
+    en_tete(I_LISTE_MORCEAUX_NIVEAU);
+    if (hors_liste(I_LISTE_MORCEAUX_NIVEAU)) {
+        int i_fonction;
+        if (choix < 0 || choix >= N_MORCEAUX_NIVEAU) {
+            i_fonction = rand() % N_MORCEAUX_NIVEAU;
+            printf("génération morceau de niveau aléatoire %i\n", i_fonction);
+        }
+        else {
+            i_fonction = choix;
+            printf("génération morceau de niveau depuis paramètre %i\n", i_fonction);
+        }
+        fonctions_generation[i_fonction]();
+    }
+    else {
+        int * i_fonction = oter_elt(I_LISTE_MORCEAUX_NIVEAU);
+        printf("génération morceau de niveau depuis la file %i\n", *i_fonction);
+        fonctions_generation[*i_fonction]();
+        free(i_fonction);
+    }
 }
 
 // génération par fonctions C plutôt que par parsage d’un fichier pour
@@ -81,6 +104,13 @@ void generer_morceau_niveau_1(void) {
     for (int i = 4; i < 8; i++)
         for (int j = 0; j < i-3; j++)
             ajout_droit(I_LISTE_ENTITES, creer_entite_destructible("bloc_terre", LARGEUR_MUR + 10*i, 145 + (j-i)*5, 10, 5, VRAI));
+}
+
+// enchainement des morceaux de niveau 1, 1 et 0
+void generer_morceau_niveau_2(void) {
+    generer_morceau_niveau_1();
+    enfiler_fonction(1);
+    enfiler_fonction(0);
 }
 
 void generer_murs(void) {

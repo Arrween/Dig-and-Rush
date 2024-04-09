@@ -195,6 +195,7 @@ int boucle_jeu(SDL_Renderer * rend) {
     srand(time(NULL));
 
     init_liste(I_LISTE_ENTITES);
+    init_liste(I_LISTE_MORCEAUX_NIVEAU);
 
     int doit_quitter = FAUX;
 

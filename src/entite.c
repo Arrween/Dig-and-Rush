@@ -165,7 +165,7 @@ void animer(t_entite * e, long long int compteur_frames) {
     int pas_anim;
     t_animation * anim = e->animation_courante;
 
-    if (anim->longueur == 1*anim->w_sprite)
+    if (anim->longueur == 1)
         pas_anim = 0;
     else
         pas_anim = calculer_pas_selon_vitesse(compteur_frames, anim->vitesse_anim);

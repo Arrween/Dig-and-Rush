@@ -1,5 +1,5 @@
 #define I_LISTE_ENTITES 0
-#define I_LISTE_DESTRUCTIBLES 1
+#define I_LISTE_MORCEAUX_NIVEAU 1
 
 typedef struct elem { struct elem *pred, *succ; void * val; } t_elem;
 typedef struct { t_elem *drapeau, *ec; } t_liste;
