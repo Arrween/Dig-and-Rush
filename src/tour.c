@@ -487,6 +487,8 @@ int boucle_jeu(SDL_Renderer * rend) {
     detruire_entite(&fond_tour);
     detruire_entite(&fond_tour_2);
     detruire_entite(&perso);
+    detruire_texte(&texte_fps);
+    detruire_texte(&texte_score);
 
     return doit_quitter ;
 }
