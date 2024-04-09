@@ -93,7 +93,6 @@ void verif_collision(t_entite * e1, float * correction_defilement) {
                 *correction_defilement = depassement;
         }
 
-
         suivant(I_LISTE_ENTITES);
     }
 }
@@ -220,7 +219,6 @@ int boucle_jeu(SDL_Renderer * rend) {
 
     changer_hitbox(perso, 26, 22, 51, 73.4);
 
-    perso->doit_afficher_hitbox = VRAI;
     int lumiere_est_allumee = VRAI;
     int lumiere_est_allumee_prec = FAUX;
 
@@ -388,6 +386,12 @@ int boucle_jeu(SDL_Renderer * rend) {
             changer_animation(perso, perso->sens_regard == GAUCHE ? CHUTE_G : CHUTE_D);
         else if (perso->animation_courante->id == CHUTE_G || perso->animation_courante->id == CHUTE_D)
             changer_animation(perso, REPOS);
+        else if (perso->animation_courante->id == REPOS) {
+            if (perso->deplacement == GAUCHE)
+                changer_animation(perso, DEPL_G);
+            else if (perso->deplacement == DROITE)
+                changer_animation(perso, DEPL_D);
+        }
         deplacer(perso, compteur_frames);
         animer(perso, compteur_frames);
 
