@@ -13,18 +13,18 @@ void comportement_patrouille(t_entite * pnj) {
         return;
     if (pnj->deplacement == REPOS_MVT
         || (pnj->deplacement == DROITE && pnj->hitbox.x + pnj->hitbox.w >= pnj->pnj->x_patrouille_d)
-        || pnj->a_collision_d
+        || pnj->collisions.d
         ) {
         pnj->deplacement = GAUCHE;
         changer_animation(pnj, DEPL_G);
     }
     else if ((pnj->deplacement == GAUCHE && pnj->hitbox.x <= pnj->pnj->x_patrouille_g)
-             || pnj->a_collision_g
+             || pnj->collisions.g
              ) {
         pnj->deplacement = DROITE;
         changer_animation(pnj, DEPL_D);
     }
-    if (!pnj->a_collision_b) {
+    if (!pnj->collisions.b) {
         if (pnj->deplacement == GAUCHE) {
             pnj->deplacement = DROITE;
             changer_animation(pnj, DEPL_D);

@@ -143,13 +143,13 @@ int calculer_pas_selon_vitesse(long long int compteur_frames, float vitesse) {
 void deplacer(t_entite * e, long long int compteur_frames) {
     float depl_x = 0;
     float depl_y = 0;
-    if (e->deplacement == GAUCHE && !e->a_collision_g)
+    if (e->deplacement == GAUCHE && !e->collisions.g)
         depl_x = -1;
-    if (e->deplacement == DROITE && !e->a_collision_d)
+    if (e->deplacement == DROITE && !e->collisions.d)
         depl_x = 1;
-    if (e->deplacement == HAUT && !e->a_collision_h)
+    if (e->deplacement == HAUT && !e->collisions.h)
         depl_y = -1;
-    if (e->deplacement == BAS && !e->a_collision_b)
+    if (e->deplacement == BAS && !e->collisions.b)
         depl_y = 1;
     int pas = calculer_pas_selon_vitesse(compteur_frames, e->vitesse);
     depl_x *= pas;
@@ -252,8 +252,8 @@ t_entite * creer_entite_depuis_texture(SDL_Texture * texture,
 
     nouv->doit_afficher_hitbox = FAUX;
     nouv->est_relatif = est_relatif;
-    nouv->deplacement = REPOS;
-    nouv->deplacement_prec = REPOS;
+    nouv->deplacement = REPOS_MVT;
+    nouv->deplacement_prec = REPOS_MVT;
     nouv->sens_regard = DROITE;
     nouv->x_sprite = nouv->y_sprite = 0;
 
@@ -263,10 +263,10 @@ t_entite * creer_entite_depuis_texture(SDL_Texture * texture,
     nouv->dec_y_dst_prec = 0;
     nouv->doit_restaurer_dst = FAUX;
 
-    nouv->a_collision_g = FAUX;
-    nouv->a_collision_d = FAUX;
-    nouv->a_collision_b = FAUX;
-    nouv->a_collision_h = FAUX;
+    nouv->collisions.g = NULL;
+    nouv->collisions.d = NULL;
+    nouv->collisions.h = NULL;
+    nouv->collisions.b = NULL;
 
     nouv->n_animations = 0;
     nouv->animations = NULL;

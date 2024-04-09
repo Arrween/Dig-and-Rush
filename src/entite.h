@@ -9,6 +9,15 @@
 */
 enum { REPOS_MVT, GAUCHE, DROITE, HAUT, BAS };
 
+typedef struct s_entite t_entite;
+
+typedef struct s_collision {
+    t_entite * g;
+    t_entite * d;
+    t_entite * h;
+    t_entite * b;
+} t_collision;
+
 typedef struct s_destructible t_destructible;
 typedef struct s_pnj t_pnj;
 /** \brief Objet général pour toute entité affichée à l’écran
@@ -41,14 +50,8 @@ typedef struct s_entite {
     /** booléen régissant l’affichage du rectangle de collision */
     int doit_afficher_hitbox;
 
-     /** booléen indiquant si l’entité est en collision avec une autre à sa gauche */
-    int a_collision_g;
-     /** booléen indiquant si l’entité est en collision avec une autre à sa droite */
-    int a_collision_d;
-     /** booléen indiquant si l’entité est en collision avec une autre au-dessus */
-    int a_collision_h;
-     /** booléen indiquant si l’entité est en collision avec une autre au-dessous */
-    int a_collision_b;
+    t_collision collisions;
+
     /** sens vers lequel se déplace l’entité */
     int deplacement;
     int deplacement_prec;
