@@ -121,29 +121,6 @@ void porter_coup(t_entite * e, int * score, t_texte * texte_score) {
     }
 }
 
-/**
- * @brief vérifie qu’une entité peut creuser une autre entité selon leurs positions
- * @param e entité essayant de creuser
- * @param bloc entité qu’on essaye de creuser
- * @return VRAI si l’entité `e` est en position de creuser l’entité `bloc`
- */
-int verifier_peut_creuser(t_entite * e, t_entite * bloc) {
-    int e_x1 = e->hitbox.x;
-    int e_x2 = e->hitbox.x + e->hitbox.w;
-    int e_y2 = e->hitbox.y + e->hitbox.h;
-    int b_x1 = bloc->hitbox.x;
-    int b_x2 = bloc->hitbox.x + bloc->hitbox.w;
-    int b_y1 = bloc->hitbox.y;
-    // définit le dépassement horizontal autorisé pour que le creusage soit possible
-    // en pourcentage de la largeur de l’entité
-    int depassement_x = e->hitbox.w * 0.4;
-    int depassement_y = 5;
-    return e_x1 >= b_x1 - depassement_x &&
-           e_x2 <= b_x2 + depassement_x &&
-           e_y2 >= b_y1 &&
-           e_y2 <= b_y1 + depassement_y;
-}
-
 void calculer_ombre(SDL_Texture * tex_ombre, int rayon,
                     t_entite * perso,
                     SDL_FRect rect_zone) {
@@ -291,7 +268,7 @@ int boucle_jeu(SDL_Renderer * rend) {
                                 en_queue(I_LISTE_ENTITES);
                                 while(!hors_liste(I_LISTE_ENTITES)) {
                                     t_entite * elem = valeur_elt(I_LISTE_ENTITES);
-                                    if (elem->destructible && verifier_peut_creuser(perso, elem)) {
+                                    if (elem->destructible && perso->collisions.b == elem) {
                                         jouer_audio(1, elem->destructible->id_son, 0);
                                         oter_elt(I_LISTE_ENTITES);
                                         detruire_entite(&elem);
