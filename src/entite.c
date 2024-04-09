@@ -253,6 +253,7 @@ t_entite * creer_entite_depuis_texture(SDL_Texture * texture,
     nouv->doit_afficher_hitbox = FAUX;
     nouv->est_relatif = est_relatif;
     nouv->deplacement = REPOS;
+    nouv->deplacement_prec = REPOS;
     nouv->sens_regard = DROITE;
     nouv->x_sprite = nouv->y_sprite = 0;
 

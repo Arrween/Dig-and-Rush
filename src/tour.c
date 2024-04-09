@@ -4,6 +4,7 @@
 #include <SDL2/SDL_ttf.h>
 #include <time.h>
 
+#include "ressources.h"
 #include "tour.h"
 #include "constantes.h"
 #include "entite.h"
@@ -267,11 +268,13 @@ int boucle_jeu(SDL_Renderer * rend) {
                             lumiere_est_allumee_prec = !lumiere_est_allumee;
                             break;
                         case SDL_SCANCODE_A:
+                            perso->deplacement_prec = perso->deplacement;
                             perso->deplacement = GAUCHE;
                             if (perso->a_collision_b)
                                 changer_animation(perso, DEPL_G);
                             break;
                         case SDL_SCANCODE_D:
+                            perso->deplacement_prec = perso->deplacement;
                             perso->deplacement = DROITE;
                             if (perso->a_collision_b)
                                 changer_animation(perso, DEPL_D);
@@ -279,6 +282,8 @@ int boucle_jeu(SDL_Renderer * rend) {
                         case SDL_SCANCODE_S:
                             if (perso->a_collision_b){
                                 changer_animation(perso, CREUSER); 
+                                perso->deplacement_prec = perso->deplacement;
+                                perso->deplacement = REPOS_MVT;
                                 en_queue(I_LISTE_ENTITES);
                                 while(!hors_liste(I_LISTE_ENTITES)) {
                                     t_entite * elem = valeur_elt(I_LISTE_ENTITES);
@@ -294,6 +299,8 @@ int boucle_jeu(SDL_Renderer * rend) {
                             break;
                         case SDL_SCANCODE_W:
                             if (perso->a_collision_b) {
+                                perso->deplacement_prec = perso->deplacement;
+                                perso->deplacement = REPOS_MVT;
                                 if (perso->sens_regard == GAUCHE)
                                     changer_animation(perso, ATTQ_G);
                                 else if (perso->sens_regard == DROITE)
@@ -308,12 +315,40 @@ int boucle_jeu(SDL_Renderer * rend) {
                 case SDL_KEYUP:
                     switch (event.key.keysym.scancode) {
                         case SDL_SCANCODE_A:
+                            if (perso->animation_courante->id == DEPL_G) {
+                                if (perso->a_collision_b)
+                                    changer_animation(perso, REPOS);
+                            }
+                            if (perso->deplacement == perso->deplacement_prec)
+                                perso->deplacement = REPOS_MVT;
+                            else if (perso->deplacement == GAUCHE)
+                                perso->deplacement = perso->deplacement_prec;
+                            if (perso->deplacement_prec == GAUCHE)
+                                perso->deplacement_prec = REPOS_MVT;
+                            break;
                         case SDL_SCANCODE_D:
+                            if (perso->animation_courante->id == DEPL_D) {
+                                if (perso->a_collision_b)
+                                    changer_animation(perso, REPOS);
+                            }
+                            if (perso->deplacement == perso->deplacement_prec)
+                                perso->deplacement = REPOS_MVT;
+                            else if (perso->deplacement == DROITE)
+                                perso->deplacement = perso->deplacement_prec;
+                            if (perso->deplacement_prec == DROITE)
+                                perso->deplacement_prec = REPOS_MVT;
+                            break;
                         case SDL_SCANCODE_S:
-                        case SDL_SCANCODE_W:
-                            if (perso->a_collision_b)
+                            if (perso->animation_courante->id == CREUSER) {
+                                perso->deplacement = perso->deplacement_prec;
                                 changer_animation(perso, REPOS);
-                            perso->deplacement = REPOS_MVT;
+                            }
+                            break;
+                        case SDL_SCANCODE_W:
+                            if (perso->animation_courante->id ==  ATTQ_G || perso->animation_courante->id == ATTQ_D) {
+                                perso->deplacement = perso->deplacement_prec;
+                                changer_animation(perso, REPOS);
+                            }
                             break;
                         default:
                             break;

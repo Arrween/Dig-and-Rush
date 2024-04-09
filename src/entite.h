@@ -51,6 +51,7 @@ typedef struct s_entite {
     int a_collision_b;
     /** sens vers lequel se déplace l’entité */
     int deplacement;
+    int deplacement_prec;
     /** sens (gauche ou droite) vers lequel regarde l’entité */
     int sens_regard;
     /** position horizontale dans la grille de la spritesheet, si l’entité est chargée d’une spritesheet */ 
