@@ -1,0 +1,18 @@
+héberger la doc doxygen pour la rendre accessible aux examinateurs
+compléter la doc
+trouver des fonctions à tester avec CUnit
+déboguer un truc avec gdb
+définition de hitboxes d’attaque et de vulnérabilité (possiblement pour chaque frame d’animation) pour les combats
+ne pas interrompre l’animation de creusage à la destruction d’un bloc
+plus d’éléments d’interface ? rendre ceux actuels (score et fps) plus jolis
+plus d’ennemis (jeteur de sort qui déclenche la nuit ?)
+faire disparaitre un squelette lorsque le bloc dessous est détruit, jouer possiblement une animation de nuage de fumée
+attaques des ennemis, et donc gérer situation de perte de vie ou mort du personnage
+ajouter des bonus ou du butin à ramasser
+plus de variété dans la génération du parcours
+musique différente entre menu et jeu ?
+transition de musique pour la nuit
+gérer les erreurs éventuelles, par exemple des fonctions SDL
+nettoyer le code obsolète / pouvant être mieux présenté
+finaliser la sélection des personnages (une idée que je trouve sympa c’est jouer une petite accroche qu’on aurait chacun enregistrée pour notre perso quand il est sélectionné)
+menu de pause en jeu (avec réglage du son par ex.)
