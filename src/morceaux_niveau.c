@@ -12,9 +12,18 @@
 
 #define LARGEUR_MUR 10
 
+/**
+ * @brief Tableau des pointeurs de fonctions de génération de morceaux de niveau.
+ */
+
 void (*fonctions_generation[N_MORCEAUX_NIVEAU])(void) = {
     generer_morceau_niveau_0,
 };
+
+/**
+ * @brief Enfile une fonction de génération de morceau de niveau.
+ * @param i Indice de la fonction de génération à enfiler.
+ */
 
 void enfiler_fonction(int i) {
     int * i_fonction = malloc(sizeof(int));
@@ -22,6 +31,11 @@ void enfiler_fonction(int i) {
     printf("ajout à la file du morceau de niveau %i\n", i);
     ajout_droit(I_LISTE_MORCEAUX_NIVEAU, i_fonction);
 }
+
+/**
+ * @brief Génère un morceau de niveau en utilisant une fonction de génération spécifique.
+ * @param choix Choix de la fonction de génération (-1 pour aléatoire, sinon l'indice de la fonction).
+ */
 
 void generer_morceau_niveau(int choix) {
     en_tete(I_LISTE_MORCEAUX_NIVEAU);
@@ -48,6 +62,12 @@ void generer_morceau_niveau(int choix) {
 // génération par fonctions C plutôt que par parsage d’un fichier pour
 // bénéficier de la Turing-complétion
 
+/**
+ * @brief Génère un ennemi à une position spécifique.
+ * @param x Position en x de l'ennemi.
+ * @param y Position en y de l'ennemi.
+ */
+
 void generer_ennemi(int x, int y){
     t_entite * nouv;
     nouv = creer_entite_pnj_depuis_spritesheet("squelette", x, y, 20, 20, VRAI);
@@ -55,6 +75,11 @@ void generer_ennemi(int x, int y){
     changer_hitbox(nouv, 20, 50, 50, 55);
     ajout_droit(I_LISTE_ENTITES, nouv);
 }
+
+/**
+ * @brief Génère un morceau de niveau aléatoire qui se répète.
+ */
+
 void generer_morceau_niveau_0(void){
     en_queue(I_LISTE_ENTITES);
 
@@ -93,6 +118,9 @@ void generer_morceau_niveau_0(void){
     }
 }
 
+/**
+ * @brief Génère les murs entourant le niveau.
+ */
 
 void generer_murs(void) {
     int n_blocs_mur = 20; // nombre pour chaque mur

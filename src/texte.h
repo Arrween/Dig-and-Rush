@@ -3,12 +3,16 @@
 
 #define TAILLE_MAX_TEXTE 1000
 
+/**
+ * @brief Structure représentant un texte à afficher.
+ */
+
 typedef struct {
-    TTF_Font * police;
-    SDL_Surface * surface;
-    SDL_Color couleur;
-    SDL_Rect rect_dst;
-    char contenu[TAILLE_MAX_TEXTE];
+    TTF_Font *police; /**< Police de caractères utilisée pour le texte. */
+    char contenu[TAILLE_MAX_TEXTE]; /**< Contenu du texte. */
+    SDL_Color couleur; /**< Couleur du texte. */
+    SDL_Rect rect_dst; /**< Rectangle de destination pour le texte. */
+    SDL_Surface *surface; /**< Surface contenant le texte rendu. */
 } t_texte;
 
 t_texte * creer_texte(char * id, int r, int v, int b, int a,
