@@ -48,10 +48,12 @@ t_pnj * creer_pnj(char * id) {
     if (strcmp(id, "squelette") == 0) {
         nouv->comportement = comportement_patrouille;
         nouv->valeur_vaincu = 10;
+        nouv->est_ecrasable = VRAI;
     }
     else {
         nouv->comportement = (void(*)(t_entite*)) comportement_oisif;
         nouv->valeur_vaincu = 0;
+        nouv->est_ecrasable = FAUX;
     }
     nouv->x_patrouille_g = 0;
     nouv->x_patrouille_d = 100;

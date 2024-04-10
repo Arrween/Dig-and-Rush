@@ -56,7 +56,7 @@ void verif_collision(t_entite * e1, float * correction_defilement) {
     while (!hors_liste(I_LISTE_ENTITES)) {
         t_entite * e2 = valeur_elt(I_LISTE_ENTITES);
         
-        if (!e2->est_obstacle) {
+        if (e1 == e2 || (!e2->est_obstacle && !(e2->pnj && e2->pnj->est_ecrasable))) {
             suivant(I_LISTE_ENTITES);
             continue;
         }
@@ -432,6 +432,19 @@ int boucle_jeu(SDL_Renderer * rend) {
             suivant(I_LISTE_ENTITES);
         }
         for (int i = 0; i < n_pnjs; i++) {
+            // tue un ennemi qui peut être écrasé si le personnage lui tombe dessus
+            if (pnjs[i]->pnj->est_ecrasable && perso->collisions.b == pnjs[i]) {
+                pnjs[i]->id_animation_suivante = ANIM_MORT_STATIQUE;
+                changer_animation(pnjs[i], ANIM_MORT);
+                pnjs[i]->deplacement = REPOS_MVT;
+                pnjs[i]->pnj->est_mort = VRAI;
+                pnjs[i]->pnj->est_ecrasable = FAUX;
+                score += pnjs[i]->pnj->valeur_vaincu;
+                changer_texte(texte_score, "POINTS : %i", score);
+
+                continue;
+            }
+            // évolution du comportement du pnj i
             verif_collision(pnjs[i], NULL);
             pnjs[i]->pnj->comportement(pnjs[i]);
             deplacer(pnjs[i], compteur_frames);
