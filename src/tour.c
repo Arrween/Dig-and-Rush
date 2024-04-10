@@ -128,6 +128,7 @@ void porter_coup(t_entite * e, int * score, t_texte * texte_score) {
                 changer_animation(elem, ANIM_MORT);
                 elem->deplacement = REPOS_MVT;
                 elem->pnj->est_mort = VRAI;
+                elem->pnj->est_ecrasable = FAUX;
                 *score += elem->pnj->valeur_vaincu;
                 changer_texte(texte_score, "POINTS : %i", *score);
             }
