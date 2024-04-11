@@ -98,9 +98,24 @@ struct chargement_spritesheet chargements_spritesheets[] = {
             {ANIM_NULLE, 0, 0, 0, 0, 0, 0, 0, 0., NULL}
         }
     },
-    //Ennemie
+    //Ennemi 1 : Squelette
     {"ressources/Personnages/squelette_craftpix.png", "squelette", 
             {
+                {REPOS, 0, 5*128, 128, 128, 0, 0, 1, 1., NULL},
+                {DEPL_G, 0, 17*128, 128, 128, 0, 0, 8, 1/2., NULL},
+                {DEPL_D, 0, 8*128, 128, 128, 0, 0, 8, 1/2., NULL},
+                {ATTQ_G, 0, 1*128, 128, 128, 0, 0, 4, 1/3., NULL},
+                {ATTQ_D, 0, 10*128, 128, 128, 0, 0, 4, 1/3., NULL},
+                {ANIM_MORT, 0, 3*128, 128, 128, 0, 0, 3, 1/8., NULL},
+                {ANIM_MORT_STATIQUE, 2, 3*128, 128, 128, 0, 0, 1, 1, NULL},
+                {ANIM_NULLE, 0, 0, 0, 0, 0, 0, 0, 0., NULL}
+            }
+    },
+
+    //Ennemi 2 : Boule de feu
+    {"ressources/Personnages/feu.png", "feu", 
+            {
+                //Les coordonnées sont à modifier
                 {REPOS, 0, 5*128, 128, 128, 0, 0, 1, 1., NULL},
                 {DEPL_G, 0, 17*128, 128, 128, 0, 0, 8, 1/2., NULL},
                 {DEPL_D, 0, 8*128, 128, 128, 0, 0, 8, 1/2., NULL},
