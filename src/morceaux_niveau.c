@@ -12,11 +12,18 @@
 
 #define LARGEUR_MUR 10
 
+/**
+ * @brief Tableau des pointeurs de fonctions de génération de morceaux de niveau.
+ */
+
 void (*fonctions_generation[N_MORCEAUX_NIVEAU])(void) = {
     generer_morceau_niveau_0,
-    generer_morceau_niveau_1,
-    generer_morceau_niveau_2,
 };
+
+/**
+ * @brief Enfile une fonction de génération de morceau de niveau.
+ * @param i Indice de la fonction de génération à enfiler.
+ */
 
 void enfiler_fonction(int i) {
     int * i_fonction = malloc(sizeof(int));
@@ -24,6 +31,11 @@ void enfiler_fonction(int i) {
     printf("ajout à la file du morceau de niveau %i\n", i);
     ajout_droit(I_LISTE_MORCEAUX_NIVEAU, i_fonction);
 }
+
+/**
+ * @brief Génère un morceau de niveau en utilisant une fonction de génération spécifique.
+ * @param choix Choix de la fonction de génération (-1 pour aléatoire, sinon l'indice de la fonction).
+ */
 
 void generer_morceau_niveau(int choix) {
     en_tete(I_LISTE_MORCEAUX_NIVEAU);
@@ -50,68 +62,64 @@ void generer_morceau_niveau(int choix) {
 // génération par fonctions C plutôt que par parsage d’un fichier pour
 // bénéficier de la Turing-complétion
 
-void generer_morceau_niveau_0(void) {
-    // tailles ajustées pour être carrées
+/**
+ * @brief Génère un ennemi à une position spécifique.
+ * @param x Position en x de l'ennemi.
+ * @param y Position en y de l'ennemi.
+ */
+
+void generer_ennemi(int x, int y){
     t_entite * nouv;
-
-    en_queue(I_LISTE_ENTITES);
-
-    int i, x, y;
-    for (i=0, x=10, y=110; i<8; i++, x+=10){
-        if (i==6){
-            ajout_droit(I_LISTE_ENTITES, creer_entite_obstacle("bloc_pierre", x, y+20, 10, 10, VRAI));
-            ajout_droit(I_LISTE_ENTITES, creer_entite_destructible("bloc_terre", x, y+30, 10, 10, VRAI));
-            ajout_droit(I_LISTE_ENTITES, creer_entite_destructible("bloc_terre", x, y+40, 10, 10, VRAI));
-        }
-        
-        if (i==7){
-            ajout_droit(I_LISTE_ENTITES, creer_entite_obstacle("bloc_pierre", x, y+20, 10, 10, VRAI));
-            ajout_droit(I_LISTE_ENTITES, creer_entite_destructible("bloc_terre", x, y+30, 10, 10, VRAI));
-            ajout_droit(I_LISTE_ENTITES, creer_entite_obstacle("bloc_pierre", x, y+40, 10, 10, VRAI));
-        }
-
-        
-
-        else{
-            ajout_droit(I_LISTE_ENTITES, creer_entite_obstacle("bloc_pierre", x, y, 10, 10, VRAI));
-            if (i != 5 && i != 7)
-                ajout_droit(I_LISTE_ENTITES, creer_entite_obstacle("bloc_pierre", x, y+20, 10, 10, VRAI));
-            if (i==0)
-                ajout_droit(I_LISTE_ENTITES, creer_entite_destructible("bloc_terre", x, y+20, 10, 10, VRAI));
-
-            if (i==2 || i==3){
-                ajout_droit(I_LISTE_ENTITES, creer_entite_obstacle("bloc_pierre", x, y+60, 10, 10, VRAI));
-                ajout_droit(I_LISTE_ENTITES, creer_entite_obstacle("bloc_pierre", x, y+70, 10, 10, VRAI));
-            }
-            ajout_droit(I_LISTE_ENTITES, creer_entite_destructible("bloc_terre", x, y+40, 10, 10, VRAI));
-
-        }
-    }
-
-
-
-    nouv = creer_entite_pnj_depuis_spritesheet("squelette", 10, 130, 20, 20, VRAI);
+    nouv = creer_entite_pnj_depuis_spritesheet("squelette", x, y, 20, 20, VRAI);
     nouv->vitesse = 1./2;
     changer_hitbox(nouv, 20, 50, 50, 55);
     ajout_droit(I_LISTE_ENTITES, nouv);
 }
 
-void generer_morceau_niveau_1(void) {
+/**
+ * @brief Génère un morceau de niveau aléatoire qui se répète.
+ */
+
+void generer_morceau_niveau_0(void){
     en_queue(I_LISTE_ENTITES);
-    for (int i = 4; i > 0; i--)
-        for (int j = 0; j < i+1; j++)
-            ajout_droit(I_LISTE_ENTITES, creer_entite_destructible("bloc_terre", LARGEUR_MUR + 10*(4-i), 125 + (j-i)*5, 10, 5, VRAI));
-    for (int i = 4; i < 8; i++)
-        for (int j = 0; j < i-3; j++)
-            ajout_droit(I_LISTE_ENTITES, creer_entite_destructible("bloc_terre", LARGEUR_MUR + 10*i, 145 + (j-i)*5, 10, 5, VRAI));
+
+    // Demander un nombre aléatoire entre 0 et 10 à l'utilisateur
+    int random;
+    srand(time(NULL));
+
+    int i, j, x = 10, y=110 ;
+    int nb_pierres = 0;
+    int ennemi;
+
+    for (i=0; i<10; i++, y+=10){
+        if (i%2) {
+            for (j=0, x=10, nb_pierres = 0, ennemi=0; j<8; j++, x+= 10){
+                random = rand() % 10 + 1;
+                if ((random < 4) && (nb_pierres < 7)){
+                    ajout_droit(I_LISTE_ENTITES, creer_entite_obstacle("bloc_pierre", x, y, 10, 10, VRAI));
+                    nb_pierres++;
+                    if (i%5==0 && ennemi==0){
+                        generer_ennemi(x,y);
+                        ennemi=1;
+                    }
+
+                }
+                else if (random == 4 || random == 5);
+                else if (random > 5) {
+                    ajout_droit(I_LISTE_ENTITES, creer_entite_destructible("bloc_terre", x, y, 10, 10, VRAI));
+                    if (i%5==0 && ennemi==0){
+                            generer_ennemi(x,y);
+                            ennemi=1;
+                    }
+                }
+            }
+        }
+    }
 }
 
-// enchainement des morceaux de niveau 1, 1 et 0
-void generer_morceau_niveau_2(void) {
-    generer_morceau_niveau_1();
-    enfiler_fonction(1);
-    enfiler_fonction(0);
-}
+/**
+ * @brief Génère les murs entourant le niveau.
+ */
 
 void generer_murs(void) {
     int n_blocs_mur = 20; // nombre pour chaque mur

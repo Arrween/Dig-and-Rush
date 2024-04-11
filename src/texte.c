@@ -5,6 +5,14 @@
 #include "texte.h"
 #include "ressources.h"
 
+/**
+ * @brief Change le contenu du texte avec un nouveau contenu formaté.
+ * 
+ * @param texte Pointeur vers la structure de texte à modifier.
+ * @param format_contenu Format du nouveau contenu.
+ * @param ... Arguments pour le format du contenu.
+ */
+
 void changer_texte(t_texte * texte, char * format_contenu, ...) {
     va_list ap;
     va_start(ap, format_contenu);
@@ -14,11 +22,33 @@ void changer_texte(t_texte * texte, char * format_contenu, ...) {
     va_end(ap);
 }
 
+/**
+ * @brief Affiche le texte sur le rendu spécifié.
+ * 
+ * @param rend Rendu SDL où le texte doit être affiché.
+ * @param texte Structure de texte à afficher.
+ */
+
 void afficher_texte(SDL_Renderer * rend, t_texte * texte) {
     SDL_Texture * texture = SDL_CreateTextureFromSurface(rend, texte->surface);
     SDL_RenderCopy(rend, texture, NULL, &texte->rect_dst);
     SDL_DestroyTexture(texture);
 }
+
+/**
+ * @brief Crée une nouvelle structure de texte avec les attributs spécifiés.
+ * 
+ * @param id Identifiant de la police de caractères à utiliser.
+ * @param rouge Valeur rouge de la couleur du texte.
+ * @param vert Valeur verte de la couleur du texte.
+ * @param bleu Valeur bleue de la couleur du texte.
+ * @param alpha Valeur alpha de la couleur du texte.
+ * @param x Position en x du texte.
+ * @param y Position en y du texte.
+ * @param w Largeur du texte.
+ * @param h Hauteur du texte.
+ * @return Pointeur vers la nouvelle structure de texte créée, NULL en cas d'échec.
+ */
 
 t_texte * creer_texte(char * id, int rouge, int vert, int bleu, int alpha, int x, int y, int w, int h) {
     TTF_Font * police = recuperer_police(id);
@@ -41,6 +71,13 @@ t_texte * creer_texte(char * id, int rouge, int vert, int bleu, int alpha, int x
     return nouv;
 }
 
+/**
+ * @brief Détruit une structure de texte et libère la mémoire associée.
+ * 
+ * @param texte Pointeur vers le pointeur de la structure de texte à détruire.
+ */
+
+ 
 void detruire_texte(t_texte ** texte) {
     if (*texte) {
         SDL_FreeSurface((*texte)->surface);

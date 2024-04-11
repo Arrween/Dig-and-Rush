@@ -4,9 +4,19 @@
 #include "entite.h"
 #include "constantes.h"
 
+/**
+ * @brief Comportement par défaut pour un PNJ oisif.
+ */
+
 void comportement_oisif(void) {
     return;
 }
+
+/**
+ * @brief Comportement par défaut pour un PNJ en patrouille.
+ * 
+ * @param pnj Pointeur vers l'entité du PNJ.
+ */
 
 void comportement_patrouille(t_entite * pnj) {
     if (pnj->pnj->est_mort)
@@ -38,11 +48,13 @@ void comportement_patrouille(t_entite * pnj) {
     }
 }
 
-/** 
-* @brief crée un nouveau `t_pnj` et définit les valeurs par défaut de
-*       ses attributs en fonction du type de ressource
-* @param id identifiant de ressource utilisé pour distinguer les valeurs par défaut à affecter
-*/
+/**
+ * @brief Crée une nouvelle structure de PNJ avec les attributs spécifiés.
+ * 
+ * @param id Identifiant de la ressource utilisée pour définir les valeurs par défaut.
+ * @return Pointeur vers la nouvelle structure de PNJ créée, NULL en cas d'échec.
+ */
+
 t_pnj * creer_pnj(char * id) {
     t_pnj * nouv = malloc(sizeof(t_pnj));
     if (strcmp(id, "squelette") == 0) {
@@ -61,17 +73,48 @@ t_pnj * creer_pnj(char * id) {
     return nouv;
 }
 
+
+/**
+ * @brief Crée une nouvelle structure d'entité PNJ avec les attributs spécifiés.
+ * 
+ * @param id Identifiant de l'entité PNJ.
+ * @param x Position en x de l'entité PNJ.
+ * @param y Position en y de l'entité PNJ.
+ * @param w Largeur de l'entité PNJ.
+ * @param h Hauteur de l'entité PNJ.
+ * @param est_relatif 1 si les coordonnées sont relatives, 0 si elles sont absolues.
+ * @return Pointeur vers la nouvelle structure d'entité PNJ créée, NULL en cas d'échec.
+ */
+
 t_entite * creer_entite_pnj(char * id, float x, float y, float w, float h, int est_relatif) {
     t_entite * nouv = creer_entite(id, x, y, w, h, est_relatif);
     nouv->pnj = creer_pnj(id);
     return nouv;
 }
 
+/**
+ * @brief Crée une nouvelle structure d'entité PNJ à partir d'une spritesheet avec les attributs spécifiés.
+ * 
+ * @param id Identifiant de l'entité PNJ.
+ * @param x Position en x de l'entité PNJ.
+ * @param y Position en y de l'entité PNJ.
+ * @param w Largeur de l'entité PNJ.
+ * @param h Hauteur de l'entité PNJ.
+ * @param est_relatif 1 si les coordonnées sont relatives, 0 si elles sont absolues.
+ * @return Pointeur vers la nouvelle structure d'entité PNJ créée, NULL en cas d'échec.
+ */
+
 t_entite * creer_entite_pnj_depuis_spritesheet(char * id, float x, float y, float w, float h, int est_relatif) {
     t_entite * nouv = creer_entite_depuis_spritesheet(id, x, y, w, h, est_relatif);
     nouv->pnj = creer_pnj(id);
     return nouv;
 }
+
+/**
+ * @brief Détruit une structure de PNJ et libère la mémoire associée.
+ * 
+ * @param p Pointeur vers le pointeur de la structure de PNJ à détruire.
+ */
 
 void detruire_pnj(t_pnj ** p) {
     if (*p) {

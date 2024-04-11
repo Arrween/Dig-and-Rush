@@ -3,9 +3,10 @@ REP_SRC = src
 REP_OBJ = obj
 REP_DOC = doc
 REP_LIB = lib
+REP_RAPPORT = rapport
 NOM_BIN = dignrush
 NOM_PROG = dignrush.sh
-REPS = $(REP_BIN) $(REP_SRC) $(REP_OBJ) $(REP_DOC) $(REP_LIB)
+REPS = $(REP_BIN) $(REP_SRC) $(REP_OBJ) $(REP_DOC) $(REP_LIB) $(REP_RAPPORT)
 
 REP_SDL = $(REP_LIB)/SDL2
 REP_SDLINC = $(REP_SDL)/include
@@ -29,6 +30,7 @@ ENTETES = $(REP_SRC)/constantes.h
 WARNING_FLAGS = -Wall -Wextra # -Wconversion -Wno-float-conversion -Wno-sign-conversion #-fanalyzer -fsanitize=undefined #-fsanitize=address
 DEBUG_FLAGS = 
 
+DOCS_PDF = $(REP_DOC)/description_détaillée.pdf $(REP_DOC)/rapport.pdf
 SOURCES_TEX = $(wildcard $(REP_DOC)/*.tex)
 DOXYFILE = $(REP_DOC)/Doxyfile
 
@@ -48,27 +50,33 @@ $(OBJETS) : $(REP_OBJ)/%.o: $(REP_SRC)/%.c $(ENTETES)
 	gcc -o $@ -c $< $(WARNING_FLAGS) $(DEBUG_FLAGS) $(INCLUDES)
 
 docs : docs_tex docs_doxy
-docs_tex: $(SOURCES_TEX)
+docs_tex: $(DOCS_PDF)
+$(DOCS_PDF): $(REP_DOC)/%.pdf: $(REP_DOC)/%.tex
 	@ $(OUTIL_MESSAGE) Compilation des fichiers LaTeX…
-ifdef XELATEX
-	@# se déplacer dans doc/ pour compiler doc/*.tex, le doc/ étant retiré par subst
-	@# « -interaction batchmode » pour limiter la loquacité de xelatex
-	cd $(REP_DOC) && xelatex -interaction batchmode $(subst $(REP_DOC)/, , $<)
-else ifdef TECTONIC
+ifdef TECTONIC
 	@# compilateur TeX alternatif utilisé chez Matthieu
 	tectonic $<
+else ifdef XELATEX
+	@# se déplacer dans doc/ pour compiler doc/*.tex, le doc/ étant retiré par subst
+	@# « -interaction batchmode » pour limiter la loquacité de xelatex
+	# cd $(REP_DOC) && xelatex -interaction batchmode $(subst $(REP_DOC)/, , $<)
+	cd $(REP_DOC) && xelatex $(subst $(REP_DOC)/, , $<)
 else
 	@echo "pas de compilateur TeX trouvé, docs .tex non compilées"
 endif
 docs_doxy: $(DOXYFILE)
 	@ $(OUTIL_MESSAGE) Génération de la doc Doxygen…
 	cd $(REP_DOC) && doxygen $(subst $(REP_DOC)/, , $<)
+ifeq ($(shell whoami), s123690)
+	cp -r $(REP_DOC)/html $(HOME)/public_html/doxygen_dignrush
+endif
 
 reps :
 	mkdir -p $(REPS)
 
 clean :
 	rm -f $(REP_OBJ)/*
+	rm -f $(REP_DOC)/*pdf
 remove : clean
 	rm $(REP_BIN)/$(NOM_BIN)
 
