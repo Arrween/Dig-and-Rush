@@ -5,6 +5,7 @@ REP_DOC = doc
 REP_LIB = lib
 REP_RAPPORT = rapport
 NOM_BIN = dignrush
+TEST_BIN = test_unit
 NOM_PROG = dignrush.sh
 REPS = $(REP_BIN) $(REP_SRC) $(REP_OBJ) $(REP_DOC) $(REP_LIB) $(REP_RAPPORT)
 
@@ -16,11 +17,11 @@ REP_SDLBIN = $(REP_SDL)/bin
 SYSTEME = $(shell uname)
 ifeq ($(SYSTEME), Linux)
 $(info système linux, utilisation d’une librairie SDL locale…)
-LIB_FLAGS = `$(REP_SDLBIN)/sdl2-config --libs --cflags` -lSDL2_image -lSDL2_ttf -lSDL2_mixer
+LIB_FLAGS = `$(REP_SDLBIN)/sdl2-config --libs --cflags` -lSDL2_image -lSDL2_ttf -lSDL2_mixer -lcunit
 INCLUDES = -I$(REP_SRC) -I$(REP_SDLINC)
 else
 $(info système non linux, utilisation de la librairie SDL système…)
-LIB_FLAGS = -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer
+LIB_FLAGS = -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer -lcunit
 INCLUDES = -I$(REP_SRC)
 endif
 
@@ -43,9 +44,14 @@ XELATEX := $(shell command -v xelatex 2> /dev/null)
 .PHONY = docs docs_tex docs_doxy reps clean remove all
 .SILENT = reps
 
-$(NOM_BIN) : $(OBJETS)
+$(NOM_BIN) : $(filter-out $(REP_OBJ)/test_unit.o, $(OBJETS))
 	@ $(OUTIL_MESSAGE) Compilation du jeu…
 	gcc -o $(REP_BIN)/$@ $^ $(LIB_FLAGS) $(INCLUDES) $(WARNING_FLAGS) $(DEBUG_FLAGS)
+
+$(TEST_BIN) : $(filter-out $(REP_OBJ)/main.o, $(OBJETS))
+	@ $(OUTIL_MESSAGE) Compilation des tests unitaires...
+	gcc -o $(REP_BIN)/$@ $^ $(LIB_FLAGS) $(INCLUDES) $(WARNING_FLAGS) $(DEBUG_FLAGS)
+
 $(OBJETS) : $(REP_OBJ)/%.o: $(REP_SRC)/%.c $(ENTETES)
 	gcc -o $@ -c $< $(WARNING_FLAGS) $(DEBUG_FLAGS) $(INCLUDES)
 
@@ -80,6 +86,10 @@ remove : clean
 all : reps $(NOM_BIN) docs
 
 jeu : reps $(NOM_BIN)
+
+test : reps $(TEST_BIN)
+	@ $(OUTIL_MESSAGE) Lancement des tests...
+	$(REP_BIN)/$(TEST_BIN)
 
 debug : DEBUG_FLAGS += -g
 debug : $(NOM_BIN)
