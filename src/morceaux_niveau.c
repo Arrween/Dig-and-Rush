@@ -92,23 +92,22 @@ void generer_morceau_niveau_0(void){
     int ennemi;
 
     for (i=0; i<10; i++, y+=10){
-        
-        if (i%2 == 0) ;     // Une fois sur deux il n'y a pas de ligne de blocs
-        else {
+        if (i%2) {
             for (j=0, x=10, nb_pierres = 0, ennemi=0; j<8; j++, x+= 10){
                 random = rand() % 10 + 1;
-                if (random < 4 && nb_pierres < 7){
-                        ajout_droit(I_LISTE_ENTITES, creer_entite_obstacle("bloc_pierre", x, y, 10, 10, VRAI));
-                        nb_pierres++;
-                        if (i!=0 && i%5==0 && ennemi==0){
-                            generer_ennemi(x,y);
-                            ennemi=1;
-                        }
+                if ((random < 4) && (nb_pierres < 7)){
+                    ajout_droit(I_LISTE_ENTITES, creer_entite_obstacle("bloc_pierre", x, y, 10, 10, VRAI));
+                    nb_pierres++;
+                    if (i%5==0 && ennemi==0){
+                        generer_ennemi(x,y);
+                        ennemi=1;
+                    }
+
                 }
                 else if (random == 4 || random == 5);
-                else {
+                else if (random > 5) {
                     ajout_droit(I_LISTE_ENTITES, creer_entite_destructible("bloc_terre", x, y, 10, 10, VRAI));
-                    if (i!=0 && i%5==0 && ennemi==0){
+                    if (i%5==0 && ennemi==0){
                             generer_ennemi(x,y);
                             ennemi=1;
                     }
