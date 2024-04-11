@@ -336,7 +336,7 @@ int boucle_jeu(SDL_Renderer * rend) {
         
         if (creusage_en_cours) {
         compteur_s += DELTA_TEMPS; // DELTA_TEMPS représente le temps écoulé depuis la dernière frame
-        if (compteur_s >= 1500) {
+        if (compteur_s >= 900) {
             // Si le temps écoulé dépasse 2 secondes, détruisez le bloc et réinitialisez les variables
             en_queue(I_LISTE_ENTITES);
             while(!hors_liste(I_LISTE_ENTITES)) {
