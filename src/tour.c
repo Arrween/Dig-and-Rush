@@ -21,6 +21,10 @@
 
 #define N 10
 
+
+int compteur_s = 0; // Initialisation du compteur pour la touche 'S'
+int creusage_en_cours = FAUX; // Indicateur si l'animation de creusage est en cours
+
 SDL_bool PointInFRect(const SDL_FPoint* p, const SDL_FRect* r) {
     if (p->x >= r->x && p->x < r->x + r->w &&
         p->y >= r->y && p->y < r->y + r->h) {
@@ -242,6 +246,7 @@ int boucle_jeu(SDL_Renderer * rend) {
 
     // Boucle de jeu principale
     while (doit_boucler) {
+     int DELTA_TEMPS = 50;
         chrono_deb = clock();
         // Gestion des événements
         while (SDL_PollEvent(&event)) {
@@ -278,7 +283,12 @@ int boucle_jeu(SDL_Renderer * rend) {
                         case SDL_SCANCODE_S:
                             if (perso->a_collision_b){
                                 changer_animation(perso, CREUSER); 
+                                if (event.key.state == SDL_PRESSED) {
+                compteur_s = 0; // Réinitialiser le compteur à chaque fois que la touche est enfoncée
+                creusage_en_cours = VRAI; // Marquer que l'animation de creusage est en cours
+            } else if ( creusage_en_cours) {
                                 en_queue(I_LISTE_ENTITES);
+                               
                                 while(!hors_liste(I_LISTE_ENTITES)) {
                                     t_entite * elem = valeur_elt(I_LISTE_ENTITES);
                                     if (elem->destructible && verifier_peut_creuser(perso, elem)) {
@@ -286,10 +296,12 @@ int boucle_jeu(SDL_Renderer * rend) {
                                         jouer_audio(1, elem->destructible->id_son, 0);
                                         oter_elt(I_LISTE_ENTITES);
                                         detruire_entite(&elem);
+                                        creusage_en_cours = FAUX;
                                     }
                                     else
                                         precedent(I_LISTE_ENTITES);
                                 }
+                            }
                             }
                             break;
                         case SDL_SCANCODE_W:
@@ -319,7 +331,29 @@ int boucle_jeu(SDL_Renderer * rend) {
                             break;
                     }
             }
+           
         }
+        
+        if (creusage_en_cours) {
+        compteur_s += DELTA_TEMPS; // DELTA_TEMPS représente le temps écoulé depuis la dernière frame
+        if (compteur_s >= 1500) {
+            // Si le temps écoulé dépasse 2 secondes, détruisez le bloc et réinitialisez les variables
+            en_queue(I_LISTE_ENTITES);
+            while(!hors_liste(I_LISTE_ENTITES)) {
+                t_entite * elem = valeur_elt(I_LISTE_ENTITES);
+                if (elem->destructible && verifier_peut_creuser(perso, elem)) {
+                    elem->destructible->action_destruction();
+                    jouer_audio(1, elem->destructible->id_son, 0);
+                    oter_elt(I_LISTE_ENTITES);
+                    detruire_entite(&elem);
+                    creusage_en_cours = FAUX;
+                }
+                else
+                    precedent(I_LISTE_ENTITES);
+            }
+        } 
+    }
+
 
         SDL_RenderClear(rend);
 
