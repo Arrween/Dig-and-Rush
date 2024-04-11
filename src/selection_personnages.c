@@ -1,3 +1,8 @@
+/**
+ * @file main.c
+ * @brief Programme principal pour afficher des personnages et gérer leur sélection.
+ */
+
 #include <stdio.h>
 #include <stdlib.h> // Pour les fonctions malloc et free
 #include <SDL2/SDL.h>
@@ -19,6 +24,12 @@ SDL_Renderer* gRenderer = NULL;
 
 
 
+/**
+ * @brief Fonction pour charger et afficher les images.
+ * 
+ * @param renderer Le renderer SDL où les images doivent être affichées.
+ * @param personnages La structure de personnages contenant les textures à afficher.
+ */
 
 
 // Fonction pour charger et afficher les images
@@ -41,6 +52,13 @@ void afficher_images(SDL_Renderer* renderer, Persos personnages) {
     SDL_RenderCopy(renderer, personnages.texture, NULL, &destRect);
     
 }
+
+
+/**
+ * @brief Fonction pour créer et afficher les personnages.
+ * 
+ * @param renderer Le renderer SDL où les personnages doivent être affichés.
+ */
 
 // Fonction pour créer et afficher les personnages
 void afficher_persos(SDL_Renderer* renderer) {
