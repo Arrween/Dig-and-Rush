@@ -46,10 +46,10 @@ struct chargement chargements_texs[] = {
 
     {"ressources/Personnages/jackPerso.png", "jack"},
     {"ressources/Tour/Arriere_plan/fond.jpg", "fond_tour"},
-    {"ressources/Tour/Arriere_plan/fond_jeu.png", "fond_jeu"},
-    {"ressources/Tour/Arriere_plan/fond_jeu_nuit.jpg", "fond_jeu_nuit"},
-    {"ressources/Tour/Blocs/terre/terre.jpg", "bloc_terre"},
-    {"ressources/Tour/Blocs/pierres_sombres/pierre.jpg", "bloc_pierre"},
+    {"ressources/Tour/Arriere_plan/Clouds/cloud1.png", "fond_jeu"},
+    {"ressources/Tour/Arriere_plan/Clouds/cloud1_nuit.jpg", "fond_jeu_nuit"},
+    {"ressources/Tour/Blocs/terre/terre3.png", "bloc_terre"},
+    {"ressources/Tour/Blocs/pierres_claires/pierre_herbe.png", "bloc_pierre"},
 
     //Selections personnages
     {"ressources/Personnages/selections/koba.png", "koba"},
