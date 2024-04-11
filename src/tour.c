@@ -4,6 +4,7 @@
 #include <SDL2/SDL_ttf.h>
 #include <time.h>
 
+#include "ressources.h"
 #include "tour.h"
 #include "constantes.h"
 #include "entite.h"
@@ -11,6 +12,7 @@
 #include "entite_pnj.h"
 #include "morceaux_niveau.h"
 #include "listes.h"
+#include "texte.h"
 
 #define MAX_RAYON_OMBRE (TAILLE_H)
 #define FACTEUR_MIN_RAYON_OMBRE 4 // multipli par la largeur du personnage
@@ -49,16 +51,16 @@ void verif_collision(t_entite * e1, float * correction_defilement) {
     // point au milieu du bas de la hitbox
     SDL_FPoint e1_b = {e1->hitbox.x + 0.5 * e1->hitbox.w, e1->hitbox.y + e1->hitbox.h};
 
-    e1->a_collision_g = FAUX;
-    e1->a_collision_d = FAUX;
-    e1->a_collision_h = FAUX;
-    e1->a_collision_b = FAUX;
+    e1->collisions.g = NULL;
+    e1->collisions.d = NULL;
+    e1->collisions.h = NULL;
+    e1->collisions.b = NULL;
 
     en_tete(I_LISTE_ENTITES);
     while (!hors_liste(I_LISTE_ENTITES)) {
         t_entite * e2 = valeur_elt(I_LISTE_ENTITES);
         
-        if (!e2->est_obstacle) {
+        if (e1 == e2 || (!e2->est_obstacle && !(e2->pnj && e2->pnj->est_ecrasable))) {
             suivant(I_LISTE_ENTITES);
             continue;
         }
@@ -72,10 +74,14 @@ void verif_collision(t_entite * e1, float * correction_defilement) {
         int collision_b = PointInFRect(&e1_b, &(e2->hitbox));
         // l’entité a une collision à gauche si elle est en collision à gauche avec au moins une entité de la liste
         // idem pour droite, haut, bas
-        e1->a_collision_g = e1->a_collision_g || collision_g;
-        e1->a_collision_d = e1->a_collision_d || collision_d;
-        e1->a_collision_h = e1->a_collision_h || collision_h;
-        e1->a_collision_b = e1->a_collision_b || collision_b;
+        if (collision_g)
+            e1->collisions.g = e2;
+        if (collision_d)
+            e1->collisions.d = e2;
+        if (collision_h)
+            e1->collisions.h = e2;
+        if (collision_b)
+            e1->collisions.b = e2;
 
         // replacement de l’entité si le chevauchement avec l’entité en collision est non négligeable
         if (collision_g && !collision_d) {
@@ -96,12 +102,26 @@ void verif_collision(t_entite * e1, float * correction_defilement) {
                 *correction_defilement = depassement;
         }
 
-
         suivant(I_LISTE_ENTITES);
     }
 }
 
-void porter_coup(t_entite * e) {
+void creuser(t_entite * a_creuser) {
+    en_queue(I_LISTE_ENTITES);
+    while(!hors_liste(I_LISTE_ENTITES)) {
+        t_entite * elem = valeur_elt(I_LISTE_ENTITES);
+        if (a_creuser == elem && elem->destructible) {
+            jouer_audio(1, elem->destructible->id_son, 0);
+            oter_elt(I_LISTE_ENTITES);
+            detruire_entite(&elem);
+            break;
+        }
+        else
+            precedent(I_LISTE_ENTITES);
+    }
+}
+
+void porter_coup(t_entite * e, int * score, t_texte * texte_score) {
     en_tete(I_LISTE_ENTITES);
     while (!hors_liste(I_LISTE_ENTITES)) {
         t_entite * elem = valeur_elt(I_LISTE_ENTITES);
@@ -112,33 +132,13 @@ void porter_coup(t_entite * e) {
                 changer_animation(elem, ANIM_MORT);
                 elem->deplacement = REPOS_MVT;
                 elem->pnj->est_mort = VRAI;
+                elem->pnj->est_ecrasable = FAUX;
+                *score += elem->pnj->valeur_vaincu;
+                changer_texte(texte_score, "POINTS : %i", *score);
             }
         }
         suivant(I_LISTE_ENTITES);
     }
-}
-
-/**
- * @brief vérifie qu’une entité peut creuser une autre entité selon leurs positions
- * @param e entité essayant de creuser
- * @param bloc entité qu’on essaye de creuser
- * @return VRAI si l’entité `e` est en position de creuser l’entité `bloc`
- */
-int verifier_peut_creuser(t_entite * e, t_entite * bloc) {
-    int e_x1 = e->hitbox.x;
-    int e_x2 = e->hitbox.x + e->hitbox.w;
-    int e_y2 = e->hitbox.y + e->hitbox.h;
-    int b_x1 = bloc->hitbox.x;
-    int b_x2 = bloc->hitbox.x + bloc->hitbox.w;
-    int b_y1 = bloc->hitbox.y;
-    // définit le dépassement horizontal autorisé pour que le creusage soit possible
-    // en pourcentage de la largeur de l’entité
-    int depassement_x = e->hitbox.w * 0.4;
-    int depassement_y = 5;
-    return e_x1 >= b_x1 - depassement_x &&
-           e_x2 <= b_x2 + depassement_x &&
-           e_y2 >= b_y1 &&
-           e_y2 <= b_y1 + depassement_y;
 }
 
 void calculer_ombre(SDL_Texture * tex_ombre, int rayon,
@@ -195,10 +195,12 @@ int boucle_jeu(SDL_Renderer * rend) {
     int doit_boucler = VRAI;
     long long compteur_frames = 0;
     float pas_defilement = 0;
+    int score = 0;
 
     srand(time(NULL));
 
     init_liste(I_LISTE_ENTITES);
+    init_liste(I_LISTE_MORCEAUX_NIVEAU);
 
     int doit_quitter = FAUX;
 
@@ -220,7 +222,6 @@ int boucle_jeu(SDL_Renderer * rend) {
 
     changer_hitbox(perso, 26, 22, 51, 73.4);
 
-    perso->doit_afficher_hitbox = VRAI;
     int lumiere_est_allumee = VRAI;
     int lumiere_est_allumee_prec = FAUX;
 
@@ -234,11 +235,10 @@ int boucle_jeu(SDL_Renderer * rend) {
     int alpha_fond = 0;
 
     // compteur de FPS
-    SDL_Color couleur_fps = {0,0,0,255};
-    TTF_Font * police = TTF_OpenFont("ressources/Menu/Police/font1.ttf", 50);
-    SDL_Surface * surface_fps = TTF_RenderText_Solid(police, "", couleur_fps);
-    SDL_Rect dst_fps = {20, TAILLE_H-40, 100, 30};
-    SDL_Texture * tex_fps = NULL;
+    t_texte * texte_fps = creer_texte("police_defaut", 0, 0, 0, 255, 20, TAILLE_H-40, 100, 30);
+
+    t_texte * texte_score = creer_texte("police_defaut", 0, 0, 0, 255, 20, 20, 160, 50);
+    changer_texte(texte_score, "POINTS : %i", score);
 
     // chronométrage du temps de chaque frame
     clock_t chrono_deb, chrono_fin;
@@ -271,22 +271,25 @@ int boucle_jeu(SDL_Renderer * rend) {
                             lumiere_est_allumee_prec = !lumiere_est_allumee;
                             break;
                         case SDL_SCANCODE_A:
+                            perso->deplacement_prec = perso->deplacement;
                             perso->deplacement = GAUCHE;
-                            if (perso->a_collision_b)
+                            if (perso->collisions.b)
                                 changer_animation(perso, DEPL_G);
                             break;
                         case SDL_SCANCODE_D:
+                            perso->deplacement_prec = perso->deplacement;
                             perso->deplacement = DROITE;
-                            if (perso->a_collision_b)
+                            if (perso->collisions.b)
                                 changer_animation(perso, DEPL_D);
                             break;
                         case SDL_SCANCODE_S:
-                            if (perso->a_collision_b){
+                            if (perso->collisions.b){
                                 changer_animation(perso, CREUSER); 
+
                                 if (event.key.state == SDL_PRESSED) {
-                compteur_s = 0; // Réinitialiser le compteur à chaque fois que la touche est enfoncée
-                creusage_en_cours = VRAI; // Marquer que l'animation de creusage est en cours
-            } else if ( creusage_en_cours) {
+                		compteur_s = 0; // Réinitialiser le compteur à chaque fois que la touche est enfoncée
+               			creusage_en_cours = VRAI; // Marquer que l'animation de creusage est en cours
+            			} else if ( creusage_en_cours) {
                                 en_queue(I_LISTE_ENTITES);
                                
                                 while(!hors_liste(I_LISTE_ENTITES)) {
@@ -301,16 +304,27 @@ int boucle_jeu(SDL_Renderer * rend) {
                                     else
                                         precedent(I_LISTE_ENTITES);
                                 }
+
+                                //perso->deplacement_prec = perso->deplacement;
+                                //perso->deplacement = REPOS_MVT;
+                                //creuser(perso->collisions.b);
+
                             }
                             }
                             break;
                         case SDL_SCANCODE_W:
-                            if (perso->a_collision_b) {
-                                if (perso->sens_regard == GAUCHE)
+                            if (perso->collisions.b) {
+                                perso->deplacement_prec = perso->deplacement;
+                                perso->deplacement = REPOS_MVT;
+                                if (perso->sens_regard == GAUCHE) {
                                     changer_animation(perso, ATTQ_G);
-                                else if (perso->sens_regard == DROITE)
+                                    creuser(perso->collisions.g);
+                                }
+                                else if (perso->sens_regard == DROITE) {
                                     changer_animation(perso, ATTQ_D);
-                                porter_coup(perso);
+                                    creuser(perso->collisions.d);
+                                }
+                                porter_coup(perso, &score, texte_score);
                             }
                             break;
                         default:
@@ -320,12 +334,40 @@ int boucle_jeu(SDL_Renderer * rend) {
                 case SDL_KEYUP:
                     switch (event.key.keysym.scancode) {
                         case SDL_SCANCODE_A:
+                            if (perso->animation_courante->id == DEPL_G) {
+                                if (perso->collisions.b)
+                                    changer_animation(perso, REPOS);
+                            }
+                            if (perso->deplacement == perso->deplacement_prec)
+                                perso->deplacement = REPOS_MVT;
+                            else if (perso->deplacement == GAUCHE)
+                                perso->deplacement = perso->deplacement_prec;
+                            if (perso->deplacement_prec == GAUCHE)
+                                perso->deplacement_prec = REPOS_MVT;
+                            break;
                         case SDL_SCANCODE_D:
+                            if (perso->animation_courante->id == DEPL_D) {
+                                if (perso->collisions.b)
+                                    changer_animation(perso, REPOS);
+                            }
+                            if (perso->deplacement == perso->deplacement_prec)
+                                perso->deplacement = REPOS_MVT;
+                            else if (perso->deplacement == DROITE)
+                                perso->deplacement = perso->deplacement_prec;
+                            if (perso->deplacement_prec == DROITE)
+                                perso->deplacement_prec = REPOS_MVT;
+                            break;
                         case SDL_SCANCODE_S:
-                        case SDL_SCANCODE_W:
-                            if (perso->a_collision_b)
+                            if (perso->animation_courante->id == CREUSER) {
+                                perso->deplacement = perso->deplacement_prec;
                                 changer_animation(perso, REPOS);
-                            perso->deplacement = REPOS_MVT;
+                            }
+                            break;
+                        case SDL_SCANCODE_W:
+                            if (perso->animation_courante->id ==  ATTQ_G || perso->animation_courante->id == ATTQ_D) {
+                                perso->deplacement = perso->deplacement_prec;
+                                changer_animation(perso, REPOS);
+                            }
                             break;
                         default:
                             break;
@@ -406,9 +448,8 @@ int boucle_jeu(SDL_Renderer * rend) {
 
         SDL_RenderCopy(rend, tex_ombre, NULL, NULL);
 
-        SDL_DestroyTexture(tex_fps);
-        tex_fps = SDL_CreateTextureFromSurface(rend, surface_fps);
-        SDL_RenderCopy(rend, tex_fps, NULL, &dst_fps);
+        afficher_texte(rend, texte_fps);
+        afficher_texte(rend, texte_score);
 
         SDL_RenderPresent(rend);
 
@@ -417,10 +458,16 @@ int boucle_jeu(SDL_Renderer * rend) {
         verif_collision(perso, &correction_defilement);
 
         // Déplacement et animation du personnage
-        if (! perso->a_collision_b)
+        if (! perso->collisions.b)
             changer_animation(perso, perso->sens_regard == GAUCHE ? CHUTE_G : CHUTE_D);
         else if (perso->animation_courante->id == CHUTE_G || perso->animation_courante->id == CHUTE_D)
             changer_animation(perso, REPOS);
+        else if (perso->animation_courante->id == REPOS) {
+            if (perso->deplacement == GAUCHE)
+                changer_animation(perso, DEPL_G);
+            else if (perso->deplacement == DROITE)
+                changer_animation(perso, DEPL_D);
+        }
         deplacer(perso, compteur_frames);
         animer(perso, compteur_frames);
 
@@ -435,6 +482,19 @@ int boucle_jeu(SDL_Renderer * rend) {
             suivant(I_LISTE_ENTITES);
         }
         for (int i = 0; i < n_pnjs; i++) {
+            // tue un ennemi qui peut être écrasé si le personnage lui tombe dessus
+            if (pnjs[i]->pnj->est_ecrasable && perso->collisions.b == pnjs[i]) {
+                pnjs[i]->id_animation_suivante = ANIM_MORT_STATIQUE;
+                changer_animation(pnjs[i], ANIM_MORT);
+                pnjs[i]->deplacement = REPOS_MVT;
+                pnjs[i]->pnj->est_mort = VRAI;
+                pnjs[i]->pnj->est_ecrasable = FAUX;
+                score += pnjs[i]->pnj->valeur_vaincu;
+                changer_texte(texte_score, "POINTS : %i", score);
+
+                continue;
+            }
+            // évolution du comportement du pnj i
             verif_collision(pnjs[i], NULL);
             pnjs[i]->pnj->comportement(pnjs[i]);
             deplacer(pnjs[i], compteur_frames);
@@ -442,7 +502,7 @@ int boucle_jeu(SDL_Renderer * rend) {
         }
 
         // Logique de défilement des obstacles
-        if (!perso->a_collision_b) {
+        if (!perso->collisions.b) {
             // Calcul du pas de défilement en fonction de la vitesse de chute et du compteur de frames
             if (VITESSE_CHUTE >= 1) {
                 pas_defilement = VITESSE_CHUTE;
@@ -463,7 +523,7 @@ int boucle_jeu(SDL_Renderer * rend) {
             changer_pos_rel(elem, 0, -pas_defilement);
             suivant(I_LISTE_ENTITES);
         }
-        if (!perso->a_collision_b) {
+        if (!perso->collisions.b) {
             changer_pos_rel(fond_tour, 0, -pas_defilement);
             changer_pos_rel(fond_tour_2, 0, -pas_defilement);
         }
@@ -501,12 +561,8 @@ int boucle_jeu(SDL_Renderer * rend) {
         chrono_fin = clock();
         microsec_par_frame = (chrono_fin - chrono_deb) * 1000000 / CLOCKS_PER_SEC;
         // printf("%i μs\n", microsec_par_frame);
-        char txt_fps[30];
-        if (compteur_frames % 10 == 0) {
-            sprintf(txt_fps, "%.2f FPS", 1000000./microsec_par_frame);
-            SDL_FreeSurface(surface_fps);
-            surface_fps = TTF_RenderText_Solid(police, txt_fps, couleur_fps);
-        }
+        if (compteur_frames % 10 == 0)
+            changer_texte(texte_fps, "%.2f FPS", 1000000./microsec_par_frame);
 
         int attente = 1000 / FPS - microsec_par_frame/1000;
 
@@ -524,6 +580,8 @@ int boucle_jeu(SDL_Renderer * rend) {
     detruire_entite(&fond_tour);
     detruire_entite(&fond_tour_2);
     detruire_entite(&perso);
+    detruire_texte(&texte_fps);
+    detruire_texte(&texte_score);
 
     return doit_quitter ;
 }

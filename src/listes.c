@@ -48,15 +48,18 @@ void modif_elt(int i, void * v) {
         listes[i].ec->val = v;
 }
 
-void oter_elt(int i) {
+void * oter_elt(int i) {
     t_elem *ancien;
+    void * val;
     if (!hors_liste(i)) {
         ancien = listes[i].ec;
+        val = ancien->val;
         listes[i].ec->pred->succ = listes[i].ec->succ;
         listes[i].ec->succ->pred = listes[i].ec->pred;
         listes[i].ec = listes[i].ec->pred;
         free(ancien);
     }
+    return val;
 }
 
 void ajout_droit(int i, void * v) {

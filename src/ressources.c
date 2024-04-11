@@ -9,6 +9,7 @@ t_texture * textures = NULL;
 t_spritesheet * spritesheets = NULL;
 t_son * sons = NULL;
 t_musique * musiques = NULL;
+t_police * polices = NULL;
 
 struct chargement {
     char chemin[TAILLE_MAX_CHEMIN];
@@ -19,6 +20,12 @@ struct chargement_spritesheet {
     char chemin[TAILLE_MAX_CHEMIN];
     char id[TAILLE_MAX_ID];
     t_animation animations[100];
+};
+
+struct chargement_police {
+    char chemin[TAILLE_MAX_CHEMIN];
+    char id[TAILLE_MAX_ID];
+    int taille;
 };
 
 struct chargement chargements_texs[] = {
@@ -44,12 +51,15 @@ struct chargement chargements_texs[] = {
     {"ressources/Tour/Blocs/terre/terre.jpg", "bloc_terre"},
     {"ressources/Tour/Blocs/pierres_sombres/pierre.jpg", "bloc_pierre"},
 
+    //Selections personnages
+    {"ressources/Personnages/selections/koba.png", "koba"},
+
 };
 
 struct chargement_spritesheet chargements_spritesheets[] = {
     {"ressources/Personnages/matthieuPerso2.png", "matt", 
             {
-                {REPOS, 0, 6*64, 64, 64, 0, 0, 1*64, 1., NULL},
+                {REPOS, 0, 6*64, 64, 64, 0, 0, 1, 1., NULL},
                 {CHUTE_G, 5, 1*64, 64, 64, 0, 0, 1, 1., NULL},
                 {CHUTE_D, 5, 3*64, 64, 64, 0, 0, 1, 1., NULL},
                 {DEPL_G, 0, 9*64, 64, 64, 0, 0, 9, 1/5., NULL},
@@ -60,6 +70,35 @@ struct chargement_spritesheet chargements_spritesheets[] = {
                 {ANIM_NULLE, 0, 0, 0, 0, 0, 0, 0, 0., NULL}
             }
     },
+    //Perso 2
+    {"ressources/Personnages/jackPerso.png", "jack", 
+        {
+            {REPOS, 0, 6*64, 64, 64, 0, 0, 1, 1., NULL},
+            {CHUTE_G, 5, 1*64, 64, 64, 0, 0, 1, 1., NULL},
+            {CHUTE_D, 5, 3*64, 64, 64, 0, 0, 1, 1., NULL},
+            {DEPL_G, 0, 9*64, 64, 64, 0, 0, 9, 1/5., NULL},
+            {DEPL_D, 0, 11*64, 64, 64, 0, 0, 9, 1/5., NULL},
+            {ATTQ_G, 0, 5*64, 64, 64, 0, 0, 8, 1/3., NULL},
+            {ATTQ_D, 0, 7*64, 64, 64, 0, 0, 8, 1/3., NULL},
+            {CREUSER, 0, 6*64, 64, 64, 0, 0, 8, 1./6, NULL},
+            {ANIM_NULLE, 0, 0, 0, 0, 0, 0, 0, 0., NULL}
+        }
+    },
+    //Perso 3
+    {"ressources/Personnages/yohanPerso.png", "yohan", 
+        {
+            {REPOS, 0, 6*64, 64, 64, 0, 0, 1, 1., NULL},
+            {CHUTE_G, 5, 1*64, 64, 64, 0, 0, 1, 1., NULL},
+            {CHUTE_D, 5, 3*64, 64, 64, 0, 0, 1, 1., NULL},
+            {DEPL_G, 0, 9*64, 64, 64, 0, 0, 9, 1/5., NULL},
+            {DEPL_D, 0, 11*64, 64, 64, 0, 0, 9, 1/5., NULL},
+            {ATTQ_G, 0, 5*64, 64, 64, 0, 0, 8, 1/3., NULL},
+            {ATTQ_D, 0, 7*64, 64, 64, 0, 0, 8, 1/3., NULL},
+            {CREUSER, 0, 6*64, 64, 64, 0, 0, 8, 1./6, NULL},
+            {ANIM_NULLE, 0, 0, 0, 0, 0, 0, 0, 0., NULL}
+        }
+    },
+    //Ennemie
     {"ressources/Personnages/squelette_craftpix.png", "squelette", 
             {
                 {REPOS, 0, 5*128, 128, 128, 0, 0, 1, 1., NULL},
@@ -71,7 +110,7 @@ struct chargement_spritesheet chargements_spritesheets[] = {
                 {ANIM_MORT_STATIQUE, 2, 3*128, 128, 128, 0, 0, 1, 1, NULL},
                 {ANIM_NULLE, 0, 0, 0, 0, 0, 0, 0, 0., NULL}
             }
-    },
+    }
 };
 
 struct chargement chargements_sons[] = {
@@ -83,6 +122,11 @@ struct chargement chargements_sons[] = {
 struct chargement chargements_musiques[] = {
     {"ressources/Audio/Musique/musique_menu.mp3", "musique_menu"},
 };
+
+struct chargement_police chargements_polices[] = {
+    {"ressources/Menu/Police/font1.ttf", "police_defaut", 50},
+};
+
 
 t_animation * recuperer_animation(t_animation ** anims, int n_anims, t_id_anim id) {
     for (int i = 0; i < n_anims; i++) {
@@ -110,8 +154,10 @@ void init_ressources(SDL_Renderer * rend) {
     t_spritesheet * ressource_spritesheet;
     t_son * ressource_son;
     t_musique * ressource_mus;
+    t_police * ressource_police;
     struct chargement charg;
     struct chargement_spritesheet charg_sheet;
+    struct chargement_police charg_police;
     unsigned long i;
 
     for (i = 0; i < sizeof(chargements_texs)/sizeof(*chargements_texs); i++) {
@@ -200,7 +246,27 @@ void init_ressources(SDL_Renderer * rend) {
                    charg.id, charg.chemin);
         }
     }
+
+    for (i = 0; i < sizeof(chargements_polices)/sizeof(*chargements_polices); i++) {
+        charg_police = chargements_polices[i];
+        HASH_FIND_STR(polices, charg_police.id, ressource_police);
+        if (!ressource_police) {
+            ressource_police = malloc(sizeof(t_police));
+            if (!(ressource_police->police = TTF_OpenFont(charg_police.chemin, charg_police.taille)))
+                SDL_LogError(SDL_LOG_CATEGORY_APPLICATION,
+                             "Erreur lors du chargement d’une police"
+                             " : %s\n", TTF_GetError());
+            strcpy(ressource_police->id, charg_police.id);
+            HASH_ADD_STR(polices, id, ressource_police);
+        }
+        else {
+            printf("Avertissement : ressource police avec l’id « %s » "
+                   "déjà présente, fichier « %s » non chargé\n",
+                   charg_police.id, charg_police.chemin);
+        }
+    }
 }
+
 
 SDL_Texture * recuperer_texture(const char * id) {
     t_texture * ressource;
@@ -268,11 +334,24 @@ int jouer_audio(int canal, const char * id, int repetitions) {
     return -2;
 }
 
+TTF_Font * recuperer_police(const char * id) {
+    t_police * ressource;
+    HASH_FIND_STR(polices, id, ressource);
+    if (ressource)
+        return ressource->police;
+    else {
+        fprintf(stderr, "Avertissement : récupération d’une "
+                "ressource police inexistante « %s »\n", id);
+        return NULL;
+    }
+}
+
 void detruire_ressources() {
     t_texture * tex_courant, * tex_tmp;
     t_spritesheet * sheet_courant, * sheet_tmp;
     t_son * son_courant, * son_tmp;
     t_musique * mus_courant, * mus_tmp;
+    t_police * police_courant, * police_tmp;
     HASH_ITER(hh, textures, tex_courant, tex_tmp) {
         SDL_DestroyTexture(tex_courant->texture);
         free(tex_courant);
@@ -290,6 +369,10 @@ void detruire_ressources() {
     }
     HASH_ITER(hh, musiques, mus_courant, mus_tmp) {
         Mix_FreeMusic(mus_courant->tampon);
+        free(mus_courant);
+    }
+    HASH_ITER(hh, polices, police_courant, police_tmp) {
+        TTF_CloseFont(police_courant->police);
         free(mus_courant);
     }
 }

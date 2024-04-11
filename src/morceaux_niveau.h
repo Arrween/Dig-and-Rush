@@ -1,9 +1,10 @@
 #include "entite.h"
 
-#define N_MORCEAUX_NIVEAU 2
+#define N_MORCEAUX_NIVEAU 1
 
 void generer_morceau_niveau_0(void);
 void generer_morceau_niveau_1(void);
+void generer_morceau_niveau_2(void);
 
 void generer_morceau_niveau(int);
 

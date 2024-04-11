@@ -4,11 +4,14 @@
 #include "entite.h"
 #include "constantes.h"
 
+/**
+ * @brief Structure renseignant le caractère destructible d’une entité
+ */
+
 struct s_destructible {
-    void (*action_destruction) (void);
-    char id_son[TAILLE_MAX_ID];
+    char id_son[TAILLE_MAX_ID]; /**< id de ressource du son à jouer lors de la destruction */
 };
 
-t_entite * creer_entite_destructible(char*, float, float, float, float, int);
+t_entite * creer_entite_destructible(char* id, float x, float y, float w, float h, int est_relatif);
 
 #endif
