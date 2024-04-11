@@ -219,7 +219,6 @@ int main() {
         // Afficher Matt en fonction de son état de sélection
         if (!mattSelectionne) {
             // Sauvegarder la couleur actuelle du dessin
-            printf("MAtt");
             SDL_Color couleurOriginale;
             SDL_GetRenderDrawColor(rend, &couleurOriginale.r, &couleurOriginale.g, &couleurOriginale.b, &couleurOriginale.a);
             
