@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 texte="$@"
 l_texte="$(echo -n "$texte"|wc -c)"

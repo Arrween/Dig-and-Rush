@@ -51,4 +51,4 @@ void action_quitter(t_etat *);
 void action_jouer(t_etat *);
 void action_personnages(t_etat *);
 void action_parametres(t_etat *);
-void action_nulle(t_etat *);
+void action_nulle(void);

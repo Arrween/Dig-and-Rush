@@ -121,10 +121,16 @@ void action_parametres(t_etat * etat) {
     etat->i_menu = PAGE_MENU_PARAMETRES;
 }
 void action_volume(t_etat * etat) {
-    if (etat->boutons[1]->texture == recuperer_texture("bouton_volume_off"))
+    if (etat->boutons[1]->texture == recuperer_texture("bouton_volume_off")) {
         etat->boutons[1]->texture = recuperer_texture("bouton_volume_on");
-    else
+        Mix_VolumeMusic(0);
+        Mix_Volume(-1, 0);
+    }
+    else {
         etat->boutons[1]->texture = recuperer_texture("bouton_volume_off");
+        Mix_VolumeMusic(MIX_MAX_VOLUME * FACTEUR_VOLUME_MUSIQUE_INI);
+        Mix_Volume(-1, MIX_MAX_VOLUME * FACTEUR_VOLUME_SONS_INI);
+    }
 }
 void action_personnages(t_etat * etat) {
     etat->i_menu = PAGE_MENU_PERSONNAGES;
@@ -142,9 +148,10 @@ void action_home(t_etat * etat) {
 }
 void action_jouer(t_etat * etat) {
     etat->i_menu = PAGE_MENU_SERVEUR;
+    jouer_audio(0, "confirmation", 0);
 }
 void action_quitter(t_etat * etat) {
     etat->doit_quitter = VRAI;
 }
-void action_nulle(t_etat * etat) {
+void action_nulle(void) {
 }
