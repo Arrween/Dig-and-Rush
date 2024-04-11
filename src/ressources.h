@@ -9,14 +9,20 @@
 #define TAILLE_MAX_CHEMIN 200
 #define TAILLE_MAX_ID 100
 
+/**
+ * @brief Structure représentant un élément de la table de hachage des ressources textures
+ */
 typedef struct {
-    SDL_Texture * texture;
-    char id[TAILLE_MAX_ID];
-    UT_hash_handle hh;
+    SDL_Texture * texture; /**< texture chargée depuis le fichier ressource */
+    char id[TAILLE_MAX_ID]; /**< identifiant de la ressource dans la table de hachage */
+    UT_hash_handle hh; /**< handle de la table de hachage */
 } t_texture; 
 
 extern t_texture * textures;
 
+/**
+ * @brief Valeurs possibles pour le type d’animation d’une entité à un moment donné
+ */
 typedef enum { ANIM_NULLE, REPOS, CHUTE_G, CHUTE_D, DEPL_G, DEPL_D, CREUSER, ATTQ_G, ATTQ_D, ANIM_MORT, ANIM_MORT_STATIQUE } t_id_anim;
 
 typedef struct {
