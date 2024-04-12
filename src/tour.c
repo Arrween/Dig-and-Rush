@@ -21,11 +21,8 @@
 
 #define PAS_ALPHA_FOND 7
 
-#define N 10
+#define DELAI_CREUSAGE 18 // nombre de frames
 
-
-int compteur_s = 0; // Initialisation du compteur pour la touche 'S'
-int creusage_en_cours = FAUX; // Indicateur si l'animation de creusage est en cours
 
 SDL_bool PointInFRect(const SDL_FPoint* p, const SDL_FRect* r) {
     if (p->x >= r->x && p->x < r->x + r->w &&
@@ -196,6 +193,9 @@ int boucle_jeu(SDL_Renderer * rend) {
     long long compteur_frames = 0;
     float pas_defilement = 0;
     int score = 0;
+    int creusage_en_cours = FAUX; // Indicateur si l'animation de creusage est en cours
+    int compteur_creusage = 0;
+
 
     srand(time(NULL));
 
@@ -257,7 +257,11 @@ int boucle_jeu(SDL_Renderer * rend) {
                     break;
                 case SDL_KEYDOWN:
                     if (event.key.repeat) break;
-                    // Gestion des touches du clavier
+                    // arrêter le creusage si l’on appuie sur une touche
+                    // différente de celle de creusage même si l’on a maintenu
+                    // cette dernière enfoncée
+                    if (event.key.keysym.scancode != SDL_SCANCODE_S)
+                        creusage_en_cours = FAUX;
                     switch (event.key.keysym.scancode) {
                         case SDL_SCANCODE_ESCAPE:
                         case SDL_SCANCODE_Q:
@@ -285,31 +289,10 @@ int boucle_jeu(SDL_Renderer * rend) {
                         case SDL_SCANCODE_S:
                             if (perso->collisions.b){
                                 changer_animation(perso, CREUSER); 
-
-                                if (event.key.state == SDL_PRESSED) {
-                		compteur_s = 0; // Réinitialiser le compteur à chaque fois que la touche est enfoncée
-               			creusage_en_cours = VRAI; // Marquer que l'animation de creusage est en cours
-            			} else if ( creusage_en_cours) {
-                                en_queue(I_LISTE_ENTITES);
-                               
-                                while(!hors_liste(I_LISTE_ENTITES)) {
-                                    t_entite * elem = valeur_elt(I_LISTE_ENTITES);
-                                    if (elem->destructible && verifier_peut_creuser(perso, elem)) {
-                                        elem->destructible->action_destruction();
-                                        jouer_audio(1, elem->destructible->id_son, 0);
-                                        oter_elt(I_LISTE_ENTITES);
-                                        detruire_entite(&elem);
-                                        creusage_en_cours = FAUX;
-                                    }
-                                    else
-                                        precedent(I_LISTE_ENTITES);
-                                }
-
-                                //perso->deplacement_prec = perso->deplacement;
-                                //perso->deplacement = REPOS_MVT;
-                                //creuser(perso->collisions.b);
-
-                            }
+                                perso->deplacement_prec = perso->deplacement;
+                                perso->deplacement = REPOS_MVT;
+                                compteur_creusage = 0; // Réinitialiser le compteur à chaque fois que la touche est enfoncée
+                                creusage_en_cours = VRAI; // Marquer que l'animation de creusage est en cours
                             }
                             break;
                         case SDL_SCANCODE_W:
@@ -362,6 +345,7 @@ int boucle_jeu(SDL_Renderer * rend) {
                                 perso->deplacement = perso->deplacement_prec;
                                 changer_animation(perso, REPOS);
                             }
+                            creusage_en_cours = FAUX;
                             break;
                         case SDL_SCANCODE_W:
                             if (perso->animation_courante->id ==  ATTQ_G || perso->animation_courante->id == ATTQ_D) {
@@ -375,28 +359,15 @@ int boucle_jeu(SDL_Renderer * rend) {
             }
            
         }
-        
+
         if (creusage_en_cours) {
-        compteur_s += DELTA_TEMPS; // DELTA_TEMPS représente le temps écoulé depuis la dernière frame
-        if (compteur_s >= 900) {
-            // Si le temps écoulé dépasse 2 secondes, détruisez le bloc et réinitialisez les variables
-            en_queue(I_LISTE_ENTITES);
-            while(!hors_liste(I_LISTE_ENTITES)) {
-                t_entite * elem = valeur_elt(I_LISTE_ENTITES);
-                if (elem->destructible && verifier_peut_creuser(perso, elem)) {
-                    elem->destructible->action_destruction();
-                    jouer_audio(1, elem->destructible->id_son, 0);
-                    oter_elt(I_LISTE_ENTITES);
-                    detruire_entite(&elem);
-                    creusage_en_cours = FAUX;
-                }
-                else
-                    precedent(I_LISTE_ENTITES);
-            }
-        } 
-    }
-
-
+            compteur_creusage++;
+            if (compteur_creusage >= DELAI_CREUSAGE) {
+                creuser(perso->collisions.b);
+                creusage_en_cours = FAUX;
+            } 
+        }
+        
         SDL_RenderClear(rend);
 
         if (lumiere_est_allumee && !lumiere_est_allumee_prec) {
