@@ -64,6 +64,7 @@ t_pnj * creer_pnj(char * id, t_entite * e) {
         nouv->est_ecrasable = VRAI;
         e->vitesse = 1./2;
         changer_hitbox(e, 20, 50, 50, 55);
+        e->doit_afficher_hitbox = VRAI;
     }
     //else if (strcmp(id, "feu") == 0) {
         // champs initiaux pour la boule de feu
@@ -73,7 +74,8 @@ t_pnj * creer_pnj(char * id, t_entite * e) {
         nouv->valeur_vaincu = 10;
         nouv->est_ecrasable = VRAI;
         e->vitesse = 1./2;
-        changer_hitbox(e, 20, 50, 50, 55);
+        changer_hitbox(e, 20, 30, 50, 55);
+        e->doit_afficher_hitbox = VRAI;
     }
     else {
         nouv->comportement = (void(*)(t_entite*)) comportement_oisif;
