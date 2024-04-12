@@ -31,6 +31,8 @@ struct chargement_police {
 struct chargement chargements_texs[] = {
     {"ressources/Menu/Background_Menu/Fond_Menu.png", "menu_fond"},
     {"ressources/Menu/Nom_du_Jeu/logo.png", "menu_titre"},
+    {"ressources/Menu/Nom_du_Jeu/titre_personnages.png", "titre_personnages"},
+
     {"ressources/Menu/Background_Menu/choix_serveur.png", "menu_serveur"},
     {"ressources/Menu/Background_Menu/menu_parametre.png", "menu_paramètres"},
     {"ressources/Menu/Background_Menu/menu_personnages.png", "menu_personnages"},

@@ -75,6 +75,15 @@ int main() {
             (void(*)(t_etat*)) action_nulle,
             "TITRE"
         };
+
+    t_bouton btn_titre_perso = { recuperer_texture("titre_personnages"),
+        {TAILLE_L * (0.5 - 0.238),
+            TAILLE_H * (0.5 - 0.42),
+            TAILLE_L * 0.476,
+            TAILLE_H * 0.417},
+        (void(*)(t_etat*)) action_nulle,
+        "TITRE_PERSO"
+    };
     t_bouton btn_parametres = { recuperer_texture("bouton_paramètres"),
             {TAILLE_L * 0.012,
                 TAILLE_H * 0.021,
@@ -128,8 +137,8 @@ int main() {
                 TAILLE_H * 0.7,
                 TAILLE_L * 0.201,
                 TAILLE_H * 0.154},
-            action_jouer,
-            "PLAY"
+            action_personnages,
+            "PERSONNAGES"
         };
     t_bouton btn_quitter = { recuperer_texture("bouton_quitter"),
             {TAILLE_L * 0.12,
@@ -140,12 +149,13 @@ int main() {
             "QUIT"
         };
 
-    t_bouton * menus[4][10] = {
-        {&btn_fullscreen, &btn_volume, &btn_continue , &btn_quitter, &btn_parametres, &btn_personnages, &btn_titre, NULL}, // menu principal
-        {&btn_fullscreen, &btn_volume, &btn_menu, &btn_parametres, &btn_personnages, NULL}, // menu serveur
-        {&btn_fullscreen, &btn_volume, &btn_menu, &btn_personnages, NULL}, // menu paramètres
-        {&btn_fullscreen, &btn_volume, &btn_menu, &btn_jouer, &btn_parametres, NULL} // menu personnages
-    };
+t_bouton * menus[4][10] = {
+    {&btn_fullscreen, &btn_volume, &btn_continue , &btn_quitter, &btn_parametres, &btn_personnages, &btn_titre, NULL}, // menu principal
+    {&btn_fullscreen, &btn_volume, &btn_menu, &btn_parametres, &btn_personnages, NULL}, // menu serveur
+    {&btn_fullscreen, &btn_volume, &btn_menu, &btn_personnages, NULL}, // menu paramètres
+    {&btn_fullscreen, &btn_volume, &btn_menu, &btn_jouer, &btn_parametres, &btn_titre_perso, NULL} // menu personnages
+};
+
     SDL_Texture * fonds_menus[4] = {
         recuperer_texture("menu_fond"),
         recuperer_texture("menu_serveur"),
