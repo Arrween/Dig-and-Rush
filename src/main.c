@@ -19,7 +19,6 @@ Persos personnages; // Assurez-vous que MAX_PERSONNAGES est défini correctement
 char filename[N]; // Assurez-vous que N est défini correctement
 
 t_entite* matt;
-matt = creer_entite_depuis_spritesheet("matt", 35, 33.5, 17, 17, VRAI);
 
 SDL_Rect mattRect = { (TAILLE_L - 17) / 2, (TAILLE_H - 17) / 2, 17, 17 };
 int main() {
@@ -124,6 +123,14 @@ int main() {
             action_jouer,
             "PLAY"
         };
+    t_bouton btn_continue = { recuperer_texture("bouton_continue"),
+            {TAILLE_L * 0.67,
+                TAILLE_H * 0.7,
+                TAILLE_L * 0.201,
+                TAILLE_H * 0.154},
+            action_jouer,
+            "PLAY"
+        };
     t_bouton btn_quitter = { recuperer_texture("bouton_quitter"),
             {TAILLE_L * 0.12,
                 TAILLE_H * 0.7,
@@ -134,10 +141,10 @@ int main() {
         };
 
     t_bouton * menus[4][10] = {
-        {&btn_fullscreen, &btn_volume, &btn_jouer, &btn_quitter, &btn_parametres, &btn_personnages, &btn_titre, NULL}, // menu principal
+        {&btn_fullscreen, &btn_volume, &btn_continue , &btn_quitter, &btn_parametres, &btn_personnages, &btn_titre, NULL}, // menu principal
         {&btn_fullscreen, &btn_volume, &btn_menu, &btn_parametres, &btn_personnages, NULL}, // menu serveur
         {&btn_fullscreen, &btn_volume, &btn_menu, &btn_personnages, NULL}, // menu paramètres
-        {&btn_fullscreen, &btn_volume, &btn_menu, &btn_parametres, NULL} // menu personnages
+        {&btn_fullscreen, &btn_volume, &btn_menu, &btn_jouer, &btn_parametres, NULL} // menu personnages
     };
     SDL_Texture * fonds_menus[4] = {
         recuperer_texture("menu_fond"),
@@ -159,6 +166,7 @@ int main() {
     int i_btn;
     int pause = 0;
     t_bouton * btn;
+    matt = creer_entite_depuis_spritesheet("matt", 35, 33.5, 17, 17, VRAI);
     int mattSelectionne = 0; // Matt n'est pas sélectionné initialement
 
     
