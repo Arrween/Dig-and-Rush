@@ -65,13 +65,15 @@ t_pnj * creer_pnj(char * id, t_entite * e) {
         e->vitesse = 1./2;
         changer_hitbox(e, 20, 50, 50, 55);
     }
-    else if (strcmp(id, "feu") == 0) {
+    //else if (strcmp(id, "feu") == 0) {
         // champs initiaux pour la boule de feu
-    }
+    //}
     else if (strcmp(id, "feu") == 0) {
         nouv->comportement = comportement_patrouille;
         nouv->valeur_vaincu = 10;
         nouv->est_ecrasable = VRAI;
+        e->vitesse = 1./2;
+        changer_hitbox(e, 20, 50, 50, 55);
     }
     else {
         nouv->comportement = (void(*)(t_entite*)) comportement_oisif;

@@ -77,12 +77,6 @@ void generer_ennemi(int x, int y){
 void generer_ennemi2(int x, int y){
     t_entite * nouv;
     nouv = creer_entite_pnj_depuis_spritesheet("feu", x, y, 20, 20, VRAI);
-     if (nouv == NULL) {
-        printf("Erreur lors de la création de l'ennemi de type feu.\n");
-        return;
-    }
-    nouv->vitesse = 1./2;
-    changer_hitbox(nouv, 20, 50, 50, 55);
     ajout_droit(I_LISTE_ENTITES, nouv);
 }
 
