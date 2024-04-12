@@ -62,6 +62,11 @@ t_pnj * creer_pnj(char * id) {
         nouv->valeur_vaincu = 10;
         nouv->est_ecrasable = VRAI;
     }
+    else if (strcmp(id, "feu") == 0) {
+        nouv->comportement = comportement_patrouille;
+        nouv->valeur_vaincu = 10;
+        nouv->est_ecrasable = VRAI;
+    }
     else {
         nouv->comportement = (void(*)(t_entite*)) comportement_oisif;
         nouv->valeur_vaincu = 0;

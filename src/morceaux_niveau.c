@@ -76,6 +76,18 @@ void generer_ennemi(int x, int y){
     ajout_droit(I_LISTE_ENTITES, nouv);
 }
 
+void generer_ennemi2(int x, int y){
+    t_entite * nouv;
+    nouv = creer_entite_pnj_depuis_spritesheet("feu", x, y, 20, 20, VRAI);
+     if (nouv == NULL) {
+        printf("Erreur lors de la création de l'ennemi de type feu.\n");
+        return;
+    }
+    nouv->vitesse = 1./2;
+    changer_hitbox(nouv, 20, 50, 50, 55);
+    ajout_droit(I_LISTE_ENTITES, nouv);
+}
+
 /**
  * @brief Génère un morceau de niveau aléatoire qui se répète.
  */
@@ -102,14 +114,22 @@ void generer_morceau_niveau_0(void){
                         generer_ennemi(x,y);
                         ennemi=1;
                     }
+                    else if (i%2==0 && ennemi==0){
+                    generer_ennemi2(x,y);
+                    ennemi=1;
+                    }
 
                 }
                 else if (random == 4 || random == 5);
                 else if (random > 5) {
                     ajout_droit(I_LISTE_ENTITES, creer_entite_destructible("bloc_terre", x, y, 10, 10, VRAI));
                     if (i%5==0 && ennemi==0){
-                            generer_ennemi(x,y);
+                            generer_ennemi2(x,y);
                             ennemi=1;
+                    }
+                    else if (i%2==0 && ennemi==0){
+                    generer_ennemi(x,y);
+                    ennemi=1;
                     }
                 }
             }
