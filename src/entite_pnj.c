@@ -52,15 +52,21 @@ void comportement_patrouille(t_entite * pnj) {
  * @brief Crée une nouvelle structure de PNJ avec les attributs spécifiés.
  * 
  * @param id Identifiant de la ressource utilisée pour définir les valeurs par défaut.
+ * @param e entité contenant cette structure t_pnj
  * @return Pointeur vers la nouvelle structure de PNJ créée, NULL en cas d'échec.
  */
 
-t_pnj * creer_pnj(char * id) {
+t_pnj * creer_pnj(char * id, t_entite * e) {
     t_pnj * nouv = malloc(sizeof(t_pnj));
     if (strcmp(id, "squelette") == 0) {
         nouv->comportement = comportement_patrouille;
         nouv->valeur_vaincu = 10;
         nouv->est_ecrasable = VRAI;
+        e->vitesse = 1./2;
+        changer_hitbox(e, 20, 50, 50, 55);
+    }
+    else if (strcmp(id, "feu") == 0) {
+        // champs initiaux pour la boule de feu
     }
     else if (strcmp(id, "feu") == 0) {
         nouv->comportement = comportement_patrouille;
@@ -93,7 +99,7 @@ t_pnj * creer_pnj(char * id) {
 
 t_entite * creer_entite_pnj(char * id, float x, float y, float w, float h, int est_relatif) {
     t_entite * nouv = creer_entite(id, x, y, w, h, est_relatif);
-    nouv->pnj = creer_pnj(id);
+    nouv->pnj = creer_pnj(id, nouv);
     return nouv;
 }
 
@@ -111,7 +117,7 @@ t_entite * creer_entite_pnj(char * id, float x, float y, float w, float h, int e
 
 t_entite * creer_entite_pnj_depuis_spritesheet(char * id, float x, float y, float w, float h, int est_relatif) {
     t_entite * nouv = creer_entite_depuis_spritesheet(id, x, y, w, h, est_relatif);
-    nouv->pnj = creer_pnj(id);
+    nouv->pnj = creer_pnj(id, nouv);
     return nouv;
 }
 

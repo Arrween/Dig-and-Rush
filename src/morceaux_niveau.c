@@ -71,8 +71,6 @@ void generer_morceau_niveau(int choix) {
 void generer_ennemi(int x, int y){
     t_entite * nouv;
     nouv = creer_entite_pnj_depuis_spritesheet("squelette", x, y, 20, 20, VRAI);
-    nouv->vitesse = 1./2;
-    changer_hitbox(nouv, 20, 50, 50, 55);
     ajout_droit(I_LISTE_ENTITES, nouv);
 }
 
