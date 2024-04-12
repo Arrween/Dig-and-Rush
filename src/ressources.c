@@ -66,7 +66,7 @@ struct chargement_spritesheet chargements_spritesheets[] = {
                 {DEPL_D, 0, 11*64, 64, 64, 0, 0, 9, 1/5., NULL},
                 {ATTQ_G, 0, 5*64, 64, 64, 0, 0, 8, 1/3., NULL},
                 {ATTQ_D, 0, 7*64, 64, 64, 0, 0, 8, 1/3., NULL},
-                {CREUSER, 0, 6*64, 64, 64, 0, 0, 8, 1./6, NULL},
+                {CREUSER, 0, 6*64, 64, 64, 0, 0, 8, 1./2, NULL},
                 {ANIM_NULLE, 0, 0, 0, 0, 0, 0, 0, 0., NULL}
             }
     },
@@ -80,7 +80,7 @@ struct chargement_spritesheet chargements_spritesheets[] = {
             {DEPL_D, 0, 11*64, 64, 64, 0, 0, 9, 1/5., NULL},
             {ATTQ_G, 0, 5*64, 64, 64, 0, 0, 8, 1/3., NULL},
             {ATTQ_D, 0, 7*64, 64, 64, 0, 0, 8, 1/3., NULL},
-            {CREUSER, 0, 6*64, 64, 64, 0, 0, 8, 1./6, NULL},
+            {CREUSER, 0, 6*64, 64, 64, 0, 0, 8, 1./2, NULL},
             {ANIM_NULLE, 0, 0, 0, 0, 0, 0, 0, 0., NULL}
         }
     },
@@ -94,7 +94,7 @@ struct chargement_spritesheet chargements_spritesheets[] = {
             {DEPL_D, 0, 11*64, 64, 64, 0, 0, 9, 1/5., NULL},
             {ATTQ_G, 0, 5*64, 64, 64, 0, 0, 8, 1/3., NULL},
             {ATTQ_D, 0, 7*64, 64, 64, 0, 0, 8, 1/3., NULL},
-            {CREUSER, 0, 6*64, 64, 64, 0, 0, 8, 1./6, NULL},
+            {CREUSER, 0, 6*64, 64, 64, 0, 0, 8, 1./2, NULL},
             {ANIM_NULLE, 0, 0, 0, 0, 0, 0, 0, 0., NULL}
         }
     },

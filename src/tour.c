@@ -21,7 +21,8 @@
 
 #define PAS_ALPHA_FOND 7
 
-#define N 10
+#define DELAI_CREUSAGE 18 // nombre de frames
+
 
 SDL_bool PointInFRect(const SDL_FPoint* p, const SDL_FRect* r) {
     if (p->x >= r->x && p->x < r->x + r->w &&
@@ -192,6 +193,9 @@ int boucle_jeu(SDL_Renderer * rend) {
     long long compteur_frames = 0;
     float pas_defilement = 0;
     int score = 0;
+    int creusage_en_cours = FAUX; // Indicateur si l'animation de creusage est en cours
+    int compteur_creusage = 0;
+
 
     srand(time(NULL));
 
@@ -242,6 +246,7 @@ int boucle_jeu(SDL_Renderer * rend) {
 
     // Boucle de jeu principale
     while (doit_boucler) {
+     int DELTA_TEMPS = 50;
         chrono_deb = clock();
         // Gestion des événements
         while (SDL_PollEvent(&event)) {
@@ -252,7 +257,11 @@ int boucle_jeu(SDL_Renderer * rend) {
                     break;
                 case SDL_KEYDOWN:
                     if (event.key.repeat) break;
-                    // Gestion des touches du clavier
+                    // arrêter le creusage si l’on appuie sur une touche
+                    // différente de celle de creusage même si l’on a maintenu
+                    // cette dernière enfoncée
+                    if (event.key.keysym.scancode != SDL_SCANCODE_S)
+                        creusage_en_cours = FAUX;
                     switch (event.key.keysym.scancode) {
                         case SDL_SCANCODE_ESCAPE:
                         case SDL_SCANCODE_Q:
@@ -282,7 +291,8 @@ int boucle_jeu(SDL_Renderer * rend) {
                                 changer_animation(perso, CREUSER); 
                                 perso->deplacement_prec = perso->deplacement;
                                 perso->deplacement = REPOS_MVT;
-                                creuser(perso->collisions.b);
+                                compteur_creusage = 0; // Réinitialiser le compteur à chaque fois que la touche est enfoncée
+                                creusage_en_cours = VRAI; // Marquer que l'animation de creusage est en cours
                             }
                             break;
                         case SDL_SCANCODE_W:
@@ -335,6 +345,7 @@ int boucle_jeu(SDL_Renderer * rend) {
                                 perso->deplacement = perso->deplacement_prec;
                                 changer_animation(perso, REPOS);
                             }
+                            creusage_en_cours = FAUX;
                             break;
                         case SDL_SCANCODE_W:
                             if (perso->animation_courante->id ==  ATTQ_G || perso->animation_courante->id == ATTQ_D) {
@@ -346,8 +357,17 @@ int boucle_jeu(SDL_Renderer * rend) {
                             break;
                     }
             }
+           
         }
 
+        if (creusage_en_cours) {
+            compteur_creusage++;
+            if (compteur_creusage >= DELAI_CREUSAGE) {
+                creuser(perso->collisions.b);
+                creusage_en_cours = FAUX;
+            } 
+        }
+        
         SDL_RenderClear(rend);
 
         if (lumiere_est_allumee && !lumiere_est_allumee_prec) {
