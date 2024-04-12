@@ -19,8 +19,18 @@ Persos personnages; // Assurez-vous que MAX_PERSONNAGES est défini correctement
 char filename[N]; // Assurez-vous que N est défini correctement
 
 t_entite* matt;
+t_entite* jack;
+t_entite* yohan;
 
-SDL_Rect mattRect = { (TAILLE_L - 17) / 2, (TAILLE_H - 17) / 2, 17, 17 };
+
+
+
+SDL_Rect mattRect = { (TAILLE_L - 165) / 2, (TAILLE_H - 195) / 2, 80, 100 };
+SDL_Rect jackRect = { (TAILLE_L + 30) / 2, (TAILLE_H - 195) / 2, 80, 100 };
+SDL_Rect yohanRect = { (TAILLE_L - 165) / 2, (TAILLE_H + 15) / 2, 80, 100 };
+
+
+
 int main() {
     printf("début du main\n");
 
@@ -78,7 +88,7 @@ int main() {
 
     t_bouton btn_titre_perso = { recuperer_texture("titre_personnages"),
         {TAILLE_L * (0.5 - 0.238),
-            TAILLE_H * (0.5 - 0.42),
+            TAILLE_H * (0.35 - 0.42),
             TAILLE_L * 0.476,
             TAILLE_H * 0.417},
         (void(*)(t_etat*)) action_nulle,
@@ -176,8 +186,18 @@ t_bouton * menus[4][10] = {
     int i_btn;
     int pause = 0;
     t_bouton * btn;
-    matt = creer_entite_depuis_spritesheet("matt", 35, 33.5, 17, 17, VRAI);
+
+    matt = creer_entite_depuis_spritesheet("matt", 75, 17.5, 50, 50, VRAI);
+    jack = creer_entite_depuis_spritesheet("jack", 75, 17.5, 50, 50, VRAI);
+    yohan = creer_entite_depuis_spritesheet("yohan", 75, 17.5, 50, 50, VRAI);
+
+
+
     int mattSelectionne = 0; // Matt n'est pas sélectionné initialement
+    int jackSelectionne = 0; 
+    int yohanSelectionne = 0; 
+
+
 
     
     // Afficher les personnages uniquement si le menu actuel est celui des personnages
@@ -199,7 +219,25 @@ t_bouton * menus[4][10] = {
                         if (SDL_PointInRect(&pointeur, &mattRect)) {
                             // Gérer l'action lorsque Matt est cliqué
                             mattSelectionne = !mattSelectionne; // Inverser l'état de sélection de Matt
-                        }                      
+                            jackSelectionne = 0; // Désélectionner Jack
+                            yohanSelectionne = 0; // Désélectionner Yohan
+                            printf("Personnage sélectionné : Matt\n");
+
+                        }
+                       else if (SDL_PointInRect(&pointeur, &jackRect)) {
+                            jackSelectionne = !jackSelectionne; 
+                            mattSelectionne = 0;
+                            yohanSelectionne = 0;
+                            printf("Personnage sélectionné : Jack\n");
+
+                        }  
+                        else if (SDL_PointInRect(&pointeur, &yohanRect)) {
+                            yohanSelectionne = !yohanSelectionne;
+                            mattSelectionne = 0;
+                            jackSelectionne = 0;
+                            printf("Personnage sélectionné : Yohan\n");
+
+                        }                                        
                         
                         for (i_btn = 0; (btn = menus[etat.i_menu][i_btn]); i_btn++) {
                             if (SDL_PointInRect(&pointeur, &btn->rect)) {
@@ -241,16 +279,38 @@ t_bouton * menus[4][10] = {
         afficher_images(rend, personnages);
         // Afficher Matt en fonction de son état de sélection
         if (mattSelectionne) {    
-            // Dessiner un contour autour de Matt
-            SDL_RenderDrawRect(rend, &mattRect);
-            
-            // Afficher Matt avec un effet de sélection
-            // Vous pouvez implémenter cette fonctionnalité selon vos besoins
-            afficher_personnage_selectionne(rend, matt, mattSelectionne);
-        } else {
-            // Afficher Matt sans effet de sélection
-            afficher_personnage_selectionne(rend, matt, mattSelectionne);
+          // Afficher Matt avec un effet de sélection
+            afficher_entite(rend, matt);
+
+            SDL_Color couleur_txt_matt = {0,0,0,255};
+            TTF_Font * font = TTF_OpenFont("ressources/Menu/Police/font1.ttf", 50);
+            SDL_Surface * surface_txt_chargement = TTF_RenderText_Solid(font, "IDLUSEN", couleur_txt_matt);
+            SDL_Rect dst_txt_chargement = {TAILLE_L/2 + 215, TAILLE_H/2 - 215, 200, 50};
+            SDL_Texture * tex_txt_chargement = SDL_CreateTextureFromSurface(rend, surface_txt_chargement);;
+            SDL_RenderCopy(rend, tex_txt_chargement, NULL, &dst_txt_chargement);
         }
+        if (jackSelectionne) {    
+            afficher_entite(rend, jack);
+
+            SDL_Color couleur_txt_jack = {0,0,0,255};
+            TTF_Font * font2 = TTF_OpenFont("ressources/Menu/Police/font1.ttf", 50);
+            SDL_Surface * surface_txt_chargement = TTF_RenderText_Solid(font2, "STENFRESH", couleur_txt_jack);
+            SDL_Rect dst_txt_chargement = {TAILLE_L/2 + 215, TAILLE_H/2 - 215, 200, 50};
+            SDL_Texture * tex_txt_chargement = SDL_CreateTextureFromSurface(rend, surface_txt_chargement);;
+            SDL_RenderCopy(rend, tex_txt_chargement, NULL, &dst_txt_chargement);
+        }
+        
+        if (yohanSelectionne) {    
+            afficher_entite(rend, yohan);
+
+            SDL_Color couleur_txt_yohan = {0,0,0,255};
+            TTF_Font * font3 = TTF_OpenFont("ressources/Menu/Police/font1.ttf", 50);
+            SDL_Surface * surface_txt_chargement = TTF_RenderText_Solid(font3, "YO HAN", couleur_txt_yohan);
+            SDL_Rect dst_txt_chargement = {TAILLE_L/2 + 215, TAILLE_H/2 - 215, 200, 50};
+            SDL_Texture * tex_txt_chargement = SDL_CreateTextureFromSurface(rend, surface_txt_chargement);;
+            SDL_RenderCopy(rend, tex_txt_chargement, NULL, &dst_txt_chargement);
+        }
+        
     }
     
     // Afficher les autres boutons du menu

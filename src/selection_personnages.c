@@ -100,9 +100,22 @@ void gerer_clic_personnage(SDL_Event event, t_entite* perso, SDL_Rect* rect, int
 
 // Fonction pour afficher le personnage sélectionné sur le côté de l'écran
 void afficher_personnage_selectionne(SDL_Renderer* renderer, t_entite* perso, int selectionne) {
-    if (selectionne) {
-        // Dessiner le personnage sélectionné sur le côté droit de l'écran
-        SDL_Rect destRect = { TAILLE_L - 100, (TAILLE_H - 50) / 2, 100, 50 };
+    if (selectionne && perso != NULL) {
+        // Obtenir les coordonnées et dimensions de l'entité
+        int x = perso->rect_dst->x;
+        int y = perso->rect_dst->y;
+        int largeur = perso->rect_dst->w;
+        int hauteur = perso->rect_dst->h;
+        
+        // Dessiner un rectangle autour de l'entité sélectionnée
+        SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255); // Couleur rouge
+        SDL_Rect rect = { x, y, largeur, hauteur };
+        SDL_RenderDrawRect(renderer, &rect);
+
+        // Afficher l'entité sélectionnée en grand à droite
+        //SDL_Rect destRect = { TAILLE_L - largeur - 10, (TAILLE_H - hauteur) / 2, largeur, hauteur };
         afficher_entite(renderer, perso);
     }
 }
+
+
