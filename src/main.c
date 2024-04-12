@@ -19,8 +19,9 @@ Persos personnages; // Assurez-vous que MAX_PERSONNAGES est défini correctement
 char filename[N]; // Assurez-vous que N est défini correctement
 
 t_entite* matt;
-SDL_Rect mattRect = { 35, 33, 17, 17 }; // x, y, largeur, hauteur
+matt = creer_entite_depuis_spritesheet("matt", 35, 33.5, 17, 17, VRAI);
 
+SDL_Rect mattRect = { (TAILLE_L - 17) / 2, (TAILLE_H - 17) / 2, 17, 17 };
 int main() {
     printf("début du main\n");
 
@@ -43,7 +44,7 @@ int main() {
     // écran de chargement
     SDL_Color couleur_txt_chargement = {255,255,255,255};
     TTF_Font * police = TTF_OpenFont("ressources/Menu/Police/font1.ttf", 50);
-    SDL_Surface * surface_txt_chargement = TTF_RenderText_Solid(police, "Chargement...", couleur_txt_chargement);
+    SDL_Surface * surface_txt_chargement = TTF_RenderText_Solid(police, "Loading...", couleur_txt_chargement);
     SDL_Rect dst_txt_chargement = {TAILLE_L/2 - 100, TAILLE_H/2 - 40, 200, 80};
     SDL_Texture * tex_txt_chargement = SDL_CreateTextureFromSurface(rend, surface_txt_chargement);;
     SDL_SetRenderDrawColor(rend, 0, 0, 0, 255);
@@ -156,10 +157,10 @@ int main() {
     jouer_audio(0, "musique_menu", -1);
 
     int i_btn;
+    int pause = 0;
     t_bouton * btn;
     int mattSelectionne = 0; // Matt n'est pas sélectionné initialement
 
-    matt = creer_entite_depuis_spritesheet("matt", 35, 33.5, 17, 17, VRAI);
     
     // Afficher les personnages uniquement si le menu actuel est celui des personnages
     if (etat.i_menu == PAGE_MENU_PERSONNAGES) {
@@ -201,6 +202,9 @@ int main() {
                             jouer_audio(0, "coq", 0);
                             etat.doit_quitter = boucle_jeu(rend);
                             break;
+                        case SDLK_SPACE:
+                            pause = !pause;
+                            break;
                         default:
                             break;
                     }
@@ -208,6 +212,7 @@ int main() {
             }
         }
         
+
         // Mettre à jour l'écran
         SDL_RenderClear(rend);
         SDL_RenderCopy(rend, fonds_menus[etat.i_menu], NULL, NULL);
@@ -217,20 +222,10 @@ int main() {
         afficher_persos(rend);
         afficher_images(rend, personnages);
         // Afficher Matt en fonction de son état de sélection
-        if (!mattSelectionne) {
-            // Sauvegarder la couleur actuelle du dessin
-            SDL_Color couleurOriginale;
-            SDL_GetRenderDrawColor(rend, &couleurOriginale.r, &couleurOriginale.g, &couleurOriginale.b, &couleurOriginale.a);
-            
-            // Changer la couleur du dessin en rouge
-            SDL_SetRenderDrawColor(rend, 255, 0, 0, 255);
-            
+        if (mattSelectionne) {    
             // Dessiner un contour autour de Matt
             SDL_RenderDrawRect(rend, &mattRect);
             
-            // Rétablir la couleur originale du dessin
-            SDL_SetRenderDrawColor(rend, couleurOriginale.r, couleurOriginale.g, couleurOriginale.b, couleurOriginale.a);
-
             // Afficher Matt avec un effet de sélection
             // Vous pouvez implémenter cette fonctionnalité selon vos besoins
             afficher_personnage_selectionne(rend, matt, mattSelectionne);
@@ -246,7 +241,18 @@ int main() {
 
     SDL_RenderPresent(rend);
     SDL_Delay(1000 / FPS);
+
+    if (pause) {
+        printf("Pause\n");
+        // Afficher un message de pause ou un écran de pause
+        SDL_SetRenderDrawColor(rend, 255, 255, 255, 255); // Fond blanc pour la pause
+        SDL_RenderClear(rend);
+        // Afficher un message de pause, par exemple :
+        // SDL_RenderCopy(renderer, textureMessagePause, NULL, &destRectMessagePause);
+        SDL_RenderPresent(rend);
     }
+}
+
 //
     // Nettoyage
 
