@@ -93,7 +93,7 @@ int main() {
     };
     t_bouton btn_defense_pleine = { recuperer_texture("defense_pleine"),
         {TAILLE_L * 0.15,
-            TAILLE_H * 0.45,
+            TAILLE_H * 0.40,
             TAILLE_L * 0.20,
             TAILLE_H * 0.15},
         (void(*)(t_etat*)) action_nulle,
@@ -101,7 +101,7 @@ int main() {
     };
     t_bouton btn_energie_pleine = { recuperer_texture("energie_pleine"),
         {TAILLE_L * 0.15,
-            TAILLE_H * 0.65,
+            TAILLE_H * 0.55,
             TAILLE_L * 0.20,
             TAILLE_H * 0.15},
         (void(*)(t_etat*)) action_nulle,
@@ -147,6 +147,14 @@ int main() {
             action_personnages,
             "PERSONNAGES"
         };
+    t_bouton btn_continue = { recuperer_texture("bouton_continue"),
+            {TAILLE_L * 0.67,
+                TAILLE_H * 0.7,
+                TAILLE_L * 0.201,
+                TAILLE_H * 0.154},
+            action_personnages,
+            "PERSONNAGES"
+        };
     t_bouton btn_fullscreen = { recuperer_texture("bouton_fullscreen_on"),
             {TAILLE_L * 0.892,
                 TAILLE_H * 0.017,
@@ -171,13 +179,13 @@ int main() {
             action_jouer,
             "PLAY"
         };
-    t_bouton btn_continue = { recuperer_texture("bouton_continue"),
-            {TAILLE_L * 0.67,
+    t_bouton btn_back = { recuperer_texture("back"),
+            {TAILLE_L * 0.12,
                 TAILLE_H * 0.7,
                 TAILLE_L * 0.201,
                 TAILLE_H * 0.154},
-            action_personnages,
-            "PERSONNAGES"
+            action_retour,
+            "RETOUR"
         };
     t_bouton btn_quitter = { recuperer_texture("bouton_quitter"),
             {TAILLE_L * 0.12,
@@ -188,18 +196,21 @@ int main() {
             "QUIT"
         };
 
-t_bouton * menus[4][10] = {
+
+t_bouton * menus[3][10] = {
     {&btn_fullscreen, &btn_volume, &btn_continue , &btn_quitter, &btn_parametres, &btn_personnages, &btn_titre, NULL}, // menu principal
-    {&btn_fullscreen, &btn_volume, &btn_menu, &btn_parametres, &btn_personnages, NULL}, // menu serveur
+    {&btn_fullscreen, &btn_volume, &btn_menu, &btn_jouer, &btn_parametres, &btn_titre_perso, &btn_back, NULL}, // menu serveur
     {&btn_fullscreen, &btn_volume, &btn_menu, &btn_personnages, NULL}, // menu paramètres
-    {&btn_fullscreen, &btn_volume, &btn_menu, &btn_jouer, &btn_parametres, &btn_titre_perso, NULL} // menu personnages
+    //{&btn_fullscreen, &btn_volume, &btn_menu, &btn_jouer, &btn_parametres, &btn_titre_perso, &btn_back, NULL} // menu personnages
+
 };
 
-    SDL_Texture * fonds_menus[4] = {
+    SDL_Texture * fonds_menus[3] = {
         recuperer_texture("menu_fond"),
-        recuperer_texture("menu_serveur"),
+        recuperer_texture("menu_personnages"),
         recuperer_texture("menu_paramètres"),
-        recuperer_texture("menu_personnages")
+        //recuperer_texture("menu_personnages")
+
     };
 
     t_etat etat = {
@@ -272,6 +283,12 @@ t_bouton * menus[4][10] = {
                             if (SDL_PointInRect(&pointeur, &btn->rect)) {
                                 btn->action(&etat);
                                 printf("Bouton %s cliqué\n", btn->nom);
+                        
+                                // Si le bouton "Play" est cliqué, exécutez l'action spécifique à ce bouton
+                                /*if (btn == &btn_jouer) {
+                                    jouer_audio(0, "coq", 0);
+                                    etat.doit_quitter = boucle_jeu(rend);
+                                }*/
                             }
                         }
                     }

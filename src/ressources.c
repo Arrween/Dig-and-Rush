@@ -46,6 +46,8 @@ struct chargement chargements_texs[] = {
     {"ressources/Menu/Boutons/bouton_play.png", "bouton_jouer"},
     {"ressources/Menu/Boutons/bouton_continue.png", "bouton_continue"},
     {"ressources/Menu/Boutons/bouton_quit.png", "bouton_quitter"},
+    {"ressources/Menu/Boutons/bouton_back.png", "back"},
+
 
     {"ressources/Menu/Boutons/barre_de_vie_pleine.png", "barre_de_vie_pleine"},
     {"ressources/Menu/Boutons/defense_pleine.png", "defense_pleine"},
