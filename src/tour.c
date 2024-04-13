@@ -190,6 +190,7 @@ void calculer_ombre(SDL_Texture * tex_ombre, int rayon,
 int boucle_jeu(SDL_Renderer * rend) {
     SDL_Event event;
     int doit_boucler = VRAI;
+    int est_en_pause = FAUX;
     long long compteur_frames = 0;
     float pas_defilement = 0;
     int score = 0;
@@ -266,6 +267,9 @@ int boucle_jeu(SDL_Renderer * rend) {
                         case SDL_SCANCODE_ESCAPE:
                         case SDL_SCANCODE_Q:
                             doit_boucler = FAUX;
+                            break;
+                        case SDL_SCANCODE_SPACE:
+                            est_en_pause = !est_en_pause;
                             break;
                         case SDL_SCANCODE_H:
                             perso->doit_afficher_hitbox = !perso->doit_afficher_hitbox;
@@ -358,6 +362,10 @@ int boucle_jeu(SDL_Renderer * rend) {
                     }
             }
            
+        }
+        if (est_en_pause) {
+            SDL_Delay(1000/FPS);
+            continue;
         }
 
         if (creusage_en_cours) {
