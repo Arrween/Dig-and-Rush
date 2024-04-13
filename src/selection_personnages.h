@@ -3,7 +3,7 @@
 
 #include <SDL2/SDL.h>
 
-extern char *personnage_selectionne; // Déclaration externe de la variable globale
+extern const char *personnage_selectionne; // Déclaration externe de la variable globale
 
 
 // Structure pour représenter un personnage avec sa texture et sa position

@@ -83,6 +83,38 @@ int main() {
             "TITRE"
         };
 
+    t_bouton btn_barre_de_vie_pleine = { recuperer_texture("barre_de_vie_pleine"),
+        {TAILLE_L * 0.15,
+            TAILLE_H * 0.25,
+            TAILLE_L * 0.20,
+            TAILLE_H * 0.15},
+        (void(*)(t_etat*)) action_nulle,
+        "PDV PLEINE"
+    };
+    t_bouton btn_defense_pleine = { recuperer_texture("defense_pleine"),
+        {TAILLE_L * 0.15,
+            TAILLE_H * 0.45,
+            TAILLE_L * 0.20,
+            TAILLE_H * 0.15},
+        (void(*)(t_etat*)) action_nulle,
+        "DEFENSE PLEINE"
+    };
+    t_bouton btn_energie_pleine = { recuperer_texture("energie_pleine"),
+        {TAILLE_L * 0.15,
+            TAILLE_H * 0.65,
+            TAILLE_L * 0.20,
+            TAILLE_H * 0.15},
+        (void(*)(t_etat*)) action_nulle,
+        "ENERGIE PLEINE"
+    };
+    t_bouton btn_energie_semi = { recuperer_texture("energie_semi"),
+        {TAILLE_L * 0.15,
+            TAILLE_H * 0.65,
+            TAILLE_L * 0.20,
+            TAILLE_H * 0.15},
+        (void(*)(t_etat*)) action_nulle,
+        "ENERGIE SEMI"
+    };
     t_bouton btn_titre_perso = { recuperer_texture("titre_personnages"),
         {TAILLE_L * (0.5 - 0.238),
             TAILLE_H * (0.35 - 0.42),
@@ -287,6 +319,13 @@ t_bouton * menus[4][10] = {
             SDL_Rect dst_txt_chargement = {TAILLE_L/2 + 215, TAILLE_H/2 - 215, 200, 50};
             SDL_Texture * tex_txt_chargement = SDL_CreateTextureFromSurface(rend, surface_txt_chargement);;
             SDL_RenderCopy(rend, tex_txt_chargement, NULL, &dst_txt_chargement);
+
+            SDL_RenderCopy(rend, btn_barre_de_vie_pleine.texture, NULL, &btn_barre_de_vie_pleine.rect);
+            SDL_RenderCopy(rend, btn_defense_pleine.texture, NULL, &btn_defense_pleine.rect);
+            SDL_RenderCopy(rend, btn_energie_pleine.texture, NULL, &btn_energie_pleine.rect);
+
+
+
         }
         if (jackSelectionne) { 
             selectionner_personnage("jack");
@@ -299,6 +338,11 @@ t_bouton * menus[4][10] = {
             SDL_Rect dst_txt_chargement = {TAILLE_L/2 + 215, TAILLE_H/2 - 215, 200, 50};
             SDL_Texture * tex_txt_chargement = SDL_CreateTextureFromSurface(rend, surface_txt_chargement);;
             SDL_RenderCopy(rend, tex_txt_chargement, NULL, &dst_txt_chargement);
+
+            SDL_RenderCopy(rend, btn_barre_de_vie_pleine.texture, NULL, &btn_barre_de_vie_pleine.rect);
+            SDL_RenderCopy(rend, btn_defense_pleine.texture, NULL, &btn_defense_pleine.rect);
+            SDL_RenderCopy(rend, btn_energie_pleine.texture, NULL, &btn_energie_pleine.rect);
+
 
         }
         
@@ -313,6 +357,12 @@ t_bouton * menus[4][10] = {
             SDL_Rect dst_txt_chargement = {TAILLE_L/2 + 215, TAILLE_H/2 - 215, 200, 50};
             SDL_Texture * tex_txt_chargement = SDL_CreateTextureFromSurface(rend, surface_txt_chargement);;
             SDL_RenderCopy(rend, tex_txt_chargement, NULL, &dst_txt_chargement);
+
+            SDL_RenderCopy(rend, btn_barre_de_vie_pleine.texture, NULL, &btn_barre_de_vie_pleine.rect);
+            SDL_RenderCopy(rend, btn_defense_pleine.texture, NULL, &btn_defense_pleine.rect);
+            SDL_RenderCopy(rend, btn_energie_pleine.texture, NULL, &btn_energie_pleine.rect);
+
+
         }
         
     }

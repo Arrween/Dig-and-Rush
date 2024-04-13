@@ -47,6 +47,15 @@ struct chargement chargements_texs[] = {
     {"ressources/Menu/Boutons/bouton_continue.png", "bouton_continue"},
     {"ressources/Menu/Boutons/bouton_quit.png", "bouton_quitter"},
 
+    {"ressources/Menu/Boutons/barre_de_vie_pleine.png", "barre_de_vie_pleine"},
+    {"ressources/Menu/Boutons/defense_pleine.png", "defense_pleine"},
+
+    {"ressources/Menu/Boutons/energie_pleine.png", "energie_pleine"},
+    {"ressources/Menu/Boutons/energie_semi.png", "energie_semi"},
+
+
+
+
     {"ressources/Personnages/jackPerso.png", "jack"},
     {"ressources/Tour/Arriere_plan/fond.jpg", "fond_tour"},
     {"ressources/Tour/Arriere_plan/fond_jeu.png", "fond_jeu"},
