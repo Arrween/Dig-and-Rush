@@ -38,9 +38,13 @@ void perso_mourir(t_entite * perso) {
 }
 
 void perso_prendre_coup(t_entite * perso) {
+    if (perso->perso->temps_invu > 0)
+        return;
     perso->perso->vie--;
     if (perso->perso->vie <= 0)
         perso_mourir(perso);
+    else
+        perso->perso->temps_invu = perso->perso->temps_invu_max;
 }
 
 /**
@@ -80,6 +84,8 @@ t_perso * creer_perso(char * id, t_entite * e) {
     nouv->doit_afficher_hitbox_attaque = VRAI;
     nouv->parent->doit_afficher_hitbox = VRAI;
     nouv->est_mort = FAUX;
+    nouv->temps_invu = 0;
+    nouv->temps_invu_max = 60;
     return nouv;
 }
 

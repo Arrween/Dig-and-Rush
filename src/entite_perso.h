@@ -12,8 +12,10 @@ struct s_perso {
     t_entite * parent; /**< entité caractérisée comme entité de personnage joueur par cette structure */
     int est_mort; /**< Indique si le joueur est mort (1) ou non (0). */
     SDL_FRect hitbox_attaque; /**< utilisée pour vérifier si une entité est touchée par l’attaque du joueur */
-    int doit_afficher_hitbox_attaque; /**& booléen régissant l’affichage de `hitbox_attaque` */
-    int vie;
+    int doit_afficher_hitbox_attaque; /**< booléen régissant l’affichage de `hitbox_attaque` */
+    int vie; /**< points de vie */
+    int temps_invu; /**< compteur de frames qui conditionne l’état d’invulnérabilité après un coup pris */
+    int temps_invu_max; /**< valeur maximum affectée à `temps_invu`, en nombre de frames */
 };
 
 t_entite * creer_entite_perso(char*, float, float, float, float, int);

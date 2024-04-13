@@ -399,7 +399,15 @@ int boucle_jeu(SDL_Renderer * rend) {
 
         afficher_entite(rend, fond_tour);
         afficher_entite(rend, fond_tour_2);
-        afficher_entite(rend, perso);
+
+        if (perso->perso->temps_invu > 0) {
+            perso->perso->temps_invu--;
+            // faire clignoter le perso une fois toutes les 4 frames
+            if (perso->perso->temps_invu % 4 > 0)
+                afficher_entite(rend, perso);
+        }
+        else
+            afficher_entite(rend, perso);
 
         en_tete(I_LISTE_ENTITES);
         while (!hors_liste(I_LISTE_ENTITES)) {
