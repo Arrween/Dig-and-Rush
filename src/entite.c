@@ -7,6 +7,7 @@
 #include <string.h>
 
 #include "entite.h"
+#include "entite_destructible.h"
 #include "entite_pnj.h"
 #include "entite_perso.h"
 #include "spritesheets.h"
@@ -345,6 +346,9 @@ void detruire_entite(t_entite ** e) {
             free((*e)->rect_src);
         if ((*e)->rect_dst)
             free((*e)->rect_dst);
+        detruire_destructible(&((*e)->destructible));
+        detruire_pnj(&((*e)->pnj));
+        detruire_perso(&((*e)->perso));
         free(*e);
     }
     *e = NULL;

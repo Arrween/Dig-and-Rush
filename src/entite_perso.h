@@ -15,5 +15,6 @@ struct s_perso {
 };
 
 t_entite * creer_entite_perso(char*, float, float, float, float, int);
+void detruire_perso(t_perso**);
 
 #endif
