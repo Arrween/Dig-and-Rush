@@ -48,13 +48,25 @@ void perso_mourir(t_entite * perso) {
 t_perso * creer_perso(char * id, t_entite * e) {
     t_perso * nouv = malloc(sizeof(t_perso));
     nouv->parent = e;
+    if (strcmp(id, "jack") == 0) {
+        nouv->parent->vitesse = 2.;
+        nouv->vie = 1;
+    }
     if (strcmp(id, "matt") == 0) {
         nouv->parent->vitesse = 1.;
+        nouv->vie = 2;
     }
-    else if (strcmp(id, "jack") == 0) {
+    else if (strcmp(id, "yohan") == 0) {
         nouv->parent->vitesse = 2.;
+        nouv->vie = 2;
+    }
+    else if (strcmp(id, "ania") == 0) {
+        nouv->parent->vitesse = 2.;
+        nouv->vie = 2;
     }
     else {
+        nouv->parent->vitesse = 1.;
+        nouv->vie = 1;
     }
     changer_hitbox(nouv->parent, &(nouv->parent->hitbox), 26, 22, 51, 73.4, VRAI);
     // définir initialement sur la droite, sera modifié par le déplacement
