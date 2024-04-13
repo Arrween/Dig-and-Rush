@@ -5,6 +5,7 @@
 #include <time.h>
 
 #include "ressources.h"
+#include "selection_personnages.h"
 #include "tour.h"
 #include "constantes.h"
 #include "entite.h"
@@ -23,6 +24,7 @@
 #define PAS_ALPHA_FOND 7
 
 #define DELAI_CREUSAGE 18 // nombre de frames
+
 
 
 SDL_bool PointInFRect(const SDL_FPoint* p, const SDL_FRect* r) {
@@ -227,7 +229,9 @@ int boucle_jeu(SDL_Renderer * rend) {
     fond_tour = creer_entite("fond_tour", 0, 0, 100, 100, VRAI);
     fond_tour_2 = creer_entite("fond_tour", 0, 100, 100, 100, VRAI);
 
-    perso = creer_entite_perso("matt", 40, 20, 15, 12, VRAI);
+    perso = creer_entite_depuis_spritesheet(personnage_selectionne, 40, 20, 15, 12, VRAI);
+    perso->vitesse = 1;
+
     
     generer_murs();
 

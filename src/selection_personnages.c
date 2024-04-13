@@ -14,14 +14,14 @@
 #include "constantes.h"
 #include "spritesheets.h"
 
-#define MAX_PERSONNAGES 1 // Nombre maximum de personnages
-#define N 1
 #define VRAI 1
 
 
 SDL_Window* gWindow = NULL;
 SDL_Renderer* gRenderer = NULL;
 
+// Déclaration de la variable globale
+const char* personnage_selectionne = NULL;
 
 
 /**
@@ -87,22 +87,9 @@ void afficher_personnages(SDL_Renderer* renderer, Persos personnages) {
     afficher_persos(renderer);
 }
 
-// Fonction pour gérer le clic sur un personnage
-void gerer_clic_personnage(SDL_Event event, t_entite* perso, SDL_Rect* rect, int* selectionne) {
-    if (event.type == SDL_MOUSEBUTTONDOWN && event.button.button == SDL_BUTTON_LEFT) {
-        SDL_Point clickPoint = { event.button.x, event.button.y };
-        if (SDL_PointInRect(&clickPoint, rect)) {
-            // Inverser l'état de sélection du personnage
-            *selectionne = (*selectionne == 0) ? 1 : 0;
-        }
-    }
+// Fonction pour sélectionner un personnage
+void selectionner_personnage(const char* nom_personnage) {
+    // Mettre à jour la variable personnage_selectionne
+    personnage_selectionne = nom_personnage;
 }
 
-// Fonction pour afficher le personnage sélectionné sur le côté de l'écran
-void afficher_personnage_selectionne(SDL_Renderer* renderer, t_entite* perso, int selectionne) {
-    if (selectionne) {
-        // Dessiner le personnage sélectionné sur le côté droit de l'écran
-        SDL_Rect destRect = { TAILLE_L - 100, (TAILLE_H - 50) / 2, 100, 50 };
-        afficher_entite(renderer, perso);
-    }
-}

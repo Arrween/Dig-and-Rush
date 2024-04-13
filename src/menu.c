@@ -147,11 +147,23 @@ void action_home(t_etat * etat) {
     etat->i_menu = PAGE_MENU;
 }
 void action_jouer(t_etat * etat) {
-    etat->i_menu = PAGE_MENU_SERVEUR;
+    etat->i_menu = PAGE_MENU_PERSONNAGES;
     jouer_audio(0, "confirmation", 0);
 }
+void action_continue(t_etat * etat) {
+    etat->i_menu = PAGE_MENU_PERSONNAGES;
+    jouer_audio(0, "confirmation", 0);
+}
+
+void action_retour(t_etat *etat) {
+    if (etat->i_menu > 0) {
+        etat->i_menu--; // Décrémenter l'index du menu pour revenir en arrière
+    }
+}
+
 void action_quitter(t_etat * etat) {
     etat->doit_quitter = VRAI;
 }
+
 void action_nulle(void) {
 }
