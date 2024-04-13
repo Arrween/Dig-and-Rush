@@ -241,11 +241,28 @@ int boucle_jeu(SDL_Renderer * rend) {
                     break;
                 case SDL_KEYDOWN:
                     if (event.key.repeat) break;
+
                     // arrêter le creusage si l’on appuie sur une touche
                     // différente de celle de creusage même si l’on a maintenu
                     // cette dernière enfoncée
                     if (event.key.keysym.scancode != SDL_SCANCODE_S)
                         creusage_en_cours = FAUX;
+
+                    if (perso->perso->est_mort) {
+                        switch (event.key.keysym.scancode) {
+                            case SDL_SCANCODE_ESCAPE:
+                            case SDL_SCANCODE_Q:
+                                doit_boucler = FAUX;
+                                break;
+                            case SDL_SCANCODE_SPACE:
+                                est_en_pause = !est_en_pause;
+                                break;
+                            default:
+                                break;
+                        }
+                        continue;
+                    }
+
                     switch (event.key.keysym.scancode) {
                         case SDL_SCANCODE_ESCAPE:
                         case SDL_SCANCODE_Q:
