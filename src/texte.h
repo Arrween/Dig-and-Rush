@@ -1,3 +1,6 @@
+#ifndef TEXTE_H
+#define TEXTE_H
+
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_ttf.h>
 
@@ -20,3 +23,5 @@ t_texte * creer_texte(char * id, int r, int v, int b, int a,
 void detruire_texte(t_texte**);
 void changer_texte(t_texte*, char* format_contenu, ...);
 void afficher_texte(SDL_Renderer*, t_texte*);
+
+#endif

@@ -50,6 +50,8 @@ void verif_collision(t_entite * e1, float * correction_defilement) {
     SDL_FPoint e1_b = {e1->hitbox.x + 0.5 * e1->hitbox.w, e1->hitbox.y + e1->hitbox.h};
 
     // if (strcmp(e1->type, "matt") == 0) return;
+    if ((e1->perso && e1->perso->est_mort) || (e1->pnj && e1->pnj->est_mort))
+        return;
 
     e1->collisions.g = NULL;
     e1->collisions.d = NULL;
@@ -60,7 +62,8 @@ void verif_collision(t_entite * e1, float * correction_defilement) {
     while (!hors_liste(I_LISTE_ENTITES)) {
         t_entite * e2 = valeur_elt(I_LISTE_ENTITES);
         
-        if (e1 == e2 || (!e2->est_obstacle && !(e2->pnj && e2->pnj->est_ecrasable))) {
+        if (e1 == e2 || (!e2->est_obstacle && !(e2->pnj && e2->pnj->est_ecrasable)) 
+            || (e2->pnj && e2->pnj->est_mort) || (e2->perso && e2->perso->est_mort)) {
             suivant(I_LISTE_ENTITES);
             continue;
         }
@@ -118,35 +121,6 @@ void creuser(t_entite * a_creuser) {
         }
         else
             precedent(I_LISTE_ENTITES);
-    }
-}
-
-void porter_coup(t_entite * e, int * score, t_texte * texte_score) {
-    SDL_FRect * hitbox_attaque = NULL;
-    if (e->perso)
-        hitbox_attaque = &e->perso->hitbox_attaque;
-    else if (e->pnj)
-        hitbox_attaque = &e->pnj->hitbox_attaque;
-    else
-        return;
-
-    en_tete(I_LISTE_ENTITES);
-    while (!hors_liste(I_LISTE_ENTITES)) {
-        t_entite * elem = valeur_elt(I_LISTE_ENTITES);
-        if (elem == e)
-            continue;
-        if (elem->pnj) {
-            if (!elem->pnj->est_mort && SDL_HasIntersectionF(hitbox_attaque, &elem->hitbox)) {
-                elem->id_animation_suivante = ANIM_MORT_STATIQUE;
-                changer_animation(elem, ANIM_MORT);
-                elem->deplacement = REPOS_MVT;
-                elem->pnj->est_mort = VRAI;
-                elem->pnj->est_ecrasable = FAUX;
-                *score += elem->pnj->valeur_vaincu;
-                changer_texte(texte_score, "POINTS : %i", *score);
-            }
-        }
-        suivant(I_LISTE_ENTITES);
     }
 }
 
@@ -318,7 +292,7 @@ int boucle_jeu(SDL_Renderer * rend) {
                                     changer_animation(perso, ATTQ_D);
                                     creuser(perso->collisions.d);
                                 }
-                                porter_coup(perso, &score, texte_score);
+                                perso_porter_coup(perso, &score, texte_score);
                             }
                             break;
                         default:
@@ -482,7 +456,7 @@ int boucle_jeu(SDL_Renderer * rend) {
             }
             // évolution du comportement du pnj i
             verif_collision(pnjs[i], NULL);
-            pnjs[i]->pnj->comportement(pnjs[i]);
+            pnjs[i]->pnj->comportement(pnjs[i], perso);
             deplacer(pnjs[i], compteur_frames);
             animer(pnjs[i], compteur_frames);
         }

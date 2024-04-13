@@ -67,6 +67,8 @@ struct chargement_spritesheet chargements_spritesheets[] = {
                 {ATTQ_G, 0, 5*64, 64, 64, 0, 0, 8, 1/3.},
                 {ATTQ_D, 0, 7*64, 64, 64, 0, 0, 8, 1/3.},
                 {CREUSER, 0, 6*64, 64, 64, 0, 0, 8, 1./2},
+                {ANIM_MORT, 0, 20*64, 64, 64, 0, 0, 5, 1./2},
+                {ANIM_MORT_STATIQUE, 4, 20*64, 64, 64, 0, 0, 1, 1./2},
                 {ANIM_NULLE, 0, 0, 0, 0, 0, 0, 0, 0.}
             }
     },
@@ -81,6 +83,8 @@ struct chargement_spritesheet chargements_spritesheets[] = {
             {ATTQ_G, 0, 5*64, 64, 64, 0, 0, 8, 1/3.},
             {ATTQ_D, 0, 7*64, 64, 64, 0, 0, 8, 1/3.},
             {CREUSER, 0, 6*64, 64, 64, 0, 0, 8, 1./2},
+            {ANIM_MORT, 0, 20*64, 64, 64, 0, 0, 5, 1./2},
+            {ANIM_MORT_STATIQUE, 4, 20*64, 64, 64, 0, 0, 1, 1./2},
             {ANIM_NULLE, 0, 0, 0, 0, 0, 0, 0, 0.}
         }
     },
@@ -95,6 +99,8 @@ struct chargement_spritesheet chargements_spritesheets[] = {
             {ATTQ_G, 0, 5*64, 64, 64, 0, 0, 8, 1/3.},
             {ATTQ_D, 0, 7*64, 64, 64, 0, 0, 8, 1/3.},
             {CREUSER, 0, 6*64, 64, 64, 0, 0, 8, 1./2},
+            {ANIM_MORT, 0, 20*64, 64, 64, 0, 0, 5, 1./2},
+            {ANIM_MORT_STATIQUE, 4, 20*64, 64, 64, 0, 0, 1, 1./2},
             {ANIM_NULLE, 0, 0, 0, 0, 0, 0, 0, 0.}
         }
     },
@@ -104,8 +110,8 @@ struct chargement_spritesheet chargements_spritesheets[] = {
                 {REPOS, 0, 5*128, 128, 128, 0, 0, 1, 1.},
                 {DEPL_G, 0, 17*128, 128, 128, 0, 0, 8, 1/2.},
                 {DEPL_D, 0, 8*128, 128, 128, 0, 0, 8, 1/2.},
-                {ATTQ_G, 0, 1*128, 128, 128, 0, 0, 4, 1/3.},
-                {ATTQ_D, 0, 10*128, 128, 128, 0, 0, 4, 1/3.},
+                {ATTQ_G, 0, 10*128, 128, 128, 0, 0, 4, 1/3.},
+                {ATTQ_D, 0, 1*128, 128, 128, 0, 0, 4, 1/3.},
                 {ANIM_MORT, 0, 3*128, 128, 128, 0, 0, 3, 1/8.},
                 {ANIM_MORT_STATIQUE, 2, 3*128, 128, 128, 0, 0, 1, 1},
                 {ANIM_NULLE, 0, 0, 0, 0, 0, 0, 0, 0.}

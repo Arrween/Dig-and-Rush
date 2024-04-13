@@ -2,6 +2,7 @@
 #define ENTITE_PERSO_H
 
 #include "entite.h"
+#include "texte.h"
 
 /**
  * @brief Structure représentant un personnage joueur.
@@ -16,5 +17,8 @@ struct s_perso {
 
 t_entite * creer_entite_perso(char*, float, float, float, float, int);
 void detruire_perso(t_perso**);
+
+void perso_porter_coup(t_entite*, int*, t_texte*);
+void perso_mourir(t_entite*);
 
 #endif

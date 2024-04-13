@@ -1,6 +1,7 @@
 #include <string.h>
 
 #include "entite_pnj.h"
+#include "entite_perso.h"
 #include "entite.h"
 #include "constantes.h"
 
@@ -19,10 +20,26 @@ void comportement_oisif(void) {
  * @param pnj Pointeur vers l'entité du PNJ.
  */
 
-void comportement_patrouille(t_entite * pnj) {
+void comportement_patrouille(t_entite * pnj, t_entite * perso) {
     if (pnj->pnj->est_mort)
         return;
     int a_change_sens = FAUX;
+
+    if (!perso->perso->est_mort && SDL_HasIntersectionF(&pnj->pnj->hitbox_attaque, &perso->hitbox)) {
+        if (pnj->deplacement == GAUCHE) {
+            pnj->id_animation_suivante = DEPL_G;
+            changer_animation(pnj, ATTQ_G);
+        }
+        else if (pnj->deplacement == DROITE) {
+            pnj->id_animation_suivante = DEPL_D;
+            changer_animation(pnj, ATTQ_D);
+        }
+        pnj->deplacement = REPOS_MVT;
+        perso_mourir(perso);
+    }
+    if (pnj->animation_courante->id == ATTQ_G || pnj->animation_courante->id == ATTQ_D)
+        return;
+
     if (pnj->deplacement == REPOS_MVT
         || (pnj->deplacement == DROITE && pnj->hitbox.x + pnj->hitbox.w >= pnj->pnj->x_patrouille_d)
         || pnj->collisions.d

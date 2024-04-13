@@ -9,11 +9,11 @@
  
 struct s_pnj {
     t_entite * parent; /**< entité caractérisée comme entité de PNJ par cette structure */
-    void (*comportement) (t_entite*); /**< Pointeur vers la fonction de comportement du PNJ. */
+    void (*comportement) (t_entite*, t_entite*); /**< Pointeur vers la fonction de comportement du PNJ. */
     float x_patrouille_g; /**< Position en x du point de patrouille gauche du PNJ. */
     float x_patrouille_d; /**< Position en x du point de patrouille droit du PNJ. */
     int est_mort; /**< Indique si le PNJ est mort (1) ou non (0). */
-    int valeur_vaincu; /**< Valeur en points attribuée au PNJ une fois vaincu. */
+    int valeur_vaincu; /**< Valeur en points attribuée par le PNJ une fois vaincu. */
     int est_ecrasable; /**< Indique si le PNJ est écrasable (1) ou non (0). */
     SDL_FRect hitbox_attaque; /**< utilisée pour vérifier si une entité est touchée par l’attaque du pnj */
     int doit_afficher_hitbox_attaque; /**& booléen régissant l’affichage de `hitbox_attaque` */
