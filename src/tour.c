@@ -503,10 +503,8 @@ int boucle_jeu(SDL_Renderer * rend) {
             changer_pos_rel(elem, 0, -pas_defilement);
             suivant(I_LISTE_ENTITES);
         }
-        if (!perso->collisions.b) {
-            changer_pos_rel(fond_tour, 0, -pas_defilement);
-            changer_pos_rel(fond_tour_2, 0, -pas_defilement);
-        }
+        changer_pos_rel(fond_tour, 0, -pas_defilement);
+        changer_pos_rel(fond_tour_2, 0, -pas_defilement);
 
         // Génération de nouvelles entités et des fonds de tour alternés une fois qu’une hauteur de tour a défilé
         float bas_fond_tour = fond_tour->rect_dst->y + fond_tour->rect_dst->h;
