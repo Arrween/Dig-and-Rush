@@ -80,7 +80,7 @@ t_perso * creer_perso(char * id, t_entite * e) {
     }
     changer_hitbox(nouv->parent, &(nouv->parent->hitbox), 26, 22, 51, 73.4, VRAI);
     // définir initialement sur la droite, sera modifié par le déplacement
-    changer_hitbox(nouv->parent, &(nouv->hitbox_attaque), 50, 45, 60, 45, VRAI);
+    changer_hitbox(nouv->parent, &(nouv->hitbox_attaque), 50, 45, 62, 45, VRAI);
     nouv->doit_afficher_hitbox_attaque = VRAI;
     nouv->parent->doit_afficher_hitbox = VRAI;
     nouv->est_mort = FAUX;
