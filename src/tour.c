@@ -54,8 +54,6 @@ void verif_collision(t_entite * e1, float * correction_defilement) {
     SDL_FPoint e1_b = {e1->hitbox.x + 0.5 * e1->hitbox.w, e1->hitbox.y + e1->hitbox.h};
 
     // if (strcmp(e1->type, "matt") == 0) return;
-    if ((e1->perso && e1->perso->est_mort) || (e1->pnj && e1->pnj->est_mort))
-        return;
 
     e1->collisions.g = NULL;
     e1->collisions.d = NULL;
@@ -67,7 +65,8 @@ void verif_collision(t_entite * e1, float * correction_defilement) {
         t_entite * e2 = valeur_elt(I_LISTE_ENTITES);
         
         if (e1 == e2 || (!e2->est_obstacle && !(e2->pnj && e2->pnj->est_ecrasable)) 
-            || (e2->pnj && e2->pnj->est_mort) || (e2->perso && e2->perso->est_mort)) {
+            || (e2->pnj && e2->pnj->est_mort) || (e2->perso && e2->perso->est_mort)
+            || (e2->pnj && e1->perso && e1->perso->est_mort)) {
             suivant(I_LISTE_ENTITES);
             continue;
         }
