@@ -66,17 +66,22 @@ void afficher_persos(SDL_Renderer* renderer) {
     t_entite* perso;
     t_entite* perso2;
     t_entite* perso3;
+    t_entite* perso4;
 
     // Créer un personnage
     perso = creer_entite_depuis_spritesheet("matt", 35, 33.5, 17, 17, VRAI);
     perso2 = creer_entite_depuis_spritesheet("jack", 50, 33.5, 17, 17, VRAI);
     perso3 = creer_entite_depuis_spritesheet("yohan", 35, 47, 17, 17, VRAI);
+    perso4 = creer_entite_depuis_spritesheet("ania", 50, 47, 17, 17, VRAI);
+
 
     
     // Afficher le personnage
     afficher_entite(renderer, perso);
     afficher_entite(renderer, perso2);
     afficher_entite(renderer, perso3);
+    afficher_entite(renderer, perso4);
+
 }
 
 // Fonction principale pour afficher les personnages

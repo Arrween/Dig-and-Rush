@@ -17,6 +17,7 @@ Persos personnages; // Assurez-vous que MAX_PERSONNAGES est défini correctement
 t_entite* matt;
 t_entite* jack;
 t_entite* yohan;
+t_entite* ania;
 
 
 
@@ -24,6 +25,7 @@ t_entite* yohan;
 SDL_Rect mattRect = { (TAILLE_L - 165) / 2, (TAILLE_H - 195) / 2, 80, 100 };
 SDL_Rect jackRect = { (TAILLE_L + 30) / 2, (TAILLE_H - 195) / 2, 80, 100 };
 SDL_Rect yohanRect = { (TAILLE_L - 165) / 2, (TAILLE_H + 15) / 2, 80, 100 };
+SDL_Rect aniaRect = { (TAILLE_L + 30) / 2, (TAILLE_H + 15) / 2, 80, 100 };
 
 
 
@@ -230,12 +232,15 @@ t_bouton * menus[3][10] = {
     matt = creer_entite_depuis_spritesheet("matt", 75, 17.5, 50, 50, VRAI);
     jack = creer_entite_depuis_spritesheet("jack", 75, 17.5, 50, 50, VRAI);
     yohan = creer_entite_depuis_spritesheet("yohan", 75, 17.5, 50, 50, VRAI);
+    ania = creer_entite_depuis_spritesheet("ania", 75, 17.5, 50, 50, VRAI);
 
 
 
     int mattSelectionne = 0; // Matt n'est pas sélectionné initialement
     int jackSelectionne = 0; 
     int yohanSelectionne = 0; 
+    int aniaSelectionne = 0; 
+
 
 
 
@@ -261,6 +266,7 @@ t_bouton * menus[3][10] = {
                             mattSelectionne = !mattSelectionne; // Inverser l'état de sélection de Matt
                             jackSelectionne = 0; // Désélectionner Jack
                             yohanSelectionne = 0; // Désélectionner Yohan
+                            aniaSelectionne = 0; // Désélectionner Ania
                             printf("Personnage sélectionné : Matt\n");
 
                         }
@@ -268,6 +274,9 @@ t_bouton * menus[3][10] = {
                             jackSelectionne = !jackSelectionne; 
                             mattSelectionne = 0;
                             yohanSelectionne = 0;
+                            aniaSelectionne = 0;
+
+
                             printf("Personnage sélectionné : Jack\n");
 
                         }  
@@ -275,10 +284,19 @@ t_bouton * menus[3][10] = {
                             yohanSelectionne = !yohanSelectionne;
                             mattSelectionne = 0;
                             jackSelectionne = 0;
+                            aniaSelectionne = 0;
+
                             printf("Personnage sélectionné : Yohan\n");
 
                         }                                        
-                        
+                        else if (SDL_PointInRect(&pointeur, &aniaRect)) {
+                            aniaSelectionne = !aniaSelectionne;
+                            mattSelectionne = 0;
+                            jackSelectionne = 0;
+                            yohanSelectionne = 0;
+                            printf("Personnage sélectionné : Ania\n");
+
+                        }                          
                         for (i_btn = 0; (btn = menus[etat.i_menu][i_btn]); i_btn++) {
                             if (SDL_PointInRect(&pointeur, &btn->rect)) {
                                 btn->action(&etat);
@@ -382,6 +400,24 @@ t_bouton * menus[3][10] = {
             SDL_Color couleur_txt_yohan = {0,0,0,255};
             TTF_Font * font3 = TTF_OpenFont("ressources/Menu/Police/font1.ttf", 50);
             SDL_Surface * surface_txt_chargement = TTF_RenderText_Solid(font3, "YO HAN", couleur_txt_yohan);
+            SDL_Rect dst_txt_chargement = {TAILLE_L/2 + 215, TAILLE_H/2 - 215, 200, 50};
+            SDL_Texture * tex_txt_chargement = SDL_CreateTextureFromSurface(rend, surface_txt_chargement);;
+            SDL_RenderCopy(rend, tex_txt_chargement, NULL, &dst_txt_chargement);
+
+            SDL_RenderCopy(rend, btn_barre_de_vie_pleine.texture, NULL, &btn_barre_de_vie_pleine.rect);
+            SDL_RenderCopy(rend, btn_defense_pleine.texture, NULL, &btn_defense_pleine.rect);
+            SDL_RenderCopy(rend, btn_energie_pleine.texture, NULL, &btn_energie_pleine.rect);
+
+
+        }
+        if (aniaSelectionne) {  
+            selectionner_personnage("ania");
+  
+            afficher_entite(rend, ania);
+
+            SDL_Color couleur_txt_ania = {0,0,0,255};
+            TTF_Font * font4 = TTF_OpenFont("ressources/Menu/Police/font1.ttf", 50);
+            SDL_Surface * surface_txt_chargement = TTF_RenderText_Solid(font4, "Arrween", couleur_txt_ania);
             SDL_Rect dst_txt_chargement = {TAILLE_L/2 + 215, TAILLE_H/2 - 215, 200, 50};
             SDL_Texture * tex_txt_chargement = SDL_CreateTextureFromSurface(rend, surface_txt_chargement);;
             SDL_RenderCopy(rend, tex_txt_chargement, NULL, &dst_txt_chargement);
