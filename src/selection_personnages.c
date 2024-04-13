@@ -14,14 +14,14 @@
 #include "constantes.h"
 #include "spritesheets.h"
 
-#define MAX_PERSONNAGES 1 // Nombre maximum de personnages
-#define N 1
 #define VRAI 1
 
 
 SDL_Window* gWindow = NULL;
 SDL_Renderer* gRenderer = NULL;
 
+// Déclaration de la variable globale
+char* personnage_selectionne = NULL;
 
 
 /**
@@ -87,35 +87,9 @@ void afficher_personnages(SDL_Renderer* renderer, Persos personnages) {
     afficher_persos(renderer);
 }
 
-// Fonction pour gérer le clic sur un personnage
-void gerer_clic_personnage(SDL_Event event, t_entite* perso, SDL_Rect* rect, int* selectionne) {
-    if (event.type == SDL_MOUSEBUTTONDOWN && event.button.button == SDL_BUTTON_LEFT) {
-        SDL_Point clickPoint = { event.button.x, event.button.y };
-        if (SDL_PointInRect(&clickPoint, rect)) {
-            // Inverser l'état de sélection du personnage
-            *selectionne = (*selectionne == 0) ? 1 : 0;
-        }
-    }
+// Fonction pour sélectionner un personnage
+void selectionner_personnage(const char* nom_personnage) {
+    // Mettre à jour la variable personnage_selectionne
+    personnage_selectionne = nom_personnage;
 }
-
-// Fonction pour afficher le personnage sélectionné sur le côté de l'écran
-void afficher_personnage_selectionne(SDL_Renderer* renderer, t_entite* perso, int selectionne) {
-    if (selectionne && perso != NULL) {
-        // Obtenir les coordonnées et dimensions de l'entité
-        int x = perso->rect_dst->x;
-        int y = perso->rect_dst->y;
-        int largeur = perso->rect_dst->w;
-        int hauteur = perso->rect_dst->h;
-        
-        // Dessiner un rectangle autour de l'entité sélectionnée
-        SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255); // Couleur rouge
-        SDL_Rect rect = { x, y, largeur, hauteur };
-        SDL_RenderDrawRect(renderer, &rect);
-
-        // Afficher l'entité sélectionnée en grand à droite
-        //SDL_Rect destRect = { TAILLE_L - largeur - 10, (TAILLE_H - hauteur) / 2, largeur, hauteur };
-        afficher_entite(renderer, perso);
-    }
-}
-
 

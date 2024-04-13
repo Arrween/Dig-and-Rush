@@ -4,19 +4,15 @@
 #include <SDL2/SDL_ttf.h>
 #include <SDL2/SDL_mixer.h>
 
-#include "constantes.h"
-#include "entite.h"
 #include "tour.h"
+#include "constantes.h"
+#include "selection_personnages.h"
+#include "entite.h"
 #include "menu.h"
 #include "ressources.h"
-#include "selection_personnages.h"
-
-#define MAX_PERSONNAGES 3 // Nombre maximum de personnages que vous souhaitez charger
-#define N 1 // Taille maximale du nom de fichier pour les textures des personnages
 
 
 Persos personnages; // Assurez-vous que MAX_PERSONNAGES est défini correctement
-char filename[N]; // Assurez-vous que N est défini correctement
 
 t_entite* matt;
 t_entite* jack;
@@ -32,6 +28,7 @@ SDL_Rect yohanRect = { (TAILLE_L - 165) / 2, (TAILLE_H + 15) / 2, 80, 100 };
 
 
 int main() {
+
     printf("début du main\n");
 
     SDL_Window * fenetre;
@@ -278,7 +275,9 @@ t_bouton * menus[4][10] = {
         afficher_persos(rend);
         afficher_images(rend, personnages);
         // Afficher Matt en fonction de son état de sélection
-        if (mattSelectionne) {    
+        if (mattSelectionne) {   
+            selectionner_personnage("matt");
+ 
           // Afficher Matt avec un effet de sélection
             afficher_entite(rend, matt);
 
@@ -289,7 +288,9 @@ t_bouton * menus[4][10] = {
             SDL_Texture * tex_txt_chargement = SDL_CreateTextureFromSurface(rend, surface_txt_chargement);;
             SDL_RenderCopy(rend, tex_txt_chargement, NULL, &dst_txt_chargement);
         }
-        if (jackSelectionne) {    
+        if (jackSelectionne) { 
+            selectionner_personnage("jack");
+   
             afficher_entite(rend, jack);
 
             SDL_Color couleur_txt_jack = {0,0,0,255};
@@ -298,9 +299,12 @@ t_bouton * menus[4][10] = {
             SDL_Rect dst_txt_chargement = {TAILLE_L/2 + 215, TAILLE_H/2 - 215, 200, 50};
             SDL_Texture * tex_txt_chargement = SDL_CreateTextureFromSurface(rend, surface_txt_chargement);;
             SDL_RenderCopy(rend, tex_txt_chargement, NULL, &dst_txt_chargement);
+
         }
         
-        if (yohanSelectionne) {    
+        if (yohanSelectionne) {  
+            selectionner_personnage("yohan");
+  
             afficher_entite(rend, yohan);
 
             SDL_Color couleur_txt_yohan = {0,0,0,255};
