@@ -31,6 +31,8 @@ struct chargement_police {
 struct chargement chargements_texs[] = {
     {"ressources/Menu/Background_Menu/Fond_Menu.png", "menu_fond"},
     {"ressources/Menu/Nom_du_Jeu/logo.png", "menu_titre"},
+    {"ressources/Menu/Nom_du_Jeu/titre_personnages.png", "titre_personnages"},
+
     {"ressources/Menu/Background_Menu/choix_serveur.png", "menu_serveur"},
     {"ressources/Menu/Background_Menu/menu_parametre.png", "menu_paramètres"},
     {"ressources/Menu/Background_Menu/menu_personnages.png", "menu_personnages"},
@@ -42,7 +44,19 @@ struct chargement chargements_texs[] = {
     {"ressources/Menu/Boutons/bouton_not_fullscreen.png", "bouton_fullscreen_off"},
     {"ressources/Menu/Boutons/bouton_home.png", "bouton_menu"},
     {"ressources/Menu/Boutons/bouton_play.png", "bouton_jouer"},
+    {"ressources/Menu/Boutons/bouton_continue.png", "bouton_continue"},
     {"ressources/Menu/Boutons/bouton_quit.png", "bouton_quitter"},
+    {"ressources/Menu/Boutons/bouton_back.png", "back"},
+
+
+    {"ressources/Menu/Boutons/barre_de_vie_pleine.png", "barre_de_vie_pleine"},
+    {"ressources/Menu/Boutons/defense_pleine.png", "defense_pleine"},
+
+    {"ressources/Menu/Boutons/energie_pleine.png", "energie_pleine"},
+    {"ressources/Menu/Boutons/energie_semi.png", "energie_semi"},
+
+
+
 
     {"ressources/Personnages/jackPerso.png", "jack"},
     {"ressources/Tour/Arriere_plan/fond.jpg", "fond_tour"},

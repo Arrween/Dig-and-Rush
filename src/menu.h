@@ -26,7 +26,7 @@ extern TTF_Font * chargement_font(char * chemin, int taille, SDL_Renderer ** ren
 
 // Données des boutons
 
-enum { PAGE_MENU, PAGE_MENU_SERVEUR, PAGE_MENU_PARAMETRES, PAGE_MENU_PERSONNAGES };
+enum { PAGE_MENU, PAGE_MENU_PERSONNAGES, /*PAGE_MENU_SERVEUR,*/ PAGE_MENU_PARAMETRES };
 
 typedef struct s_etat t_etat;
 typedef struct { 
@@ -51,4 +51,6 @@ void action_quitter(t_etat *);
 void action_jouer(t_etat *);
 void action_personnages(t_etat *);
 void action_parametres(t_etat *);
+void action_continue(t_etat * );
+void action_retour(t_etat *);
 void action_nulle(void);
