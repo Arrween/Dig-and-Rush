@@ -48,6 +48,8 @@ void verif_collision(t_entite * e1, float * correction_defilement) {
     // point au milieu du bas de la hitbox
     SDL_FPoint e1_b = {e1->hitbox.x + 0.5 * e1->hitbox.w, e1->hitbox.y + e1->hitbox.h};
 
+    // if (strcmp(e1->type, "matt") == 0) return;
+
     e1->collisions.g = NULL;
     e1->collisions.d = NULL;
     e1->collisions.h = NULL;
@@ -193,6 +195,7 @@ int boucle_jeu(SDL_Renderer * rend) {
     int est_en_pause = FAUX;
     long long compteur_frames = 0;
     float pas_defilement = 0;
+    float repere_defilement = 100;
     int score = 0;
     int creusage_en_cours = FAUX; // Indicateur si l'animation de creusage est en cours
     int compteur_creusage = 0;
@@ -217,8 +220,6 @@ int boucle_jeu(SDL_Renderer * rend) {
     perso = creer_entite_depuis_spritesheet("matt", 40, 20, 15, 12, VRAI);
     perso->vitesse = 1;
     
-    generer_morceau_niveau(-1);
-
     generer_murs();
 
     changer_hitbox(perso, 26, 22, 51, 73.4);
@@ -247,7 +248,6 @@ int boucle_jeu(SDL_Renderer * rend) {
 
     // Boucle de jeu principale
     while (doit_boucler) {
-     int DELTA_TEMPS = 50;
         chrono_deb = clock();
         // Gestion des événements
         while (SDL_PollEvent(&event)) {
@@ -494,6 +494,7 @@ int boucle_jeu(SDL_Renderer * rend) {
         else {
             pas_defilement = correction_defilement;
         }
+        repere_defilement += pas_defilement;
 
         // Déplacement relatif des obstacles pour simuler le défilement
         en_tete(I_LISTE_ENTITES);
@@ -531,8 +532,11 @@ int boucle_jeu(SDL_Renderer * rend) {
                     precedent(I_LISTE_ENTITES);
             }
 
-            generer_morceau_niveau(-1);
             generer_murs();
+        }
+        if (repere_defilement > 100) {
+            generer_morceau_niveau(repere_defilement);
+            repere_defilement = 0;
         }
 
         compteur_frames++;
