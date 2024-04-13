@@ -50,14 +50,17 @@ t_perso * creer_perso(char * id, t_entite * e) {
     nouv->parent = e;
     if (strcmp(id, "matt") == 0) {
         nouv->parent->vitesse = 1.;
-        changer_hitbox(nouv->parent, &(nouv->parent->hitbox), 26, 22, 51, 73.4, VRAI);
-        // définir initialement sur la droite, sera modifié par le déplacement
-        changer_hitbox(nouv->parent, &(nouv->hitbox_attaque), 50, 45, 60, 45, VRAI);
-        nouv->doit_afficher_hitbox_attaque = VRAI;
-        nouv->parent->doit_afficher_hitbox = VRAI;
+    }
+    else if (strcmp(id, "jack") == 0) {
+        nouv->parent->vitesse = 2.;
     }
     else {
     }
+    changer_hitbox(nouv->parent, &(nouv->parent->hitbox), 26, 22, 51, 73.4, VRAI);
+    // définir initialement sur la droite, sera modifié par le déplacement
+    changer_hitbox(nouv->parent, &(nouv->hitbox_attaque), 50, 45, 60, 45, VRAI);
+    nouv->doit_afficher_hitbox_attaque = VRAI;
+    nouv->parent->doit_afficher_hitbox = VRAI;
     nouv->est_mort = FAUX;
     return nouv;
 }

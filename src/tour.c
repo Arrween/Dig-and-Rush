@@ -203,9 +203,7 @@ int boucle_jeu(SDL_Renderer * rend) {
     fond_tour = creer_entite("fond_tour", 0, 0, 100, 100, VRAI);
     fond_tour_2 = creer_entite("fond_tour", 0, 100, 100, 100, VRAI);
 
-    perso = creer_entite_depuis_spritesheet(personnage_selectionne, 40, 20, 15, 12, VRAI);
-    perso->vitesse = 1;
-
+    perso = creer_entite_perso((char*)personnage_selectionne, 40, 20, 15, 12, VRAI);
     
     generer_murs();
 
