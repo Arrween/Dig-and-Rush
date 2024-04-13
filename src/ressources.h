@@ -35,7 +35,6 @@ typedef struct {
     int decalage_dest_y;
     int longueur;
     float vitesse_anim;
-    SDL_FRect * hitboxes_attaque;
 } t_animation;
 
 

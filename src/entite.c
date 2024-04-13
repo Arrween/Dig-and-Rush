@@ -7,6 +7,7 @@
 #include <string.h>
 
 #include "entite.h"
+#include "entite_pnj.h"
 #include "spritesheets.h"
 #include "constantes.h"
 
@@ -66,6 +67,12 @@ void afficher_entite(SDL_Renderer * rend, t_entite * e) {
                                COULEUR_HITBOX_B, COULEUR_HITBOX_A);
         SDL_RenderDrawRectF(rend, &rect_absolu);
     }
+    if (e->pnj && e->pnj->doit_afficher_hitbox_attaque) {
+        SDL_FRect rect_absolu = convertir_vers_absolu(&(e->pnj->hitbox_attaque), zone_jeu);
+        SDL_SetRenderDrawColor(rend, COULEUR_HITBOX_ATTQ_R, COULEUR_HITBOX_ATTQ_V,
+                               COULEUR_HITBOX_ATTQ_B, COULEUR_HITBOX_ATTQ_A);
+        SDL_RenderDrawRectF(rend, &rect_absolu);
+    }
 }
 
 /*
@@ -104,6 +111,10 @@ void changer_pos_entite(t_entite * e, float x, float y) {
     }
     e->rect_dst->y = y;
     e->hitbox.y += y - yy;
+    if (e->pnj) {
+        e->pnj->hitbox_attaque.x += x - xx;
+        e->pnj->hitbox_attaque.y += y - yy;
+    }
 }
 
 void changer_dims(t_entite * e, float w, float h) {
