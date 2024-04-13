@@ -5,6 +5,7 @@
 
 #include <stdio.h>
 #include <stdlib.h> // Pour les fonctions malloc et free
+#include <string.h>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 
@@ -21,7 +22,7 @@ SDL_Window* gWindow = NULL;
 SDL_Renderer* gRenderer = NULL;
 
 // Déclaration de la variable globale
-const char* personnage_selectionne = NULL;
+char personnage_selectionne[TAILLE_MAX_ID];
 
 
 /**
@@ -90,6 +91,6 @@ void afficher_personnages(SDL_Renderer* renderer, Persos personnages) {
 // Fonction pour sélectionner un personnage
 void selectionner_personnage(const char* nom_personnage) {
     // Mettre à jour la variable personnage_selectionne
-    personnage_selectionne = nom_personnage;
+    strcpy(personnage_selectionne, nom_personnage);
 }
 

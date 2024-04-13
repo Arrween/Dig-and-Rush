@@ -264,7 +264,7 @@ t_bouton * menus[3][10] = {
                             printf("Personnage sélectionné : Matt\n");
 
                         }
-                       else if (SDL_PointInRect(&pointeur, &jackRect)) {
+                        else if (SDL_PointInRect(&pointeur, &jackRect)) {
                             jackSelectionne = !jackSelectionne; 
                             mattSelectionne = 0;
                             yohanSelectionne = 0;
@@ -301,6 +301,17 @@ t_bouton * menus[3][10] = {
                             etat.doit_quitter = VRAI;
                             break;
                         case SDL_SCANCODE_A:
+                            selectionner_personnage("matt");
+                            jouer_audio(0, "coq", 0);
+                            etat.doit_quitter = boucle_jeu(rend);
+                            break;
+                        case SDL_SCANCODE_S:
+                            selectionner_personnage("jack");
+                            jouer_audio(0, "coq", 0);
+                            etat.doit_quitter = boucle_jeu(rend);
+                            break;
+                        case SDL_SCANCODE_D:
+                            selectionner_personnage("yohan");
                             jouer_audio(0, "coq", 0);
                             etat.doit_quitter = boucle_jeu(rend);
                             break;
