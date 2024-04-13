@@ -35,7 +35,7 @@ void comportement_patrouille(t_entite * pnj, t_entite * perso) {
             changer_animation(pnj, ATTQ_D);
         }
         pnj->deplacement = REPOS_MVT;
-        perso_mourir(perso);
+        perso_prendre_coup(perso);
     }
     if (pnj->animation_courante->id == ATTQ_G || pnj->animation_courante->id == ATTQ_D)
         return;
@@ -94,7 +94,7 @@ t_pnj * creer_pnj(char * id, t_entite * e) {
         nouv->parent->vitesse = 1./2;
         changer_hitbox(nouv->parent, &(nouv->parent->hitbox), 30, 50, 40, 55, VRAI);
         // définir initialement sur la droite, sera modifié par la patrouille
-        changer_hitbox(nouv->parent, &(nouv->hitbox_attaque), 70, 70, 20, 20, VRAI);
+        changer_hitbox(nouv->parent, &(nouv->hitbox_attaque), 50, 70, 33, 20, VRAI);
         nouv->doit_afficher_hitbox_attaque = VRAI;
         nouv->parent->doit_afficher_hitbox = VRAI;
     }
@@ -116,7 +116,7 @@ t_pnj * creer_pnj(char * id, t_entite * e) {
         nouv->parent->doit_afficher_hitbox = VRAI;
     }
     else {
-        nouv->comportement = (void(*)(t_entite*)) comportement_oisif;
+        nouv->comportement = (void(*)(t_entite*, t_entite*)) comportement_oisif;
         nouv->valeur_vaincu = 0;
         nouv->est_ecrasable = FAUX;
     }

@@ -25,6 +25,8 @@
 
 #define DELAI_CREUSAGE 18 // nombre de frames
 
+#define DELAI_PERTE_SCORE 150 // nombre de frames
+
 
 
 SDL_bool PointInFRect(const SDL_FPoint* p, const SDL_FRect* r) {
@@ -241,11 +243,28 @@ int boucle_jeu(SDL_Renderer * rend) {
                     break;
                 case SDL_KEYDOWN:
                     if (event.key.repeat) break;
+
                     // arrêter le creusage si l’on appuie sur une touche
                     // différente de celle de creusage même si l’on a maintenu
                     // cette dernière enfoncée
                     if (event.key.keysym.scancode != SDL_SCANCODE_S)
                         creusage_en_cours = FAUX;
+
+                    if (perso->perso->est_mort) {
+                        switch (event.key.keysym.scancode) {
+                            case SDL_SCANCODE_ESCAPE:
+                            case SDL_SCANCODE_Q:
+                                doit_boucler = FAUX;
+                                break;
+                            case SDL_SCANCODE_SPACE:
+                                est_en_pause = !est_en_pause;
+                                break;
+                            default:
+                                break;
+                        }
+                        continue;
+                    }
+
                     switch (event.key.keysym.scancode) {
                         case SDL_SCANCODE_ESCAPE:
                         case SDL_SCANCODE_Q:
@@ -399,7 +418,15 @@ int boucle_jeu(SDL_Renderer * rend) {
 
         afficher_entite(rend, fond_tour);
         afficher_entite(rend, fond_tour_2);
-        afficher_entite(rend, perso);
+
+        if (perso->perso->temps_invu > 0) {
+            perso->perso->temps_invu--;
+            // faire clignoter le perso une fois toutes les 4 frames
+            if (perso->perso->temps_invu % 4 > 0)
+                afficher_entite(rend, perso);
+        }
+        else
+            afficher_entite(rend, perso);
 
         en_tete(I_LISTE_ENTITES);
         while (!hors_liste(I_LISTE_ENTITES)) {
@@ -521,6 +548,11 @@ int boucle_jeu(SDL_Renderer * rend) {
         }
 
         compteur_frames++;
+
+        if (compteur_frames % DELAI_PERTE_SCORE == 0 && score > 0) {
+            score--;
+            changer_texte(texte_score, "POINTS : %i", score);
+        }
 
         chrono_fin = clock();
         microsec_par_frame = (chrono_fin - chrono_deb) * 1000000 / CLOCKS_PER_SEC;

@@ -37,6 +37,16 @@ void perso_mourir(t_entite * perso) {
     perso->perso->est_mort = VRAI;
 }
 
+void perso_prendre_coup(t_entite * perso) {
+    if (perso->perso->temps_invu > 0)
+        return;
+    perso->perso->vie--;
+    if (perso->perso->vie <= 0)
+        perso_mourir(perso);
+    else
+        perso->perso->temps_invu = perso->perso->temps_invu_max;
+}
+
 /**
  * @brief Crée une nouvelle structure de personnage joueur avec les attributs spécifiés.
  * 
@@ -48,20 +58,34 @@ void perso_mourir(t_entite * perso) {
 t_perso * creer_perso(char * id, t_entite * e) {
     t_perso * nouv = malloc(sizeof(t_perso));
     nouv->parent = e;
-    if (strcmp(id, "matt") == 0) {
-        nouv->parent->vitesse = 1.;
+    if (strcmp(id, "ania") == 0) {
+        nouv->parent->vitesse = 2.;
+        nouv->vie = 2;
     }
     else if (strcmp(id, "jack") == 0) {
         nouv->parent->vitesse = 2.;
+        nouv->vie = 1;
+    }
+    else if (strcmp(id, "matt") == 0) {
+        nouv->parent->vitesse = 1.;
+        nouv->vie = 2;
+    }
+    else if (strcmp(id, "yohan") == 0) {
+        nouv->parent->vitesse = 2.;
+        nouv->vie = 2;
     }
     else {
+        nouv->parent->vitesse = 1.;
+        nouv->vie = 1;
     }
     changer_hitbox(nouv->parent, &(nouv->parent->hitbox), 26, 22, 51, 73.4, VRAI);
     // définir initialement sur la droite, sera modifié par le déplacement
-    changer_hitbox(nouv->parent, &(nouv->hitbox_attaque), 50, 45, 60, 45, VRAI);
+    changer_hitbox(nouv->parent, &(nouv->hitbox_attaque), 50, 45, 62, 45, VRAI);
     nouv->doit_afficher_hitbox_attaque = VRAI;
     nouv->parent->doit_afficher_hitbox = VRAI;
     nouv->est_mort = FAUX;
+    nouv->temps_invu = 0;
+    nouv->temps_invu_max = 60;
     return nouv;
 }
 
