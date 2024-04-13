@@ -238,7 +238,7 @@ void changer_animation(t_entite * e, t_id_anim id_anim) {
             e->rect_dst->y += e->dec_y_dst_prec;
             e->rect_dst->x -= anim->decalage_dest_x;
             e->rect_dst->y -= anim->decalage_dest_y;
-            printf("décalage y de +%i -%i\n", e->dec_y_dst_prec, anim->decalage_dest_y);
+            e->dec_x_dst_prec = anim->decalage_dest_x;
             e->dec_y_dst_prec = anim->decalage_dest_y;
         }
 

@@ -274,6 +274,16 @@ int boucle_jeu(SDL_Renderer * rend) {
                             break;
                         case SDL_SCANCODE_H:
                             perso->doit_afficher_hitbox = !perso->doit_afficher_hitbox;
+                            perso->perso->doit_afficher_hitbox_attaque = !perso->perso->doit_afficher_hitbox_attaque;
+                            en_tete(I_LISTE_ENTITES);
+                            while (!hors_liste(I_LISTE_ENTITES)) {
+                                t_entite * elem = valeur_elt(I_LISTE_ENTITES);
+                                if (elem->pnj) {
+                                    elem->doit_afficher_hitbox = !elem->doit_afficher_hitbox;
+                                    elem->pnj->doit_afficher_hitbox_attaque = !elem->pnj->doit_afficher_hitbox_attaque;
+                                }
+                                suivant(I_LISTE_ENTITES);
+                            }
                             break;
                         case SDL_SCANCODE_L:
                             lumiere_est_allumee = !lumiere_est_allumee;

@@ -87,6 +87,22 @@ void comportement_patrouille(t_entite * pnj, t_entite * perso) {
 t_pnj * creer_pnj(char * id, t_entite * e) {
     t_pnj * nouv = malloc(sizeof(t_pnj));
     nouv->parent = e;
+    nouv->doit_afficher_hitbox_attaque = FAUX;
+    nouv->parent->doit_afficher_hitbox = FAUX;
+    nouv->x_patrouille_g = 0;
+    nouv->x_patrouille_d = 100;
+    nouv->est_mort = FAUX;
+    nouv->comportement = (void(*)(t_entite*, t_entite*)) comportement_oisif;
+    nouv->valeur_vaincu = 0;
+    nouv->est_ecrasable = FAUX;
+    nouv->parent->vitesse = 1.;
+    changer_hitbox(nouv->parent, &(nouv->hitbox_attaque), 
+                   nouv->parent->hitbox.x,
+                   nouv->parent->hitbox.y,
+                   nouv->parent->hitbox.w,
+                   nouv->parent->hitbox.h,
+                   VRAI);
+
     if (strcmp(id, "squelette") == 0) {
         nouv->comportement = comportement_patrouille;
         nouv->valeur_vaincu = 10;
@@ -95,34 +111,15 @@ t_pnj * creer_pnj(char * id, t_entite * e) {
         changer_hitbox(nouv->parent, &(nouv->parent->hitbox), 30, 50, 40, 55, VRAI);
         // définir initialement sur la droite, sera modifié par la patrouille
         changer_hitbox(nouv->parent, &(nouv->hitbox_attaque), 50, 70, 33, 20, VRAI);
-        nouv->doit_afficher_hitbox_attaque = VRAI;
-        nouv->parent->doit_afficher_hitbox = VRAI;
     }
-    //else if (strcmp(id, "feu") == 0) {
-        // champs initiaux pour la boule de feu
-    //}
     else if (strcmp(id, "feu") == 0) {
         nouv->comportement = comportement_patrouille;
         nouv->valeur_vaincu = 10;
         nouv->est_ecrasable = VRAI;
-        //e->vitesse = 1./2;
-        //changer_hitbox(e, 20, 30, 50, 55);
-        //e->doit_afficher_hitbox = VRAI;
         nouv->parent->vitesse = 1./2;
         changer_hitbox(nouv->parent, &(nouv->parent->hitbox), 20, 30, 50, 55, VRAI);
-        // définir initialement sur la droite, sera modifié par la patrouille
-        changer_hitbox(nouv->parent, &(nouv->hitbox_attaque), 70, 70, 20, 20, VRAI);
-        nouv->doit_afficher_hitbox_attaque = VRAI;
-        nouv->parent->doit_afficher_hitbox = VRAI;
     }
-    else {
-        nouv->comportement = (void(*)(t_entite*, t_entite*)) comportement_oisif;
-        nouv->valeur_vaincu = 0;
-        nouv->est_ecrasable = FAUX;
-    }
-    nouv->x_patrouille_g = 0;
-    nouv->x_patrouille_d = 100;
-    nouv->est_mort = FAUX;
+
     return nouv;
 }
 
