@@ -109,7 +109,7 @@ t_pnj * creer_pnj(char * id, t_entite * e) {
         //changer_hitbox(e, 20, 30, 50, 55);
         //e->doit_afficher_hitbox = VRAI;
         nouv->parent->vitesse = 1./2;
-        changer_hitbox(nouv->parent, &(nouv->parent->hitbox), 30, 50, 40, 55, VRAI);
+        changer_hitbox(nouv->parent, &(nouv->parent->hitbox), 20, 30, 50, 55, VRAI);
         // définir initialement sur la droite, sera modifié par la patrouille
         changer_hitbox(nouv->parent, &(nouv->hitbox_attaque), 70, 70, 20, 20, VRAI);
         nouv->doit_afficher_hitbox_attaque = VRAI;
