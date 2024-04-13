@@ -13,5 +13,6 @@ struct s_destructible {
 };
 
 t_entite * creer_entite_destructible(char* id, float x, float y, float w, float h, int est_relatif);
+void detruire_destructible(t_destructible**);
 
 #endif

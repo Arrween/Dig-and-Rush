@@ -21,5 +21,6 @@ struct s_pnj {
 
 t_entite * creer_entite_pnj_depuis_spritesheet(char*, float, float, float, float, int);
 t_entite * creer_entite_pnj(char*, float, float, float, float, int);
+void detruire_pnj(t_pnj**);
 
 #endif
