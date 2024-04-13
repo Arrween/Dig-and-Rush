@@ -389,6 +389,8 @@ int boucle_jeu(SDL_Renderer * rend) {
         
         SDL_RenderClear(rend);
 
+        if (perso->perso->est_mort)
+            lumiere_est_allumee = FAUX;
         if (lumiere_est_allumee && !lumiere_est_allumee_prec) {
             alpha_fond += PAS_ALPHA_FOND;
             if (alpha_fond >= 255)
