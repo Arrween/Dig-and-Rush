@@ -122,12 +122,21 @@ void creuser(t_entite * a_creuser) {
 }
 
 void porter_coup(t_entite * e, int * score, t_texte * texte_score) {
+    SDL_FRect * hitbox_attaque = NULL;
+    if (e->perso)
+        hitbox_attaque = &e->perso->hitbox_attaque;
+    else if (e->pnj)
+        hitbox_attaque = &e->pnj->hitbox_attaque;
+    else
+        return;
+
     en_tete(I_LISTE_ENTITES);
     while (!hors_liste(I_LISTE_ENTITES)) {
         t_entite * elem = valeur_elt(I_LISTE_ENTITES);
+        if (elem == e)
+            continue;
         if (elem->pnj) {
-            // SDL_FRect hitbox_attaque = e->animation_courante->hitboxes_attaque[e->x_sprite];
-            if (!elem->pnj->est_mort && SDL_HasIntersectionF(&e->hitbox, &elem->hitbox)) {
+            if (!elem->pnj->est_mort && SDL_HasIntersectionF(hitbox_attaque, &elem->hitbox)) {
                 elem->id_animation_suivante = ANIM_MORT_STATIQUE;
                 changer_animation(elem, ANIM_MORT);
                 elem->deplacement = REPOS_MVT;
