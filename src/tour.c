@@ -10,6 +10,7 @@
 #include "entite.h"
 #include "entite_destructible.h"
 #include "entite_pnj.h"
+#include "entite_perso.h"
 #include "morceaux_niveau.h"
 #include "listes.h"
 #include "texte.h"
@@ -217,12 +218,9 @@ int boucle_jeu(SDL_Renderer * rend) {
     fond_tour = creer_entite("fond_tour", 0, 0, 100, 100, VRAI);
     fond_tour_2 = creer_entite("fond_tour", 0, 100, 100, 100, VRAI);
 
-    perso = creer_entite_depuis_spritesheet("matt", 40, 20, 15, 12, VRAI);
-    perso->vitesse = 1;
+    perso = creer_entite_perso("matt", 40, 20, 15, 12, VRAI);
     
     generer_murs();
-
-    changer_hitbox(perso, 26, 22, 51, 73.4);
 
     int lumiere_est_allumee = VRAI;
     int lumiere_est_allumee_prec = FAUX;

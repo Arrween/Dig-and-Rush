@@ -20,6 +20,7 @@ typedef struct s_collision {
 
 typedef struct s_destructible t_destructible;
 typedef struct s_pnj t_pnj;
+typedef struct s_perso t_perso;
 /** \brief Objet général pour toute entité affichée à l’écran
 *
 */
@@ -57,6 +58,7 @@ typedef struct s_entite {
     int deplacement_prec;
     /** sens (gauche ou droite) vers lequel regarde l’entité */
     int sens_regard;
+    int sens_regard_prec;
     /** position horizontale dans la grille de la spritesheet, si l’entité est chargée d’une spritesheet */ 
     int x_sprite;
     /** voir x_sprite */
@@ -80,6 +82,8 @@ typedef struct s_entite {
     int est_obstacle;
     /** sous-structure affectée si l’entité est un personnage non-joueur */
     t_pnj * pnj;
+    /** sous-structure affectée si l’entité est un personnage joueur */
+    t_perso * perso;
 
 } t_entite;
 
@@ -90,7 +94,8 @@ void detruire_entite(t_entite **);
 
 void afficher_entite(SDL_Renderer*, t_entite*);
 extern void changer_pos_rel(t_entite*, float, float);
-void changer_hitbox(t_entite *, float, float, float, float);
+void changer_hitbox(t_entite *, SDL_FRect*, float, float, float, float, int);
+void appliquer_reflexion_hitbox(t_entite*, SDL_FRect*);
 SDL_FRect convertir_vers_absolu(SDL_FRect *, SDL_FRect);
 void deplacer(t_entite *, long long int);
 void animer(t_entite *, long long int compteur_frames);

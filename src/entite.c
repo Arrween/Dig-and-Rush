@@ -8,6 +8,7 @@
 
 #include "entite.h"
 #include "entite_pnj.h"
+#include "entite_perso.h"
 #include "spritesheets.h"
 #include "constantes.h"
 
@@ -73,6 +74,12 @@ void afficher_entite(SDL_Renderer * rend, t_entite * e) {
                                COULEUR_HITBOX_ATTQ_B, COULEUR_HITBOX_ATTQ_A);
         SDL_RenderDrawRectF(rend, &rect_absolu);
     }
+    if (e->perso && e->perso->doit_afficher_hitbox_attaque) {
+        SDL_FRect rect_absolu = convertir_vers_absolu(&(e->perso->hitbox_attaque), zone_jeu);
+        SDL_SetRenderDrawColor(rend, COULEUR_HITBOX_ATTQ_R, COULEUR_HITBOX_ATTQ_V,
+                               COULEUR_HITBOX_ATTQ_B, COULEUR_HITBOX_ATTQ_A);
+        SDL_RenderDrawRectF(rend, &rect_absolu);
+    }
 }
 
 /*
@@ -115,6 +122,10 @@ void changer_pos_entite(t_entite * e, float x, float y) {
         e->pnj->hitbox_attaque.x += x - xx;
         e->pnj->hitbox_attaque.y += y - yy;
     }
+    if (e->perso) {
+        e->perso->hitbox_attaque.x += x - xx;
+        e->perso->hitbox_attaque.y += y - yy;
+    }
 }
 
 void changer_dims(t_entite * e, float w, float h) {
@@ -127,19 +138,28 @@ void changer_pos_rel(t_entite * e, float dx, float dy) {
                            e->rect_dst->y + dy);
 }
 
-void changer_hitbox(t_entite * e, float x, float y, float w, float h) {
+void changer_hitbox(t_entite * e, SDL_FRect * hitbox, float x, float y, float w, float h, int avec_coord_rect_dst) {
     float dst_x = e->rect_dst->x;
     float dst_y = e->rect_dst->y;
     float dst_w = e->rect_dst->w;
     float dst_h = e->rect_dst->h;
-    if (x > INT_MIN)
-        e->hitbox.x = dst_x + dst_w * (float)x/100;
-    if (y > INT_MIN)
-        e->hitbox.y = dst_y + dst_h * (float)y/100;
-    if (w > -1)
-        e->hitbox.w = dst_w * (float)w/100;
-    if (h > -1)
-        e->hitbox.h = dst_h * (float)h/100;
+    if (avec_coord_rect_dst) {
+        hitbox->x = dst_x + dst_w * x/100;
+        hitbox->y = dst_y + dst_h * y/100;
+        hitbox->w = dst_w * w/100;
+        hitbox->h = dst_h * h/100;
+    }
+    else {
+        hitbox->x = x;
+        hitbox->y = y;
+        hitbox->w = w;
+        hitbox->h = h;
+    }
+}
+
+void appliquer_reflexion_hitbox(t_entite * e, SDL_FRect * hitbox) {
+    changer_hitbox(e, hitbox, 2*e->hitbox.x + e->hitbox.w - hitbox->x - hitbox->w,
+                   hitbox->y, hitbox->w, hitbox->h, FAUX);
 }
 
 int calculer_pas_selon_vitesse(long long int compteur_frames, float vitesse) {
@@ -167,8 +187,12 @@ void deplacer(t_entite * e, long long int compteur_frames) {
     depl_y *= pas;
     if (e->deplacement != REPOS_MVT) {
         changer_pos_rel(e, depl_x, depl_y);
-        if (e->deplacement == GAUCHE || e->deplacement == DROITE)
+        if (e->deplacement == GAUCHE || e->deplacement == DROITE) {
             e->sens_regard = e->deplacement;
+            if (e->perso && e->sens_regard != e->sens_regard_prec)
+                appliquer_reflexion_hitbox(e, &(e->perso->hitbox_attaque));
+            e->sens_regard_prec = e->sens_regard;
+        }
     }
 }
 
@@ -259,13 +283,14 @@ t_entite * creer_entite_depuis_texture(SDL_Texture * texture,
     nouv->rect_dst->x = x;
     nouv->rect_dst->y = y;
     changer_dims(nouv, w, h);
-    changer_hitbox(nouv, 0, 0, 100, 100);
+    changer_hitbox(nouv, &(nouv->hitbox), 0, 0, 100, 100, VRAI);
 
     nouv->doit_afficher_hitbox = FAUX;
     nouv->est_relatif = est_relatif;
     nouv->deplacement = REPOS_MVT;
     nouv->deplacement_prec = REPOS_MVT;
     nouv->sens_regard = DROITE;
+    nouv->sens_regard_prec = nouv->sens_regard;
     nouv->x_sprite = nouv->y_sprite = 0;
 
     nouv->vitesse = 0;
@@ -286,6 +311,7 @@ t_entite * creer_entite_depuis_texture(SDL_Texture * texture,
     nouv->destructible = NULL;
     nouv->est_obstacle = FAUX;
     nouv->pnj = NULL;
+    nouv->perso = NULL;
 
     return nouv;
 }
