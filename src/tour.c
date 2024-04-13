@@ -25,6 +25,8 @@
 
 #define DELAI_CREUSAGE 18 // nombre de frames
 
+#define DELAI_PERTE_SCORE 150 // nombre de frames
+
 
 
 SDL_bool PointInFRect(const SDL_FPoint* p, const SDL_FRect* r) {
@@ -546,6 +548,11 @@ int boucle_jeu(SDL_Renderer * rend) {
         }
 
         compteur_frames++;
+
+        if (compteur_frames % DELAI_PERTE_SCORE == 0 && score > 0) {
+            score--;
+            changer_texte(texte_score, "POINTS : %i", score);
+        }
 
         chrono_fin = clock();
         microsec_par_frame = (chrono_fin - chrono_deb) * 1000000 / CLOCKS_PER_SEC;
