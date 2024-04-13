@@ -415,9 +415,6 @@ int boucle_jeu(SDL_Renderer * rend) {
             if (alpha_fond <= 0 && rayon_ombre <= FACTEUR_MIN_RAYON_OMBRE*perso->rect_dst->w)
                 lumiere_est_allumee_prec = FAUX;
         }
-        else if (!lumiere_est_allumee) {
-            calculer_ombre(tex_ombre, rayon_ombre, perso, zone_jeu);
-        }
 
         // Affichage des entités
         SDL_SetTextureAlphaMod(fond->texture, alpha_fond);
@@ -444,7 +441,8 @@ int boucle_jeu(SDL_Renderer * rend) {
             suivant(I_LISTE_ENTITES);
         }
 
-        SDL_RenderCopy(rend, tex_ombre, NULL, NULL);
+        if (!lumiere_est_allumee || !lumiere_est_allumee_prec)
+            SDL_RenderCopy(rend, tex_ombre, NULL, NULL);
 
         afficher_texte(rend, texte_fps);
         afficher_texte(rend, texte_score);
