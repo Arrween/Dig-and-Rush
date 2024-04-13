@@ -35,7 +35,7 @@ void comportement_patrouille(t_entite * pnj, t_entite * perso) {
             changer_animation(pnj, ATTQ_D);
         }
         pnj->deplacement = REPOS_MVT;
-        perso_mourir(perso);
+        perso_prendre_coup(perso);
     }
     if (pnj->animation_courante->id == ATTQ_G || pnj->animation_courante->id == ATTQ_D)
         return;

@@ -37,6 +37,12 @@ void perso_mourir(t_entite * perso) {
     perso->perso->est_mort = VRAI;
 }
 
+void perso_prendre_coup(t_entite * perso) {
+    perso->perso->vie--;
+    if (perso->perso->vie <= 0)
+        perso_mourir(perso);
+}
+
 /**
  * @brief Crée une nouvelle structure de personnage joueur avec les attributs spécifiés.
  * 
