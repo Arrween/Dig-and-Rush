@@ -53,7 +53,7 @@ SDL_FRect convertir_vers_absolu(SDL_FRect * rect, SDL_FRect rect_abs) {
 
 void afficher_entite(SDL_Renderer * rend, t_entite * e) {
 
-    SDL_FRect zone_jeu = {TAILLE_L/4, 0, TAILLE_L/2, TAILLE_H};
+    SDL_FRect zone_jeu = {TAILLE_L/4., 0, TAILLE_L/2., TAILLE_H};
 
     SDL_Rect * src = e->rect_src->w >= 0 ? e->rect_src : NULL;
     SDL_FRect * dst = e->rect_dst->w >= 0 ? e->rect_dst : NULL;

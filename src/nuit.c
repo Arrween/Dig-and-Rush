@@ -105,7 +105,7 @@ void calculer_ombre(t_nuit * nuit) {
             // de jeu et le centre du personnage est plus grande que `rayon`
             // écrire un pixel d’autant moins transparent qu’il est loin
             if (carre_distance > nuit->rayon*nuit->rayon) {
-                float alpha = ((float)(carre_distance - nuit->rayon*nuit->rayon)) / (TAILLE_L/2*TAILLE_L/2 + TAILLE_H/2*TAILLE_H/2) * 255. * FACTEUR_OBSCURCISSEMENT;
+                float alpha = ((float)(carre_distance - nuit->rayon*nuit->rayon)) / (TAILLE_L/2.*TAILLE_L/2. + TAILLE_H/2.*TAILLE_H/2.) * 255. * FACTEUR_OBSCURCISSEMENT;
                 pixels[j * TAILLE_L + i] = SDL_MapRGBA(format, 0, 0, 0, alpha < 255 ? alpha : 255);
             }
             // sinon écrire un pixel transparent
