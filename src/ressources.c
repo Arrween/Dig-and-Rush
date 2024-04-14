@@ -165,6 +165,7 @@ struct chargement_spritesheet chargements_spritesheets[] = {
 };
 
 struct chargement chargements_sons[] = {
+    {"ressources/Audio/SFX/silence.mp3", "silence"},
     {"ressources/essais_audio/confirmation_001.wav", "confirmation"},
     {"ressources/Audio/SFX/coq.mp3", "coq"},
     {"ressources/Audio/SFX/destruction_bloc_1.flac", "destruction_bloc_1"},
@@ -172,6 +173,7 @@ struct chargement chargements_sons[] = {
     {"ressources/Audio/SFX/destruction_bloc_3.flac", "destruction_bloc_3"},
     {"ressources/Audio/Musique/musique_menu.mp3", "musique_jour"},
     {"ressources/Audio/Musique/musique_nuit.mp3", "musique_nuit"},
+    {"ressources/Audio/SFX/attaque_squelette.ogg", "attaque_squelette"},
 };
 
 struct chargement chargements_musiques[] = {

@@ -29,10 +29,12 @@ void comportement_patrouille(t_entite * pnj, t_entite * perso) {
         if (pnj->deplacement == GAUCHE) {
             pnj->id_animation_suivante = DEPL_G;
             changer_animation(pnj, ATTQ_G);
+            jouer_audio(1, pnj->pnj->id_son_attaque, 0);
         }
         else if (pnj->deplacement == DROITE) {
             pnj->id_animation_suivante = DEPL_D;
             changer_animation(pnj, ATTQ_D);
+            jouer_audio(1, pnj->pnj->id_son_attaque, 0);
         }
         pnj->deplacement = REPOS_MVT;
         perso_prendre_coup(perso);
@@ -110,12 +112,14 @@ t_pnj * creer_pnj(char * id, t_entite * e) {
     changer_hitbox(nouv->parent, &(nouv->hitbox_attaque), nouv->parent->hitbox.x,
                    nouv->parent->hitbox.y, nouv->parent->hitbox.w,
                    nouv->parent->hitbox.h, FAUX);
+    strcpy(nouv->id_son_attaque, "silence");
 
     if (strcmp(id, "squelette") == 0) {
         nouv->comportement = comportement_patrouille;
         nouv->valeur_vaincu = 10;
         nouv->est_ecrasable = VRAI;
         nouv->parent->vitesse = 1./2;
+        strcpy(nouv->id_son_attaque, "attaque_squelette");
         changer_hitbox(nouv->parent, &(nouv->parent->hitbox), 30, 50, 40, 55, VRAI);
         // définir initialement sur la droite, sera modifié par la patrouille
         changer_hitbox(nouv->parent, &(nouv->hitbox_attaque), 50, 70, 33, 20, VRAI);
