@@ -10,7 +10,6 @@
 #include "entite_destructible.h"
 #include "entite_pnj.h"
 #include "entite_perso.h"
-#include "spritesheets.h"
 #include "constantes.h"
 
 int numeros_entites = 0;

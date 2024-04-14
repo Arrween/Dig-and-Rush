@@ -13,7 +13,6 @@
 #include "selection_personnages.h"
 #include "ressources.h"
 #include "constantes.h"
-#include "spritesheets.h"
 
 #define VRAI 1
 

@@ -1,3 +1,8 @@
+/**
+ *  @file
+ *  @brief Fonctions de gestion simplifiée de textes via SDL_ttf
+ */
+
 #include <SDL2/SDL_ttf.h>
 #include <string.h>
 #include <stdarg.h>
@@ -47,7 +52,8 @@ void afficher_texte(SDL_Renderer * rend, t_texte * texte) {
  * @param y Position en y du texte.
  * @param w Largeur du texte.
  * @param h Hauteur du texte.
- * @return Pointeur vers la nouvelle structure de texte créée, NULL en cas d'échec.
+ * @return Pointeur vers la nouvelle structure de texte créée, NULL en cas d'échec
+ *          de récupération de la ressource police.
  */
 
 t_texte * creer_texte(char * id, int rouge, int vert, int bleu, int alpha, int x, int y, int w, int h) {
