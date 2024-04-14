@@ -460,8 +460,8 @@ int boucle_jeu(SDL_Renderer * rend) {
             generer_murs();
         }
         if (repere_defilement > 100) {
-            generer_morceau_niveau(repere_defilement);
-            repere_defilement = 0;
+            generer_morceau_niveau(repere_defilement + 10);
+            repere_defilement -= 100;
         }
 
         compteur_frames++;
