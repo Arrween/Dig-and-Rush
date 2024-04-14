@@ -76,6 +76,17 @@ void comportement_patrouille(t_entite * pnj, t_entite * perso) {
         appliquer_reflexion_hitbox(pnj, &(pnj->pnj->hitbox_attaque));
 }
 
+void pnj_mourir(t_entite * pnj, int * score, t_texte * texte_score) {
+    if (!pnj->pnj || (pnj->pnj && pnj->pnj->est_mort))
+        return;
+    pnj->id_animation_suivante = ANIM_MORT_STATIQUE;
+    changer_animation(pnj, ANIM_MORT);
+    pnj->deplacement = REPOS_MVT;
+    pnj->pnj->est_mort = VRAI;
+    *score += pnj->pnj->valeur_vaincu;
+    changer_texte(texte_score, "POINTS : %i", *score);
+}
+
 /**
  * @brief Crée une nouvelle structure de PNJ avec les attributs spécifiés.
  * 

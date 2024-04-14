@@ -2,6 +2,7 @@
 #define ENTITE_PNJ_H
 
 #include "entite.h"
+#include "texte.h"
 
 /**
  * @brief Structure représentant un PNJ (Personnage Non-Joueur).
@@ -22,5 +23,7 @@ struct s_pnj {
 t_entite * creer_entite_pnj_depuis_spritesheet(char*, float, float, float, float, int);
 t_entite * creer_entite_pnj(char*, float, float, float, float, int);
 void detruire_pnj(t_pnj**);
+
+void pnj_mourir(t_entite * pnj, int * score, t_texte * texte_score);
 
 #endif

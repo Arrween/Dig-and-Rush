@@ -17,14 +17,8 @@ void perso_porter_coup(t_entite * e, int * score, t_texte * texte_score) {
     while (!hors_liste(I_LISTE_ENTITES)) {
         t_entite * elem = valeur_elt(I_LISTE_ENTITES);
         if (elem->pnj) {
-            if (!elem->pnj->est_mort && SDL_HasIntersectionF(hitbox_attaque, &elem->hitbox)) {
-                elem->id_animation_suivante = ANIM_MORT_STATIQUE;
-                changer_animation(elem, ANIM_MORT);
-                elem->deplacement = REPOS_MVT;
-                elem->pnj->est_mort = VRAI;
-                *score += elem->pnj->valeur_vaincu;
-                changer_texte(texte_score, "POINTS : %i", *score);
-            }
+            if (SDL_HasIntersectionF(hitbox_attaque, &elem->hitbox))
+                pnj_mourir(elem, score, texte_score);
         }
         suivant(I_LISTE_ENTITES);
     }
