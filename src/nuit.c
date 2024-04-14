@@ -43,7 +43,6 @@ void transitionner_nuit(t_nuit * nuit) {
         incrementer_parametre(&(nuit->alpha), nuit->min_alpha, nuit->max_alpha);
         incrementer_parametre(&(nuit->rayon), nuit->min_rayon, nuit->max_rayon);
         incrementer_parametre(&(nuit->volume_musique_jour), nuit->min_musique, nuit->max_musique);
-        calculer_ombre(nuit);
 
         if (nuit->alpha >= nuit->max_alpha && nuit->rayon >= nuit->max_rayon)
             nuit->est_active_prec = FAUX;
@@ -52,13 +51,14 @@ void transitionner_nuit(t_nuit * nuit) {
         Mix_Volume(CANAL_MUS_NUIT, nuit->max_musique - nuit->volume_musique_jour);
         SDL_SetTextureAlphaMod(nuit->texture_jour, nuit->alpha);
         SDL_SetTextureAlphaMod(nuit->texture_nuit, nuit->max_alpha - nuit->alpha);
+
+        calculer_ombre(nuit);
     }
     // la nuit tombe
     else if (nuit->est_active && !nuit->est_active_prec) {
         decrementer_parametre(&(nuit->alpha), nuit->min_alpha, nuit->max_alpha);
         decrementer_parametre(&(nuit->rayon), nuit->min_rayon, nuit->max_rayon);
         decrementer_parametre(&(nuit->volume_musique_jour), nuit->min_musique, nuit->max_musique);
-        calculer_ombre(nuit);
 
         if (nuit->alpha <= nuit->min_alpha && nuit->rayon <= nuit->min_rayon)
             nuit->est_active_prec = VRAI;
@@ -67,7 +67,11 @@ void transitionner_nuit(t_nuit * nuit) {
         Mix_Volume(CANAL_MUS_NUIT, nuit->max_musique - nuit->volume_musique_jour);
         SDL_SetTextureAlphaMod(nuit->texture_jour, nuit->alpha);
         SDL_SetTextureAlphaMod(nuit->texture_nuit, nuit->max_alpha - nuit->alpha);
+
+        calculer_ombre(nuit);
     }
+    else if (nuit->est_active)
+        calculer_ombre(nuit);
 }
 
 void calculer_ombre(t_nuit * nuit) {
