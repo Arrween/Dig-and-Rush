@@ -370,10 +370,16 @@ int boucle_jeu(SDL_Renderer * rend) {
         verif_collision(perso, &correction_defilement);
 
         // Déplacement et animation du personnage
-        if (! perso->collisions.b)
+        if (!perso->collisions.b) {
             changer_animation(perso, perso->sens_regard == GAUCHE ? CHUTE_G : CHUTE_D);
-        else if (perso->animation_courante->id == CHUTE_G || perso->animation_courante->id == CHUTE_D)
+            if (perso->deplacement != REPOS_MVT)
+                perso->deplacement_prec = perso->deplacement;
+            perso->deplacement = REPOS_MVT;
+        }
+        else if (perso->animation_courante->id == CHUTE_G || perso->animation_courante->id == CHUTE_D) {
             changer_animation(perso, REPOS);
+            perso->deplacement = perso->deplacement_prec;
+        }
         else if (perso->animation_courante->id == REPOS) {
             if (perso->deplacement == GAUCHE)
                 changer_animation(perso, DEPL_G);
