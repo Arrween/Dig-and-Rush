@@ -12,17 +12,18 @@
 
 #define LARGEUR_MUR 10
 
-#define CHANCE_BLOC_PIERRE 4 // en dizaine de %
-#define CHANCE_BLOC_TERRE 4 // en dizaine de %
-#define CHANCE_BLOC_VIDE 2 // en dizaine de %
+#define CHANCE_BLOC_PIERRE 4 // en dizaines de %
+#define CHANCE_BLOC_TERRE 4 // en dizaines de %
+#define CHANCE_BLOC_VIDE 2 // en dizaines de %
 #define MAX_BLOCS_PIERRE 7
+#define CHANCE_BLOC_TERRE_INTERMEDIAIRE 1 // en dizaines de %
 
 
 /**
  * @brief Génère un morceau de niveau aléatoire qui se répète.
  */
 
-void generer_morceau_niveau(float repere_defilement){
+void generer_morceau_niveau(float repere_generation){
     en_queue(I_LISTE_ENTITES);
 
     // générer un nombre aléatoire entre 0 et 9
@@ -30,7 +31,7 @@ void generer_morceau_niveau(float repere_defilement){
     srand(time(NULL));
 
     int i, j;
-    float x = 10, y = repere_defilement;
+    float x = 10, y = repere_generation;
     int n_pierres_ligne = 0;
     int presences_blocs[8];
 
@@ -55,6 +56,7 @@ void generer_morceau_niveau(float repere_defilement){
         // ajouter un ennemi au-dessus d’un bloc aléatoire de la ligne
         random = rand() % 8;
         int limite = random - 1 > 0 ? random - 1 : 0;
+        int position_ennemi = -1;
         // parcourir la ligne à partir d’une colonne aléatoire jusqu’à trouver un bloc où poser l’ennemi
         for (j = random; j != limite && !presences_blocs[j]; j = (j + 1) % 8);
         if (presences_blocs[j]) {
@@ -62,6 +64,13 @@ void generer_morceau_niveau(float repere_defilement){
                 ajout_droit(I_LISTE_ENTITES, creer_entite_pnj_depuis_spritesheet("squelette", 10*(j+1)-5, y-17, 20, 17, VRAI));
             else if (i % 3 == 0)
                 ajout_droit(I_LISTE_ENTITES, creer_entite_pnj_depuis_spritesheet("feu", 10*(j+1)-5, y-20, 20, 20, VRAI));
+            position_ennemi = j;
+        }
+        // ajout aléatoire de blocs sur les lignes intermédiaires là où ne se trouve pas d’ennemi
+        for (j = 0, x = 10; j < 8; j++, x += 10) {
+            random = rand() % 10;
+            if (j != position_ennemi && random < CHANCE_BLOC_TERRE_INTERMEDIAIRE)
+                ajout_droit(I_LISTE_ENTITES, creer_entite_destructible("bloc_terre", x, y-10, 10, 10, VRAI));
         }
     }
 }
