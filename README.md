@@ -1,4 +1,4 @@
-# Dig & Rush {#mainpage}
+# Dig & Rush
 
 ## Contributeurs
 - [BOULANGER Matthieu](https://github.com/Idlusen) (Idlusen)
