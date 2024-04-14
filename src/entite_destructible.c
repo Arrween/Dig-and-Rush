@@ -1,3 +1,7 @@
+/** @file
+ *  @brief implémentation du caractère destructible d’une `t_entite`
+ */
+
 #include <string.h>
 
 #include "entite_destructible.h"
@@ -5,10 +9,10 @@
 #include "constantes.h"
 
 /**
- * @brief Crée une nouvelle structure d'entité destructible avec les attributs spécifiés.
+ * @brief Alloue la mémoire pour un `t_destructible` et initialise ses champs.
  * 
- * @param id Identifiant de la ressource utilisée pour définir les valeurs par défaut.
- * @return Pointeur vers la nouvelle structure d'entité destructible créée, NULL en cas d'échec.
+ * @param id Identifiant de ressource utilisé pour définir les valeurs par défaut.
+ * @return pointeur vers le `t_destructible` alloué et initialisé
  */
 
 t_destructible * creer_destructible(char * id) {
@@ -37,12 +41,13 @@ t_destructible * creer_destructible(char * id) {
  * @param w Largeur de l'entité destructible.
  * @param h Hauteur de l'entité destructible.
  * @param est_relatif 1 si les coordonnées sont relatives, 0 si elles sont absolues.
- * @return Pointeur vers la nouvelle structure d'entité créée, NULL en cas d'échec.
+ * @return Pointeur vers la nouvelle structure d'entité créée.
  */
 
 t_entite * creer_entite_destructible(char * id, float x, float y, float w, float h, int est_relatif) {
     t_entite * nouv = creer_entite(id, x, y, w, h, est_relatif);
     nouv->destructible = creer_destructible(id);
+    /** une entité destructible est aussi une entité obstacle */
     nouv->est_obstacle = VRAI;
     return nouv;
 }
