@@ -37,7 +37,7 @@ void generer_morceau_niveau(float repere_defilement){
                     ajout_droit(I_LISTE_ENTITES, creer_entite_obstacle("bloc_pierre", x, y, 10, 10, VRAI));
                     nb_pierres++;
                     if (i % 5 == 0 && n_ennemis == 0){
-                        ajout_droit(I_LISTE_ENTITES, creer_entite_pnj_depuis_spritesheet("squelette", x-5, y-20, 20, 20, VRAI));
+                        ajout_droit(I_LISTE_ENTITES, creer_entite_pnj_depuis_spritesheet("squelette", x-5, y-17, 20, 17, VRAI));
                         n_ennemis = 1;
                     }
                     else if (i%3==0 && n_ennemis==0){
@@ -51,7 +51,7 @@ void generer_morceau_niveau(float repere_defilement){
                     ajout_droit(I_LISTE_ENTITES, creer_entite_destructible("bloc_terre", x, y, 10, 10, VRAI));
 
                     if (i % 5 == 0 && n_ennemis == 0){
-                        ajout_droit(I_LISTE_ENTITES, creer_entite_pnj_depuis_spritesheet("squelette", x-5, y-20, 20, 20, VRAI));
+                        ajout_droit(I_LISTE_ENTITES, creer_entite_pnj_depuis_spritesheet("squelette", x-5, y-17, 20, 17, VRAI));
                         n_ennemis = 1;
                     }
 
