@@ -152,14 +152,14 @@ struct chargement_spritesheet chargements_spritesheets[] = {
     {"ressources/Personnages/feu.png", "feu", 
             {
                 //Les coordonnées sont à modifier
-                {REPOS, 0, 2*128, 128, 128, 0, -5, 1, 1., NULL},
-                {DEPL_G, 0, 13*128, 128, 128, 0, -5, 7, 1/2., NULL},
-                {DEPL_D, 0, 5*128, 128, 128, 0, -5, 7, 1/2., NULL},
-                {ATTQ_G, 0, 3*128, 128, 128, 0, 0, 13, 1/3., NULL},
-                {ATTQ_D, 0, 11*128, 128, 128, 0, 0, 13, 1/3., NULL},
-                {ANIM_MORT, 0, 1*128, 128, 128, 0, 0, 6, 1/8., NULL},
-                {ANIM_MORT_STATIQUE, 5, 1*128, 128, 128, 0, 0, 1, 1, NULL},
-                {ANIM_NULLE, 0, 0, 0, 0, 0, 0, 0, 0., NULL}
+                {REPOS, 0, 2*128, 128, 128, 0, -5, 1, 1.},
+                {DEPL_G, 0, 13*128, 128, 128, 0, -5, 7, 1/2.},
+                {DEPL_D, 0, 5*128, 128, 128, 0, -5, 7, 1/2.},
+                {ATTQ_G, 0, 3*128, 128, 128, 0, -5, 13, 1/3.},
+                {ATTQ_D, 0, 11*128, 128, 128, 0, -5, 13, 1/3.},
+                {ANIM_MORT, 0, 1*128, 128, 128, 0, -5, 6, 1/8.},
+                {ANIM_MORT_STATIQUE, 5, 1*128, 128, 128, 0, -5, 1, 1},
+                {ANIM_NULLE, 0, 0, 0, 0, 0, 0, 0, 0.}
             }
     }
 };
