@@ -333,6 +333,11 @@ t_bouton * menus[3][10] = {
                             jouer_audio(0, "coq", 0);
                             etat.doit_quitter = boucle_jeu(rend);
                             break;
+                        case SDL_SCANCODE_W:
+                            selectionner_personnage("ania");
+                            jouer_audio(0, "coq", 0);
+                            etat.doit_quitter = boucle_jeu(rend);
+                            break;
                         case SDLK_SPACE:
                             pause = !pause;
                             break;
