@@ -107,12 +107,9 @@ t_pnj * creer_pnj(char * id, t_entite * e) {
     nouv->valeur_vaincu = 0;
     nouv->est_ecrasable = FAUX;
     nouv->parent->vitesse = 1.;
-    changer_hitbox(nouv->parent, &(nouv->hitbox_attaque), 
-                   nouv->parent->hitbox.x,
-                   nouv->parent->hitbox.y,
-                   nouv->parent->hitbox.w,
-                   nouv->parent->hitbox.h,
-                   VRAI);
+    changer_hitbox(nouv->parent, &(nouv->hitbox_attaque), nouv->parent->hitbox.x,
+                   nouv->parent->hitbox.y, nouv->parent->hitbox.w,
+                   nouv->parent->hitbox.h, FAUX);
 
     if (strcmp(id, "squelette") == 0) {
         nouv->comportement = comportement_patrouille;
@@ -129,6 +126,9 @@ t_pnj * creer_pnj(char * id, t_entite * e) {
         nouv->est_ecrasable = VRAI;
         nouv->parent->vitesse = 1./2;
         changer_hitbox(nouv->parent, &(nouv->parent->hitbox), 20, 30, 50, 55, VRAI);
+        changer_hitbox(nouv->parent, &(nouv->hitbox_attaque), nouv->parent->hitbox.x,
+                       nouv->parent->hitbox.y, nouv->parent->hitbox.w,
+                       nouv->parent->hitbox.h, FAUX);
     }
 
     return nouv;
