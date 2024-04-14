@@ -13,10 +13,18 @@
 
 t_destructible * creer_destructible(char * id) {
     t_destructible * nouv = malloc(sizeof(t_destructible));
-    if (strcmp(id, "bloc_terre") == 0)
-        strcpy(nouv->id_son, "destruction_bloc");
+    int alea;
+    if (strcmp(id, "bloc_terre") == 0) {
+        alea = rand() % 3;
+        if (alea == 0)
+            strcpy(nouv->id_son, "destruction_bloc_1");
+        else if (alea == 1)
+            strcpy(nouv->id_son, "destruction_bloc_2");
+        else if (alea == 2)
+            strcpy(nouv->id_son, "destruction_bloc_3");
+    }
     else
-        strcpy(nouv->id_son, "destruction_bloc");
+        strcpy(nouv->id_son, "destruction_bloc_1");
     return nouv;
 }
 
