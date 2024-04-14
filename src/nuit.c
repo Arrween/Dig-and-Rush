@@ -5,24 +5,37 @@ void calculer_ombre(t_nuit * nuit);
 t_nuit * creer_nuit(SDL_Renderer * rend, t_entite * perso, SDL_FRect zone_jeu,
                     SDL_Texture * texture_jour, SDL_Texture * texture_nuit) {
     t_nuit * nouv = malloc(sizeof(t_nuit));
+
     nouv->centre = perso;
     nouv->etendue = zone_jeu;
     nouv->texture_jour = texture_jour;
     nouv->texture_nuit = texture_nuit;
+    SDL_SetTextureBlendMode(nouv->texture_jour, SDL_BLENDMODE_BLEND);
+    SDL_SetTextureBlendMode(nouv->texture_nuit, SDL_BLENDMODE_BLEND);
+
     nouv->min_alpha = 0;
     nouv->max_alpha = 255;
     nouv->alpha = nouv->min_alpha;
     nouv->min_rayon = FACTEUR_MIN_RAYON_OMBRE * nouv->centre->rect_dst->w;
     nouv->max_rayon = MAX_RAYON_OMBRE;
     nouv->rayon = nouv->min_rayon;
+
     nouv->texture_ombre = SDL_CreateTexture(rend, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_STREAMING, TAILLE_L, TAILLE_H);
     SDL_SetTextureBlendMode(nouv->texture_ombre, SDL_BLENDMODE_BLEND);
+
     nouv->max_musique = MIX_MAX_VOLUME * FACTEUR_VOLUME_SONS_INI;
     nouv->min_musique = 0;
     nouv->volume_musique_jour = nouv->max_musique;
+
     nouv->est_active = FAUX;
     nouv->est_active_prec = VRAI;
+
     return nouv;
+}
+
+void basculer_nuit(t_nuit * nuit) {
+    nuit->est_active = !nuit->est_active;
+    nuit->est_active_prec = !nuit->est_active;
 }
 
 void decrementer_parametre(float * param, float min, float max) {

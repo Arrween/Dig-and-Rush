@@ -17,9 +17,10 @@
 #include "listes.h"
 #include "texte.h"
 
-#define DELAI_CREUSAGE 18 // nombre de frames
-
-#define DELAI_PERTE_SCORE 150 // nombre de frames
+#define DELAI_CREUSAGE 18 // en nombre de frames
+#define DELAI_PERTE_SCORE 150 // en nombre de frames
+#define DELAI_JOUR 750 // en nombre de frames
+#define DELAI_NUIT 300 // en nombre de frames
 
 
 
@@ -131,6 +132,7 @@ int boucle_jeu(SDL_Renderer * rend) {
     int score = 0;
     int creusage_en_cours = FAUX; // Indicateur si l'animation de creusage est en cours
     int compteur_creusage = 0;
+    int compteur_jour_nuit = 0;
 
 
     srand(time(NULL));
@@ -145,24 +147,18 @@ int boucle_jeu(SDL_Renderer * rend) {
 
     int doit_quitter = FAUX;
 
-    t_entite * fond, * fond_tour, * fond_tour_2, * perso;
-    t_entite * fond_nuit;
-
     // Initialisation des entités de fond et de personnage
-    fond = creer_entite("fond_jeu", -1, -1, -1, -1, FAUX);
-    fond_nuit = creer_entite("fond_jeu_nuit", -1, -1, -1, -1, FAUX);
-    // pour transition jour/nuit
-    SDL_SetTextureBlendMode(fond->texture, SDL_BLENDMODE_BLEND);
-    SDL_SetTextureBlendMode(fond_nuit->texture, SDL_BLENDMODE_BLEND);
+    t_entite * fond = creer_entite("fond_jeu", -1, -1, -1, -1, FAUX);
+    t_entite * fond_nuit = creer_entite("fond_jeu_nuit", -1, -1, -1, -1, FAUX);
 
-    fond_tour = creer_entite("fond_tour", 0, 0, 100, 100, VRAI);
-    fond_tour_2 = creer_entite("fond_tour", 0, 100, 100, 100, VRAI);
+    t_entite * fond_tour = creer_entite("fond_tour", 0, 0, 100, 100, VRAI);
+    t_entite * fond_tour_2 = creer_entite("fond_tour", 0, 100, 100, 100, VRAI);
 
-    perso = creer_entite_perso((char*)personnage_selectionne, 40, 20, 15, 12, VRAI);
+    t_entite * perso = creer_entite_perso((char*)personnage_selectionne, 40, 20, 15, 12, VRAI);
     
     generer_murs();
 
-    SDL_FRect zone_jeu = {TAILLE_L/4, 0, TAILLE_L/2, TAILLE_H};
+    SDL_FRect zone_jeu = {TAILLE_L/4., 0, TAILLE_L/2., TAILLE_H};
     t_nuit * nuit = creer_nuit(rend, perso, zone_jeu, fond->texture, fond_nuit->texture);
 
     // compteur de FPS
@@ -231,8 +227,7 @@ int boucle_jeu(SDL_Renderer * rend) {
                             }
                             break;
                         case SDL_SCANCODE_L:
-                            nuit->est_active = !nuit->est_active;
-                            nuit->est_active_prec = !nuit->est_active;
+                            basculer_nuit(nuit);
                             break;
                         case SDL_SCANCODE_A:
                             perso->deplacement_prec = perso->deplacement;
@@ -474,6 +469,17 @@ int boucle_jeu(SDL_Renderer * rend) {
         if (compteur_frames % DELAI_PERTE_SCORE == 0 && score > 0) {
             score--;
             changer_texte(texte_score, "POINTS : %i", score);
+        }
+
+        compteur_jour_nuit++;
+
+        if (nuit->est_active && compteur_jour_nuit == DELAI_NUIT) {
+            basculer_nuit(nuit);
+            compteur_jour_nuit = 0;
+        }
+        else if (!nuit->est_active && compteur_jour_nuit == DELAI_JOUR) {
+            basculer_nuit(nuit);
+            compteur_jour_nuit = 0;
         }
 
         chrono_fin = clock();

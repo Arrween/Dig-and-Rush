@@ -37,6 +37,7 @@ typedef struct {
 t_nuit * creer_nuit(SDL_Renderer*, t_entite* centre, SDL_FRect zone_jeu,
                     SDL_Texture* texture_jour, SDL_Texture* texture_nuit);
 void transitionner_nuit(t_nuit*);
+void basculer_nuit(t_nuit*);
 void detruire_nuit(t_nuit ** nuit);
 
 #endif
