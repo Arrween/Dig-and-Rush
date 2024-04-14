@@ -81,7 +81,7 @@ t_spritesheet * recuperer_spritesheet(const char*);
 
 t_son * recuperer_son(const char*, int);
 t_musique * recuperer_musique(const char*, int);
-int jouer_audio(int, const char*, int);
+int jouer_audio(int canal, const char* id, int repetitions);
 
 TTF_Font * recuperer_police(const char*);
 

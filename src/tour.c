@@ -12,16 +12,10 @@
 #include "entite_destructible.h"
 #include "entite_pnj.h"
 #include "entite_perso.h"
+#include "nuit.h"
 #include "morceaux_niveau.h"
 #include "listes.h"
 #include "texte.h"
-
-#define MAX_RAYON_OMBRE (TAILLE_H)
-#define FACTEUR_MIN_RAYON_OMBRE 4 // multipli par la largeur du personnage
-#define FACTEUR_OBSCURCISSEMENT 6.
-#define PAS_RAYON_OMBRE 18
-
-#define PAS_ALPHA_FOND 7
 
 #define DELAI_CREUSAGE 18 // nombre de frames
 
@@ -127,55 +121,6 @@ void creuser(t_entite * a_creuser) {
     }
 }
 
-void calculer_ombre(SDL_Texture * tex_ombre, int rayon,
-                    t_entite * perso,
-                    SDL_FRect rect_zone) {
-    SDL_PixelFormat * format = SDL_AllocFormat(SDL_PIXELFORMAT_RGBA8888);
-    Uint32 * pixels;
-    int pitch;
-    // permettre d’écrire les pixels de la texture
-    SDL_LockTexture(tex_ombre, NULL, (void**)&pixels, &pitch);
-
-    SDL_FRect rect_perso_abs;
-
-    // gestion manuelle du décalage pour les animations d’attaque, pas idéal
-    float w, h;
-    if (perso->animation_courante->id == ATTQ_G || perso->animation_courante->id == ATTQ_D) {
-        SDL_FRect rect_perso_decale = {perso->rect_dst->x + perso->animation_courante->decalage_dest_x, perso->rect_dst->y + perso->animation_courante->decalage_dest_y, perso->rect_dst->w, perso->rect_dst->h};
-        rect_perso_abs = convertir_vers_absolu(&rect_perso_decale, rect_zone);
-        w = rect_perso_abs.w / 3;
-        h = rect_perso_abs.h / 3;
-    }
-    else {
-        rect_perso_abs = convertir_vers_absolu(perso->rect_dst, rect_zone);
-        w = rect_perso_abs.w;
-        h = rect_perso_abs.h;
-    }
-
-    for (int i = rect_zone.x; i < rect_zone.x + rect_zone.w; i++) {
-        for (int j = rect_zone.y; j < rect_zone.y + rect_zone.h; j++) {
-            int dx = (i-(rect_perso_abs.x+w/2));
-            int dy = (j-(rect_perso_abs.y+h/2));
-            int carre_distance = dx*dx + dy*dy;
-            // si la distance euclidienne entre le point (i,j) de la zone
-            // de jeu et le centre du personnage est plus grande que `rayon`
-            // écrire un pixel d’autant moins transparent qu’il est loin
-            if (carre_distance > rayon*rayon) {
-                float alpha = ((float)(carre_distance - rayon*rayon)) / (TAILLE_L/2*TAILLE_L/2 + TAILLE_H/2*TAILLE_H/2) * 255. * FACTEUR_OBSCURCISSEMENT;
-                pixels[j * TAILLE_L + i] = SDL_MapRGBA(format, 0, 0, 0, alpha < 255 ? alpha : 255);
-            }
-            // sinon écrire un pixel transparent
-            else
-                pixels[j * TAILLE_L + i] = SDL_MapRGBA(format, 0, 0, 0, 0);
-        }
-    }
-
-    // fin de l’écriture des pixels
-    SDL_UnlockTexture(tex_ombre);
-    SDL_FreeFormat(format);
-}
-
-
 int boucle_jeu(SDL_Renderer * rend) {
     SDL_Event event;
     int doit_boucler = VRAI;
@@ -193,6 +138,11 @@ int boucle_jeu(SDL_Renderer * rend) {
     init_liste(I_LISTE_ENTITES);
     init_liste(I_LISTE_MORCEAUX_NIVEAU);
 
+    Mix_HaltMusic();
+    Mix_Volume(CANAL_MUS_JOUR, 0);
+    jouer_audio(CANAL_MUS_JOUR, "musique_jour", -1);
+    jouer_audio(CANAL_MUS_NUIT, "musique_nuit", -1);
+
     int doit_quitter = FAUX;
 
     t_entite * fond, * fond_tour, * fond_tour_2, * perso;
@@ -201,6 +151,10 @@ int boucle_jeu(SDL_Renderer * rend) {
     // Initialisation des entités de fond et de personnage
     fond = creer_entite("fond_jeu", -1, -1, -1, -1, FAUX);
     fond_nuit = creer_entite("fond_jeu_nuit", -1, -1, -1, -1, FAUX);
+    // pour transition jour/nuit
+    SDL_SetTextureBlendMode(fond->texture, SDL_BLENDMODE_BLEND);
+    SDL_SetTextureBlendMode(fond_nuit->texture, SDL_BLENDMODE_BLEND);
+
     fond_tour = creer_entite("fond_tour", 0, 0, 100, 100, VRAI);
     fond_tour_2 = creer_entite("fond_tour", 0, 100, 100, 100, VRAI);
 
@@ -208,17 +162,8 @@ int boucle_jeu(SDL_Renderer * rend) {
     
     generer_murs();
 
-    int lumiere_est_allumee = VRAI;
-    int lumiere_est_allumee_prec = FAUX;
-
-    // texture pour afficher une ombre quand la lumière est éteinte
     SDL_FRect zone_jeu = {TAILLE_L/4, 0, TAILLE_L/2, TAILLE_H};
-    SDL_Texture * tex_ombre = SDL_CreateTexture(rend, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_STREAMING, TAILLE_L, TAILLE_H);
-    SDL_SetTextureBlendMode(tex_ombre, SDL_BLENDMODE_BLEND);
-    int rayon_ombre = FACTEUR_MIN_RAYON_OMBRE * perso->rect_dst->w;
-    SDL_SetTextureBlendMode(fond->texture, SDL_BLENDMODE_BLEND);
-    SDL_SetTextureBlendMode(fond_nuit->texture, SDL_BLENDMODE_BLEND);
-    int alpha_fond = 0;
+    t_nuit * nuit = creer_nuit(rend, perso, zone_jeu, fond->texture, fond_nuit->texture);
 
     // compteur de FPS
     t_texte * texte_fps = creer_texte("police_defaut", 0, 0, 0, 255, 20, TAILLE_H-40, 100, 30);
@@ -286,8 +231,8 @@ int boucle_jeu(SDL_Renderer * rend) {
                             }
                             break;
                         case SDL_SCANCODE_L:
-                            lumiere_est_allumee = !lumiere_est_allumee;
-                            lumiere_est_allumee_prec = !lumiere_est_allumee;
+                            nuit->est_active = !nuit->est_active;
+                            nuit->est_active_prec = !nuit->est_active;
                             break;
                         case SDL_SCANCODE_A:
                             perso->deplacement_prec = perso->deplacement;
@@ -390,37 +335,11 @@ int boucle_jeu(SDL_Renderer * rend) {
         SDL_RenderClear(rend);
 
         if (perso->perso->est_mort)
-            lumiere_est_allumee = FAUX;
-        if (lumiere_est_allumee && !lumiere_est_allumee_prec) {
-            alpha_fond += PAS_ALPHA_FOND;
-            if (alpha_fond >= 255)
-                alpha_fond = 255;
+            nuit->est_active = VRAI;
 
-            rayon_ombre += PAS_RAYON_OMBRE;
-            if (rayon_ombre >= MAX_RAYON_OMBRE)
-                rayon_ombre = MAX_RAYON_OMBRE;
-            calculer_ombre(tex_ombre, rayon_ombre, perso, zone_jeu);
-
-            if (alpha_fond >= 255 && rayon_ombre >= MAX_RAYON_OMBRE)
-                lumiere_est_allumee_prec = VRAI;
-        }
-        else if (!lumiere_est_allumee && lumiere_est_allumee_prec) {
-            alpha_fond -= PAS_ALPHA_FOND;
-            if (alpha_fond <= 0)
-                alpha_fond = 0;
-
-            rayon_ombre -= PAS_RAYON_OMBRE;
-            if (rayon_ombre <= FACTEUR_MIN_RAYON_OMBRE*perso->rect_dst->w)
-                rayon_ombre = FACTEUR_MIN_RAYON_OMBRE * perso->rect_dst->w;
-            calculer_ombre(tex_ombre, rayon_ombre, perso, zone_jeu);
-
-            if (alpha_fond <= 0 && rayon_ombre <= FACTEUR_MIN_RAYON_OMBRE*perso->rect_dst->w)
-                lumiere_est_allumee_prec = FAUX;
-        }
+        transitionner_nuit(nuit);
 
         // Affichage des entités
-        SDL_SetTextureAlphaMod(fond->texture, alpha_fond);
-        SDL_SetTextureAlphaMod(fond_nuit->texture, 255-alpha_fond);
         afficher_entite(rend, fond);
         afficher_entite(rend, fond_nuit);
 
@@ -443,8 +362,8 @@ int boucle_jeu(SDL_Renderer * rend) {
             suivant(I_LISTE_ENTITES);
         }
 
-        if (!lumiere_est_allumee || !lumiere_est_allumee_prec)
-            SDL_RenderCopy(rend, tex_ombre, NULL, NULL);
+        if (nuit->est_active || nuit->est_active_prec)
+            SDL_RenderCopy(rend, nuit->texture_ombre, NULL, NULL);
 
         afficher_texte(rend, texte_fps);
         afficher_texte(rend, texte_score);
@@ -587,6 +506,7 @@ int boucle_jeu(SDL_Renderer * rend) {
     detruire_entite(&perso);
     detruire_texte(&texte_fps);
     detruire_texte(&texte_score);
+    detruire_nuit(&nuit);
 
     return doit_quitter ;
 }
