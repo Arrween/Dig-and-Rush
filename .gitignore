@@ -6,10 +6,12 @@ bin/*
 *.aux
 *.log
 *.out
+*.toc
 
 # documentation générée
 doc/html
 doc/latex
+doc/rapport.pdf
 
 # mac
 .DS_Store
