@@ -161,10 +161,16 @@ int boucle_jeu(SDL_Renderer * rend) {
     t_nuit * nuit = creer_nuit(rend, perso, zone_jeu, fond->texture, fond_nuit->texture);
 
     // compteur de FPS
-    t_texte * texte_fps = creer_texte("police_defaut", 0, 0, 0, 255, 20, TAILLE_H-40, 100, 30);
+    t_texte * texte_fps = creer_texte("police_defaut", 255, 255, 255, 255, 20, TAILLE_H-40, 100, 30);
 
-    t_texte * texte_score = creer_texte("police_defaut", 0, 0, 0, 255, 20, 20, 160, 50);
+    t_texte * texte_score = creer_texte("police_defaut", 255, 255, 255, 255, 20, 20, 160, 50);
     changer_texte(texte_score, "POINTS : %i", score);
+
+    t_texte * texte_mort = creer_texte("police_defaut", 255, 255, 255, 255, 550, 500, 160, 50);
+    changer_texte(texte_mort, "GAME OVER !");
+
+    t_texte * texte_reessayer = creer_texte("police_defaut", 255, 255, 255, 255, 450, 550, 350, 50);
+    changer_texte(texte_reessayer, "Type escape to retry");
 
     // chronométrage du temps de chaque frame
     clock_t chrono_deb, chrono_fin;
@@ -190,6 +196,7 @@ int boucle_jeu(SDL_Renderer * rend) {
                         creusage_en_cours = FAUX;
 
                     if (perso->perso->est_mort) {
+                        
                         switch (event.key.keysym.scancode) {
                             case SDL_SCANCODE_ESCAPE:
                             case SDL_SCANCODE_Q:
@@ -317,7 +324,7 @@ int boucle_jeu(SDL_Renderer * rend) {
             SDL_Delay(1000/FPS);
             continue;
         }
-
+       
         if (creusage_en_cours) {
             compteur_creusage++;
             if (compteur_creusage >= DELAI_CREUSAGE) {
@@ -328,8 +335,9 @@ int boucle_jeu(SDL_Renderer * rend) {
         
         SDL_RenderClear(rend);
 
-        if (perso->perso->est_mort)
+        if (perso->perso->est_mort){
             nuit->est_active = VRAI;
+        }
 
         transitionner_nuit(nuit);
 
@@ -361,6 +369,11 @@ int boucle_jeu(SDL_Renderer * rend) {
 
         afficher_texte(rend, texte_fps);
         afficher_texte(rend, texte_score);
+
+        if (perso->perso->est_mort) {
+            afficher_texte(rend, texte_mort);
+            afficher_texte(rend, texte_reessayer);
+        }
 
         SDL_RenderPresent(rend);
 
@@ -511,6 +524,8 @@ int boucle_jeu(SDL_Renderer * rend) {
     detruire_entite(&perso);
     detruire_texte(&texte_fps);
     detruire_texte(&texte_score);
+    detruire_texte(&texte_mort);
+    detruire_texte(&texte_reessayer);
     detruire_nuit(&nuit);
 
     return doit_quitter ;
