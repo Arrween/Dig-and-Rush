@@ -174,6 +174,11 @@ struct chargement chargements_sons[] = {
     {"ressources/Audio/Musique/musique_menu.mp3", "musique_jour"},
     {"ressources/Audio/Musique/musique_nuit.mp3", "musique_nuit"},
     {"ressources/Audio/SFX/attaque_squelette.ogg", "attaque_squelette"},
+    {"ressources/Audio/SFX/coup.mp3", "blessure_perso"},
+    {"ressources/Audio/SFX/blessure_perso_f.mp3", "blessure_perso_f"},
+    {"ressources/Audio/SFX/swing.mp3", "attaque_perso"},
+    {"ressources/Audio/SFX/mort.mp3", "mort_perso"},
+    {"ressources/Audio/SFX/mort_perso_f.mp3", "mort_perso_f"},
 };
 
 struct chargement chargements_musiques[] = {
