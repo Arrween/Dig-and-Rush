@@ -55,14 +55,14 @@ void verif_collision(t_entite * e1, float * correction_defilement) {
     e1->collisions.h = NULL;
     e1->collisions.b = NULL;
 
-    en_tete(I_LISTE_ENTITES);
+    liste_en_tete(I_LISTE_ENTITES);
     while (!hors_liste(I_LISTE_ENTITES)) {
-        t_entite * e2 = valeur_elt(I_LISTE_ENTITES);
+        t_entite * e2 = liste_lire(I_LISTE_ENTITES);
         
         if (e1 == e2 || (!e2->est_obstacle && !(e2->pnj && e2->pnj->est_ecrasable)) 
             || (e2->pnj && e2->pnj->est_mort) || (e2->perso && e2->perso->est_mort)
             || (e2->pnj && e1->perso && e1->perso->est_mort)) {
-            suivant(I_LISTE_ENTITES);
+            liste_suivant(I_LISTE_ENTITES);
             continue;
         }
 
@@ -103,22 +103,22 @@ void verif_collision(t_entite * e1, float * correction_defilement) {
                 *correction_defilement = depassement;
         }
 
-        suivant(I_LISTE_ENTITES);
+        liste_suivant(I_LISTE_ENTITES);
     }
 }
 
 void creuser(t_entite * a_creuser) {
-    en_queue(I_LISTE_ENTITES);
+    liste_en_queue(I_LISTE_ENTITES);
     while(!hors_liste(I_LISTE_ENTITES)) {
-        t_entite * elem = valeur_elt(I_LISTE_ENTITES);
+        t_entite * elem = liste_lire(I_LISTE_ENTITES);
         if (a_creuser == elem && elem->destructible) {
             jouer_audio(1, elem->destructible->id_son, 0);
-            oter_elt(I_LISTE_ENTITES);
+            liste_retirer(I_LISTE_ENTITES);
             detruire_entite(&elem);
             break;
         }
         else
-            precedent(I_LISTE_ENTITES);
+            liste_precedent(I_LISTE_ENTITES);
     }
 }
 
@@ -138,7 +138,6 @@ int boucle_jeu(SDL_Renderer * rend) {
     srand(time(NULL));
 
     init_liste(I_LISTE_ENTITES);
-    init_liste(I_LISTE_MORCEAUX_NIVEAU);
 
     Mix_HaltMusic();
     Mix_Volume(CANAL_MUS_JOUR, 0);
@@ -162,10 +161,16 @@ int boucle_jeu(SDL_Renderer * rend) {
     t_nuit * nuit = creer_nuit(rend, perso, zone_jeu, fond->texture, fond_nuit->texture);
 
     // compteur de FPS
-    t_texte * texte_fps = creer_texte("police_defaut", 0, 0, 0, 255, 20, TAILLE_H-40, 100, 30);
+    t_texte * texte_fps = creer_texte("police_defaut", 255, 255, 255, 255, 20, TAILLE_H-40, 100, 30);
 
-    t_texte * texte_score = creer_texte("police_defaut", 0, 0, 0, 255, 20, 20, 160, 50);
+    t_texte * texte_score = creer_texte("police_defaut", 255, 255, 255, 255, 20, 20, 160, 50);
     changer_texte(texte_score, "POINTS : %i", score);
+
+    t_texte * texte_mort = creer_texte("police_defaut", 255, 255, 255, 255, 550, 500, 160, 50);
+    changer_texte(texte_mort, "GAME OVER !");
+
+    t_texte * texte_reessayer = creer_texte("police_defaut", 255, 255, 255, 255, 450, 550, 350, 50);
+    changer_texte(texte_reessayer, "Type escape to retry");
 
     // chronométrage du temps de chaque frame
     clock_t chrono_deb, chrono_fin;
@@ -191,6 +196,7 @@ int boucle_jeu(SDL_Renderer * rend) {
                         creusage_en_cours = FAUX;
 
                     if (perso->perso->est_mort) {
+                        
                         switch (event.key.keysym.scancode) {
                             case SDL_SCANCODE_ESCAPE:
                             case SDL_SCANCODE_Q:
@@ -216,14 +222,14 @@ int boucle_jeu(SDL_Renderer * rend) {
                         case SDL_SCANCODE_H:
                             perso->doit_afficher_hitbox = !perso->doit_afficher_hitbox;
                             perso->perso->doit_afficher_hitbox_attaque = !perso->perso->doit_afficher_hitbox_attaque;
-                            en_tete(I_LISTE_ENTITES);
+                            liste_en_tete(I_LISTE_ENTITES);
                             while (!hors_liste(I_LISTE_ENTITES)) {
-                                t_entite * elem = valeur_elt(I_LISTE_ENTITES);
+                                t_entite * elem = liste_lire(I_LISTE_ENTITES);
                                 if (elem->pnj) {
                                     elem->doit_afficher_hitbox = !elem->doit_afficher_hitbox;
                                     elem->pnj->doit_afficher_hitbox_attaque = !elem->pnj->doit_afficher_hitbox_attaque;
                                 }
-                                suivant(I_LISTE_ENTITES);
+                                liste_suivant(I_LISTE_ENTITES);
                             }
                             break;
                         case SDL_SCANCODE_L:
@@ -318,7 +324,7 @@ int boucle_jeu(SDL_Renderer * rend) {
             SDL_Delay(1000/FPS);
             continue;
         }
-
+       
         if (creusage_en_cours) {
             compteur_creusage++;
             if (compteur_creusage >= DELAI_CREUSAGE) {
@@ -329,8 +335,9 @@ int boucle_jeu(SDL_Renderer * rend) {
         
         SDL_RenderClear(rend);
 
-        if (perso->perso->est_mort)
+        if (perso->perso->est_mort){
             nuit->est_active = VRAI;
+        }
 
         transitionner_nuit(nuit);
 
@@ -350,11 +357,11 @@ int boucle_jeu(SDL_Renderer * rend) {
         else
             afficher_entite(rend, perso);
 
-        en_tete(I_LISTE_ENTITES);
+        liste_en_tete(I_LISTE_ENTITES);
         while (!hors_liste(I_LISTE_ENTITES)) {
-            t_entite * elem =  valeur_elt(I_LISTE_ENTITES);
+            t_entite * elem =  liste_lire(I_LISTE_ENTITES);
             afficher_entite(rend, elem);
-            suivant(I_LISTE_ENTITES);
+            liste_suivant(I_LISTE_ENTITES);
         }
 
         if (nuit->est_active || nuit->est_active_prec)
@@ -363,6 +370,11 @@ int boucle_jeu(SDL_Renderer * rend) {
         afficher_texte(rend, texte_fps);
         afficher_texte(rend, texte_score);
 
+        if (perso->perso->est_mort) {
+            afficher_texte(rend, texte_mort);
+            afficher_texte(rend, texte_reessayer);
+        }
+
         SDL_RenderPresent(rend);
 
         // Gestion des collisions
@@ -370,10 +382,16 @@ int boucle_jeu(SDL_Renderer * rend) {
         verif_collision(perso, &correction_defilement);
 
         // Déplacement et animation du personnage
-        if (! perso->collisions.b)
+        if (!perso->collisions.b) {
             changer_animation(perso, perso->sens_regard == GAUCHE ? CHUTE_G : CHUTE_D);
-        else if (perso->animation_courante->id == CHUTE_G || perso->animation_courante->id == CHUTE_D)
+            if (perso->deplacement != REPOS_MVT)
+                perso->deplacement_prec = perso->deplacement;
+            perso->deplacement = REPOS_MVT;
+        }
+        else if (perso->animation_courante->id == CHUTE_G || perso->animation_courante->id == CHUTE_D) {
             changer_animation(perso, REPOS);
+            perso->deplacement = perso->deplacement_prec;
+        }
         else if (perso->animation_courante->id == REPOS) {
             if (perso->deplacement == GAUCHE)
                 changer_animation(perso, DEPL_G);
@@ -386,12 +404,12 @@ int boucle_jeu(SDL_Renderer * rend) {
         // évolution du comportement des pnj
         t_entite * pnjs[100]; // tableau temporaire pour stocker les pnjs trouvés car la vérification de collision interfère avec le parcours de la liste
         int n_pnjs = 0;
-        en_tete(I_LISTE_ENTITES);
+        liste_en_tete(I_LISTE_ENTITES);
         while (!hors_liste(I_LISTE_ENTITES)) {
-            t_entite * elem = valeur_elt(I_LISTE_ENTITES);
+            t_entite * elem = liste_lire(I_LISTE_ENTITES);
             if (elem->pnj)
                 pnjs[n_pnjs++] = elem;
-            suivant(I_LISTE_ENTITES);
+            liste_suivant(I_LISTE_ENTITES);
         }
         for (int i = 0; i < n_pnjs; i++) {
             // tue un ennemi qui peut être écrasé si le personnage lui tombe dessus
@@ -424,11 +442,11 @@ int boucle_jeu(SDL_Renderer * rend) {
         repere_defilement += pas_defilement;
 
         // Déplacement relatif des obstacles pour simuler le défilement
-        en_tete(I_LISTE_ENTITES);
+        liste_en_tete(I_LISTE_ENTITES);
         while (!hors_liste(I_LISTE_ENTITES)) {
-            t_entite * elem = valeur_elt(I_LISTE_ENTITES);
+            t_entite * elem = liste_lire(I_LISTE_ENTITES);
             changer_pos_rel(elem, 0, -pas_defilement);
-            suivant(I_LISTE_ENTITES);
+            liste_suivant(I_LISTE_ENTITES);
         }
         changer_pos_rel(fond_tour, 0, -pas_defilement);
         changer_pos_rel(fond_tour_2, 0, -pas_defilement);
@@ -446,15 +464,15 @@ int boucle_jeu(SDL_Renderer * rend) {
         }
         if (bas_fond_tour < 0 || bas_fond_tour_2 < 0) {
             // suppression des entités ayant défilé au-dessus de la zone de jeu
-            en_queue(I_LISTE_ENTITES);
+            liste_en_queue(I_LISTE_ENTITES);
             while (!hors_liste(I_LISTE_ENTITES)) {
-                t_entite * elem = valeur_elt(I_LISTE_ENTITES);
+                t_entite * elem = liste_lire(I_LISTE_ENTITES);
                 if (elem->rect_dst->y + elem->rect_dst->h < 0) {
-                    oter_elt(I_LISTE_ENTITES);
+                    liste_retirer(I_LISTE_ENTITES);
                     detruire_entite(&elem);
                 }
                 else
-                    precedent(I_LISTE_ENTITES);
+                    liste_precedent(I_LISTE_ENTITES);
             }
 
             generer_murs();
@@ -494,11 +512,11 @@ int boucle_jeu(SDL_Renderer * rend) {
     }
 
     // Libération des ressources
-    en_queue(I_LISTE_ENTITES);
+    liste_en_queue(I_LISTE_ENTITES);
     while (!hors_liste(I_LISTE_ENTITES)) {
-        t_entite * elem = valeur_elt(I_LISTE_ENTITES);
+        t_entite * elem = liste_lire(I_LISTE_ENTITES);
         detruire_entite(&elem);
-        oter_elt(I_LISTE_ENTITES);
+        liste_retirer(I_LISTE_ENTITES);
     }
     detruire_entite(&fond);
     detruire_entite(&fond_tour);
@@ -506,6 +524,8 @@ int boucle_jeu(SDL_Renderer * rend) {
     detruire_entite(&perso);
     detruire_texte(&texte_fps);
     detruire_texte(&texte_score);
+    detruire_texte(&texte_mort);
+    detruire_texte(&texte_reessayer);
     detruire_nuit(&nuit);
 
     return doit_quitter ;

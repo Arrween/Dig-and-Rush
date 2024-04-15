@@ -1,16 +1,14 @@
 /**
- *  \file entite.c
- *  \brief Gestion des entités, tout objet devant être affiché
+ *  @file
+ *  @brief Gestion des entités (tout objet devant être affiché)
  */
 
-#include <limits.h>
 #include <string.h>
 
 #include "entite.h"
 #include "entite_destructible.h"
 #include "entite_pnj.h"
 #include "entite_perso.h"
-#include "spritesheets.h"
 #include "constantes.h"
 
 int numeros_entites = 0;
@@ -53,7 +51,7 @@ SDL_FRect convertir_vers_absolu(SDL_FRect * rect, SDL_FRect rect_abs) {
 
 void afficher_entite(SDL_Renderer * rend, t_entite * e) {
 
-    SDL_FRect zone_jeu = {TAILLE_L/4, 0, TAILLE_L/2, TAILLE_H};
+    SDL_FRect zone_jeu = {TAILLE_L/4., 0, TAILLE_L/2., TAILLE_H};
 
     SDL_Rect * src = e->rect_src->w >= 0 ? e->rect_src : NULL;
     SDL_FRect * dst = e->rect_dst->w >= 0 ? e->rect_dst : NULL;

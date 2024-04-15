@@ -1,3 +1,7 @@
+/** @file
+ *  @brief Implémentation de la propriété « est un obstacle » d’une `t_entite` (source)
+ */
+
 #include "entite_obstacle.h"
 #include "entite.h"
 #include "constantes.h"

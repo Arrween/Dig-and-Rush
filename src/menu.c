@@ -119,6 +119,12 @@ TTF_Font * chargement_font(char * chemin, int taille, SDL_Renderer ** rend, SDL_
 
 void action_parametres(t_etat * etat) {
     etat->i_menu = PAGE_MENU_PARAMETRES;
+      
+}
+
+void action_option(t_etat * etat) {
+    etat->i_menu = PAGE_MENU_PARAMETRES;
+    etat->boutons[4]->texture = recuperer_texture("options");  
 }
 void action_volume(t_etat * etat) {
     if (etat->boutons[1]->texture == recuperer_texture("bouton_volume_off")) {

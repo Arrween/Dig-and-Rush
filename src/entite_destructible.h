@@ -1,3 +1,7 @@
+/** @file
+ *  @brief implémentation du caractère destructible d’une `t_entite` (entête)
+ */
+
 #ifndef ENTITE_DESTRUCTIBLE_H
 #define ENTITE_DESTRUCTIBLE_H
 
@@ -5,9 +9,8 @@
 #include "constantes.h"
 
 /**
- * @brief Structure renseignant le caractère destructible d’une entité
+ * @brief Structure renseignant le caractère destructible d’une `t_entite`
  */
-
 struct s_destructible {
     char id_son[TAILLE_MAX_ID]; /**< id de ressource du son à jouer lors de la destruction */
 };
