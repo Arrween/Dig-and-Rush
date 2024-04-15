@@ -3,11 +3,10 @@ REP_SRC = src
 REP_OBJ = obj
 REP_DOC = doc
 REP_LIB = lib
-REP_RAPPORT = rapport
 NOM_BIN = dignrush
 TEST_BIN = test_unit
 NOM_PROG = dignrush.sh
-REPS = $(REP_BIN) $(REP_SRC) $(REP_OBJ) $(REP_DOC) $(REP_LIB) $(REP_RAPPORT)
+REPS = $(REP_BIN) $(REP_SRC) $(REP_OBJ) $(REP_DOC) $(REP_LIB)
 
 REP_SDL = $(REP_LIB)/SDL2
 REP_SDLINC = $(REP_SDL)/include

@@ -6,6 +6,10 @@
 \usepackage{color}
 \usepackage[indent=.7cm]{parskip}
 
+\usepackage{float} % forcer impérativement le placement d’un flottant (figure ou table)
+
+\newcommand\refsuscrite[1]{\textsuperscript{\ref{#1}}}
+
 \title{
     \begin{figure}[!t]
 	\begin{minipage}{.25\textwidth}
@@ -33,9 +37,22 @@
 }
 \date{\today}
 
+
+% plan Piau-Toffolon
+% introduction
+% analyse et conception
+%	présentation du jeu −> principales fonctionnalités du jeu (haut niveau)
+%       principales structures de données
+% réalisation/développement
+%       architecture du jeu (schéma fichiers), tableau principaux fichiers
+
+
 \begin{document}
 
 \maketitle
+\begin{center}
+    \href{https://github.com/idlusen/dig-and-rush/}{Lien vers le dépôt du projet}
+\end{center}
 \newpage
 
 \tableofcontents
@@ -146,9 +163,37 @@ Il permet également, pour chaque semaine, de mettre la tâche effectuée par ch
 % Longueur : 5 pages
 % Sujets : librairies, architecture du code, menu, personnages, tour, blocs, documentation etc.
 
-\subsection{Sous-partie 1}
+\subsection{Architecture}
 
-\subsection{Sous-partie 2}
+\begin{table}[H]
+    \centering
+    \begin{tabular}{c p{.6\textwidth}}
+	\toprule
+	\texttt{main.c}			    & point d’entrée du programme	\\
+	\midrule
+	\texttt{ressources.c}		    & fonctions et structures de chargement des fichiers de ressources	\\
+	\midrule
+	\texttt{tour.c}			    & cœur du jeu avec notamment la boucle principale	\\
+	\midrule
+	\texttt{entite.c}                   & structure utilisée pour tout objet devant être affiché, déplacé et animé  \\
+	\midrule
+	\texttt{entite\_obstacle.c}          & spécialisation des entités qui agissent comme obstacles  \\
+	\midrule
+	\texttt{entite\_destructible.c}	    & spécialisation des entités qui peuvent être détruites \\
+	\midrule
+	\texttt{entite\_pnj.c}		    & spécialisation des entités représentant un personnage non joueur	\\
+	\midrule
+	\texttt{entite\_perso.c}		    & spécialisation des entités représentant le personnage du joueur	\\
+	\midrule
+	\texttt{texte.c}		    & API\refsuscrite{def_api} pour simplifier la gestion des textes   \\
+	\midrule
+	\texttt{nuit.c}			    & structure et fonctions implémentant une transition jour/nuit \\
+	\bottomrule
+    \end{tabular}
+    \caption{Rôle des différents modules}
+\end{table}
+
+\subsection{Outils utilisés}
 
 
 
@@ -166,11 +211,11 @@ Il permet également, pour chaque semaine, de mettre la tâche effectuée par ch
 
 \begin{table}[h]
     \centering
-    \begin{tabular}{c c}
+    \begin{tabular}{c p{.6\textwidth}}
 	\toprule
-	PNJ		& Personnage Non Joueur \\
+	PNJ		    & Personnage Non Joueur \\
 	\midrule
-	terme 2		& définition 2 \\
+	API \label{def_api} & \textit{Application Programming Interface}, ensemble de classes et fonctions servant d’interface vers un service \\
 	\bottomrule
     \end{tabular}
     \caption{Définitions des termes techniques employés dans le document}
