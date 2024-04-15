@@ -1,5 +1,5 @@
 /** @file
- *  @brief implémentation du caractère destructible d’une `t_entite`
+ *  @brief implémentation du caractère destructible d’une `t_entite` (source)
  */
 
 #include <string.h>
