@@ -29,12 +29,12 @@ void comportement_patrouille(t_entite * pnj, t_entite * perso) {
         if (pnj->deplacement == GAUCHE) {
             pnj->id_animation_suivante = DEPL_G;
             changer_animation(pnj, ATTQ_G);
-            jouer_audio(1, pnj->pnj->id_son_attaque, 0);
+            //jouer_audio(1, pnj->pnj->id_son_attaque, 0);
         }
         else if (pnj->deplacement == DROITE) {
             pnj->id_animation_suivante = DEPL_D;
             changer_animation(pnj, ATTQ_D);
-            jouer_audio(1, pnj->pnj->id_son_attaque, 0);
+            //jouer_audio(1, pnj->pnj->id_son_attaque, 0);
         }
         pnj->deplacement = REPOS_MVT;
         perso_prendre_coup(perso);

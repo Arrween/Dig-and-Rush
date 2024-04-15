@@ -16,6 +16,10 @@ struct s_perso {
     int vie; /**< points de vie */
     int temps_invu; /**< compteur de frames qui conditionne l’état d’invulnérabilité après un coup pris */
     int temps_invu_max; /**< valeur maximum affectée à `temps_invu`, en nombre de frames */
+    char id_son_attaque[TAILLE_MAX_ID]; /**< Identifiant de ressource du son d'attaque*/
+    char id_son_blessure[TAILLE_MAX_ID]; /**< Identifiant de ressource du son de blessure*/
+    char id_son_mort[TAILLE_MAX_ID]; /**< Identifiant de ressource du son de mort*/
+
 };
 
 t_entite * creer_entite_perso(char*, float, float, float, float, int);

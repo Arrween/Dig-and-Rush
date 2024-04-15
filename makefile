@@ -74,6 +74,7 @@ docs_doxy: $(DOXYFILE)
 	@ $(OUTIL_MESSAGE) Génération de la doc Doxygen…
 	cd $(REP_DOC) && doxygen $(subst $(REP_DOC)/, , $<)
 ifeq ($(shell whoami), s123690)
+	rm -r $(HOME)/public_html/doxygen_dignrush
 	cp -r $(REP_DOC)/html $(HOME)/public_html/doxygen_dignrush
 endif
 

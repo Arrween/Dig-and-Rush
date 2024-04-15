@@ -1,5 +1,5 @@
 /** @file
- *  @brief Implémentation de la propriété « est un obstacle » d’une `t_entite`
+ *  @brief Implémentation de la propriété « est un obstacle » d’une `t_entite` (entête)
  */
 
 #ifndef ENTITE_OBSTACLE_H

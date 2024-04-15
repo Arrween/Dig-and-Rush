@@ -4,7 +4,6 @@
 
 #include "morceaux_niveau.h"
 #include "constantes.h"
-#include "entite.h"
 #include "entite_destructible.h"
 #include "entite_obstacle.h"
 #include "entite_pnj.h"
@@ -23,7 +22,7 @@
  */
 
 void generer_morceau_niveau(float repere_defilement){
-    en_queue(I_LISTE_ENTITES);
+    liste_en_queue(I_LISTE_ENTITES);
 
     // générer un nombre aléatoire entre 0 et 9
     int random;
@@ -42,13 +41,13 @@ void generer_morceau_niveau(float repere_defilement){
             random = rand() % 10;
             // génération d’un bloc de pierre en (x,y) avec proba CHANCE_BLOC_PIERRE * 10% et un max de MAX_BLOCS_PIERRE
             if (random < CHANCE_BLOC_PIERRE && n_pierres_ligne < MAX_BLOCS_PIERRE) {
-                ajout_droit(I_LISTE_ENTITES, creer_entite_obstacle("bloc_pierre", x, y, 10, 10, VRAI));
+                liste_ajouter_droite(I_LISTE_ENTITES, creer_entite_obstacle("bloc_pierre", x, y, 10, 10, VRAI));
                 n_pierres_ligne++;
                 presences_blocs[j] = VRAI;
             }
             // génération d’un bloc de terre en (x,y) avec proba CHANCE_BLOC_TERRE * 10%
             else if (random >= CHANCE_BLOC_PIERRE && random < CHANCE_BLOC_PIERRE + CHANCE_BLOC_TERRE) {
-                ajout_droit(I_LISTE_ENTITES, creer_entite_destructible("bloc_terre", x, y, 10, 10, VRAI));
+                liste_ajouter_droite(I_LISTE_ENTITES, creer_entite_destructible("bloc_terre", x, y, 10, 10, VRAI));
                 presences_blocs[j] = VRAI;
             }
         }
@@ -59,9 +58,9 @@ void generer_morceau_niveau(float repere_defilement){
         for (j = random; j != limite && !presences_blocs[j]; j = (j + 1) % 8);
         if (presences_blocs[j]) {
             if (i % 5 == 0)
-                ajout_droit(I_LISTE_ENTITES, creer_entite_pnj_depuis_spritesheet("squelette", 10*(j+1)-5, y-17, 20, 17, VRAI));
+                liste_ajouter_droite(I_LISTE_ENTITES, creer_entite_pnj_depuis_spritesheet("squelette", 10*(j+1)-5, y-17, 20, 17, VRAI));
             else if (i % 3 == 0)
-                ajout_droit(I_LISTE_ENTITES, creer_entite_pnj_depuis_spritesheet("feu", 10*(j+1)-5, y-20, 20, 20, VRAI));
+                liste_ajouter_droite(I_LISTE_ENTITES, creer_entite_pnj_depuis_spritesheet("feu", 10*(j+1)-5, y-20, 20, 20, VRAI));
         }
     }
 }
@@ -73,11 +72,11 @@ void generer_morceau_niveau(float repere_defilement){
 void generer_murs(void) {
     int n_blocs_mur = 20; // nombre pour chaque mur
 
-    en_queue(I_LISTE_ENTITES);
+    liste_en_queue(I_LISTE_ENTITES);
     for (int i = 0; i < n_blocs_mur; i++) {
-        ajout_droit(I_LISTE_ENTITES, creer_entite_obstacle("bloc_pierre", 0, i*5, LARGEUR_MUR, 10, VRAI)); // côté gauche
-        ajout_droit(I_LISTE_ENTITES, creer_entite_obstacle("bloc_pierre", 0, (n_blocs_mur+i)*5, LARGEUR_MUR, 10, VRAI)); // côté gauche écran du dessous
-        ajout_droit(I_LISTE_ENTITES, creer_entite_obstacle("bloc_pierre", 90, i*5, LARGEUR_MUR, 10, VRAI)); // côté droit
-        ajout_droit(I_LISTE_ENTITES, creer_entite_obstacle("bloc_pierre", 90, (n_blocs_mur+i)*5, LARGEUR_MUR, 10, VRAI)); // côté droit écran du dessous
+        liste_ajouter_droite(I_LISTE_ENTITES, creer_entite_obstacle("bloc_pierre", 0, i*5, LARGEUR_MUR, 10, VRAI)); // côté gauche
+        liste_ajouter_droite(I_LISTE_ENTITES, creer_entite_obstacle("bloc_pierre", 0, (n_blocs_mur+i)*5, LARGEUR_MUR, 10, VRAI)); // côté gauche écran du dessous
+        liste_ajouter_droite(I_LISTE_ENTITES, creer_entite_obstacle("bloc_pierre", 90, i*5, LARGEUR_MUR, 10, VRAI)); // côté droit
+        liste_ajouter_droite(I_LISTE_ENTITES, creer_entite_obstacle("bloc_pierre", 90, (n_blocs_mur+i)*5, LARGEUR_MUR, 10, VRAI)); // côté droit écran du dessous
     }
 }

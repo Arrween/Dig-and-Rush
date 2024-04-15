@@ -55,14 +55,14 @@ void verif_collision(t_entite * e1, float * correction_defilement) {
     e1->collisions.h = NULL;
     e1->collisions.b = NULL;
 
-    en_tete(I_LISTE_ENTITES);
+    liste_en_tete(I_LISTE_ENTITES);
     while (!hors_liste(I_LISTE_ENTITES)) {
-        t_entite * e2 = valeur_elt(I_LISTE_ENTITES);
+        t_entite * e2 = liste_lire(I_LISTE_ENTITES);
         
         if (e1 == e2 || (!e2->est_obstacle && !(e2->pnj && e2->pnj->est_ecrasable)) 
             || (e2->pnj && e2->pnj->est_mort) || (e2->perso && e2->perso->est_mort)
             || (e2->pnj && e1->perso && e1->perso->est_mort)) {
-            suivant(I_LISTE_ENTITES);
+            liste_suivant(I_LISTE_ENTITES);
             continue;
         }
 
@@ -103,22 +103,22 @@ void verif_collision(t_entite * e1, float * correction_defilement) {
                 *correction_defilement = depassement;
         }
 
-        suivant(I_LISTE_ENTITES);
+        liste_suivant(I_LISTE_ENTITES);
     }
 }
 
 void creuser(t_entite * a_creuser) {
-    en_queue(I_LISTE_ENTITES);
+    liste_en_queue(I_LISTE_ENTITES);
     while(!hors_liste(I_LISTE_ENTITES)) {
-        t_entite * elem = valeur_elt(I_LISTE_ENTITES);
+        t_entite * elem = liste_lire(I_LISTE_ENTITES);
         if (a_creuser == elem && elem->destructible) {
             jouer_audio(1, elem->destructible->id_son, 0);
-            oter_elt(I_LISTE_ENTITES);
+            liste_retirer(I_LISTE_ENTITES);
             detruire_entite(&elem);
             break;
         }
         else
-            precedent(I_LISTE_ENTITES);
+            liste_precedent(I_LISTE_ENTITES);
     }
 }
 
@@ -138,7 +138,6 @@ int boucle_jeu(SDL_Renderer * rend) {
     srand(time(NULL));
 
     init_liste(I_LISTE_ENTITES);
-    init_liste(I_LISTE_MORCEAUX_NIVEAU);
 
     Mix_HaltMusic();
     Mix_Volume(CANAL_MUS_JOUR, 0);
@@ -216,14 +215,14 @@ int boucle_jeu(SDL_Renderer * rend) {
                         case SDL_SCANCODE_H:
                             perso->doit_afficher_hitbox = !perso->doit_afficher_hitbox;
                             perso->perso->doit_afficher_hitbox_attaque = !perso->perso->doit_afficher_hitbox_attaque;
-                            en_tete(I_LISTE_ENTITES);
+                            liste_en_tete(I_LISTE_ENTITES);
                             while (!hors_liste(I_LISTE_ENTITES)) {
-                                t_entite * elem = valeur_elt(I_LISTE_ENTITES);
+                                t_entite * elem = liste_lire(I_LISTE_ENTITES);
                                 if (elem->pnj) {
                                     elem->doit_afficher_hitbox = !elem->doit_afficher_hitbox;
                                     elem->pnj->doit_afficher_hitbox_attaque = !elem->pnj->doit_afficher_hitbox_attaque;
                                 }
-                                suivant(I_LISTE_ENTITES);
+                                liste_suivant(I_LISTE_ENTITES);
                             }
                             break;
                         case SDL_SCANCODE_L:
@@ -350,11 +349,11 @@ int boucle_jeu(SDL_Renderer * rend) {
         else
             afficher_entite(rend, perso);
 
-        en_tete(I_LISTE_ENTITES);
+        liste_en_tete(I_LISTE_ENTITES);
         while (!hors_liste(I_LISTE_ENTITES)) {
-            t_entite * elem =  valeur_elt(I_LISTE_ENTITES);
+            t_entite * elem =  liste_lire(I_LISTE_ENTITES);
             afficher_entite(rend, elem);
-            suivant(I_LISTE_ENTITES);
+            liste_suivant(I_LISTE_ENTITES);
         }
 
         if (nuit->est_active || nuit->est_active_prec)
@@ -392,12 +391,12 @@ int boucle_jeu(SDL_Renderer * rend) {
         // évolution du comportement des pnj
         t_entite * pnjs[100]; // tableau temporaire pour stocker les pnjs trouvés car la vérification de collision interfère avec le parcours de la liste
         int n_pnjs = 0;
-        en_tete(I_LISTE_ENTITES);
+        liste_en_tete(I_LISTE_ENTITES);
         while (!hors_liste(I_LISTE_ENTITES)) {
-            t_entite * elem = valeur_elt(I_LISTE_ENTITES);
+            t_entite * elem = liste_lire(I_LISTE_ENTITES);
             if (elem->pnj)
                 pnjs[n_pnjs++] = elem;
-            suivant(I_LISTE_ENTITES);
+            liste_suivant(I_LISTE_ENTITES);
         }
         for (int i = 0; i < n_pnjs; i++) {
             // tue un ennemi qui peut être écrasé si le personnage lui tombe dessus
@@ -430,11 +429,11 @@ int boucle_jeu(SDL_Renderer * rend) {
         repere_defilement += pas_defilement;
 
         // Déplacement relatif des obstacles pour simuler le défilement
-        en_tete(I_LISTE_ENTITES);
+        liste_en_tete(I_LISTE_ENTITES);
         while (!hors_liste(I_LISTE_ENTITES)) {
-            t_entite * elem = valeur_elt(I_LISTE_ENTITES);
+            t_entite * elem = liste_lire(I_LISTE_ENTITES);
             changer_pos_rel(elem, 0, -pas_defilement);
-            suivant(I_LISTE_ENTITES);
+            liste_suivant(I_LISTE_ENTITES);
         }
         changer_pos_rel(fond_tour, 0, -pas_defilement);
         changer_pos_rel(fond_tour_2, 0, -pas_defilement);
@@ -452,15 +451,15 @@ int boucle_jeu(SDL_Renderer * rend) {
         }
         if (bas_fond_tour < 0 || bas_fond_tour_2 < 0) {
             // suppression des entités ayant défilé au-dessus de la zone de jeu
-            en_queue(I_LISTE_ENTITES);
+            liste_en_queue(I_LISTE_ENTITES);
             while (!hors_liste(I_LISTE_ENTITES)) {
-                t_entite * elem = valeur_elt(I_LISTE_ENTITES);
+                t_entite * elem = liste_lire(I_LISTE_ENTITES);
                 if (elem->rect_dst->y + elem->rect_dst->h < 0) {
-                    oter_elt(I_LISTE_ENTITES);
+                    liste_retirer(I_LISTE_ENTITES);
                     detruire_entite(&elem);
                 }
                 else
-                    precedent(I_LISTE_ENTITES);
+                    liste_precedent(I_LISTE_ENTITES);
             }
 
             generer_murs();
@@ -500,11 +499,11 @@ int boucle_jeu(SDL_Renderer * rend) {
     }
 
     // Libération des ressources
-    en_queue(I_LISTE_ENTITES);
+    liste_en_queue(I_LISTE_ENTITES);
     while (!hors_liste(I_LISTE_ENTITES)) {
-        t_entite * elem = valeur_elt(I_LISTE_ENTITES);
+        t_entite * elem = liste_lire(I_LISTE_ENTITES);
         detruire_entite(&elem);
-        oter_elt(I_LISTE_ENTITES);
+        liste_retirer(I_LISTE_ENTITES);
     }
     detruire_entite(&fond);
     detruire_entite(&fond_tour);
