@@ -247,7 +247,7 @@ Pour le développement de notre jeu, nous avons principalement opté pour l'util
 % Rédaction : Jacques, Matthieu
 % Longueur : 1 page et demi
 
-La conclusion de ce projet met en lumière les apprentissages, les défis surmontés et les perspectives pour l'avenir. Nous avons réussi à concrétiser notre vision du jeu Dig & Rush grâce à une collaboration efficace et à une répartition équilibrée des tâches. En utilisant des outils tels que Discord, Trello et Git, nous avons pu organiser notre travail de manière transparente et coordonnée, facilitant ainsi la communication et la gestion des versions du code.
+La conclusion de ce projet met en lumière les apprentissages, les défis surmontés et les perspectives pour l'avenir. Nous avons réussi à concrétiser notre vision du jeu Dig \& Rush grâce à une collaboration efficace et à une répartition équilibrée des tâches. En utilisant des outils tels que Discord, Trello et Git, nous avons pu organiser notre travail de manière transparente et coordonnée, facilitant ainsi la communication et la gestion des versions du code.
 
 
 
@@ -272,7 +272,48 @@ La conclusion de ce projet met en lumière les apprentissages, les défis surmon
 
 
 \section{Tests unitaires}
+% Rédigé par : Ania
+Les tests unitaires sont essentiels pour assurer la qualité et la fiabilité. Parmis les différentes fonctions implémentées, il nous a semblé important de vérifier le bon fonctionnement grâce à une suite de tests disponibles sur la librairie CUnit.\\
+Fonctions testées : init\_ressources, recuperer\_texture, recuperer\_spritesheet, recuperer\_son, recuperer\_musique, recuperer\_audio, recuperer\_police, jouer\_audio et detruire\_ressources.\\
+Voici le résultat des tests disponibles dans le fichier test\_unit.c\\
+
+\begin{figure}[h]
+	\begin{center}
+		\includegraphics[height=7cm]{img/capture_tests.png}\\
+		\caption{{\emph{Résultats des tests unitaires}}}
+		\label{tests}
+	\end{center}
+\end{figure}
+
+Les résultats des cinq assertions sont logiques et indiquent que les fonctions se comportent comme prévu, ce qui signifie que les ressources sont fiables.\\
+Nous avons jugé important de mettre en place une suite de tests unitaires efficace qui présente une bonne base pour ajouter plus de tests au fur et à mesure que le projet s'agrandit. Cela aide au maintient de la qualité du code tout au long du développement.
 \section{Exemple de débogage}
+Lors du développement du jeu, plus précisément de la fonction de génération d'ennemis, un bug revenait souvent : un ennemi était généré dans le vide. Pour régler ce problème, il a donc fallu déboger.\\
+La fonction en question (\textit{generer\_ennemi(x,y)} ) est déclarée et appelée dans le fichier source \textit{src/morceaux\_niveau.c.}\\
+\begin{figure}[h]
+	\begin{center}
+		\includegraphics[height=7cm]{img/bug.png}\\
+		\caption{{\emph{Bug du squelette}}}
+		\label{Bug}
+	\end{center}
+\end{figure}
+Etapes de débogage : 
+\begin{itemize}
+	\item Lancer GDB
+	\item Poser un point d'arrêt (\textit{(gdb) break src/morceaux\_niveau.c:generer\_ennemi}).
+	\item Appuyer sur \textit{PLAY}.
+	\item On avance dans le jeu jusqu'à rencontrer le point d'arrêt.
+	\item On execute \textit{step} pour rentrer dans l'appel de fonction.
+	\item A l'aide des options de débogages telles que textit{print, display, next, \dots}, nous avons constaté que l'algorithme de base n'était pas bon.
+\end{itemize}
+\begin{figure}[h]
+	\begin{center}
+		\includegraphics[height=7cm]{img/debug.png}\\
+		\caption{{\emph{Exemple de débogage}}}
+		\label{débogage}
+	\end{center}
+\end{figure}
+Note : les instruction de débogage sont renseignées dans le manuel d'installation et d'utilisation fourni.
 
 % Bibliographie
 % \newpage
