@@ -4,6 +4,7 @@
 \usepackage[french]{babel}
 % \usepackage[margin=3cm,tmargin=5cm,bmargin=3.5cm]{geometry}
 \usepackage{color}
+\usepackage[indent=.7cm]{parskip}
 
 \usepackage{float} % forcer impérativement le placement d’un flottant (figure ou table)
 
@@ -63,23 +64,50 @@
 % Rédaction : Yohan
 % Longueur : 1 page
 
-\textit{Cette introduction présentera le sujet qui sera traité et le travail avec une présentation du plan adopté} \\
-Ce document présente un projet de jeu XXX réalisé dans le cadre de la formation de L2 informatique de l’université du Mans pendant la d-période de janvier à avril 2024.
-Ce projet a été développé en langage C avec la librairie SDL.
-Ce jeu fait ceci cela… \\
-Nous présenterons dans une première partie notre jeu, des scénarios d’utilisation et les principales fonctionnalités puis dans une deuxième partie la gestion du projet ensuite dans une troisième partie les éléments principaux de conception (algorithmes, structures de données, …) ensuite nous présenterons l’architecture de notre application (structuration du code en fichiers) enfin nous montrerons les principaux résultats.
-Enfin nous présenterons en conclusion les points forts et les limites de notre travail, les écarts entre la planification prévisionnelle et le déroulement réel de notre projet et les leçons tirés de cette expérience. En annexe nous présenterons un exemple de débogage et des tests (jeux d’essai et cas de test d’un exemple au moins - le fichier .c étant dans le git dans un répertoire dédié « test »)…
+Les objectifs de ce projet en groupe sont de mettre en pratique nos connaissances acquises durant cette deuxième année de licence informatique, notamment en algorithmique en code C.
+Ce projet permet également de nous introduire à la gestion de projet qui nous sera utile dans le monde professionnel. 
+Enfin, il permet de commencer à agir en groupe et en autonomie, deux points qui nous seront également utiles en tant que professionnels.
 
+Le principe du jeu Dig \& Rush consiste à l’instar du jeu Once upon a tower, jeu mobile, de descendre dans une tour en creusant des blocs qui font office de murs et de sols comme dans un labyrinthe. Le joueur a pour outil une pelle qui lui permet de détruire les blocs. Il faut en plus de cela éviter ou tuer les ennemis afin de progresser le plus rapidement dans la tour. Si le personnage meurt la partie se termine. Le joueur a le choix entre plusieurs personnages qui ont chacun une particularité. Attention, chaque tour est différente ! Cela vous permet d’explorer à chaque nouvelle partie une nouvelle facette du jeu.
 
+Ce rapport se déroule en quatre parties. L’organisation du projet, comment les tâches ont été définies et attribuées ? ; la conception, qui présentera nos choix de conception et les règles du jeu; le développement avec les outils utilisés, les sturctures de données et les algorithmes et enfin la conclusion qui mettra en avant nos remarques, nos points d’amélioration et ce que nous avons tiré de ce projet. En annexe, se trouvera les tests unitaires et tentatives de debogage, les captures d’écran du jeu et les diagrammes de Gantt.
 
+\newpage
 \section{Organisation}
 % Rédaction : Yohan, Jacques
 % Longueur : 2 pages
 % Sujets : Gantt, répartition des tâches, salon de discussion, github (cartes ?)
 
-\subsection{Sous-partie 1}
 
-\subsection{Sous-partie 2}
+\subsection{Comment les tâches ont été définies ?}
+Avant de commencer à coder l’équipe a effectué un brainstorming afin de connaître toutes les phases du projet et les tâches qui seraient susceptibles d’entrer dans ces dernières. En effet, en citant exhaustivement les tâches cela nous permet d’avoir une estimation temporelle du projet. Nous avons également pris en compte les attentes du corps enseignant.
+
+Nous avons détecté 7 phases principales sur le projet général : la définition du projet, la conception, la planification, la phase de réalisation, la phase de documentation, le rapport du projet et enfin la soutenance.
+
+La définition du projet est l’étape post conception elle permet de faire une esquisse du projet et ainsi se le représenter plus facilement. On y détermine les limites du projet. La conception entre dans l’architecture du projet. La planification, qui sera évoquée dans la partie suivante, sert à se répartir les tâches. La phase de réalisation est le codage ainsi que les tests. La documentation est la création de documents permettant la compréhension du projet. Le rapport et la soutenance sont réservés à la présentation du projet.
+
+\subsection{Comment les tâches ont été réparties ?}
+Suite à l’élaboration de la liste des tâches nous nous sommes réparties les tâches en fonction de deux critères. Tout d’abord les choix et affinités de chacuns, en effet chaque personne du groupe a préféré certaines tâches plutôt que d’autres. Ensuite, nous nous sommes réparties le reste des tâches en équilibrant afin que tout le monde ait à peu près le même temps de travail.
+Pour rendre visuel ces deux étapes précédentes l’équipe utilise l'outil GANTT. Il s’agit d’un graphe qui représente les tâches étalées sur le temps. Google Sheet est utilisé afin de pouvoir le mettre à jour et collaborer à distance.
+Sur le graphe sont présentes les tâches, les dates encadrantes ces dernières et une représentation graphique de la durée de la date entre la semaine du 8 janvier 2024 et celle du 22 avril 2024.
+L’équipe adopte deux diagrammes de Gantt, un diagramme prévisionnel qui représente l’avancement idéal du projet et un diagramme réel qui est mis à jour régulièrement. Ce dernier sert principalement à voir les tâches restantes en fonction de la deadline.
+
+\subsection{Les outils utilisés pour organiser/communiquer ?}
+Nous utilisons Discord pour communiquer. Il permet de créer des canaux en fonction de nos besoins dans le cas de projet il y a un canal pour les ressources, un pour la conversation générale et des canaux vocaux si nous avons besoin de nous appeler. Nous utilisons principalement le canal général pour suivre l’avancement de chacun.
+
+Sur le mois d’avril un Trello est mis en place, il a permis de voir plus facilement les tâches restantes et de les prioriser. Dans ce Trello est présent huit listes pour : les ressources, les idées, ce qu’il faut faire mais qui n’est pas urgent, ce qu’il faut faire, les tâches en cours, celles terminées, les problèmes et enfin ce qu’il ne faut pas oublier. Contrairement au diagramme de Gantt, il se concentre principalement sur les tâches liées au codage.
+
+\begin{figure}[h]
+\begin{center}
+\includegraphics[height=7cm]{img/capture_trello.png}\\
+\caption{{\emph{Une partie du Trello}}}
+\label{trello}
+\end{center}
+\end{figure}
+
+Afin de gérer les différentes versions du code sources, Git est utilisé. Il permet d’avoir un espace de stockage commun que ce soit pour la documentation que le code. De plus, cela permet à chacun de travailler sur une partie du projet sans modifier ce que font les autres membres du groupe, notamment grâce à la création de branches qui permet la création un clone du code principal et pouvoir travailler dessus. A peu près une branche a été créée pour chaque fonction principale du jeu. Une fois le code respectif fonctionnel nous le fusionnons dans le code principal.
+
+En plus du diagramme de Gantt et du Trello l’équipe utilise l’outil “Projects” dans Git. Il sert, dans le cas de ce projet, à communiquer notre avancement au corps enseignant. Il permet également, pour chaque semaine, de mettre la tâche effectuée par chaque membre de l’équipe.
 
 
 

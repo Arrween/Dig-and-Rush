@@ -28,7 +28,7 @@ SOURCES = $(wildcard $(REP_SRC)/*.c)
 OBJETS = $(SOURCES:$(REP_SRC)/%.c=$(REP_OBJ)/%.o)
 ENTETES = $(REP_SRC)/constantes.h
 WARNING_FLAGS = -Wall -Wextra # -Wconversion -Wno-float-conversion -Wno-sign-conversion #-fanalyzer -fsanitize=undefined #-fsanitize=address
-DEBUG_FLAGS = 
+DEBUG_FLAGS =
 
 DOCS_PDF = $(REP_DOC)/description_détaillée.pdf $(REP_DOC)/rapport.pdf
 SOURCES_TEX = $(wildcard $(REP_DOC)/*.tex)
