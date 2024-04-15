@@ -3,14 +3,18 @@
 \contentsline {section}{\numberline {2}Organisation}{4}{section.2}%
 \contentsline {subsection}{\numberline {2.1}Comment les tâches ont été définies ?}{4}{subsection.2.1}%
 \contentsline {subsection}{\numberline {2.2}Comment les tâches ont été réparties ?}{4}{subsection.2.2}%
-\contentsline {subsection}{\numberline {2.3}Les outils utilisés pour organiser/communiquer ?}{5}{subsection.2.3}%
+\contentsline {subsection}{\numberline {2.3}Les outils utilisés pour organiser/communiquer ?}{4}{subsection.2.3}%
 \contentsline {section}{\numberline {3}Conception}{6}{section.3}%
-\contentsline {subsection}{\numberline {3.1}Sous-partie 1}{6}{subsection.3.1}%
-\contentsline {subsection}{\numberline {3.2}Sous-partie 2}{6}{subsection.3.2}%
-\contentsline {section}{\numberline {4}Développement}{6}{section.4}%
-\contentsline {subsection}{\numberline {4.1}Librairies et outils utilisés}{6}{subsection.4.1}%
-\contentsline {subsection}{\numberline {4.2}Création des personnages}{7}{subsection.4.2}%
-\contentsline {subsection}{\numberline {4.3}Architecture du code}{7}{subsection.4.3}%
+\contentsline {subsection}{\numberline {3.1}Objectif du jeu}{6}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}Règles de jeu}{6}{subsection.3.2}%
+\contentsline {subsection}{\numberline {3.3}Graphismes}{6}{subsection.3.3}%
+\contentsline {subsection}{\numberline {3.4}Niveaux}{7}{subsection.3.4}%
+\contentsline {subsection}{\numberline {3.5}Personnages}{7}{subsection.3.5}%
+\contentsline {subsection}{\numberline {3.6}Mécaniques}{7}{subsection.3.6}%
+\contentsline {subsection}{\numberline {3.7}Analyse des difficultés}{7}{subsection.3.7}%
+\contentsline {section}{\numberline {4}Développement}{7}{section.4}%
+\contentsline {subsection}{\numberline {4.1}Sous-partie 1}{7}{subsection.4.1}%
+\contentsline {subsection}{\numberline {4.2}Sous-partie 2}{7}{subsection.4.2}%
 \contentsline {section}{\numberline {5}Conclusion}{7}{section.5}%
 \contentsline {section}{\numberline {A}Lexique}{8}{appendix.A}%
 \contentsline {section}{\numberline {B}Tests unitaires}{8}{appendix.B}%
