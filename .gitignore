@@ -11,7 +11,7 @@ bin/*
 # documentation générée
 doc/html
 doc/latex
-doc/rapport.pdf
+doc/*.pdf
 
 # mac
 .DS_Store
