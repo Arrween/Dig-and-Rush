@@ -6,6 +6,7 @@ bin/*
 *.aux
 *.log
 *.out
+*.toc
 
 # documentation générée
 doc/html

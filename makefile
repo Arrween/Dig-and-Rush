@@ -3,11 +3,10 @@ REP_SRC = src
 REP_OBJ = obj
 REP_DOC = doc
 REP_LIB = lib
-REP_RAPPORT = rapport
 NOM_BIN = dignrush
 TEST_BIN = test_unit
 NOM_PROG = dignrush.sh
-REPS = $(REP_BIN) $(REP_SRC) $(REP_OBJ) $(REP_DOC) $(REP_LIB) $(REP_RAPPORT)
+REPS = $(REP_BIN) $(REP_SRC) $(REP_OBJ) $(REP_DOC) $(REP_LIB)
 
 REP_SDL = $(REP_LIB)/SDL2
 REP_SDLINC = $(REP_SDL)/include
@@ -66,7 +65,7 @@ else ifdef XELATEX
 	@# se déplacer dans doc/ pour compiler doc/*.tex, le doc/ étant retiré par subst
 	@# « -interaction batchmode » pour limiter la loquacité de xelatex
 	# cd $(REP_DOC) && xelatex -interaction batchmode $(subst $(REP_DOC)/, , $<)
-	cd $(REP_DOC) && xelatex $(subst $(REP_DOC)/, , $<)
+	cd $(REP_DOC) && xelatex $(subst $(REP_DOC)/, , $<) && xelatex $(subst $(REP_DOC)/, , $<)
 else
 	@echo "pas de compilateur TeX trouvé, docs .tex non compilées"
 endif
