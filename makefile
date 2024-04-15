@@ -29,7 +29,7 @@ SOURCES = $(wildcard $(REP_SRC)/*.c)
 OBJETS = $(SOURCES:$(REP_SRC)/%.c=$(REP_OBJ)/%.o)
 ENTETES = $(REP_SRC)/constantes.h
 WARNING_FLAGS = -Wall -Wextra # -Wconversion -Wno-float-conversion -Wno-sign-conversion #-fanalyzer -fsanitize=undefined #-fsanitize=address
-DEBUG_FLAGS = 
+DEBUG_FLAGS =
 
 DOCS_PDF = $(REP_DOC)/description_détaillée.pdf $(REP_DOC)/rapport.pdf
 SOURCES_TEX = $(wildcard $(REP_DOC)/*.tex)
@@ -66,7 +66,7 @@ else ifdef XELATEX
 	@# se déplacer dans doc/ pour compiler doc/*.tex, le doc/ étant retiré par subst
 	@# « -interaction batchmode » pour limiter la loquacité de xelatex
 	# cd $(REP_DOC) && xelatex -interaction batchmode $(subst $(REP_DOC)/, , $<)
-	cd $(REP_DOC) && xelatex $(subst $(REP_DOC)/, , $<)
+	cd $(REP_DOC) && xelatex $(subst $(REP_DOC)/, , $<) && xelatex $(subst $(REP_DOC)/, , $<)
 else
 	@echo "pas de compilateur TeX trouvé, docs .tex non compilées"
 endif
