@@ -197,6 +197,15 @@ int main() {
             action_quitter,
             "QUIT"
         };
+    t_bouton btn_option = { recuperer_texture("options"),
+            {TAILLE_L * 0.18,
+                TAILLE_H * 0.30,
+                TAILLE_L * 0.30,
+                TAILLE_H * 0.30},
+            action_option,
+            "OPTIONS"
+        };
+
 
 
 t_bouton * menus[3][10] = {
