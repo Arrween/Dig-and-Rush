@@ -9,10 +9,8 @@
 \contentsline {subsection}{\numberline {3.2}Sous-partie 2}{6}{subsection.3.2}%
 \contentsline {section}{\numberline {4}Développement}{6}{section.4}%
 \contentsline {subsection}{\numberline {4.1}Librairies et outils utilisés}{6}{subsection.4.1}%
-\contentsline {subsection}{\numberline {4.2}Architecture du code}{7}{subsection.4.2}%
-\contentsline {subsection}{\numberline {4.3}Création des personnages}{7}{subsection.4.3}%
-\contentsline {subsection}{\numberline {4.4}Architecture}{7}{subsection.4.4}%
-\contentsline {subsection}{\numberline {4.5}Outils utilisés}{7}{subsection.4.5}%
+\contentsline {subsection}{\numberline {4.2}Création des personnages}{7}{subsection.4.2}%
+\contentsline {subsection}{\numberline {4.3}Architecture du code}{7}{subsection.4.3}%
 \contentsline {section}{\numberline {5}Conclusion}{7}{section.5}%
 \contentsline {section}{\numberline {A}Lexique}{8}{appendix.A}%
 \contentsline {section}{\numberline {B}Tests unitaires}{8}{appendix.B}%
