@@ -22,6 +22,7 @@ void perso_porter_coup(t_entite * e, int * score, t_texte * texte_score) {
         }
         liste_suivant(I_LISTE_ENTITES);
     }
+    jouer_audio(2, e->perso->id_son_attaque, 0);
 }
 
 void perso_mourir(t_entite * perso) {
@@ -29,6 +30,8 @@ void perso_mourir(t_entite * perso) {
     changer_animation(perso, ANIM_MORT);
     perso->deplacement = REPOS_MVT;
     perso->perso->est_mort = VRAI;
+    jouer_audio(2, perso->perso->id_son_mort, 0);
+    
 }
 
 void perso_prendre_coup(t_entite * perso) {
@@ -37,8 +40,10 @@ void perso_prendre_coup(t_entite * perso) {
     perso->perso->vie--;
     if (perso->perso->vie <= 0)
         perso_mourir(perso);
-    else
+    else{
         perso->perso->temps_invu = perso->perso->temps_invu_max;
+        jouer_audio(2, perso->perso->id_son_blessure, 0);
+    }
 }
 
 /**
@@ -55,23 +60,30 @@ t_perso * creer_perso(char * id, t_entite * e) {
     if (strcmp(id, "ania") == 0) {
         nouv->parent->vitesse = 2.;
         nouv->vie = 2;
-    }
-    else if (strcmp(id, "jack") == 0) {
-        nouv->parent->vitesse = 2.;
-        nouv->vie = 1;
-    }
-    else if (strcmp(id, "matt") == 0) {
-        nouv->parent->vitesse = 1.;
-        nouv->vie = 2;
-    }
-    else if (strcmp(id, "yohan") == 0) {
-        nouv->parent->vitesse = 2.;
-        nouv->vie = 2;
+        strcpy(nouv->id_son_blessure, "blessure_perso_f");
+        strcpy(nouv->id_son_mort, "mort_perso_f");
     }
     else {
-        nouv->parent->vitesse = 1.;
+        if (strcmp(id, "jack") == 0) {
+        nouv->parent->vitesse = 2.;
         nouv->vie = 1;
+        }
+        else if (strcmp(id, "matt") == 0) {
+            nouv->parent->vitesse = 1.;
+            nouv->vie = 2;
+        }
+        else if (strcmp(id, "yohan") == 0) {
+            nouv->parent->vitesse = 2.;
+            nouv->vie = 2;
+        }
+        else {
+            nouv->parent->vitesse = 1.;
+            nouv->vie = 1;
+        }
+        strcpy(nouv->id_son_blessure, "blessure_perso");
+        strcpy(nouv->id_son_mort, "mort_perso");
     }
+    
     changer_hitbox(nouv->parent, &(nouv->parent->hitbox), 26, 22, 51, 73.4, VRAI);
     // définir initialement sur la droite, sera modifié par le déplacement
     changer_hitbox(nouv->parent, &(nouv->hitbox_attaque), 50, 45, 62, 45, VRAI);
@@ -80,6 +92,7 @@ t_perso * creer_perso(char * id, t_entite * e) {
     nouv->est_mort = FAUX;
     nouv->temps_invu = 0;
     nouv->temps_invu_max = 60;
+    strcpy(nouv->id_son_attaque, "attaque_perso");
     return nouv;
 }
 

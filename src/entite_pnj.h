@@ -17,8 +17,8 @@ struct s_pnj {
     int valeur_vaincu; /**< Valeur en points attribuée par le PNJ une fois vaincu. */
     int est_ecrasable; /**< Indique si le PNJ est écrasable (1) ou non (0). */
     SDL_FRect hitbox_attaque; /**< utilisée pour vérifier si une entité est touchée par l’attaque du pnj */
-    int doit_afficher_hitbox_attaque; /**& booléen régissant l’affichage de `hitbox_attaque` */
-    char id_son_attaque[TAILLE_MAX_ID];
+    int doit_afficher_hitbox_attaque; /**< booléen régissant l’affichage de `hitbox_attaque` */
+    char id_son_attaque[TAILLE_MAX_ID]; /**< Identifiant de ressource du son d'attaque*/
 };
 
 t_entite * creer_entite_pnj_depuis_spritesheet(char*, float, float, float, float, int);

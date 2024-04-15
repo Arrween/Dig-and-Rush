@@ -46,6 +46,7 @@ struct chargement chargements_texs[] = {
     {"ressources/Menu/Boutons/bouton_play.png", "bouton_jouer"},
     {"ressources/Menu/Boutons/bouton_continue.png", "bouton_continue"},
     {"ressources/Menu/Boutons/bouton_quit.png", "bouton_quitter"},
+
     {"ressources/Menu/Boutons/bouton_back.png", "back"},
 
 
@@ -57,13 +58,16 @@ struct chargement chargements_texs[] = {
 
 
 
+    {"ressources/Menu/Boutons/options.png", "options"},
+
+
 
     {"ressources/Personnages/jackPerso.png", "jack"},
     {"ressources/Tour/Arriere_plan/fond.jpg", "fond_tour"},
-    {"ressources/Tour/Arriere_plan/Clouds/cloud1.png", "fond_jeu"},
-    {"ressources/Tour/Arriere_plan/Clouds/cloud1_nuit.jpg", "fond_jeu_nuit"},
+    {"ressources/Tour/Arriere_plan/ciel_bleu.png", "fond_jeu"},
+    {"ressources/Tour/Arriere_plan/ciel_nuit.png", "fond_jeu_nuit"},
     {"ressources/Tour/Blocs/terre/terre3.png", "bloc_terre"},
-    {"ressources/Tour/Blocs/pierres_claires/pierre_herbe.png", "bloc_pierre"},
+    {"ressources/Tour/Blocs/pierres_claires/pierre_herbe_c.png", "bloc_pierre"},
 
     //Selections personnages
     {"ressources/Personnages/selections/koba.png", "koba"},
@@ -174,6 +178,11 @@ struct chargement chargements_sons[] = {
     {"ressources/Audio/Musique/musique_menu.mp3", "musique_jour"},
     {"ressources/Audio/Musique/musique_nuit.mp3", "musique_nuit"},
     {"ressources/Audio/SFX/attaque_squelette.ogg", "attaque_squelette"},
+    {"ressources/Audio/SFX/coup.mp3", "blessure_perso"},
+    {"ressources/Audio/SFX/blessure_perso_f.mp3", "blessure_perso_f"},
+    {"ressources/Audio/SFX/swing.mp3", "attaque_perso"},
+    {"ressources/Audio/SFX/mort.mp3", "mort_perso"},
+    {"ressources/Audio/SFX/mort_perso_f.mp3", "mort_perso_f"},
 };
 
 struct chargement chargements_musiques[] = {
