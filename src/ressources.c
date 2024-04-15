@@ -36,6 +36,10 @@ struct chargement chargements_texs[] = {
     {"ressources/Menu/Background_Menu/choix_serveur.png", "menu_serveur"},
     {"ressources/Menu/Background_Menu/menu_parametre.png", "menu_paramètres"},
     {"ressources/Menu/Background_Menu/menu_personnages.png", "menu_personnages"},
+    {"ressources/Menu/Background_Menu/menu_commandes.png", "menu_commandes"},
+
+
+
     {"ressources/Menu/Boutons/bouton_parametre.png", "bouton_paramètres"},
     {"ressources/Menu/Boutons/bouton_volume_on.png", "bouton_volume_on"},
     {"ressources/Menu/Boutons/bouton_volume_off.png", "bouton_volume_off"},
@@ -58,7 +62,7 @@ struct chargement chargements_texs[] = {
 
 
 
-    {"ressources/Menu/Boutons/options.png", "options"},
+    {"ressources/Menu/Boutons/options_logo.png", "options"},
 
 
 

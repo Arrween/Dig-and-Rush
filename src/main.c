@@ -27,6 +27,7 @@ SDL_Rect jackRect = { (TAILLE_L + 30) / 2, (TAILLE_H - 195) / 2, 80, 100 };
 SDL_Rect yohanRect = { (TAILLE_L - 165) / 2, (TAILLE_H + 15) / 2, 80, 100 };
 SDL_Rect aniaRect = { (TAILLE_L + 30) / 2, (TAILLE_H + 15) / 2, 80, 100 };
 
+SDL_Rect controlsRect = { (TAILLE_L - 165) / 2, (TAILLE_H - 195) / 2, 80, 100 };
 
 
 int main() {
@@ -198,11 +199,11 @@ int main() {
             "QUIT"
         };
     t_bouton btn_option = { recuperer_texture("options"),
-            {TAILLE_L * 0.18,
-                TAILLE_H * 0.30,
-                TAILLE_L * 0.30,
-                TAILLE_H * 0.30},
-            action_option,
+            {TAILLE_L * 0.24,
+                TAILLE_H * 0.35,
+                TAILLE_L * 0.35,
+                TAILLE_H * 0.35},
+            action_parametres,
             "OPTIONS"
         };
 
@@ -211,7 +212,7 @@ int main() {
 t_bouton * menus[3][10] = {
     {&btn_fullscreen, &btn_volume, &btn_continue , &btn_quitter, &btn_parametres, &btn_personnages, &btn_titre, NULL}, // menu principal
     {&btn_fullscreen, &btn_volume, &btn_menu, &btn_jouer, &btn_parametres, &btn_titre_perso, &btn_back, NULL}, // menu serveur
-    {&btn_fullscreen, &btn_volume, &btn_menu, &btn_personnages, NULL}, // menu paramètres
+    {&btn_fullscreen, &btn_volume, &btn_menu, &btn_personnages, &btn_option, NULL}, // menu paramètres
     //{&btn_fullscreen, &btn_volume, &btn_menu, &btn_jouer, &btn_parametres, &btn_titre_perso, &btn_back, NULL} // menu personnages
 
 };
@@ -269,6 +270,20 @@ t_bouton * menus[3][10] = {
                 case SDL_MOUSEBUTTONDOWN:
                     if (event.button.button == SDL_BUTTON_LEFT) {
                         SDL_Point pointeur = {event.button.x, event.button.y};
+                        if(SDL_PointInRect(&pointeur, &controlsRect)){
+                            SDL_SetRenderDrawColor(rend, 255, 0, 0, 255); // Couleur rouge
+                            SDL_RenderDrawRect(rend, &controlsRect); // Dessiner le rectangle
+                            
+
+                            // Charger et afficher la texture du nouveau fond
+                            SDL_Texture* nouveauFond = recuperer_texture("menu_commandes");
+                            SDL_Rect destRect = {0, 0, TAILLE_L, TAILLE_H}; // Rectangle de destination pour le rendu
+                            SDL_RenderCopy(rend, nouveauFond, NULL, &destRect);
+                            SDL_RenderPresent(rend); // Mettre à jour le rendu
+                            SDL_Delay(10000); // Attendre 2 secondes (2000 millisecondes)
+                            printf("Coontrols sélectionné\n");
+
+                        }
                         // Vérifier si le clic se trouve à l'intérieur du rectangle de Matt
                         if (SDL_PointInRect(&pointeur, &mattRect)) {
                             // Gérer l'action lorsque Matt est cliqué
@@ -373,7 +388,7 @@ t_bouton * menus[3][10] = {
           // Afficher Matt avec un effet de sélection
             afficher_entite(rend, matt);
 
-            SDL_Color couleur_txt_matt = {0,0,0,255};
+            SDL_Color couleur_txt_matt = {0,255,0,255};
             TTF_Font * font = TTF_OpenFont("ressources/Menu/Police/font1.ttf", 50);
             SDL_Surface * surface_txt_chargement = TTF_RenderText_Solid(font, "IDLUSEN", couleur_txt_matt);
             SDL_Rect dst_txt_chargement = {TAILLE_L/2 + 215, TAILLE_H/2 - 215, 200, 50};
@@ -392,7 +407,7 @@ t_bouton * menus[3][10] = {
    
             afficher_entite(rend, jack);
 
-            SDL_Color couleur_txt_jack = {0,0,0,255};
+            SDL_Color couleur_txt_jack = {0,0,255,255};
             TTF_Font * font2 = TTF_OpenFont("ressources/Menu/Police/font1.ttf", 50);
             SDL_Surface * surface_txt_chargement = TTF_RenderText_Solid(font2, "STENFRESH", couleur_txt_jack);
             SDL_Rect dst_txt_chargement = {TAILLE_L/2 + 215, TAILLE_H/2 - 215, 200, 50};
@@ -411,7 +426,7 @@ t_bouton * menus[3][10] = {
   
             afficher_entite(rend, yohan);
 
-            SDL_Color couleur_txt_yohan = {0,0,0,255};
+            SDL_Color couleur_txt_yohan = {255,165,0,255};
             TTF_Font * font3 = TTF_OpenFont("ressources/Menu/Police/font1.ttf", 50);
             SDL_Surface * surface_txt_chargement = TTF_RenderText_Solid(font3, "YO HAN", couleur_txt_yohan);
             SDL_Rect dst_txt_chargement = {TAILLE_L/2 + 215, TAILLE_H/2 - 215, 200, 50};
@@ -429,7 +444,7 @@ t_bouton * menus[3][10] = {
   
             afficher_entite(rend, ania);
 
-            SDL_Color couleur_txt_ania = {0,0,0,255};
+            SDL_Color couleur_txt_ania = {255,0,0,255};
             TTF_Font * font4 = TTF_OpenFont("ressources/Menu/Police/font1.ttf", 50);
             SDL_Surface * surface_txt_chargement = TTF_RenderText_Solid(font4, "Arrween", couleur_txt_ania);
             SDL_Rect dst_txt_chargement = {TAILLE_L/2 + 215, TAILLE_H/2 - 215, 200, 50};
@@ -439,8 +454,6 @@ t_bouton * menus[3][10] = {
             SDL_RenderCopy(rend, btn_barre_de_vie_pleine.texture, NULL, &btn_barre_de_vie_pleine.rect);
             SDL_RenderCopy(rend, btn_defense_pleine.texture, NULL, &btn_defense_pleine.rect);
             SDL_RenderCopy(rend, btn_energie_pleine.texture, NULL, &btn_energie_pleine.rect);
-
-
         }
         
     }
