@@ -13,14 +13,14 @@ void perso_porter_coup(t_entite * e, int * score, t_texte * texte_score) {
         return;
     SDL_FRect * hitbox_attaque = &e->perso->hitbox_attaque;
 
-    en_tete(I_LISTE_ENTITES);
+    liste_en_tete(I_LISTE_ENTITES);
     while (!hors_liste(I_LISTE_ENTITES)) {
-        t_entite * elem = valeur_elt(I_LISTE_ENTITES);
+        t_entite * elem = liste_lire(I_LISTE_ENTITES);
         if (elem->pnj) {
             if (SDL_HasIntersectionF(hitbox_attaque, &elem->hitbox))
                 pnj_mourir(elem, score, texte_score);
         }
-        suivant(I_LISTE_ENTITES);
+        liste_suivant(I_LISTE_ENTITES);
     }
     jouer_audio(2, e->perso->id_son_attaque, 0);
 }

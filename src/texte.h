@@ -1,6 +1,6 @@
 /**
  *  @file
- *  @brief Fonctions de gestion simplifiée de textes via SDL_ttf
+ *  @brief Fonctions de gestion simplifiée de textes via SDL_ttf (entête)
  */
 
 #ifndef TEXTE_H

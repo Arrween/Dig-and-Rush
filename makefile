@@ -29,7 +29,7 @@ SOURCES = $(wildcard $(REP_SRC)/*.c)
 OBJETS = $(SOURCES:$(REP_SRC)/%.c=$(REP_OBJ)/%.o)
 ENTETES = $(REP_SRC)/constantes.h
 WARNING_FLAGS = -Wall -Wextra # -Wconversion -Wno-float-conversion -Wno-sign-conversion #-fanalyzer -fsanitize=undefined #-fsanitize=address
-DEBUG_FLAGS = 
+DEBUG_FLAGS =
 
 DOCS_PDF = $(REP_DOC)/description_détaillée.pdf $(REP_DOC)/rapport.pdf
 SOURCES_TEX = $(wildcard $(REP_DOC)/*.tex)
@@ -74,6 +74,7 @@ docs_doxy: $(DOXYFILE)
 	@ $(OUTIL_MESSAGE) Génération de la doc Doxygen…
 	cd $(REP_DOC) && doxygen $(subst $(REP_DOC)/, , $<)
 ifeq ($(shell whoami), s123690)
+	rm -r $(HOME)/public_html/doxygen_dignrush
 	cp -r $(REP_DOC)/html $(HOME)/public_html/doxygen_dignrush
 endif
 
