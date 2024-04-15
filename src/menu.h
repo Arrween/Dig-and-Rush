@@ -45,6 +45,7 @@ struct s_etat {
 };
 
 void action_volume(t_etat *);
+void action_option(t_etat * );
 void action_fullscreen(t_etat *);
 void action_home(t_etat *);
 void action_quitter(t_etat *);
