@@ -197,6 +197,15 @@ int main() {
             action_quitter,
             "QUIT"
         };
+    t_bouton btn_option = { recuperer_texture("options"),
+            {TAILLE_L * 0.18,
+                TAILLE_H * 0.30,
+                TAILLE_L * 0.30,
+                TAILLE_H * 0.30},
+            action_option,
+            "OPTIONS"
+        };
+
 
 
 t_bouton * menus[3][10] = {
@@ -303,7 +312,7 @@ t_bouton * menus[3][10] = {
                                 printf("Bouton %s cliqué\n", btn->nom);
                         
                                 // Si le bouton "Play" est cliqué, exécutez l'action spécifique à ce bouton
-                                /*if (btn == &btn_jouer) {
+                                /*if (&btn_jouer) {
                                     jouer_audio(0, "coq", 0);
                                     etat.doit_quitter = boucle_jeu(rend);
                                 }*/
