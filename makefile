@@ -66,7 +66,7 @@ else ifdef XELATEX
 	@# se déplacer dans doc/ pour compiler doc/*.tex, le doc/ étant retiré par subst
 	@# « -interaction batchmode » pour limiter la loquacité de xelatex
 	# cd $(REP_DOC) && xelatex -interaction batchmode $(subst $(REP_DOC)/, , $<)
-	cd $(REP_DOC) && xelatex $(subst $(REP_DOC)/, , $<)
+	cd $(REP_DOC) && xelatex $(subst $(REP_DOC)/, , $<) && xelatex $(subst $(REP_DOC)/, , $<)
 else
 	@echo "pas de compilateur TeX trouvé, docs .tex non compilées"
 endif
