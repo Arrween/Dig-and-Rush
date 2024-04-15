@@ -16,7 +16,7 @@ REP_SDLBIN = $(REP_SDL)/bin
 SYSTEME = $(shell uname)
 ifeq ($(SYSTEME), Linux)
 $(info système linux, utilisation d’une librairie SDL locale…)
-LIB_FLAGS = `$(REP_SDLBIN)/sdl2-config --libs --cflags` -lSDL2_image -lSDL2_ttf -lSDL2_mixer -lcunit
+LIB_FLAGS = `$(REP_SDLBIN)/sdl2-config --libs --cflags` -lSDL2_image -lSDL2_ttf -lSDL2_mixer
 INCLUDES = -I$(REP_SRC) -I$(REP_SDLINC)
 else
 $(info système non linux, utilisation de la librairie SDL système…)
@@ -45,11 +45,11 @@ XELATEX := $(shell command -v xelatex 2> /dev/null)
 
 $(NOM_BIN) : $(filter-out $(REP_OBJ)/test_unit.o, $(OBJETS))
 	@ $(OUTIL_MESSAGE) Compilation du jeu…
-	gcc -o $(REP_BIN)/$@ $^ $(LIB_FLAGS) $(INCLUDES) $(WARNING_FLAGS) $(DEBUG_FLAGS)
+	gcc -o $(REP_BIN)/$@ $^ $(LIB_FLAGS) $(INCLUDES) $(WARNING_FLAGS) $(DEBUG_FLAGS) 
 
 $(TEST_BIN) : $(filter-out $(REP_OBJ)/main.o, $(OBJETS))
 	@ $(OUTIL_MESSAGE) Compilation des tests unitaires...
-	gcc -o $(REP_BIN)/$@ $^ $(LIB_FLAGS) $(INCLUDES) $(WARNING_FLAGS) $(DEBUG_FLAGS)
+	gcc -o $(REP_BIN)/$@ $^ $(LIB_FLAGS) $(INCLUDES) $(WARNING_FLAGS) $(DEBUG_FLAGS) -lcunit
 
 $(OBJETS) : $(REP_OBJ)/%.o: $(REP_SRC)/%.c $(ENTETES)
 	gcc -o $@ -c $< $(WARNING_FLAGS) $(DEBUG_FLAGS) $(INCLUDES)
