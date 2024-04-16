@@ -135,6 +135,7 @@ void pnj_mourir(t_entite * pnj, int * score, t_texte * texte_score) {
     pnj->pnj->est_mort = VRAI;
     *score += pnj->pnj->valeur_vaincu;
     changer_texte(texte_score, "POINTS : %i", *score);
+    jouer_audio(4, pnj->pnj->id_son_mort, 0);
 }
 
 /**
@@ -161,6 +162,7 @@ t_pnj * creer_pnj(char * id, t_entite * e) {
                    nouv->parent->hitbox.y, nouv->parent->hitbox.w,
                    nouv->parent->hitbox.h, FAUX);
     strcpy(nouv->id_son_attaque, "silence");
+    strcpy(nouv->id_son_mort, "silence");
 
     if (strcmp(id, "squelette") == 0) {
         nouv->comportement = comportement_patrouille;
@@ -178,6 +180,7 @@ t_pnj * creer_pnj(char * id, t_entite * e) {
         nouv->est_ecrasable = VRAI;
         nouv->parent->vitesse = 1./2;
         strcpy(nouv->id_son_attaque, "attaque_feu");
+        strcpy(nouv->id_son_mort, "mort_feu");
         changer_hitbox(nouv->parent, &(nouv->parent->hitbox), 20, 30, 50, 55, VRAI);
         changer_hitbox(nouv->parent, &(nouv->hitbox_attaque), nouv->parent->hitbox.x,
                        nouv->parent->hitbox.y, nouv->parent->hitbox.w,

@@ -19,6 +19,7 @@ struct s_pnj {
     SDL_FRect hitbox_attaque; /**< utilisée pour vérifier si une entité est touchée par l’attaque du pnj */
     int doit_afficher_hitbox_attaque; /**< booléen régissant l’affichage de `hitbox_attaque` */
     char id_son_attaque[TAILLE_MAX_ID]; /**< Identifiant de ressource du son d'attaque*/
+    char id_son_mort[TAILLE_MAX_ID]; /**< Identifiant de ressource du son d’agonie */
 };
 
 t_entite * creer_entite_pnj_depuis_spritesheet(char*, float, float, float, float, int);
