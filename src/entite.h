@@ -21,6 +21,7 @@ typedef struct s_collision {
 } t_collision;
 
 typedef struct s_destructible t_destructible;
+typedef struct s_bonus t_bonus;
 typedef struct s_pnj t_pnj;
 typedef struct s_perso t_perso;
 /** \brief Objet général pour toute entité affichée à l’écran
@@ -86,6 +87,8 @@ typedef struct s_entite {
     t_pnj * pnj;
     /** sous-structure affectée si l’entité est un personnage joueur */
     t_perso * perso;
+    /** sous-structure affectée si l’entité est un bonus ramassable */
+    t_bonus * bonus;
 
 } t_entite;
 

@@ -5,6 +5,7 @@
 #include "morceaux_niveau.h"
 #include "constantes.h"
 #include "entite_destructible.h"
+#include "entite_bonus.h"
 #include "entite_obstacle.h"
 #include "entite_pnj.h"
 #include "listes.h"
@@ -51,16 +52,18 @@ void generer_morceau_niveau(float repere_defilement){
                 presences_blocs[j] = VRAI;
             }
         }
-        // ajouter un ennemi au-dessus d’un bloc aléatoire de la ligne
+        // ajouter un ennemi ou un bonus au-dessus d’un bloc aléatoire de la ligne
         random = rand() % 8;
         int limite = random - 1 > 0 ? random - 1 : 0;
         // parcourir la ligne à partir d’une colonne aléatoire jusqu’à trouver un bloc où poser l’ennemi
         for (j = random; j != limite && !presences_blocs[j]; j = (j + 1) % 8);
         if (presences_blocs[j]) {
-            if (i % 5 == 0)
+            if (i == 5)
                 liste_ajouter_droite(I_LISTE_ENTITES, creer_entite_pnj_depuis_spritesheet("squelette", 10*(j+1)-5, y-17, 20, 17, VRAI));
-            else if (i % 3 == 0)
+            else if (i == 9)
                 liste_ajouter_droite(I_LISTE_ENTITES, creer_entite_pnj_depuis_spritesheet("feu", 10*(j+1)-5, y-20, 20, 20, VRAI));
+            else if (i == 3)
+                liste_ajouter_droite(I_LISTE_ENTITES, creer_entite_bonus("pieces", 10*(j+1)+2.5, y-6, 7, 7, VRAI));
         }
     }
 }
