@@ -19,7 +19,6 @@ void comportement_oisif(void) {
  * 
  * @param pnj Pointeur vers l'entité du PNJ.
  */
-
 void comportement_patrouille(t_entite * pnj, t_entite * perso) {
     if (pnj->pnj->est_mort)
         return;
@@ -78,6 +77,55 @@ void comportement_patrouille(t_entite * pnj, t_entite * perso) {
         appliquer_reflexion_hitbox(pnj, &(pnj->pnj->hitbox_attaque));
 }
 
+/**
+ * @brief Comportement par défaut pour un PNJ volant en patrouille.
+ * 
+ * @param pnj Pointeur vers l'entité du PNJ.
+ */
+void comportement_patrouille_vol(t_entite * pnj, t_entite * perso) {
+    if (pnj->pnj->est_mort)
+        return;
+    int a_change_sens = FAUX;
+
+    if (!perso->perso->est_mort && SDL_HasIntersectionF(&pnj->pnj->hitbox_attaque, &perso->hitbox)) {
+        if (pnj->deplacement == GAUCHE) {
+            pnj->id_animation_suivante = DEPL_G;
+            changer_animation(pnj, ATTQ_G);
+            jouer_audio(3, pnj->pnj->id_son_attaque, 0);
+        }
+        else if (pnj->deplacement == DROITE) {
+            pnj->id_animation_suivante = DEPL_D;
+            changer_animation(pnj, ATTQ_D);
+            jouer_audio(3, pnj->pnj->id_son_attaque, 0);
+        }
+        pnj->deplacement = REPOS_MVT;
+        perso_prendre_coup(perso);
+    }
+    if (pnj->animation_courante->id == ATTQ_G || pnj->animation_courante->id == ATTQ_D)
+        return;
+
+    if (pnj->deplacement == REPOS_MVT
+        || (pnj->deplacement == DROITE && pnj->hitbox.x + pnj->hitbox.w >= pnj->pnj->x_patrouille_d)
+        || pnj->collisions.d
+        ) {
+        pnj->deplacement = GAUCHE;
+        changer_animation(pnj, DEPL_G);
+        changer_pos_rel(pnj, -1, 0); // pour sortir de l’état de collision
+        if (pnj->deplacement != REPOS_MVT)
+            a_change_sens = VRAI;
+    }
+    else if ((pnj->deplacement == GAUCHE && pnj->hitbox.x <= pnj->pnj->x_patrouille_g)
+             || pnj->collisions.g
+             ) {
+        pnj->deplacement = DROITE;
+        changer_animation(pnj, DEPL_D);
+        changer_pos_rel(pnj, 1, 0); // pour sortir de l’état de collision
+        a_change_sens = VRAI;
+    }
+    if (a_change_sens)
+        appliquer_reflexion_hitbox(pnj, &(pnj->pnj->hitbox_attaque));
+}
+
 void pnj_mourir(t_entite * pnj, int * score, t_texte * texte_score) {
     if (!pnj->pnj || (pnj->pnj && pnj->pnj->est_mort))
         return;
@@ -125,7 +173,7 @@ t_pnj * creer_pnj(char * id, t_entite * e) {
         changer_hitbox(nouv->parent, &(nouv->hitbox_attaque), 50, 70, 33, 20, VRAI);
     }
     else if (strcmp(id, "feu") == 0) {
-        nouv->comportement = comportement_patrouille;
+        nouv->comportement = comportement_patrouille_vol;
         nouv->valeur_vaincu = 10;
         nouv->est_ecrasable = VRAI;
         nouv->parent->vitesse = 1./2;
