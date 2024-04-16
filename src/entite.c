@@ -9,6 +9,7 @@
 #include "entite_destructible.h"
 #include "entite_pnj.h"
 #include "entite_perso.h"
+#include "entite_bonus.h"
 #include "constantes.h"
 
 int numeros_entites = 0;
@@ -302,6 +303,7 @@ t_entite * creer_entite_depuis_texture(SDL_Texture * texture,
     nouv->est_obstacle = FAUX;
     nouv->pnj = NULL;
     nouv->perso = NULL;
+    nouv->bonus = NULL;
 
     return nouv;
 }
@@ -338,6 +340,7 @@ void detruire_entite(t_entite ** e) {
         detruire_destructible(&((*e)->destructible));
         detruire_pnj(&((*e)->pnj));
         detruire_perso(&((*e)->perso));
+        detruire_bonus(&((*e)->bonus));
         free(*e);
     }
     *e = NULL;

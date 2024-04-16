@@ -10,6 +10,7 @@
 #include "constantes.h"
 #include "entite.h"
 #include "entite_destructible.h"
+#include "entite_bonus.h"
 #include "entite_pnj.h"
 #include "entite_perso.h"
 #include "nuit.h"
@@ -38,7 +39,7 @@ SDL_bool PointInFRect(const SDL_FPoint* p, const SDL_FRect* r) {
  * @param e1 entité possiblement en collision
  * @param correction_defilement valeur à retourner si `e1` est le personnage joueur
  */
-void verif_collision(t_entite * e1, float * correction_defilement) {
+void verif_collision(t_entite * e1, float * correction_defilement, int * score, t_texte * texte_score) {
     // points haut gauche, haut droit etc., décalés sur l’axe vertical pour ne pas déclencher
     // une collision à la fois sur la gauche, la droite et le bas
     SDL_FPoint e1_hg = {e1->hitbox.x, e1->hitbox.y + 0.05 * e1->hitbox.h};
@@ -59,8 +60,10 @@ void verif_collision(t_entite * e1, float * correction_defilement) {
     while (!hors_liste(I_LISTE_ENTITES)) {
         t_entite * e2 = liste_lire(I_LISTE_ENTITES);
         
-        if (e1 == e2 || (!e2->est_obstacle && !(e2->pnj && e2->pnj->est_ecrasable)) 
-            || (e2->pnj && e2->pnj->est_mort) || (e2->perso && e2->perso->est_mort)
+        if (e1 == e2
+            || (!e2->est_obstacle && !e2->bonus && !(e2->pnj && e2->pnj->est_ecrasable)) 
+            || (e2->pnj && e2->pnj->est_mort)
+            || (e2->perso && e2->perso->est_mort)
             || (e2->pnj && e1->perso && e1->perso->est_mort)) {
             liste_suivant(I_LISTE_ENTITES);
             continue;
@@ -101,6 +104,15 @@ void verif_collision(t_entite * e1, float * correction_defilement) {
             float depassement = e2->hitbox.y - (e1->hitbox.y + e1->hitbox.h);
             if (depassement < 0)
                 *correction_defilement = depassement;
+        }
+
+        // ramassage de bonus
+        if ((e2->bonus && e1->perso) && (collision_b || collision_d || collision_g || collision_h)) {
+            jouer_audio(3, e2->bonus->id_son, 0);
+            *score += e2->bonus->valeur;
+            changer_texte(texte_score, "POINTS : %i", *score);
+            detruire_entite(&e2);
+            liste_retirer(I_LISTE_ENTITES);
         }
 
         liste_suivant(I_LISTE_ENTITES);
@@ -395,7 +407,7 @@ int boucle_jeu(SDL_Renderer * rend) {
 
         // Gestion des collisions
         float correction_defilement = 0;
-        verif_collision(perso, &correction_defilement);
+        verif_collision(perso, &correction_defilement, &score, texte_score);
 
         // Déplacement et animation du personnage
         if (!perso->collisions.b) {
@@ -435,7 +447,7 @@ int boucle_jeu(SDL_Renderer * rend) {
                 continue;
             }
             // évolution du comportement du pnj i
-            verif_collision(pnjs[i], NULL);
+            verif_collision(pnjs[i], NULL, NULL, NULL);
             pnjs[i]->pnj->comportement(pnjs[i], perso);
             deplacer(pnjs[i], compteur_frames);
             animer(pnjs[i], compteur_frames);

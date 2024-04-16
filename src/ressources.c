@@ -72,6 +72,7 @@ struct chargement chargements_texs[] = {
     {"ressources/Tour/Arriere_plan/ciel_nuit.png", "fond_jeu_nuit"},
     {"ressources/Tour/Blocs/terre/terre3.png", "bloc_terre"},
     {"ressources/Tour/Blocs/pierres_claires/pierre_herbe_c.png", "bloc_pierre"},
+    {"ressources/Tour/pieces.png", "pieces"},
 
     //Selections personnages
     {"ressources/Personnages/selections/koba.png", "koba"},
@@ -400,7 +401,7 @@ int jouer_audio(int canal, const char * id, int repetitions) {
         return 0;
     }
 
-    fprintf(stderr, "Avertissement : tentaive de jouer une "
+    fprintf(stderr, "Avertissement : tentative de jouer une "
             "ressource audio (son ou musique) inexistante « %s »\n", id);
     return -2;
 }
