@@ -27,7 +27,7 @@ SDL_Rect jackRect = { (TAILLE_L + 30) / 2, (TAILLE_H - 195) / 2, 80, 100 };
 SDL_Rect yohanRect = { (TAILLE_L - 165) / 2, (TAILLE_H + 15) / 2, 80, 100 };
 SDL_Rect aniaRect = { (TAILLE_L + 30) / 2, (TAILLE_H + 15) / 2, 80, 100 };
 
-SDL_Rect controlsRect = { (TAILLE_L - 165) / 2, (TAILLE_H - 195) / 2, 80, 100 };
+SDL_Rect controlsRect = { (TAILLE_L - 400) / 2, (TAILLE_H +15) / 2, 230, 75 };
 
 
 int main() {
@@ -270,19 +270,20 @@ t_bouton * menus[3][10] = {
                 case SDL_MOUSEBUTTONDOWN:
                     if (event.button.button == SDL_BUTTON_LEFT) {
                         SDL_Point pointeur = {event.button.x, event.button.y};
-                        if(SDL_PointInRect(&pointeur, &controlsRect)){
-                            SDL_SetRenderDrawColor(rend, 255, 0, 0, 255); // Couleur rouge
-                            SDL_RenderDrawRect(rend, &controlsRect); // Dessiner le rectangle
-                            
+                        if (etat.i_menu == PAGE_MENU_PARAMETRES) {
+                            if (SDL_PointInRect(&pointeur, &controlsRect)) {
+                                SDL_SetRenderDrawColor(rend, 255, 0, 0, 255); // Couleur rouge
+                                SDL_RenderDrawRect(rend, &controlsRect); // Dessiner le rectangle
 
-                            // Charger et afficher la texture du nouveau fond
-                            SDL_Texture* nouveauFond = recuperer_texture("menu_commandes");
-                            SDL_Rect destRect = {0, 0, TAILLE_L, TAILLE_H}; // Rectangle de destination pour le rendu
-                            SDL_RenderCopy(rend, nouveauFond, NULL, &destRect);
-                            SDL_RenderPresent(rend); // Mettre à jour le rendu
-                            SDL_Delay(10000); // Attendre 2 secondes (2000 millisecondes)
-                            printf("Coontrols sélectionné\n");
-
+                                // Charger et afficher la texture du nouveau fond
+                                SDL_Texture* nouveauFond = recuperer_texture("menu_commandes");
+                                SDL_Rect destRect = {0, 0, TAILLE_L, TAILLE_H}; // Rectangle de destination pour le rendu
+                                SDL_RenderCopy(rend, nouveauFond, NULL, &destRect);
+                                SDL_RenderPresent(rend); // Mettre à jour le rendu
+                                SDL_Delay(5000); // Attendre 5 secondes (5000 millisecondes)
+                                printf("Controls sélectionné\n");
+                                
+                            }
                         }
                         // Vérifier si le clic se trouve à l'intérieur du rectangle de Matt
                         if (SDL_PointInRect(&pointeur, &mattRect)) {
@@ -428,7 +429,7 @@ t_bouton * menus[3][10] = {
 
             SDL_Color couleur_txt_yohan = {255,165,0,255};
             TTF_Font * font3 = TTF_OpenFont("ressources/Menu/Police/font1.ttf", 50);
-            SDL_Surface * surface_txt_chargement = TTF_RenderText_Solid(font3, "YO HAN", couleur_txt_yohan);
+            SDL_Surface * surface_txt_chargement = TTF_RenderText_Solid(font3, "AOHYN", couleur_txt_yohan);
             SDL_Rect dst_txt_chargement = {TAILLE_L/2 + 215, TAILLE_H/2 - 215, 200, 50};
             SDL_Texture * tex_txt_chargement = SDL_CreateTextureFromSurface(rend, surface_txt_chargement);;
             SDL_RenderCopy(rend, tex_txt_chargement, NULL, &dst_txt_chargement);

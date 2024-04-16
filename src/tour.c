@@ -145,7 +145,7 @@ int boucle_jeu(SDL_Renderer * rend) {
     int creusage_en_cours = FAUX; // Indicateur si l'animation de creusage est en cours
     int compteur_creusage = 0;
     int compteur_jour_nuit = 0;
-
+    int nuit_avant_pause ;
 
     srand(time(NULL));
 
@@ -182,7 +182,10 @@ int boucle_jeu(SDL_Renderer * rend) {
     changer_texte(texte_mort, "GAME OVER !");
 
     t_texte * texte_reessayer = creer_texte("police_defaut", 255, 255, 255, 255, 450, 550, 350, 50);
-    changer_texte(texte_reessayer, "Type escape to retry");
+    changer_texte(texte_reessayer, "Press <escape> to retry");
+
+    t_texte * texte_pause = creer_texte("police_defaut", 255, 255, 255, 255, 450, 550, 350, 50);
+    changer_texte(texte_pause, "Paused, press <space> to resume.");
 
     // chronométrage du temps de chaque frame
     clock_t chrono_deb, chrono_fin;
@@ -230,6 +233,11 @@ int boucle_jeu(SDL_Renderer * rend) {
                             break;
                         case SDL_SCANCODE_SPACE:
                             est_en_pause = !est_en_pause;
+                            if (!est_en_pause){
+                                if (nuit->est_active && !nuit_avant_pause){
+                                    nuit->est_active = FAUX ;
+                                }
+                            }
                             break;
                         case SDL_SCANCODE_H:
                             perso->doit_afficher_hitbox = !perso->doit_afficher_hitbox;
@@ -333,10 +341,12 @@ int boucle_jeu(SDL_Renderer * rend) {
            
         }
         if (est_en_pause) {
+            nuit->est_active = VRAI ;
             SDL_Delay(1000/FPS);
-            continue;
         }
-       
+
+        
+
         if (creusage_en_cours) {
             compteur_creusage++;
             if (compteur_creusage >= DELAI_CREUSAGE) {
@@ -381,13 +391,19 @@ int boucle_jeu(SDL_Renderer * rend) {
 
         afficher_texte(rend, texte_fps);
         afficher_texte(rend, texte_score);
+        if (est_en_pause) 
+            afficher_texte(rend, texte_pause);
 
         if (perso->perso->est_mort) {
             afficher_texte(rend, texte_mort);
             afficher_texte(rend, texte_reessayer);
         }
 
+        
         SDL_RenderPresent(rend);
+        if (est_en_pause) {
+            continue ;
+        }
 
         // Gestion des collisions
         float correction_defilement = 0;
