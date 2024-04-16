@@ -223,9 +223,6 @@ int boucle_jeu(SDL_Renderer * rend) {
                             case SDL_SCANCODE_Q:
                                 doit_boucler = FAUX;
                                 break;
-                            case SDL_SCANCODE_SPACE:
-                                est_en_pause = !est_en_pause;
-                                break;
                             default:
                                 break;
                         }
