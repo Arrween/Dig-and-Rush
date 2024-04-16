@@ -149,7 +149,6 @@ int boucle_jeu(SDL_Renderer * rend) {
     int creusage_en_cours = FAUX; // Indicateur si l'animation de creusage est en cours
     int compteur_creusage = 0;
     int compteur_jour_nuit = 0;
-    int nuit_avant_pause ;
 
     srand(time(NULL));
     int n = rand()%10 + 1;
@@ -242,7 +241,7 @@ int boucle_jeu(SDL_Renderer * rend) {
                         case SDL_SCANCODE_SPACE:
                             est_en_pause = !est_en_pause;
                             if (!est_en_pause){
-                                if (nuit->est_active && !nuit_avant_pause){
+                                if (nuit->est_active) {
                                     nuit->est_active = FAUX ;
                                 }
                             }
@@ -468,7 +467,7 @@ int boucle_jeu(SDL_Renderer * rend) {
             // Calcul du pas de défilement en fonction de la vitesse de chute et du compteur de frames
             if (VITESSE_CHUTE >= 1) {
                 pas_defilement = VITESSE_CHUTE;
-            } else if (compteur_frames % (int)(1 / (VITESSE_CHUTE)) == 0) {
+            } else if (compteur_frames % (int)(1 / (VITESSE_CHUTE)) == 0) { // avertissement de division par zéro à ignorer du fait que dans cette branche VITESSE_CHUTE est inférieur à 1
                 pas_defilement = 1;
             } else {
                 pas_defilement = 0;
@@ -522,7 +521,7 @@ int boucle_jeu(SDL_Renderer * rend) {
 
         compteur_frames++;
 
-        if (compteur_frames % DELAI_PERTE_SCORE == 0 && score > 0) {
+        if (compteur_frames % DELAI_PERTE_SCORE == 0 && score > 0 && !perso->perso->est_mort) {
             score--;
             changer_texte(texte_score, "SCORE : %i", score);
         }
