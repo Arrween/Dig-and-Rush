@@ -18,7 +18,7 @@
 t_bonus * creer_bonus(char * id) {
     t_bonus * nouv = malloc(sizeof(t_bonus));
     if (strcmp(id, "pieces") == 0) {
-        strcpy(nouv->id_son, "ramassage_pieces");
+        strcpy(nouv->id_son, "ramasser_butin");
         nouv->valeur = 5;
     }
     else {

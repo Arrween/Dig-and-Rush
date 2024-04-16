@@ -149,6 +149,7 @@ int boucle_jeu(SDL_Renderer * rend) {
     int nuit_avant_pause ;
 
     srand(time(NULL));
+    int n = rand()%10 + 1;
 
     init_liste(I_LISTE_ENTITES);
 
@@ -160,14 +161,19 @@ int boucle_jeu(SDL_Renderer * rend) {
     int doit_quitter = FAUX;
 
     // Initialisation des entités de fond et de personnage
-    t_entite * fond = creer_entite("fond_jeu", -1, -1, -1, -1, FAUX);
-    t_entite * fond_nuit = creer_entite("fond_jeu_nuit", -1, -1, -1, -1, FAUX);
+    t_entite * fond ;
+    if (n%2)
+        fond = creer_entite("fond_jeu", -1, -1, -1, -1, FAUX);
+    else
+        fond = creer_entite("fond_jeu2", -1, -1, -1, -1, FAUX);
 
+    t_entite * fond_nuit = creer_entite("fond_jeu_nuit", -1, -1, -1, -1, FAUX);
     t_entite * fond_tour = creer_entite("fond_tour", 0, 0, 100, 100, VRAI);
     t_entite * fond_tour_2 = creer_entite("fond_tour", 0, 100, 100, 100, VRAI);
-
+    printf("Jack");fflush(stdout);
     t_entite * perso = creer_entite_perso((char*)personnage_selectionne, 40, 20, 15, 12, VRAI);
-    
+    printf("Lol");
+
     generer_murs();
 
     SDL_FRect zone_jeu = {TAILLE_L/4., 0, TAILLE_L/2., TAILLE_H};
@@ -217,9 +223,6 @@ int boucle_jeu(SDL_Renderer * rend) {
                             case SDL_SCANCODE_ESCAPE:
                             case SDL_SCANCODE_Q:
                                 doit_boucler = FAUX;
-                                break;
-                            case SDL_SCANCODE_SPACE:
-                                est_en_pause = !est_en_pause;
                                 break;
                             default:
                                 break;

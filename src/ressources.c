@@ -69,6 +69,7 @@ struct chargement chargements_texs[] = {
     {"ressources/Personnages/jackPerso.png", "jack"},
     {"ressources/Tour/Arriere_plan/fond.jpg", "fond_tour"},
     {"ressources/Tour/Arriere_plan/ciel_bleu.png", "fond_jeu"},
+    {"ressources/Tour/Arriere_plan/ciel_orange.png", "fond_jeu2"},
     {"ressources/Tour/Arriere_plan/ciel_nuit.png", "fond_jeu_nuit"},
     {"ressources/Tour/Blocs/terre/terre3.png", "bloc_terre"},
     {"ressources/Tour/Blocs/pierres_claires/pierre_herbe_c.png", "bloc_pierre"},
@@ -188,6 +189,8 @@ struct chargement chargements_sons[] = {
     {"ressources/Audio/SFX/swing.mp3", "attaque_perso"},
     {"ressources/Audio/SFX/mort.mp3", "mort_perso"},
     {"ressources/Audio/SFX/mort_perso_f.mp3", "mort_perso_f"},
+    {"ressources/Audio/SFX/explosion.mp3", "attaque_feu"},
+    {"ressources/Audio/SFX/pickup.mp3", "ramasser_butin"},
 };
 
 struct chargement chargements_musiques[] = {
