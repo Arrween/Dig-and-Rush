@@ -176,6 +176,8 @@ int boucle_jeu(SDL_Renderer * rend) {
 
     generer_murs();
 
+    generer_premiere_ligne(80);
+
     SDL_FRect zone_jeu = {TAILLE_L/4., 0, TAILLE_L/2., TAILLE_H};
     t_nuit * nuit = creer_nuit(rend, perso, zone_jeu, fond->texture, fond_nuit->texture);
 

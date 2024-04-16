@@ -17,6 +17,13 @@
 #define CHANCE_BLOC_VIDE 2 // en dizaine de %
 #define MAX_BLOCS_PIERRE 7
 
+void generer_premiere_ligne(float y) {
+    liste_en_queue(I_LISTE_ENTITES);
+
+    for (int j = 1; j <= 8; j++) {
+        liste_ajouter_droite(I_LISTE_ENTITES, creer_entite_destructible("bloc_terre", j*10, y, 10, 10, VRAI));
+    }
+}
 
 /**
  * @brief Génère un morceau de niveau aléatoire qui se répète.
