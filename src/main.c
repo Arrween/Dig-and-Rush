@@ -280,7 +280,7 @@ t_bouton * menus[3][10] = {
                             SDL_Rect destRect = {0, 0, TAILLE_L, TAILLE_H}; // Rectangle de destination pour le rendu
                             SDL_RenderCopy(rend, nouveauFond, NULL, &destRect);
                             SDL_RenderPresent(rend); // Mettre à jour le rendu
-                            SDL_Delay(10000); // Attendre 2 secondes (2000 millisecondes)
+                            SDL_Delay(5000); // Attendre 2 secondes (2000 millisecondes)
                             printf("Coontrols sélectionné\n");
 
                         }
