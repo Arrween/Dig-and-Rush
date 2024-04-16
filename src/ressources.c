@@ -190,7 +190,7 @@ struct chargement_spritesheet chargements_spritesheets[] = {
 
 struct chargement chargements_sons[] = {
     {"ressources/Audio/SFX/silence.mp3", "silence"},
-    {"ressources/essais_audio/confirmation_001.wav", "confirmation"},
+    {"ressources/Audio/SFX/menu_confirmation.wav", "confirmation"},
     {"ressources/Audio/SFX/coq.mp3", "coq"},
     {"ressources/Audio/SFX/destruction_bloc_1.flac", "destruction_bloc_1"},
     {"ressources/Audio/SFX/destruction_bloc_2.flac", "destruction_bloc_2"},
