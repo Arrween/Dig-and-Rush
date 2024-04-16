@@ -21,7 +21,7 @@ SDL_Window* gWindow = NULL;
 SDL_Renderer* gRenderer = NULL;
 
 // Déclaration de la variable globale
-char personnage_selectionne[TAILLE_MAX_ID];
+char personnage_selectionne[TAILLE_MAX_ID] = "";
 
 
 /**
