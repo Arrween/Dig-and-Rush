@@ -82,10 +82,10 @@ En annexe, se trouvera les tests unitaires et tentatives de debogage, les captur
 \section{Organisation}
 % Rédaction : Yohan, Jacques
 % Longueur : 2 pages
-% Sujets : Gantt, répartition des tâches, salon de discussion, github (cartes ?)
+% Sujets : Gantt, répartition des tâches, salon de discussion, github (cartes ?), trello
 
 
-\subsection{Comment les tâches ont été définies ?}
+\subsection{Définition des tâches}
 Avant de commencer à coder l’équipe a effectué un brainstorming afin de connaître toutes les phases du projet et les tâches qui seraient susceptibles d’entrer dans ces dernières. 
 En effet, en citant exhaustivement les tâches cela nous permet d’avoir une estimation temporelle du projet. 
 Nous avons également pris en compte les attentes du corps enseignant.
@@ -99,7 +99,7 @@ La planification, qui sera évoquée dans la partie suivante, sert à se répart
 La documentation est la création de documents permettant la compréhension du projet. 
 Le rapport et la soutenance sont réservés à la présentation du projet.
 
-\subsection{Comment les tâches ont été réparties ?}
+\subsection{Répartition des tâches}
 Suite à l’élaboration de la liste des tâches nous nous sommes réparties les tâches en fonction de deux critères. 
 Tout d’abord les choix et affinités de chacuns, en effet chaque personne du groupe a préféré certaines tâches plutôt que d’autres. 
 Ensuite, nous nous sommes réparties le reste des tâches en équilibrant afin que tout le monde ait à peu près le même temps de travail.
@@ -111,7 +111,7 @@ Sur le graphe sont présentes les tâches, les dates encadrantes ces dernières 
 L’équipe adopte deux diagrammes de Gantt, un diagramme prévisionnel qui représente l’avancement idéal du projet et un diagramme réel qui est mis à jour régulièrement. 
 Ce dernier sert principalement à voir les tâches restantes en fonction de la deadline.
 
-\subsection{Les outils utilisés pour organiser/communiquer ?}
+\subsection{Outils consacrés à la communication et à l'organisation}
 Nous utilisons Discord pour communiquer. 
 Il permet de créer des canaux en fonction de nos besoins. 
 Dans le cas de projet il y a un canal pour les ressources, un pour la conversation générale et des canaux vocaux si nous avons besoin de nous appeler. 
@@ -152,9 +152,49 @@ Il permet également, pour chaque semaine, de mettre la tâche effectuée par ch
 % Longueur : 3 pages
 % Sujets : analyse, cahier des charges etc.
 
-\subsection{Sous-partie 1}
+Développé en C en utilisant la bibliothèque SDL, notre jeu a d'abord connu une phase de conception.
 
-\subsection{Sous-partie 2}
+\subsection{Objectif du jeu}
+\subsection{Règles de jeu}
+\subsection{Graphismes}
+%  Rédigé par : Ania
+Les graphismes de Dig\&Rush sont fortement inspirés du jeu mobile Once Upon a Tower.
+Pour les menus (menu principal, menu de personnages, menu de paramètres, \dots), les couleurs  chaudes telles que le rouge et le orange, mixé à une pointe de violet nous semblaient plus adaptés à l'esprit combatif et dangereux du jeu. 
+En ce qui concerne l'interface du jeu, nous avons opté pour une palette de couleurs vivantes dans les tons bleu, vert et blanc pour attirer et retenir l'attention des joueurs.
+Une fois les couleurs définies, il nous restait à trouver les bonnes ressources en libre de droit. Nous avons donc fini par opter pour des images d'intérieur médiéval pour les menus, un fond de ciel bleu pour l'interface de jeu et un fond uni blanc pour le fond de la tour.
+La tour elle à son tour, est entourée de murs de blocs de pierres.
+\begin{figure}[h]
+	\begin{center}
+		\includegraphics[height=7cm]{img/menu.png}\\
+		\caption{{\emph{Menu principal}}}
+		\label{menu}
+	\end{center}
+\end{figure}
+
+\subsection{Niveaux}
+%  Rédigé par : Ania
+Les niveaux, avec le placement des blocs qui devait être aléatoire, était l'une des parties les plus complexes à concevoir, car il nous fallait pour chaque ligne une suite de blocs de pierres, de blocs de terre et de vides générés automatiquement mais tout en faisant attention à toujours laisser au moins une issue possible au joueur afin qu'il puisse avancer.
+
+\subsection{Personnages}
+
+
+\subsection{Mécaniques}
+%  Rédigé par : Ania
+Comme mentionné précédemment, notre jeu est composé d'une tour, de blocs de pierres, de terre, de personnages (joueurs et non joueurs) et le petit plus : un effet de transition entre le jour et la nuit.
+\begin{itemize}
+	\item Les blocs de pierres délimitent la tour et les endroits par où le joueur ne peut pas passer.
+	\item Les blocs de terre sont destructibles et permettent donc de creuser un chemin pour le joueur, mais non pour le PNJ.
+	\item Les personnages joueur creusent et attaquent les ennemis pour les vaincre.
+	\item Les personnages non-joueur (ennemis) se déplacent sur un axe horizontal et attaquent le joueur dès qu'il est détécté à leur proximité.
+	\item Effet d'ombre qui permet la transition entre le jour et la nuit pour varier la difficulté et rajouter du défi.
+\end{itemize}
+
+Chacune de ces mécaniques est agrémenté d'un son pour soit un joueur masculin ou féminin (son de blessure, d'attaque, de mort, ...).
+
+
+\subsection{Analyse des difficultés}
+% Difficulté de savoir quel types de structures utiliser : listes, matrices, ...
+% Communication, gestion, ...
 
 
 
@@ -163,7 +203,17 @@ Il permet également, pour chaque semaine, de mettre la tâche effectuée par ch
 % Longueur : 5 pages
 % Sujets : librairies, architecture du code, menu, personnages, tour, blocs, documentation etc.
 
-\subsection{Architecture}
+Dans cette section, nous traitons des aspects techniques du développement de notre jeu en 2D utilisant la bibliothèque SDL et programmé en langage C. Elle englobe plusieurs sujets, notamment les librairies employées, l'architecture du code, la création des personnages...
+
+\subsection{Librairies et outils utilisés}
+
+Pour le développement de notre jeu, nous avons principalement opté pour l'utilisation de la bibliothèque SDL (Simple DirectMedia Layer) en langage C. SDL s'est révélée être un choix judicieux, offrant une interface simple et efficace pour la gestion des graphiques, du son et des périphériques d'entrée. Cette bibliothèque a grandement facilité le processus de développement de notre jeu en 2D. En complément, nous avons intégré GitHub comme plateforme de gestion de version, nous permettant ainsi de collaborer efficacement sur le code source et de suivre son évolution au fil du temps. De plus, nous avons utilisé des outils de développement standard tels que GCC (GNU Compiler Collection) pour la compilation du code source et GDB (GNU Debugger) pour le débogage.
+
+\subsection{Création des personnages}
+
+
+
+\subsection{Architecture du code}
 
 \begin{table}[H]
     \centering
@@ -193,13 +243,11 @@ Il permet également, pour chaque semaine, de mettre la tâche effectuée par ch
     \caption{Rôle des différents modules}
 \end{table}
 
-\subsection{Outils utilisés}
-
-
-
 \section{Conclusion}
 % Rédaction : Jacques, Matthieu
 % Longueur : 1 page et demi
+
+La conclusion de ce projet met en lumière les apprentissages, les défis surmontés et les perspectives pour l'avenir. Nous avons réussi à concrétiser notre vision du jeu Dig \& Rush grâce à une collaboration efficace et à une répartition équilibrée des tâches. En utilisant des outils tels que Discord, Trello et Git, nous avons pu organiser notre travail de manière transparente et coordonnée, facilitant ainsi la communication et la gestion des versions du code.
 
 
 
@@ -224,7 +272,48 @@ Il permet également, pour chaque semaine, de mettre la tâche effectuée par ch
 
 
 \section{Tests unitaires}
+% Rédigé par : Ania
+Les tests unitaires sont essentiels pour assurer la qualité et la fiabilité. Parmis les différentes fonctions implémentées, il nous a semblé important de vérifier le bon fonctionnement grâce à une suite de tests disponibles sur la librairie CUnit.\\
+Fonctions testées : init\_ressources, recuperer\_texture, recuperer\_spritesheet, recuperer\_son, recuperer\_musique, recuperer\_audio, recuperer\_police, jouer\_audio et detruire\_ressources.\\
+Voici le résultat des tests disponibles dans le fichier test\_unit.c\\
+
+\begin{figure}[h]
+	\begin{center}
+		\includegraphics[height=7cm]{img/capture_tests.png}\\
+		\caption{{\emph{Résultats des tests unitaires}}}
+		\label{tests}
+	\end{center}
+\end{figure}
+
+Les résultats des cinq assertions sont logiques et indiquent que les fonctions se comportent comme prévu, ce qui signifie que les ressources sont fiables.\\
+Nous avons jugé important de mettre en place une suite de tests unitaires efficace qui présente une bonne base pour ajouter plus de tests au fur et à mesure que le projet s'agrandit. Cela aide au maintient de la qualité du code tout au long du développement.
 \section{Exemple de débogage}
+Lors du développement du jeu, plus précisément de la fonction de génération d'ennemis, un bug revenait souvent : un ennemi était généré dans le vide. Pour régler ce problème, il a donc fallu déboger.\\
+La fonction en question (\textit{generer\_ennemi(x,y)} ) est déclarée et appelée dans le fichier source \textit{src/morceaux\_niveau.c.}\\
+\begin{figure}[h]
+	\begin{center}
+		\includegraphics[height=7cm]{img/bug.png}\\
+		\caption{{\emph{Bug du squelette}}}
+		\label{Bug}
+	\end{center}
+\end{figure}
+Etapes de débogage : 
+\begin{itemize}
+	\item Lancer GDB
+	\item Poser un point d'arrêt (\textit{(gdb) break src/morceaux\_niveau.c:generer\_ennemi}).
+	\item Appuyer sur \textit{PLAY}.
+	\item On avance dans le jeu jusqu'à rencontrer le point d'arrêt.
+	\item On execute \textit{step} pour rentrer dans l'appel de fonction.
+	\item A l'aide des options de débogages telles que textit{print, display, next, \dots}, nous avons constaté que l'algorithme de base n'était pas bon.
+\end{itemize}
+\begin{figure}[h]
+	\begin{center}
+		\includegraphics[height=7cm]{img/debug.png}\\
+		\caption{{\emph{Exemple de débogage}}}
+		\label{débogage}
+	\end{center}
+\end{figure}
+Note : les instruction de débogage sont renseignées dans le manuel d'installation et d'utilisation fourni.
 
 % Bibliographie
 % \newpage
