@@ -119,8 +119,8 @@ Nous utilisons principalement le canal général pour suivre l’avancement de c
 
 \begin{figure}[h]
 \begin{center}
-\includegraphics[height=4cm]{img/capture_trello.png}\\
-\caption{{\emph{Mettre capture Discord}}}
+\includegraphics[height=5.5cm]{img/discord.png}\\
+\caption{{\emph{Outil de communication : Discord}}}
 \label{discord}
 \end{center}
 \end{figure}
@@ -131,14 +131,14 @@ Contrairement au diagramme de Gantt, il se concentre principalement sur les tâc
 
 \begin{figure}[h]
 \begin{center}
-\includegraphics[height=7cm]{img/capture_trello.png}\\
-\caption{{\emph{Une partie du Trello}}}
+\includegraphics[height=5.5cm]{img/capture_trello.png}\\
+\caption{{\emph{Exemple du Trello}}}
 \label{trello}
 \end{center}
 \end{figure}
 
 Afin de gérer les différentes versions du code sources, Git est utilisé. 
-Il permet d’avoir un espace de stockage commun que ce soit pour la documentation que le code. De plus, cela permet à chacun de travailler sur une partie du projet sans modifier ce que font les autres membres du groupe, notamment grâce à la création de branches qui permet la création un clone du code principal et pouvoir travailler dessus. 
+Il permet d’avoir un espace de stockage commun que ce soit pour le code ou la documentation. De plus, cela permet à chacun de travailler sur une partie du projet sans modifier ce que font les autres membres du groupe, notamment grâce à la création de branches qui permet la création d'un clone du code principal et pouvoir travailler dessus. 
 A peu près une branche a été créée pour chaque fonction principale du jeu. Une fois le code respectif fonctionnel nous le fusionnons dans le code principal.
 
 En plus du diagramme de Gantt et du Trello l’équipe utilise l’outil “Projects” dans Git. 
@@ -234,7 +234,18 @@ Chacune de ces mécaniques est agrémenté d'un son pour soit un joueur masculin
 \subsection{Analyse des difficultés}
 % Difficulté de savoir quel types de structures utiliser : listes, matrices, ...
 % Communication, gestion, ...
+Plusieurs difficultés apparaissent dans le projet. 
+Premièrement, il y a la communication qui peut être compliquée au début du projet, chaque membre ne communique ni ne travaille de la même manière. Dans la communication il faut également intégrer la gestion des outils et leurs mises à jour afin que les autres membres puissent avancer, ne pas faire du travail redondant ou ne pas empiéter sur les tâches des autres.
 
+Deuxièmement, il y a la gestion du temps, le projet est majoritairement dépendant de la date limite. C’est cette dernière qui permet d’implémenter en priorité certaines fonctionnalités selon le temps restant.
+
+Le jeu se base sur des graphismes, dans notre cas, il est obligatoire d’utiliser la bibliothèque SDL. Il s’agit d’une bibliothèque dont nous avons peu ou pas connaissance post projet.
+
+Chaque membre de l’équipe possède un système d’exploitation différent ce qui accroît les difficultés de portabilité pour développer en commun.
+
+Le jeu tournant autour d’un personnage et d’ennemis la question de comment animer et les faire interagir différemment se pose. En effet, les personnages n’ont pas tous la même architecture de sprites, les tailles,  les espaces entre chaque sprite, les animation et le nombre de sprites sont différents).
+
+La question du libre de droit s’est aussi posé pour la récupération des ressources graphiques.
 
 
 \section{Développement}
