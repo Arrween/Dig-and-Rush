@@ -169,9 +169,10 @@ int boucle_jeu(SDL_Renderer * rend) {
     t_entite * fond_nuit = creer_entite("fond_jeu_nuit", -1, -1, -1, -1, FAUX);
     t_entite * fond_tour = creer_entite("fond_tour", 0, 0, 100, 100, VRAI);
     t_entite * fond_tour_2 = creer_entite("fond_tour", 0, 100, 100, 100, VRAI);
-
+    printf("Jack");fflush(stdout);
     t_entite * perso = creer_entite_perso((char*)personnage_selectionne, 40, 20, 15, 12, VRAI);
-    
+    printf("Lol");
+
     generer_murs();
 
     SDL_FRect zone_jeu = {TAILLE_L/4., 0, TAILLE_L/2., TAILLE_H};
