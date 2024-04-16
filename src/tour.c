@@ -64,6 +64,7 @@ void verif_collision(t_entite * e1, float * correction_defilement, int * score, 
             || (!e2->est_obstacle && !e2->bonus && !(e2->pnj && e2->pnj->est_ecrasable)) 
             || (e2->pnj && e2->pnj->est_mort)
             || (e2->perso && e2->perso->est_mort)
+            || (e2->pnj && e1->perso && e1->perso->temps_invu > 0)
             || (e2->pnj && e1->perso && e1->perso->est_mort)) {
             liste_suivant(I_LISTE_ENTITES);
             continue;
