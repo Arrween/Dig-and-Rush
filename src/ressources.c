@@ -191,6 +191,7 @@ struct chargement chargements_sons[] = {
     {"ressources/Audio/SFX/mort_perso_f.mp3", "mort_perso_f"},
     {"ressources/Audio/SFX/explosion.mp3", "attaque_feu"},
     {"ressources/Audio/SFX/pickup.mp3", "ramasser_butin"},
+    {"ressources/Audio/SFX/loup.mp3", "loup"},
 };
 
 struct chargement chargements_musiques[] = {
