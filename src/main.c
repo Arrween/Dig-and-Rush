@@ -324,13 +324,13 @@ t_bouton * menus[3][10] = {
                         }                          
                         for (i_btn = 0; (btn = menus[etat.i_menu][i_btn]); i_btn++) {
                             if (SDL_PointInRect(&pointeur, &btn->rect)) {
-                                printf("menu %i\n",etat.i_menu);
+                                //printf("menu %i\n",etat.i_menu);
                                 btn->action(&etat);
                                 printf("Bouton %s cliqué\n", btn->nom);
                         
                                 if (btn == &btn_jouer && strcmp(personnage_selectionne, "") != 0) {
                                     jouer_audio(0, "coq", 0);
-                                    printf("après son\n");
+                                    //printf("après son\n");
                                     etat.doit_quitter = boucle_jeu(rend);
                                 }
                                 break;

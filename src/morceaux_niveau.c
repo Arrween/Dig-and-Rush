@@ -64,6 +64,9 @@ void generer_morceau_niveau(float repere_defilement){
                 liste_ajouter_droite(I_LISTE_ENTITES, creer_entite_pnj_depuis_spritesheet("feu", 10*(j+1)-5, y-20, 20, 20, VRAI));
             else if (i == 3)
                 liste_ajouter_droite(I_LISTE_ENTITES, creer_entite_bonus("pieces", 10*(j+1)+2.5, y-6, 7, 7, VRAI));
+            else if(i == 7)
+                liste_ajouter_droite(I_LISTE_ENTITES, creer_entite_pnj_depuis_spritesheet("oncle", 10*(j+1)-5, y-11.5, 15, 12, VRAI));
+
         }
     }
 }

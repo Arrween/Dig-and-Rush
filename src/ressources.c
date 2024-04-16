@@ -170,6 +170,19 @@ struct chargement_spritesheet chargements_spritesheets[] = {
                 {ANIM_MORT_STATIQUE, 5, 1*128, 128, 128, 0, -5, 1, 1},
                 {ANIM_NULLE, 0, 0, 0, 0, 0, 0, 0, 0.}
             }
+    },
+    //Ennemi 3 : ONCLE DE JACKKKKKKKKKKITO
+    {"ressources/Personnages/onclePerso.png", "oncle", 
+            {
+                {REPOS, 0, 6*64, 64, 64, 0, 0, 1, 1.},
+                {DEPL_G, 0, 9*64, 64, 64, 0, 0, 9, 1/5.},
+                {DEPL_D, 0, 11*64, 64, 64, 0, 0, 9, 1/5.},
+                {ATTQ_G, 0, 5*64, 64, 64, 0, 0, 8, 1/3.},
+                {ATTQ_D, 0, 7*64, 64, 64, 0, 0, 8, 1/3.},
+                {ANIM_MORT, 0, 20*64, 64, 64, 0, 0, 5, 1./2},
+                {ANIM_MORT_STATIQUE, 4, 20*64, 64, 64, 0, 0, 1, 1./2},
+                {ANIM_NULLE, 0, 0, 0, 0, 0, 0, 0, 0.}
+            }
     }
 };
 

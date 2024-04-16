@@ -164,9 +164,7 @@ int boucle_jeu(SDL_Renderer * rend) {
 
     t_entite * fond_tour = creer_entite("fond_tour", 0, 0, 100, 100, VRAI);
     t_entite * fond_tour_2 = creer_entite("fond_tour", 0, 100, 100, 100, VRAI);
-    printf("Jack");fflush(stdout);
     t_entite * perso = creer_entite_perso((char*)personnage_selectionne, 40, 20, 15, 12, VRAI);
-    printf("Lol");
 
     generer_murs();
 
@@ -177,7 +175,7 @@ int boucle_jeu(SDL_Renderer * rend) {
     t_texte * texte_fps = creer_texte("police_defaut", 255, 255, 255, 255, 20, TAILLE_H-40, 100, 30);
 
     t_texte * texte_score = creer_texte("police_defaut", 255, 255, 255, 255, 20, 20, 160, 50);
-    changer_texte(texte_score, "POINTS : %i", score);
+    changer_texte(texte_score, "SCORE : %i", score);
 
     t_texte * texte_mort = creer_texte("police_defaut", 255, 255, 255, 255, 550, 500, 160, 50);
     changer_texte(texte_mort, "GAME OVER !");
@@ -515,7 +513,7 @@ int boucle_jeu(SDL_Renderer * rend) {
 
         if (compteur_frames % DELAI_PERTE_SCORE == 0 && score > 0) {
             score--;
-            changer_texte(texte_score, "POINTS : %i", score);
+            changer_texte(texte_score, "SCORE : %i", score);
         }
 
         compteur_jour_nuit++;
