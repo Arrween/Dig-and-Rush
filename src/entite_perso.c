@@ -59,26 +59,26 @@ t_perso * creer_perso(char * id, t_entite * e) {
     nouv->parent = e;
     if (strcmp(id, "ania") == 0) {
         nouv->parent->vitesse = 2.;
-        nouv->vie = 2;
+        nouv->vie_max = nouv->vie = 2;
         strcpy(nouv->id_son_blessure, "blessure_perso_f");
         strcpy(nouv->id_son_mort, "mort_perso_f");
     }
     else {
         if (strcmp(id, "jack") == 0) {
         nouv->parent->vitesse = 2.;
-        nouv->vie = 1;
+        nouv->vie_max = nouv->vie = 1;
         }
         else if (strcmp(id, "matt") == 0) {
             nouv->parent->vitesse = 1.;
-            nouv->vie = 2;
+            nouv->vie_max = nouv->vie = 2;
         }
         else if (strcmp(id, "yohan") == 0) {
             nouv->parent->vitesse = 2.;
-            nouv->vie = 2;
+            nouv->vie_max = nouv->vie = 2;
         }
         else {
             nouv->parent->vitesse = 1.;
-            nouv->vie = 1;
+            nouv->vie_max = nouv->vie = 1;
         }
         strcpy(nouv->id_son_blessure, "blessure_perso");
         strcpy(nouv->id_son_mort, "mort_perso");

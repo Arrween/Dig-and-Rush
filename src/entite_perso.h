@@ -14,6 +14,7 @@ struct s_perso {
     SDL_FRect hitbox_attaque; /**< utilisée pour vérifier si une entité est touchée par l’attaque du joueur */
     int doit_afficher_hitbox_attaque; /**< booléen régissant l’affichage de `hitbox_attaque` */
     int vie; /**< points de vie */
+    int vie_max; /**< maximume de points de vie */
     int temps_invu; /**< compteur de frames qui conditionne l’état d’invulnérabilité après un coup pris */
     int temps_invu_max; /**< valeur maximum affectée à `temps_invu`, en nombre de frames */
     char id_son_attaque[TAILLE_MAX_ID]; /**< Identifiant de ressource du son d'attaque*/

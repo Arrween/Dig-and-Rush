@@ -112,6 +112,9 @@ void verif_collision(t_entite * e1, float * correction_defilement, int * score, 
             jouer_audio(3, e2->bonus->id_son, 0);
             *score += e2->bonus->valeur;
             changer_texte(texte_score, "POINTS : %i", *score);
+            e1->perso->vie += e2->bonus->soin;
+            if (e1->perso->vie > e1 ->perso->vie_max)
+                e1->perso->vie = e1->perso->vie_max;
             detruire_entite(&e2);
             liste_retirer(I_LISTE_ENTITES);
         }
@@ -182,6 +185,9 @@ int boucle_jeu(SDL_Renderer * rend) {
 
     t_texte * texte_score = creer_texte("police_defaut", 255, 255, 255, 255, 20, 20, 160, 50);
     changer_texte(texte_score, "SCORE : %i", score);
+
+    t_texte * texte_vie = creer_texte("police_defaut", 255, 255, 255, 255, 20, 80, 160, 50);
+    changer_texte(texte_vie, "HEALTH : %i", perso->perso->vie);
 
     t_texte * texte_mort = creer_texte("police_defaut", 255, 255, 255, 255, 550, 500, 160, 50);
     changer_texte(texte_mort, "GAME OVER !");
@@ -393,6 +399,8 @@ int boucle_jeu(SDL_Renderer * rend) {
 
         afficher_texte(rend, texte_fps);
         afficher_texte(rend, texte_score);
+        changer_texte(texte_vie, "HEALTH : %i", perso->perso->vie);
+        afficher_texte(rend, texte_vie);
         if (est_en_pause) 
             afficher_texte(rend, texte_pause);
 

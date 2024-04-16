@@ -17,13 +17,14 @@
 
 t_bonus * creer_bonus(char * id) {
     t_bonus * nouv = malloc(sizeof(t_bonus));
+    strcpy(nouv->id_son, "ramasser_bonus");
+    nouv->valeur = 0;
+    nouv->soin = 0;
     if (strcmp(id, "pieces") == 0) {
-        strcpy(nouv->id_son, "ramasser_butin");
         nouv->valeur = 5;
     }
-    else {
-        strcpy(nouv->id_son, "silence");
-        nouv->valeur = 0;
+    else if (strcmp(id, "coeur") == 0) {
+        nouv->soin = 1;
     }
     return nouv;
 }
