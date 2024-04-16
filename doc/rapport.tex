@@ -155,7 +155,17 @@ Il permet également, pour chaque semaine, de mettre la tâche effectuée par ch
 Développé en C en utilisant la bibliothèque SDL, notre jeu a d'abord connu une phase de conception.
 
 \subsection{Objectif du jeu}
-\subsection{Règles de jeu}
+Il n’y a pas de fin au jeu, l’objectif est  donc d’avoir le plus de points avant de mourir.
+
+\subsection{Règles du jeu}
+Il y a trois règles principales dans le jeu :
+\begin{itemize}
+	\item Il faut creuser les blocs de terre pour descendre dans la tour et éviter les ennemis.
+	\item Il est possible de tuer les ennemis pour ajouter des points au score et éviter de se faire tuer.
+	\item Il faut éviter de se prendre des coups des ennemis pour ne pas perdre des points.
+	\item Il ne faut pas perdre de temps car on perd des points au fil du temps même sans se faire attaquer par des ennemis. 
+\end{itemize}
+
 \subsection{Graphismes}
 %  Rédigé par : Ania
 Les graphismes de Dig\&Rush sont fortement inspirés du jeu mobile Once Upon a Tower.
@@ -176,6 +186,35 @@ La tour elle à son tour, est entourée de murs de blocs de pierres.
 Les niveaux, avec le placement des blocs qui devait être aléatoire, était l'une des parties les plus complexes à concevoir, car il nous fallait pour chaque ligne une suite de blocs de pierres, de blocs de terre et de vides générés automatiquement mais tout en faisant attention à toujours laisser au moins une issue possible au joueur afin qu'il puisse avancer.
 
 \subsection{Personnages}
+Sur l’aspect graphique, les personnages s’inspirent des jeux en pixel art. 
+Il y  a deux catégories de personnages : les personnages qu’il est possible de jouer et les ennemis nommés PNJ.
+L’ennemi se déplace de gauche à droite et inversement sur son niveau. 
+Lorsqu’ils rencontrent notre personnage ils se mettent à attaquer, ce qui tue le personnage ou non en fonction de ses points de vie. 
+Actuellement il y a deux types d’ennemis : les squelettes et les boules de feu vivantes. 
+Ces deux PNJ ont deux portées d’attaques différentes, la boule de feu doit être davantage en contact avec le personnage pour attaquer.
+
+\begin{figure}[h]
+	\begin{center}
+		\includegraphics[height=3cm]{img/exemple_feu.png}\\
+		\caption{{\emph{Ennemi de type boule de feu}}}
+		\label{boule de feu}
+	\end{center}
+\end{figure}
+
+Il y a trois personnages jouables qui représentent chaque membre de l’équipe. 
+Ces derniers ont chacun une caractéristique spécifique (vie plus conséquente,vitesse accrue, ou non). 
+Ils peuvent se diriger à gauche, à droite et vers le bas en fonction de la touche appuyée. 
+Les personnages jouables doivent également pouvoir creuser le sol et les murs. Il est donc nécessaire d’avoir des sprites qui possèdent ces animations de déplacement et de creusage.
+Pour ces derniers, nous avons utilisé un générateur de sprite où il était possible de personnaliser nos personnages. Nous les avons donc adaptés aux quatres membres. 
+Pour les ennemis un autre site, libre de droit, est utilisé afin de les différencier davantage.
+
+\begin{figure}[h]
+	\begin{center}
+		\includegraphics[height=3cm]{img/exemple_personnage_jouable.png}\\
+		\caption{{\emph{Personnage jouable}}}
+		\label{personnage jouable}
+	\end{center}
+\end{figure}
 
 
 \subsection{Mécaniques}
