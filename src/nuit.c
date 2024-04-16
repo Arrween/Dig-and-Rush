@@ -64,6 +64,7 @@ t_nuit * creer_nuit(SDL_Renderer * rend, t_entite * perso, SDL_FRect zone_jeu,
  * @param nuit objet d’effet de nuit à modifier
  */
 void basculer_nuit(t_nuit * nuit) {
+    if (!nuit->est_active) jouer_audio(0, "loup", 0);
     nuit->est_active = !nuit->est_active;
     nuit->est_active_prec = !nuit->est_active;
 }
