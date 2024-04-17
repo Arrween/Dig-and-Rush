@@ -75,47 +75,48 @@ Si le personnage meurt la partie se termine. Le joueur a le choix entre plusieur
 Attention, chaque tour est différente ! Cela vous permet d’explorer à chaque nouvelle partie une nouvelle facette du jeu.
 
 Ce rapport se déroule en quatre parties. 
-L’organisation du projet, comment les tâches ont été définies et attribuées ; la conception, qui présentera nos choix de conception et les règles du jeu ; le développement avec les outils utilisés, les sturctures de données et les algorithmes et enfin la conclusion qui mettra en avant nos remarques, nos points d’amélioration et ce que nous avons tiré de ce projet. 
+L’organisation du projet, comment les tâches ont été définies et attribuées ; la conception, qui présentera nos choix de conception et les règles du jeu ; le développement avec les structures de données et les algorithmes ; enfin, la conclusion qui mettra en avant nos remarques, nos points d’amélioration et ce que nous avons tiré de ce projet. 
 En annexe, se trouvera les tests unitaires et tentatives de debogage, les captures d’écran du jeu et les diagrammes de Gantt.
 
 \newpage
 \section{Organisation}
-% Rédaction : Yohan, Jacques
+% Rédaction : Yohan
 % Longueur : 2 pages
 % Sujets : Gantt, répartition des tâches, salon de discussion, github (cartes ?), trello
 
 
 \subsection{Définition des tâches}
-Avant de commencer à coder l’équipe a effectué un brainstorming afin de connaître toutes les phases du projet et les tâches qui seraient susceptibles d’entrer dans ces dernières. 
-En effet, en citant exhaustivement les tâches cela nous permet d’avoir une estimation temporelle du projet. 
+Avant de commencer à coder, l’équipe a effectué un brainstorming afin de connaître toutes les phases du projet et les tâches qui seraient susceptibles d’entrer dans ces dernières. 
+En effet, en citant exhaustivement les tâches cela permet d’avoir une estimation temporelle du projet. 
 Nous avons également pris en compte les attentes du corps enseignant.
 
-Nous avons détecté 7 phases principales sur le projet général : la définition du projet, la planification, la conception et l'analyse, la phase de réalisation, la phase de documentation, le rapport du projet et la soutenance qui font parti de la phase de livraison.
+Sur le projet, 7 phases principales sont détectées : la définition du projet, la planification, la conception et l'analyse, la phase de réalisation, la phase de documentation, le rapport du projet et la soutenance qui font partie de la phase de livraison.
 
-La définition du projet est l’étape post conception elle permet de faire une esquisse du projet et ainsi se le représenter plus facilement. 
+La définition du projet est l’étape post conception, elle permet de faire une esquisse du projet et ainsi se le représenter plus facilement. 
 On y détermine les limites du projet. 
+La planification, qui sera évoquée dans la partie suivante, sert à se répartir les tâches. 
+La phase de réalisation est le codage ainsi que les tests. 
 La conception entre dans l’architecture du projet. 
-La planification, qui sera évoquée dans la partie suivante, sert à se répartir les tâches. La phase de réalisation est le codage ainsi que les tests. 
 La documentation est la création de documents permettant la compréhension du projet. 
 Le rapport et la soutenance sont réservés à la présentation du projet.
 
 \subsection{Répartition des tâches}
-Suite à l’élaboration de la liste des tâches nous nous sommes réparties les tâches en fonction de deux critères. 
+À la suite de l’élaboration de la liste des tâches, se fait leur répartition en fonction de deux critères. 
 Tout d’abord les choix et affinités de chacuns, en effet chaque personne du groupe a préféré certaines tâches plutôt que d’autres. 
 Ensuite, nous nous sommes réparties le reste des tâches en équilibrant afin que tout le monde ait à peu près le même temps de travail.
 
 Pour rendre visuel ces deux étapes précédentes l’équipe utilise l'outil GANTT. 
 Il s’agit d’un graphe qui représente les tâches étalées sur le temps. 
 Google Sheet est utilisé afin de pouvoir le mettre à jour et collaborer à distance.
-Sur le graphe sont présentes les tâches, les dates encadrantes ces dernières et une représentation graphique de la durée de la date entre la semaine du 8 janvier 2024 et celle du 22 avril 2024.
+Sur le graphe sont présentes les tâches, les dates encadrantes ces dernières et une représentation graphique de la durée de la tâche entre la semaine du 8 janvier 2024 et celle du 22 avril 2024.
 L’équipe adopte deux diagrammes de Gantt, un diagramme prévisionnel qui représente l’avancement idéal du projet et un diagramme réel qui est mis à jour régulièrement. 
 Ce dernier sert principalement à voir les tâches restantes en fonction de la deadline.
 
 \subsection{Outils consacrés à la communication et à l'organisation}
 Nous utilisons Discord pour communiquer. 
 Il permet de créer des canaux en fonction de nos besoins. 
-Dans le cas de projet il y a un canal pour les ressources, un pour la conversation générale et des canaux vocaux si nous avons besoin de nous appeler. 
-Nous utilisons principalement le canal général pour suivre l’avancement de chacun.
+Dans le cas du projet, il y a un canal pour les ressources, un pour la conversation générale et des canaux vocaux si nous avons besoin de communiquer à l'oral.
+L'équipe utilise principalement le canal général pour suivre l’avancement de chacun.
 
 \begin{figure}[h]
 \begin{center}
@@ -125,8 +126,8 @@ Nous utilisons principalement le canal général pour suivre l’avancement de c
 \end{center}
 \end{figure}
 
-Sur le mois d’avril un Trello est mis en place, il a permis de voir plus facilement les tâches restantes et de les prioriser. 
-Dans ce Trello est présent huit listes pour : les ressources, les idées, ce qu’il faut faire mais qui n’est pas urgent, ce qu’il faut faire, les tâches en cours, celles terminées, les problèmes et enfin ce qu’il ne faut pas oublier. 
+Sur le mois d’avril un Trello est mis en place, il permet de voir plus facilement les tâches restantes et de les prioriser. 
+Dans ce Trello sont présentes huit listes pour : les ressources, les idées, ce qu’il faut faire mais qui n’est pas urgent, ce qu’il faut faire, les tâches en cours, celles terminées, les problèmes et enfin ce qu’il ne faut pas oublier. 
 Contrairement au diagramme de Gantt, il se concentre principalement sur les tâches liées au codage.
 
 \begin{figure}[h]
@@ -139,7 +140,7 @@ Contrairement au diagramme de Gantt, il se concentre principalement sur les tâc
 
 Afin de gérer les différentes versions du code sources, Git est utilisé. 
 Il permet d’avoir un espace de stockage commun que ce soit pour le code ou la documentation. De plus, cela permet à chacun de travailler sur une partie du projet sans modifier ce que font les autres membres du groupe, notamment grâce à la création de branches qui permet la création d'un clone du code principal et pouvoir travailler dessus. 
-A peu près une branche a été créée pour chaque fonction principale du jeu. Une fois le code respectif fonctionnel nous le fusionnons dans le code principal.
+À peu près une branche a été créée pour chaque fonction principale du jeu. Une fois le code respectif fonctionnel nous le fusionnons dans le code principal.
 
 En plus du diagramme de Gantt et du Trello l’équipe utilise l’outil “Projects” dans Git. 
 Il sert, dans le cas de ce projet, à communiquer notre avancement au corps enseignant. 
@@ -158,21 +159,22 @@ Développé en C en utilisant la bibliothèque SDL, notre jeu a d'abord connu un
 Il n’y a pas de fin au jeu, l’objectif est  donc d’avoir le plus de points avant de mourir.
 
 \subsection{Règles du jeu}
-Il y a trois règles principales dans le jeu :
+Il y a cinq règles principales dans le jeu :
 \begin{itemize}
 	\item Il faut creuser les blocs de terre pour descendre dans la tour et éviter les ennemis.
 	\item Il est possible de tuer les ennemis pour ajouter des points au score et éviter de se faire tuer.
 	\item Il faut éviter de se prendre des coups des ennemis pour ne pas perdre des points.
 	\item Il ne faut pas perdre de temps car on perd des points au fil du temps même sans se faire attaquer par des ennemis. 
+	\item Il faut ramasser les bonus qui augmentent la vie ou le score.
 \end{itemize}
 
 \subsection{Graphismes}
 %  Rédigé par : Ania
-Les graphismes de Dig\&Rush sont fortement inspirés du jeu mobile Once Upon a Tower.
+Les graphismes de Dig \& Rush sont fortement inspirés du jeu mobile Once Upon a Tower.
 Pour les menus (menu principal, menu de personnages, menu de paramètres, \dots), les couleurs  chaudes telles que le rouge et le orange, mixé à une pointe de violet nous semblaient plus adaptés à l'esprit combatif et dangereux du jeu. 
 En ce qui concerne l'interface du jeu, nous avons opté pour une palette de couleurs vivantes dans les tons bleu, vert et blanc pour attirer et retenir l'attention des joueurs.
 Une fois les couleurs définies, il nous restait à trouver les bonnes ressources en libre de droit. Nous avons donc fini par opter pour des images d'intérieur médiéval pour les menus, un fond de ciel bleu pour l'interface de jeu et un fond uni blanc pour le fond de la tour.
-La tour elle à son tour, est entourée de murs de blocs de pierres.
+La tour est quant à elle entourée de murs de blocs de pierres.
 \begin{figure}[h]
 	\begin{center}
 		\includegraphics[height=7cm]{img/menu.png}\\
@@ -187,10 +189,11 @@ Les niveaux, avec le placement des blocs qui devait être aléatoire, était l'u
 
 \subsection{Personnages}
 Sur l’aspect graphique, les personnages s’inspirent des jeux en pixel art. 
-Il y  a deux catégories de personnages : les personnages qu’il est possible de jouer et les ennemis nommés PNJ.
+Il y a deux catégories de personnages : les personnages qu’il est possible de jouer et les ennemis nommés PNJ.
+
 L’ennemi se déplace de gauche à droite et inversement sur son niveau. 
 Lorsqu’ils rencontrent notre personnage ils se mettent à attaquer, ce qui tue le personnage ou non en fonction de ses points de vie. 
-Actuellement il y a deux types d’ennemis : les squelettes et les boules de feu vivantes. 
+Actuellement, il y a deux types d’ennemis : les squelettes et les boules de feu vivantes. 
 Ces deux PNJ ont deux portées d’attaques différentes, la boule de feu doit être davantage en contact avec le personnage pour attaquer.
 
 \begin{figure}[h]
@@ -201,12 +204,12 @@ Ces deux PNJ ont deux portées d’attaques différentes, la boule de feu doit �
 	\end{center}
 \end{figure}
 
-Il y a trois personnages jouables qui représentent chaque membre de l’équipe. 
-Ces derniers ont chacun une caractéristique spécifique (vie plus conséquente,vitesse accrue, ou non). 
+Il y a quatre personnages jouables qui représentent chaque membre de l’équipe. 
+Ces derniers ont chacun une caractéristique spécifique (vie plus conséquente,vitesse accrue, ou aucun des deux). 
 Ils peuvent se diriger à gauche, à droite et vers le bas en fonction de la touche appuyée. 
 Les personnages jouables doivent également pouvoir creuser le sol et les murs. Il est donc nécessaire d’avoir des sprites qui possèdent ces animations de déplacement et de creusage.
 Pour ces derniers, nous avons utilisé un générateur de sprite où il était possible de personnaliser nos personnages. Nous les avons donc adaptés aux quatres membres. 
-Pour les ennemis un autre site, libre de droit, est utilisé afin de les différencier davantage.
+Pour les ennemis, un autre site libre de droit est utilisé afin de différencier davantage le joueur des PNJ. En effet, les ennemis crées avec le générateur de sprite se confondaient excessivement avec l'arrière plan et le joueur.
 
 \begin{figure}[h]
 	\begin{center}
@@ -234,8 +237,8 @@ Chacune de ces mécaniques est agrémenté d'un son pour soit un joueur masculin
 \subsection{Analyse des difficultés}
 % Difficulté de savoir quel types de structures utiliser : listes, matrices, ...
 % Communication, gestion, ...
-Plusieurs difficultés apparaissent dans le projet. 
-Premièrement, il y a la communication qui peut être compliquée au début du projet, chaque membre ne communique ni ne travaille de la même manière. Dans la communication il faut également intégrer la gestion des outils et leurs mises à jour afin que les autres membres puissent avancer, ne pas faire du travail redondant ou ne pas empiéter sur les tâches des autres.
+Plusieurs difficultés apparaissent en amont et pendant le projet. 
+Premièrement, il y a la communication qui peut être compliquée au début du projet, chaque membre ne communique ni ne travaille de la même manière. Dans la communication il faut également intégrer la gestion des outils et leurs mises à jour afin que les autres membres puissent avancer, ne pas faire du travail redondant ou ne pas empiéter sur les tâches des autres. Cette difficulté s'atténue sur la durée.
 
 Deuxièmement, il y a la gestion du temps, le projet est majoritairement dépendant de la date limite. C’est cette dernière qui permet d’implémenter en priorité certaines fonctionnalités selon le temps restant.
 
@@ -243,9 +246,13 @@ Le jeu se base sur des graphismes, dans notre cas, il est obligatoire d’utilis
 
 Chaque membre de l’équipe possède un système d’exploitation différent ce qui accroît les difficultés de portabilité pour développer en commun.
 
-Le jeu tournant autour d’un personnage et d’ennemis la question de comment animer et les faire interagir différemment se pose. En effet, les personnages n’ont pas tous la même architecture de sprites, les tailles,  les espaces entre chaque sprite, les animation et le nombre de sprites sont différents).
+Le jeu tournant autour d’un personnage et d’ennemis, la question de comment animer et les faire interagir différemment se pose. 
+En effet, les personnages n’ont pas tous la même architecture de sprites :  les tailles,  les espaces entre chaque sprite, les animations et le nombre de sprites sont différents.
 
-La question du libre de droit s’est aussi posé pour la récupération des ressources graphiques.
+La question du libre de droit se pose aussi pour la récupération des ressources graphiques.
+
+Enfin, plusieurs structures de données composent le projet, une difficulté se pose sur le choix de ces dernières parmis les structures évoquées durant le cursus, comme les listes, les matrices, etc. 
+Ce point sera évoqué dans la partie développement du projet.
 
 
 \section{Développement}
