@@ -38,7 +38,7 @@ OUTIL_MESSAGE = outils/bannière.sh
 
 # vérifie présence de compilateurs TeX
 TECTONIC := $(shell command -v tectonic 2> /dev/null)
-XELATEX := $(shell command -v xelatex 2> /dev/null)
+PDFLATEX := $(shell command -v pdflatex 2> /dev/null)
 
 .PHONY = docs docs_tex docs_doxy reps clean remove all
 .SILENT = reps
@@ -57,15 +57,14 @@ $(OBJETS) : $(REP_OBJ)/%.o: $(REP_SRC)/%.c $(ENTETES)
 docs : docs_tex docs_doxy
 docs_tex: $(DOCS_PDF)
 $(DOCS_PDF): $(REP_DOC)/%.pdf: $(REP_DOC)/%.tex
-	@ $(OUTIL_MESSAGE) Compilation des fichiers LaTeX…
+	@ $(OUTIL_MESSAGE) Compilation de $<…
 ifdef TECTONIC
 	@# compilateur TeX alternatif utilisé chez Matthieu
 	tectonic $<
-else ifdef XELATEX
+else ifdef PDFLATEX
 	@# se déplacer dans doc/ pour compiler doc/*.tex, le doc/ étant retiré par subst
 	@# « -interaction batchmode » pour limiter la loquacité de xelatex
-	# cd $(REP_DOC) && xelatex -interaction batchmode $(subst $(REP_DOC)/, , $<)
-	cd $(REP_DOC) && xelatex $(subst $(REP_DOC)/, , $<) && xelatex $(subst $(REP_DOC)/, , $<)
+	cd $(REP_DOC) && pdflatex $(subst $(REP_DOC)/, , $<) && pdflatex $(subst $(REP_DOC)/, , $<)
 else
 	@echo "pas de compilateur TeX trouvé, docs .tex non compilées"
 endif
