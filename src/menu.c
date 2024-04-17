@@ -1,3 +1,8 @@
+/**
+ * @file menu.c
+ * @brief Progamme pour la gestion des menus.
+ */
+
 #include <stdio.h>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
@@ -127,13 +132,13 @@ void action_option(t_etat * etat) {
     etat->boutons[4]->texture = recuperer_texture("options");  
 }
 void action_volume(t_etat * etat) {
-    if (etat->boutons[1]->texture == recuperer_texture("bouton_volume_off")) {
-        etat->boutons[1]->texture = recuperer_texture("bouton_volume_on");
+    if (etat->boutons[1]->texture == recuperer_texture("bouton_volume_on")) {
+        etat->boutons[1]->texture = recuperer_texture("bouton_volume_off");
         Mix_VolumeMusic(0);
         Mix_Volume(-1, 0);
     }
     else {
-        etat->boutons[1]->texture = recuperer_texture("bouton_volume_off");
+        etat->boutons[1]->texture = recuperer_texture("bouton_volume_on");
         Mix_VolumeMusic(MIX_MAX_VOLUME * FACTEUR_VOLUME_MUSIQUE_INI);
         Mix_Volume(-1, MIX_MAX_VOLUME * FACTEUR_VOLUME_SONS_INI);
     }

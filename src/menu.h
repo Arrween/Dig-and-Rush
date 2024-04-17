@@ -1,3 +1,11 @@
+/**
+ * @file menu.h
+ * @brief Fichier d'en-tête pour la gestion des menus.
+ */
+
+#ifndef MENU_H
+#define MENU_H
+
 #include <stdio.h>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
@@ -55,3 +63,5 @@ void action_parametres(t_etat *);
 void action_continue(t_etat * );
 void action_retour(t_etat *);
 void action_nulle(void);
+
+#endif // MENU_H

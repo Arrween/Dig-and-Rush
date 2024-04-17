@@ -1,3 +1,8 @@
+/**
+ * @file ressources.h
+ * @brief Définitions des structures et fonctions liées aux ressources du jeu.
+ */
+
 #ifndef RESSOURCES_H
 #define RESSOURCES_H
 
@@ -38,13 +43,18 @@ typedef struct {
 } t_animation;
 
 
-typedef struct {
-    SDL_Texture * texture;
-    t_animation ** animations;
-    int n_animations;
-    char id[TAILLE_MAX_ID];
-    UT_hash_handle hh;
-} t_spritesheet; 
+/**
+ * @struct t_spritesheet
+ * @brief Structure représentant une feuille de sprites.
+ */
+
+typedef struct t_spritesheet {
+    SDL_Texture * texture; /**< Pointeur vers la texture SDL de la feuille de sprites. */
+    char id[TAILLE_MAX_ID]; /**< Identifiant de la feuille de sprites. */
+    t_animation ** animations; /**< Tableau des animations de la feuille de sprites. */
+    int n_animations; /**< Nombre d'animations dans la feuille de sprites. */
+    UT_hash_handle hh; /**< Handle pour utiliser la bibliothèque uthash. */
+} t_spritesheet;
 
 extern t_spritesheet * spritesheets;
 

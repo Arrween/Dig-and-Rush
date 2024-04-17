@@ -239,6 +239,11 @@ void copier_animation(t_animation * dest, t_animation src) {
     dest->vitesse_anim = src.vitesse_anim;
 }
 
+/**
+ * @brief Initialise les ressources du jeu.
+ * @param rend Le pointeur vers le renderer SDL.
+ */
+
 void init_ressources(SDL_Renderer * rend) {
     t_texture * ressource_tex;
     t_spritesheet * ressource_spritesheet;

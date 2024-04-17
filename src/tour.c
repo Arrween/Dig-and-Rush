@@ -24,6 +24,13 @@
 #define DELAI_NUIT 300 // en nombre de frames
 
 
+/**
+ * @brief Fonction pour vérifier si un point est dans un rectangle à virgule flottante.
+ * 
+ * @param p Le point à vérifier.
+ * @param r Le rectangle dans lequel vérifier.
+ * @return SDL_TRUE si le point est dans le rectangle, sinon SDL_FALSE.
+ */
 
 SDL_bool PointInFRect(const SDL_FPoint* p, const SDL_FRect* r) {
     if (p->x >= r->x && p->x < r->x + r->w &&
@@ -123,6 +130,13 @@ void verif_collision(t_entite * e1, float * correction_defilement, int * score, 
     }
 }
 
+
+
+/**
+ * @brief Fonction pour gérer le creusage.
+ * 
+ * @param a_creuser Entité à creuser.
+ */
 void creuser(t_entite * a_creuser) {
     liste_en_queue(I_LISTE_ENTITES);
     while(!hors_liste(I_LISTE_ENTITES)) {

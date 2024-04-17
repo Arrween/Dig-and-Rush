@@ -5,6 +5,7 @@
 #include <SDL2/SDL_mixer.h>
 
 #include "tour.h"
+#include "texte.h"
 #include "constantes.h"
 #include "selection_personnages.h"
 #include "entite.h"
@@ -324,14 +325,20 @@ t_bouton * menus[3][10] = {
                         }                          
                         for (i_btn = 0; (btn = menus[etat.i_menu][i_btn]); i_btn++) {
                             if (SDL_PointInRect(&pointeur, &btn->rect)) {
-                                //printf("menu %i\n",etat.i_menu);
                                 btn->action(&etat);
                                 printf("Bouton %s cliqué\n", btn->nom);
                         
                                 if (btn == &btn_jouer && strcmp(personnage_selectionne, "") != 0) {
                                     jouer_audio(0, "coq", 0);
-                                    //printf("après son\n");
                                     etat.doit_quitter = boucle_jeu(rend);
+                                }else{
+                                    if (btn == &btn_jouer && strcmp(personnage_selectionne, "") == 0) {
+                                        afficher_message(rend, "Please, select a character!");
+
+                                        SDL_RenderPresent(rend);
+
+                                        SDL_Delay(1000); 
+                                    }
                                 }
                                 break;
                             }

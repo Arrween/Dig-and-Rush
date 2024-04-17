@@ -1,3 +1,8 @@
+/**
+ * @file constantes.h
+ * @brief Fichier d'en-tête pour les constantes du jeu.
+ */
+
 #define TITRE_FENETRE "Dig & Rush"
 #define TAILLE_L 1280
 #define TAILLE_H 720

@@ -77,6 +77,7 @@ t_texte * creer_texte(char * id, int rouge, int vert, int bleu, int alpha, int x
     return nouv;
 }
 
+
 /**
  * @brief Détruit une structure de texte et libère la mémoire associée.
  * 
@@ -90,4 +91,34 @@ void detruire_texte(t_texte ** texte) {
         free(*texte);
     }
     *texte = NULL;
+}
+
+// Fonction pour afficher un message au milieu de la fenêtre avec un fond noir
+void afficher_message(SDL_Renderer * rend, /*TTF_Font * police,*/ const char * message) {
+    SDL_Color couleurBlanche = {255, 255, 255}; // Couleur blanche
+
+    // Obtenir les dimensions de la fenêtre
+    int largeurFenetre, hauteurFenetre;
+    SDL_GetRendererOutputSize(rend, &largeurFenetre, &hauteurFenetre);
+
+    // Calculer les dimensions et la position du rectangle noir au milieu de la fenêtre
+    int largeurRectangle = largeurFenetre / 2;
+    int hauteurRectangle = hauteurFenetre / 4;
+    int posXRectangle = (largeurFenetre - largeurRectangle) / 2;
+    int posYRectangle = (hauteurFenetre - hauteurRectangle) / 2;
+
+    // Remplir le rectangle avec une couleur noire
+    SDL_SetRenderDrawColor(rend, 0, 0, 0, 255);
+    SDL_Rect rectangle = {posXRectangle, posYRectangle, largeurRectangle, hauteurRectangle};
+    SDL_RenderFillRect(rend, &rectangle);
+
+    // Créer et afficher le texte au milieu du rectangle noir
+    t_texte * texte = creer_texte("police_defaut", 255, 255, 255, 255, posXRectangle, posYRectangle, largeurRectangle, hauteurRectangle);
+    if (!texte) {
+        fprintf(stderr, "Erreur lors de la création du texte\n");
+        return;
+    }
+    changer_texte(texte, "%s", message);
+    afficher_texte(rend, texte);
+    detruire_texte(&texte);
 }

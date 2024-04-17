@@ -186,6 +186,18 @@ t_pnj * creer_pnj(char * id, t_entite * e) {
                        nouv->parent->hitbox.y, nouv->parent->hitbox.w,
                        nouv->parent->hitbox.h, FAUX);
     }
+    else if (strcmp(id, "oncle") == 0) {
+        nouv->comportement = comportement_patrouille;
+        nouv->valeur_vaincu = 40;
+        nouv->est_ecrasable = VRAI;
+        nouv->parent->vitesse = 1./2;
+        strcpy(nouv->id_son_attaque, "attaque_feu");
+        strcpy(nouv->id_son_mort, "mort_feu");
+        changer_hitbox(nouv->parent, &(nouv->parent->hitbox), 20, 30, 50, 55, VRAI);
+        changer_hitbox(nouv->parent, &(nouv->hitbox_attaque), nouv->parent->hitbox.x,
+                       nouv->parent->hitbox.y, nouv->parent->hitbox.w,
+                       nouv->parent->hitbox.h, FAUX);
+    }
 
     return nouv;
 }

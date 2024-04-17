@@ -1,3 +1,7 @@
+/** @file
+ *  @brief Implémentation de la sélection des personnages (source)
+ */
+
 #ifndef PERSOS_H
 #define PERSOS_H
 

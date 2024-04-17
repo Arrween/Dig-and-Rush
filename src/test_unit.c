@@ -4,10 +4,17 @@
 #include <SDL2/SDL_mixer.h>
 #include <SDL2/SDL_ttf.h>
 
-#include "ressources.h"
+#include "ressources.h" // Fichier contenant les fonctions de gestion des ressources
 
 
-SDL_Renderer* renderer = NULL;
+
+SDL_Renderer* renderer = NULL; // Renderer global utilisé dans les tests
+
+/**
+ * @brief Initialisation de la suite de tests.
+ * 
+ * @return 0 si l'initialisation réussit, -1 sinon.
+ */
 
 int initialiser_suite(void) {
     // Initialisation de SDL et ses extensions
@@ -28,6 +35,12 @@ int initialiser_suite(void) {
     return 0; // Initialisation réussie
 }
 
+/**
+ * @brief Nettoyage après l'exécution des tests.
+ * 
+ * @return 0 si le nettoyage réussit, -1 sinon.
+ */
+
 int nettoyer_suite(void) {
     // Nettoyage des ressources SDL
     if (renderer) {
@@ -41,6 +54,11 @@ int nettoyer_suite(void) {
     return 0;
 }
 
+
+/**
+ * @brief Test de chargement des ressources.
+ */
+
 void test_chargement_ressources(void) {
     init_ressources(renderer);
     // Tests de récupération de ressources
@@ -51,6 +69,10 @@ void test_chargement_ressources(void) {
     CU_ASSERT_PTR_NOT_NULL(recuperer_police("police_defaut"));
 }
 
+/**
+ * @brief Test de destruction des ressources.
+ */
+ 
 void test_detruire_ressources(void){
     detruire_ressources();
 }
