@@ -77,6 +77,8 @@ void comportement_patrouille(t_entite * pnj, t_entite * perso) {
         appliquer_reflexion_hitbox(pnj, &(pnj->pnj->hitbox_attaque));
 }
 
+
+
 /**
  * @brief Comportement par défaut pour un PNJ volant en patrouille.
  * 
@@ -101,6 +103,7 @@ void comportement_patrouille_vol(t_entite * pnj, t_entite * perso) {
         pnj->deplacement = REPOS_MVT;
         perso_prendre_coup(perso);
     }
+
     if (pnj->animation_courante->id == ATTQ_G || pnj->animation_courante->id == ATTQ_D)
         return;
 
@@ -126,6 +129,63 @@ void comportement_patrouille_vol(t_entite * pnj, t_entite * perso) {
         appliquer_reflexion_hitbox(pnj, &(pnj->pnj->hitbox_attaque));
 }
 
+
+
+
+
+void comportement_patrouille_statique(t_entite *pnj, t_entite *perso) {
+    if (pnj->pnj->est_mort)
+        return;
+    int a_change_sens = FAUX;
+
+    // Si le PNJ est en repos, touche un bloc ou atteint une extrémité de sa patrouille, il change de direction
+    if (pnj->deplacement == REPOS_MVT
+        || (pnj->deplacement == DROITE && pnj->hitbox.x + pnj->hitbox.w >= pnj->pnj->x_patrouille_d)
+        || pnj->collisions.d
+        ) {
+        pnj->deplacement = GAUCHE;
+        changer_animation(pnj, DEPL_G);
+        changer_pos_rel(pnj, -1, 0); // Déplacer le PNJ vers la gauche
+        if (pnj->deplacement != REPOS_MVT)
+            a_change_sens = VRAI;
+    }
+    else if ((pnj->deplacement == GAUCHE && pnj->hitbox.x <= pnj->pnj->x_patrouille_g)
+             || pnj->collisions.g
+             ) {
+        pnj->deplacement = DROITE;
+        changer_animation(pnj, DEPL_D);
+        changer_pos_rel(pnj, 1, 0); // Déplacer le PNJ vers la droite
+        a_change_sens = VRAI;
+    }
+
+    // Si le PNJ n'a pas de collision en bas, il chute vers la gauche ou vers la droite en fonction de sa direction
+    if (!pnj->collisions.b) {
+        if (pnj->deplacement == GAUCHE) {
+            changer_animation(pnj, CHUTE_G);
+            changer_pos_rel(pnj, -1, 1); // Chuter vers la gauche
+        } else if (pnj->deplacement == DROITE) {
+            changer_animation(pnj, CHUTE_D);
+            changer_pos_rel(pnj, 1, 1); // Chuter vers la droite
+        }
+        a_change_sens = VRAI;
+    }
+
+    // Si le PNJ a atterri de nouveau sur une collision, il reprend son déplacement normal
+    if (pnj->collisions.b && a_change_sens) {
+        // Réinitialiser l'animation de chute
+        changer_animation(pnj, (pnj->deplacement == GAUCHE) ? DEPL_G : DEPL_D);
+    }
+}
+
+
+
+
+
+
+
+
+
+
 void pnj_mourir(t_entite * pnj, int * score, t_texte * texte_score) {
     if (!pnj->pnj || (pnj->pnj && pnj->pnj->est_mort))
         return;
@@ -134,7 +194,7 @@ void pnj_mourir(t_entite * pnj, int * score, t_texte * texte_score) {
     pnj->deplacement = REPOS_MVT;
     pnj->pnj->est_mort = VRAI;
     *score += pnj->pnj->valeur_vaincu;
-    changer_texte(texte_score, "POINTS : %i", *score);
+    changer_texte(texte_score, "SCORE : %i", *score);
     jouer_audio(4, pnj->pnj->id_son_mort, 0);
 }
 
@@ -166,7 +226,7 @@ t_pnj * creer_pnj(char * id, t_entite * e) {
 
     if (strcmp(id, "squelette") == 0) {
         nouv->comportement = comportement_patrouille;
-        nouv->valeur_vaincu = 10;
+        nouv->valeur_vaincu = 5;
         nouv->est_ecrasable = VRAI;
         nouv->parent->vitesse = 1./2;
         strcpy(nouv->id_son_attaque, "attaque_squelette");
@@ -186,17 +246,16 @@ t_pnj * creer_pnj(char * id, t_entite * e) {
                        nouv->parent->hitbox.y, nouv->parent->hitbox.w,
                        nouv->parent->hitbox.h, FAUX);
     }
-    else if (strcmp(id, "oncle") == 0) {
-        nouv->comportement = comportement_patrouille;
-        nouv->valeur_vaincu = 40;
+    if (strcmp(id, "oncle") == 0) {
+        nouv->comportement = comportement_patrouille_statique;
+        nouv->valeur_vaincu = 20;
         nouv->est_ecrasable = VRAI;
         nouv->parent->vitesse = 1./2;
-        strcpy(nouv->id_son_attaque, "attaque_feu");
-        strcpy(nouv->id_son_mort, "mort_feu");
-        changer_hitbox(nouv->parent, &(nouv->parent->hitbox), 20, 30, 50, 55, VRAI);
-        changer_hitbox(nouv->parent, &(nouv->hitbox_attaque), nouv->parent->hitbox.x,
-                       nouv->parent->hitbox.y, nouv->parent->hitbox.w,
-                       nouv->parent->hitbox.h, FAUX);
+        strcpy(nouv->id_son_attaque, "attaque_perso");
+        strcpy(nouv->id_son_mort, "mort_perso");
+        changer_hitbox(nouv->parent, &(nouv->parent->hitbox), 30, 50, 40, 55, VRAI);
+        // définir initialement sur la droite, sera modifié par la patrouille
+        changer_hitbox(nouv->parent, &(nouv->hitbox_attaque), 50, 70, 33, 20, VRAI);
     }
 
     return nouv;

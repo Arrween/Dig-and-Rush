@@ -178,6 +178,8 @@ struct chargement_spritesheet chargements_spritesheets[] = {
     {"ressources/Personnages/onclePerso.png", "oncle", 
             {
                 {REPOS, 0, 6*64, 64, 64, 0, 0, 1, 1.},
+                {CHUTE_G, 5, 1*64, 64, 64, 0, 0, 1, 1.},
+                {CHUTE_D, 5, 3*64, 64, 64, 0, 0, 1, 1.},
                 {DEPL_G, 0, 9*64, 64, 64, 0, 0, 9, 1/5.},
                 {DEPL_D, 0, 11*64, 64, 64, 0, 0, 9, 1/5.},
                 {ATTQ_G, 0, 5*64, 64, 64, 0, 0, 8, 1/3.},
