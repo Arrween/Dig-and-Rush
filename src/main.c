@@ -88,23 +88,23 @@ int main() {
 
     t_bouton btn_barre_de_vie_pleine = { recuperer_texture("barre_de_vie_pleine"),
         {TAILLE_L * 0.15,
-            TAILLE_H * 0.25,
+            TAILLE_H * 0.35,
             TAILLE_L * 0.20,
             TAILLE_H * 0.15},
         (void(*)(t_etat*)) action_nulle,
         "PDV PLEINE"
     };
-    t_bouton btn_defense_pleine = { recuperer_texture("defense_pleine"),
+    t_bouton btn_barre_de_vie_semi = { recuperer_texture("barre_de_vie_semi"),
         {TAILLE_L * 0.15,
-            TAILLE_H * 0.40,
-            TAILLE_L * 0.20,
-            TAILLE_H * 0.15},
+            TAILLE_H * 0.32,
+            TAILLE_L * 0.205,
+            TAILLE_H * 0.20},
         (void(*)(t_etat*)) action_nulle,
-        "DEFENSE PLEINE"
+        "PDV SEMI"
     };
     t_bouton btn_energie_pleine = { recuperer_texture("energie_pleine"),
         {TAILLE_L * 0.15,
-            TAILLE_H * 0.55,
+            TAILLE_H * 0.50,
             TAILLE_L * 0.20,
             TAILLE_H * 0.15},
         (void(*)(t_etat*)) action_nulle,
@@ -112,7 +112,7 @@ int main() {
     };
     t_bouton btn_energie_semi = { recuperer_texture("energie_semi"),
         {TAILLE_L * 0.15,
-            TAILLE_H * 0.65,
+            TAILLE_H * 0.50,
             TAILLE_L * 0.20,
             TAILLE_H * 0.15},
         (void(*)(t_etat*)) action_nulle,
@@ -211,9 +211,9 @@ int main() {
 
 t_bouton * menus[3][10] = {
     {&btn_fullscreen, &btn_volume, &btn_continue , &btn_quitter, &btn_parametres, &btn_personnages, &btn_titre, NULL}, // menu principal
-    {&btn_fullscreen, &btn_volume, &btn_menu, &btn_jouer, &btn_parametres, &btn_titre_perso, &btn_back, NULL}, // menu serveur
+    {&btn_fullscreen, &btn_volume, &btn_menu, &btn_jouer, &btn_parametres, &btn_titre_perso, &btn_back, NULL},// menu personnages
     {&btn_fullscreen, &btn_volume, &btn_menu, &btn_personnages, &btn_option, NULL}, // menu paramètres
-    //{&btn_fullscreen, &btn_volume, &btn_menu, &btn_jouer, &btn_parametres, &btn_titre_perso, &btn_back, NULL} // menu personnages
+    //{&btn_fullscreen, &btn_volume, &btn_menu, &btn_jouer, &btn_parametres, &btn_titre_perso, &btn_back, NULL} 
 
 };
 
@@ -399,8 +399,7 @@ t_bouton * menus[3][10] = {
             SDL_RenderCopy(rend, tex_txt_chargement, NULL, &dst_txt_chargement);
 
             SDL_RenderCopy(rend, btn_barre_de_vie_pleine.texture, NULL, &btn_barre_de_vie_pleine.rect);
-            SDL_RenderCopy(rend, btn_defense_pleine.texture, NULL, &btn_defense_pleine.rect);
-            SDL_RenderCopy(rend, btn_energie_pleine.texture, NULL, &btn_energie_pleine.rect);
+            SDL_RenderCopy(rend, btn_energie_semi.texture, NULL, &btn_energie_semi.rect);
 
 
 
@@ -417,8 +416,7 @@ t_bouton * menus[3][10] = {
             SDL_Texture * tex_txt_chargement = SDL_CreateTextureFromSurface(rend, surface_txt_chargement);;
             SDL_RenderCopy(rend, tex_txt_chargement, NULL, &dst_txt_chargement);
 
-            SDL_RenderCopy(rend, btn_barre_de_vie_pleine.texture, NULL, &btn_barre_de_vie_pleine.rect);
-            SDL_RenderCopy(rend, btn_defense_pleine.texture, NULL, &btn_defense_pleine.rect);
+            SDL_RenderCopy(rend, btn_barre_de_vie_semi.texture, NULL, &btn_barre_de_vie_semi.rect);
             SDL_RenderCopy(rend, btn_energie_pleine.texture, NULL, &btn_energie_pleine.rect);
 
 
@@ -437,7 +435,6 @@ t_bouton * menus[3][10] = {
             SDL_RenderCopy(rend, tex_txt_chargement, NULL, &dst_txt_chargement);
 
             SDL_RenderCopy(rend, btn_barre_de_vie_pleine.texture, NULL, &btn_barre_de_vie_pleine.rect);
-            SDL_RenderCopy(rend, btn_defense_pleine.texture, NULL, &btn_defense_pleine.rect);
             SDL_RenderCopy(rend, btn_energie_pleine.texture, NULL, &btn_energie_pleine.rect);
 
 
@@ -455,7 +452,6 @@ t_bouton * menus[3][10] = {
             SDL_RenderCopy(rend, tex_txt_chargement, NULL, &dst_txt_chargement);
 
             SDL_RenderCopy(rend, btn_barre_de_vie_pleine.texture, NULL, &btn_barre_de_vie_pleine.rect);
-            SDL_RenderCopy(rend, btn_defense_pleine.texture, NULL, &btn_defense_pleine.rect);
             SDL_RenderCopy(rend, btn_energie_pleine.texture, NULL, &btn_energie_pleine.rect);
         }
         

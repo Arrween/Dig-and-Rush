@@ -51,11 +51,12 @@ struct chargement chargements_texs[] = {
     {"ressources/Menu/Boutons/bouton_continue.png", "bouton_continue"},
     {"ressources/Menu/Boutons/bouton_quit.png", "bouton_quitter"},
 
+
     {"ressources/Menu/Boutons/bouton_back.png", "back"},
 
 
     {"ressources/Menu/Boutons/barre_de_vie_pleine.png", "barre_de_vie_pleine"},
-    {"ressources/Menu/Boutons/defense_pleine.png", "defense_pleine"},
+    {"ressources/Menu/Boutons/barre_de_vie_semi.png", "barre_de_vie_semi"},
 
     {"ressources/Menu/Boutons/energie_pleine.png", "energie_pleine"},
     {"ressources/Menu/Boutons/energie_semi.png", "energie_semi"},
