@@ -169,10 +169,6 @@ void action_jouer(t_etat * etat) {
     etat->i_menu = PAGE_MENU_PERSONNAGES;
     jouer_audio(0, "confirmation", 0);
 }
-void action_continue(t_etat * etat) {
-    etat->i_menu = PAGE_MENU_PERSONNAGES;
-    jouer_audio(0, "confirmation", 0);
-}
 
 void action_retour(t_etat *etat) {
     if (etat->i_menu > 0) {
