@@ -118,7 +118,7 @@ void verif_collision(t_entite * e1, float * correction_defilement, int * score, 
         if ((e2->bonus && e1->perso) && (collision_b || collision_d || collision_g || collision_h)) {
             jouer_audio(3, e2->bonus->id_son, 0);
             *score += e2->bonus->valeur;
-            changer_texte(texte_score, "POINTS : %i", *score);
+            changer_texte(texte_score, "SCORE : %i", *score);
             e1->perso->vie += e2->bonus->soin;
             if (e1->perso->vie > e1 ->perso->vie_max)
                 e1->perso->vie = e1->perso->vie_max;

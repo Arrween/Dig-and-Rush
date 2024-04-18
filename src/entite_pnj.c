@@ -132,50 +132,28 @@ void comportement_patrouille_vol(t_entite * pnj, t_entite * perso) {
 
 
 
-
 void comportement_patrouille_statique(t_entite *pnj, t_entite *perso) {
     if (pnj->pnj->est_mort)
         return;
-    int a_change_sens = FAUX;
 
-    // Si le PNJ est en repos, touche un bloc ou atteint une extrémité de sa patrouille, il change de direction
-    if (pnj->deplacement == REPOS_MVT
-        || (pnj->deplacement == DROITE && pnj->hitbox.x + pnj->hitbox.w >= pnj->pnj->x_patrouille_d)
-        || pnj->collisions.d
-        ) {
-        pnj->deplacement = GAUCHE;
-        changer_animation(pnj, DEPL_G);
-        changer_pos_rel(pnj, -1, 0); // Déplacer le PNJ vers la gauche
-        if (pnj->deplacement != REPOS_MVT)
-            a_change_sens = VRAI;
-    }
-    else if ((pnj->deplacement == GAUCHE && pnj->hitbox.x <= pnj->pnj->x_patrouille_g)
-             || pnj->collisions.g
-             ) {
-        pnj->deplacement = DROITE;
-        changer_animation(pnj, DEPL_D);
-        changer_pos_rel(pnj, 1, 0); // Déplacer le PNJ vers la droite
-        a_change_sens = VRAI;
-    }
-
-    // Si le PNJ n'a pas de collision en bas, il chute vers la gauche ou vers la droite en fonction de sa direction
-    if (!pnj->collisions.b) {
-        if (pnj->deplacement == GAUCHE) {
-            changer_animation(pnj, CHUTE_G);
-            changer_pos_rel(pnj, -1, 1); // Chuter vers la gauche
-        } else if (pnj->deplacement == DROITE) {
-            changer_animation(pnj, CHUTE_D);
-            changer_pos_rel(pnj, 1, 1); // Chuter vers la droite
+    if (!perso->perso->est_mort && SDL_HasIntersectionF(&pnj->pnj->hitbox_attaque, &perso->hitbox)) {
+        if (pnj->deplacement == REPOS_MVT) {
+            // Choisir l'animation d'attaque en fonction de la direction du PNJ
+            if (perso->hitbox.x > pnj->hitbox.x) {
+                changer_animation(pnj, ATTQ_D);
+            } else {
+                changer_animation(pnj, ATTQ_G);
+            }
+            jouer_audio(3, pnj->pnj->id_son_attaque, 0);
         }
-        a_change_sens = VRAI;
-    }
-
-    // Si le PNJ a atterri de nouveau sur une collision, il reprend son déplacement normal
-    if (pnj->collisions.b && a_change_sens) {
-        // Réinitialiser l'animation de chute
-        changer_animation(pnj, (pnj->deplacement == GAUCHE) ? DEPL_G : DEPL_D);
+        pnj->deplacement = REPOS_MVT;
+        perso_prendre_coup(perso);
+    } else {
+        // Si le PNJ ne rencontre pas la hitbox du personnage, il revient en position de repos
+        changer_animation(pnj, REPOS);
     }
 }
+
 
 
 
@@ -254,9 +232,12 @@ t_pnj * creer_pnj(char * id, t_entite * e) {
         strcpy(nouv->id_son_attaque, "attaque_perso");
         strcpy(nouv->id_son_mort, "mort_perso");
         changer_hitbox(nouv->parent, &(nouv->parent->hitbox), 30, 50, 40, 55, VRAI);
-        // définir initialement sur la droite, sera modifié par la patrouille
-        changer_hitbox(nouv->parent, &(nouv->hitbox_attaque), 50, 70, 33, 20, VRAI);
+        // Définir la hitbox d'attaque pour le côté gauche
+        changer_hitbox(nouv->parent, &(nouv->hitbox_attaque_gauche), 10, 70, 33, 20, VRAI);
+        // Définir la hitbox d'attaque pour le côté droit
+        changer_hitbox(nouv->parent, &(nouv->hitbox_attaque_droite), 50, 70, 33, 20, VRAI);
     }
+
 
     return nouv;
 }
