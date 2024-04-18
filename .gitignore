@@ -16,6 +16,9 @@ doc/*.pdf
 # mac
 .DS_Store
 
+# autres
+score.txt
+
 # Prerequisites
 *.d
 

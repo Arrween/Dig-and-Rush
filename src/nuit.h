@@ -34,11 +34,6 @@
 */
 #define PAS_TRANSITION 5
 
-/** @brief canal audio réservé pour la musique de jour */
-#define CANAL_MUS_JOUR 8
-/** @brief canal audio réservé pour la musique de nuit */
-#define CANAL_MUS_NUIT 9
-
 /** @brief objet contenant les variables à modifier pour la transition entre
     *      jour et nuit ainsi que les paramètres nécessaires au calcul de la
     *      transition

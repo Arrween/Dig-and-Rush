@@ -18,6 +18,7 @@
 #include "listes.h"
 #include "texte.h"
 
+#define Y_PREMIERE_LIGNE 80
 #define DELAI_CREUSAGE 18 // en nombre de frames
 #define DELAI_PERTE_SCORE 150 // en nombre de frames
 #define DELAI_JOUR 750 // en nombre de frames
@@ -116,7 +117,7 @@ void verif_collision(t_entite * e1, float * correction_defilement, int * score, 
 
         // ramassage de bonus
         if ((e2->bonus && e1->perso) && (collision_b || collision_d || collision_g || collision_h)) {
-            jouer_audio(3, e2->bonus->id_son, 0);
+            jouer_audio(CANAL_BONUS, e2->bonus->id_son, 0);
             *score += e2->bonus->valeur;
             changer_texte(texte_score, "SCORE : %i", *score);
             e1->perso->vie += e2->bonus->soin;
@@ -142,7 +143,7 @@ void creuser(t_entite * a_creuser) {
     while(!hors_liste(I_LISTE_ENTITES)) {
         t_entite * elem = liste_lire(I_LISTE_ENTITES);
         if (a_creuser == elem && elem->destructible) {
-            jouer_audio(1, elem->destructible->id_son, 0);
+            jouer_audio(CANAL_CREUSAGE, elem->destructible->id_son, 0);
             liste_retirer(I_LISTE_ENTITES);
             detruire_entite(&elem);
             break;
@@ -231,7 +232,7 @@ int boucle_jeu(SDL_Renderer * rend) {
 
     generer_murs();
 
-    generer_premiere_ligne(80);
+    generer_premiere_ligne(Y_PREMIERE_LIGNE);
 
     SDL_FRect zone_jeu = {TAILLE_L/4., 0, TAILLE_L/2., TAILLE_H};
     t_nuit * nuit = creer_nuit(rend, perso, zone_jeu, fond->texture, fond_nuit->texture);

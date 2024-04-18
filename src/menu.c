@@ -124,7 +124,7 @@ TTF_Font * chargement_font(char * chemin, int taille, SDL_Renderer ** rend, SDL_
 
 void action_parametres(t_etat * etat) {
     etat->i_menu = PAGE_MENU_PARAMETRES;
-    jouer_audio(0, "confirmation", 0);
+    jouer_audio(CANAL_BTN_MENU, "confirmation", 0);
 
       
 }
@@ -132,7 +132,7 @@ void action_parametres(t_etat * etat) {
 void action_option(t_etat * etat) {
     etat->i_menu = PAGE_MENU_PARAMETRES;
     etat->boutons[4]->texture = recuperer_texture("options"); 
-    jouer_audio(0, "confirmation", 0);
+    jouer_audio(CANAL_BTN_MENU, "confirmation", 0);
  
 }
 void action_volume(t_etat * etat) {
@@ -149,7 +149,7 @@ void action_volume(t_etat * etat) {
 }
 void action_personnages(t_etat * etat) {
     etat->i_menu = PAGE_MENU_PERSONNAGES;
-    jouer_audio(0, "confirmation", 0);
+    jouer_audio(CANAL_BTN_MENU, "confirmation", 0);
 
 }
 void action_fullscreen(t_etat * etat) {
@@ -162,25 +162,25 @@ void action_fullscreen(t_etat * etat) {
 }
 void action_home(t_etat * etat) {
     etat->i_menu = PAGE_MENU;
-    jouer_audio(0, "confirmation", 0);
+    jouer_audio(CANAL_BTN_MENU, "confirmation", 0);
 
 }
 void action_jouer(t_etat * etat) {
     etat->i_menu = PAGE_MENU_PERSONNAGES;
-    jouer_audio(0, "confirmation", 0);
+    jouer_audio(CANAL_BTN_MENU, "confirmation", 0);
 }
 
 void action_retour(t_etat *etat) {
     if (etat->i_menu > 0) {
         etat->i_menu--; // Décrémenter l'index du menu pour revenir en arrière
     }
-    jouer_audio(0, "confirmation", 0);
+    jouer_audio(CANAL_BTN_MENU, "confirmation", 0);
 
 }
 
 void action_quitter(t_etat * etat) {
     etat->doit_quitter = VRAI;
-    jouer_audio(0, "confirmation", 0);
+    jouer_audio(CANAL_BTN_MENU, "confirmation", 0);
 
 }
 

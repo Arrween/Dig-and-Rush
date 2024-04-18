@@ -24,7 +24,7 @@ t_bonus * creer_bonus(char * id) {
         nouv->valeur = 5;
     }
     else if (strcmp(id, "coeur") == 0) {
-        nouv->soin += 1;
+        nouv->soin = 1;
     }
     return nouv;
 }

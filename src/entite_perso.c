@@ -22,7 +22,7 @@ void perso_porter_coup(t_entite * e, int * score, t_texte * texte_score) {
         }
         liste_suivant(I_LISTE_ENTITES);
     }
-    jouer_audio(2, e->perso->id_son_attaque, 0);
+    jouer_audio(CANAL_ATTAQUE_PERSO, e->perso->id_son_attaque, 0);
 }
 
 void perso_mourir(t_entite * perso) {
@@ -30,7 +30,7 @@ void perso_mourir(t_entite * perso) {
     changer_animation(perso, ANIM_MORT);
     perso->deplacement = REPOS_MVT;
     perso->perso->est_mort = VRAI;
-    jouer_audio(2, perso->perso->id_son_mort, 0);
+    jouer_audio(CANAL_MORT_PERSO, perso->perso->id_son_mort, 0);
     
 }
 
@@ -42,7 +42,7 @@ void perso_prendre_coup(t_entite * perso) {
         perso_mourir(perso);
     else{
         perso->perso->temps_invu = perso->perso->temps_invu_max;
-        jouer_audio(2, perso->perso->id_son_blessure, 0);
+        jouer_audio(CANAL_BLESSURE_PERSO, perso->perso->id_son_blessure, 0);
     }
 }
 

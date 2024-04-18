@@ -293,7 +293,7 @@ t_bouton * menus[3][10] = {
                             aniaSelectionne = 0; // Désélectionner Ania
                             if (mattSelectionne) {
                                 printf("Personnage sélectionné : Matt\n");
-                                jouer_audio(0, "accroche_matthieu", 0);
+                                jouer_audio(CANAL_ACCROCHE, "accroche_matthieu", 0);
                             }
 
                         }
@@ -330,7 +330,7 @@ t_bouton * menus[3][10] = {
                                 printf("Bouton %s cliqué\n", btn->nom);
                         
                                 if (btn == &btn_jouer && strcmp(personnage_selectionne, "") != 0) {
-                                    jouer_audio(0, "coq", 0);
+                                    jouer_audio(CANAL_COQ, "coq", 0);
                                     etat.doit_quitter = boucle_jeu(rend);
                                 }else{
                                     if (btn == &btn_jouer && strcmp(personnage_selectionne, "") == 0) {
@@ -355,22 +355,22 @@ t_bouton * menus[3][10] = {
                             break;
                         case SDL_SCANCODE_A:
                             selectionner_personnage("matt");
-                            jouer_audio(0, "coq", 0);
+                            jouer_audio(CANAL_COQ, "coq", 0);
                             etat.doit_quitter = boucle_jeu(rend);
                             break;
                         case SDL_SCANCODE_S:
                             selectionner_personnage("jack");
-                            jouer_audio(0, "coq", 0);
+                            jouer_audio(CANAL_COQ, "coq", 0);
                             etat.doit_quitter = boucle_jeu(rend);
                             break;
                         case SDL_SCANCODE_D:
                             selectionner_personnage("yohan");
-                            jouer_audio(0, "coq", 0);
+                            jouer_audio(CANAL_COQ, "coq", 0);
                             etat.doit_quitter = boucle_jeu(rend);
                             break;
                         case SDL_SCANCODE_W:
                             selectionner_personnage("ania");
-                            jouer_audio(0, "coq", 0);
+                            jouer_audio(CANAL_COQ, "coq", 0);
                             etat.doit_quitter = boucle_jeu(rend);
                             break;
                         case SDLK_SPACE:

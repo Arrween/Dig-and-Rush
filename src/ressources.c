@@ -4,6 +4,7 @@
 
 #include "ressources.h"
 #include "uthash.h"
+#include "constantes.h"
 
 t_texture * textures = NULL;
 t_spritesheet * spritesheets = NULL;
@@ -412,7 +413,7 @@ t_musique * recuperer_musique(const char * id, int est_silencieux) {
 }
 
 int jouer_audio(int canal, const char * id, int repetitions) {
-    t_son * son = recuperer_son(id, 1);
+    t_son * son = recuperer_son(id, VRAI);
     if (son) {
         if (Mix_PlayChannel(canal, son->tampon, repetitions) == -1) {
             fprintf(stderr, "Erreur Mix_PlayChannel : %s\n", Mix_GetError());
@@ -421,7 +422,7 @@ int jouer_audio(int canal, const char * id, int repetitions) {
         return 0;
     }
 
-    t_musique * musique = recuperer_musique(id, 1);
+    t_musique * musique = recuperer_musique(id, VRAI);
     if (musique) {
         if (Mix_PlayMusic(musique->tampon, repetitions) == -1) {
             fprintf(stderr, "Erreur Mix_PlayMusic : %s\n", Mix_GetError());
