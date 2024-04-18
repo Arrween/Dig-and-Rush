@@ -2,11 +2,12 @@ REP_BIN = bin
 REP_SRC = src
 REP_OBJ = obj
 REP_DOC = doc
+REP_SRCDOC = $(REP_DOC)/src
 REP_LIB = lib
 NOM_BIN = dignrush
 TEST_BIN = test_unit
 NOM_PROG = dignrush.sh
-REPS = $(REP_BIN) $(REP_SRC) $(REP_OBJ) $(REP_DOC) $(REP_LIB)
+REPS = $(REP_BIN) $(REP_SRC) $(REP_OBJ) $(REP_DOC) $(REP_SRCDOC) $(REP_LIB)
 
 REP_SDL = $(REP_LIB)/SDL2
 REP_SDLINC = $(REP_SDL)/include
@@ -31,8 +32,7 @@ WARNING_FLAGS = -Wall -Wextra # -Wconversion -Wno-float-conversion -Wno-sign-con
 DEBUG_FLAGS =
 
 DOCS_PDF = $(REP_DOC)/description_détaillée.pdf $(REP_DOC)/rapport.pdf $(REP_DOC)/manuel_installation_et_utilisation.pdf
-SOURCES_TEX = $(wildcard $(REP_DOC)/*.tex)
-DOXYFILE = $(REP_DOC)/Doxyfile
+DOXYFILE = $(REP_SRCDOC)/Doxyfile
 
 OUTIL_MESSAGE = outils/bannière.sh
 
@@ -56,22 +56,22 @@ $(OBJETS) : $(REP_OBJ)/%.o: $(REP_SRC)/%.c $(ENTETES)
 
 docs : docs_tex docs_doxy
 docs_tex: $(DOCS_PDF)
-$(DOCS_PDF): $(REP_DOC)/%.pdf: $(REP_DOC)/%.tex
-	@ $(OUTIL_MESSAGE) Compilation des fichiers LaTeX…
+$(DOCS_PDF): $(REP_DOC)/%.pdf: $(REP_SRCDOC)/%.tex
+	@ $(OUTIL_MESSAGE) Compilation de $<…
 ifdef TECTONIC
 	@# compilateur TeX alternatif utilisé chez Matthieu
-	tectonic $<
+	tectonic $< && mv $(REP_SRCDOC)/*.pdf $(REP_DOC)/
 else ifdef XELATEX
 	@# se déplacer dans doc/ pour compiler doc/*.tex, le doc/ étant retiré par subst
 	@# « -interaction batchmode » pour limiter la loquacité de xelatex
 	# cd $(REP_DOC) && xelatex -interaction batchmode $(subst $(REP_DOC)/, , $<)
-	cd $(REP_DOC) && xelatex $(subst $(REP_DOC)/, , $<) && xelatex $(subst $(REP_DOC)/, , $<)
+	cd $(REP_SRCDOC) && xelatex $(subst $(REP_SRCDOC)/, , $<) && xelatex $(subst $(REP_SRCDOC)/, , $<) && cd - && mv $(REP_SRCDOC)/*pdf $(REP_DOC)/
 else
-	@echo "pas de compilateur TeX trouvé, docs .tex non compilées"
+	@echo "pas de compilateur TeX adéquat trouvé, docs .tex non compilées"
 endif
 docs_doxy: $(DOXYFILE)
 	@ $(OUTIL_MESSAGE) Génération de la doc Doxygen…
-	cd $(REP_DOC) && doxygen $(subst $(REP_DOC)/, , $<)
+	doxygen $< && mv html latex $(REP_DOC)/
 ifeq ($(shell whoami), s123690)
 	rm -r $(HOME)/public_html/doxygen_dignrush
 	cp -r $(REP_DOC)/html $(HOME)/public_html/doxygen_dignrush
@@ -82,9 +82,8 @@ reps :
 
 clean :
 	rm -f $(REP_OBJ)/*
-	rm -f $(REP_DOC)/*.pdf $(REP_DOC)/*.toc $(REP_DOC)/*.aux $(REP_DOC)/*.log $(REP_DOC)/*.out
+	rm -f $(REP_DOC)/*.pdf $(REP_SRCDOC)/*.toc $(REP_SRCDOC)/*.aux $(REP_SRCDOC)/*.log $(REP_SRCDOC)/*.out
 	rm -rf $(REP_DOC)/html $(REP_DOC)/latex
-	rm *.txt
 remove : clean
 	rm $(REP_BIN)/$(NOM_BIN)
 
