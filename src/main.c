@@ -293,7 +293,10 @@ t_bouton * menus[3][10] = {
                             jackSelectionne = 0; // Désélectionner Jack
                             yohanSelectionne = 0; // Désélectionner Yohan
                             aniaSelectionne = 0; // Désélectionner Ania
-                            printf("Personnage sélectionné : Matt\n");
+                            if (mattSelectionne) {
+                                printf("Personnage sélectionné : Matt\n");
+                                jouer_audio(0, "accroche_matthieu", 0);
+                            }
 
                         }
                         else if (SDL_PointInRect(&pointeur, &jackRect)) {
