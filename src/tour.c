@@ -477,7 +477,7 @@ int boucle_jeu(SDL_Renderer * rend) {
 
             generer_murs();
         }
-        if (repere_defilement > 100) {
+        if (repere_defilement >= 100) {
             generer_morceau_niveau(repere_defilement);
             repere_defilement = 0;
         }

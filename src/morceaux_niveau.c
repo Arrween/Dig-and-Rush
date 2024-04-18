@@ -30,7 +30,7 @@ void generer_morceau_niveau(float repere_generation){
     srand(time(NULL));
 
     int i, j;
-    float x = 10, y = repere_generation;
+    float x = 10, y = repere_generation + 10;
     int n_pierres_ligne = 0;
     int presences_blocs[8];
 
