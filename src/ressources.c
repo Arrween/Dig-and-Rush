@@ -222,7 +222,7 @@ struct chargement chargements_musiques[] = {
 };
 
 struct chargement_police chargements_polices[] = {
-    {"ressources/Menu/Police/font1.ttf", "police_defaut", 50},
+    {"ressources/Polices/linux_libertine.ttf", "police_defaut", 50},
 };
 
 
