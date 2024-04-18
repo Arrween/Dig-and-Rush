@@ -1,5 +1,14 @@
-#include <string.h>
+/**
+ * @file entite_perso.c
+ * @brief Définition des fonctions pour la gestion des entités de personnages joueurs.
+ * 
+ * Ce fichier contient les définitions des fonctions pour la création, la manipulation
+ * et la destruction des entités de personnages joueurs. Ces fonctions permettent de
+ * gérer les actions des personnages joueurs, telles que attaquer, prendre des coups
+ * et mourir, ainsi que la création et la destruction de ces entités.
+ */
 
+#include <string.h>
 #include "entite_perso.h"
 #include "entite.h"
 #include "entite_pnj.h"
@@ -7,6 +16,18 @@
 #include "texte.h"
 #include "constantes.h"
 
+
+
+/**
+ * @brief Porte un coup avec le personnage joueur.
+ * 
+ * Cette fonction vérifie si le personnage joueur attaque un ennemi. Si c'est le cas,
+ * l'ennemi meurt, et le score est mis à jour. Ensuite, un son d'attaque est joué.
+ * 
+ * @param e Pointeur vers l'entité du personnage joueur.
+ * @param score Pointeur vers le score du joueur.
+ * @param texte_score Pointeur vers la structure texte pour afficher le score.
+ */
 
 void perso_porter_coup(t_entite * e, int * score, t_texte * texte_score) {
     if (!e->perso)
@@ -25,6 +46,15 @@ void perso_porter_coup(t_entite * e, int * score, t_texte * texte_score) {
     jouer_audio(CANAL_ATTAQUE_PERSO, e->perso->id_son_attaque, 0);
 }
 
+
+/**
+ * @brief Gère la mort du personnage joueur.
+ * 
+ * Cette fonction est appelée lorsque le personnage joueur meurt. Elle change
+ * l'animation du personnage, le marque comme mort, et joue un son de mort.
+ * 
+ * @param perso Pointeur vers l'entité du personnage joueur.
+ */
 void perso_mourir(t_entite * perso) {
     perso->id_animation_suivante = ANIM_MORT_STATIQUE;
     changer_animation(perso, ANIM_MORT);
@@ -34,6 +64,15 @@ void perso_mourir(t_entite * perso) {
     
 }
 
+/**
+ * @brief Gère le fait que le personnage joueur reçoit un coup.
+ * 
+ * Cette fonction est appelée lorsque le personnage joueur reçoit un coup.
+ * Elle diminue les points de vie du personnage joueur, le marque comme mort
+ * s'il n'a plus de points de vie, ou joue un son de blessure sinon.
+ * 
+ * @param perso Pointeur vers l'entité du personnage joueur.
+ */
 void perso_prendre_coup(t_entite * perso) {
     if (perso->perso->temps_invu > 0)
         return;

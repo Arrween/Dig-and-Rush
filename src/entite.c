@@ -82,12 +82,15 @@ void afficher_entite(SDL_Renderer * rend, t_entite * e) {
     }
 }
 
-/*
- * 
- *
- *
- *
+/**
+ * @brief Change les coordonnées et les dimensions d'un rectangle.
+ * @param rect Le rectangle à modifier.
+ * @param x La nouvelle coordonnée en x.
+ * @param y La nouvelle coordonnée en y.
+ * @param w La nouvelle largeur.
+ * @param h La nouvelle hauteur.
  */
+
 void changer_rect(SDL_FRect * rect, float x, float y, float w, float h) {
     rect->x = x;
     rect->y = y;
@@ -95,19 +98,54 @@ void changer_rect(SDL_FRect * rect, float x, float y, float w, float h) {
     rect->h = h;
 }
 
+
+
+/**
+ * @brief Change les coordonnées source d'une entité.
+ * @param e L'entité à modifier.
+ * @param x La nouvelle coordonnée source en x.
+ * @param y La nouvelle coordonnée source en y.
+ * @param w La nouvelle largeur source.
+ * @param h La nouvelle hauteur source.
+ */
+
 void changer_rect_src_entite(t_entite * e, int x, int y, int w, int h) {
     changer_rect((SDL_FRect*)e->rect_src, (float)x, (float)y, (float)w, (float)h);
 }
 
+
+
+/**
+ * @brief Change les coordonnées et les dimensions d'un rectangle destination d'une entité.
+ * @param e L'entité dont le rectangle destination doit être modifié.
+ * @param x La nouvelle coordonnée en x.
+ * @param y La nouvelle coordonnée en y.
+ * @param w La nouvelle largeur.
+ * @param h La nouvelle hauteur.
+ */
 void changer_rect_dst_entite(t_entite * e, float x, float y, float w, float h) {
     changer_rect(e->rect_dst, x, y, w, h);
 }
 
+
+/**
+ * @brief Change les coordonnées source d'une entité.
+ * @param e L'entité dont les coordonnées source doivent être modifiées.
+ * @param x La nouvelle coordonnée source en x.
+ * @param y La nouvelle coordonnée source en y.
+ */
 void changer_sprite(t_entite * e, int x, int y) {
     e->rect_src->x = x;
     e->rect_src->y = y;
 }
 
+
+/**
+ * @brief Change la position d'une entité.
+ * @param e L'entité dont la position doit être modifiée.
+ * @param x La nouvelle coordonnée en x.
+ * @param y La nouvelle coordonnée en y.
+ */
 void changer_pos_entite(t_entite * e, float x, float y) {
     float xx = e->rect_dst->x;
     float yy = e->rect_dst->y;
@@ -128,16 +166,44 @@ void changer_pos_entite(t_entite * e, float x, float y) {
     }
 }
 
+
+
+/**
+ * @brief Change les dimensions d'une entité.
+ * @param e L'entité dont les dimensions doivent être modifiées.
+ * @param w La nouvelle largeur.
+ * @param h La nouvelle hauteur.
+ */
+
 void changer_dims(t_entite * e, float w, float h) {
     e->rect_dst->w = w;
     e->rect_dst->h = h;
 }
 
+
+/**
+ * @brief Change la position relative d'une entité.
+ * @param e L'entité dont la position relative doit être modifiée.
+ * @param dx Le déplacement en x.
+ * @param dy Le déplacement en y.
+ */
 void changer_pos_rel(t_entite * e, float dx, float dy) {
     changer_pos_entite(e, e->rect_dst->x + dx,
                            e->rect_dst->y + dy);
 }
 
+
+
+/**
+ * @brief Change la hitbox d'une entité.
+ * @param e L'entité dont la hitbox doit être modifiée.
+ * @param hitbox Le rectangle de la hitbox.
+ * @param x La coordonnée x de la hitbox.
+ * @param y La coordonnée y de la hitbox.
+ * @param w La largeur de la hitbox.
+ * @param h La hauteur de la hitbox.
+ * @param avec_coord_rect_dst Indique si les coordonnées sont relatives au rectangle destination.
+ */
 void changer_hitbox(t_entite * e, SDL_FRect * hitbox, float x, float y, float w, float h, int avec_coord_rect_dst) {
     float dst_x = e->rect_dst->x;
     float dst_y = e->rect_dst->y;
@@ -157,11 +223,24 @@ void changer_hitbox(t_entite * e, SDL_FRect * hitbox, float x, float y, float w,
     }
 }
 
+
+/**
+ * @brief Applique une réflexion horizontale à la hitbox d'une entité.
+ * @param e L'entité dont la hitbox doit être réfléchie.
+ * @param hitbox Le rectangle de la hitbox.
+ */
 void appliquer_reflexion_hitbox(t_entite * e, SDL_FRect * hitbox) {
     changer_hitbox(e, hitbox, 2*e->hitbox.x + e->hitbox.w - hitbox->x - hitbox->w,
                    hitbox->y, hitbox->w, hitbox->h, FAUX);
 }
 
+
+/**
+ * @brief Calcule le pas de déplacement selon la vitesse de l'entité.
+ * @param compteur_frames Le compteur de frames.
+ * @param vitesse La vitesse de l'entité.
+ * @return int Le pas de déplacement.
+ */
 int calculer_pas_selon_vitesse(long long int compteur_frames, float vitesse) {
     if (vitesse >= 1)
         return (int) vitesse;
@@ -171,6 +250,12 @@ int calculer_pas_selon_vitesse(long long int compteur_frames, float vitesse) {
         return 0;
 }
 
+
+/**
+ * @brief Déplace une entité en fonction de son déplacement actuel.
+ * @param e L'entité à déplacer.
+ * @param compteur_frames Le compteur de frames.
+ */
 void deplacer(t_entite * e, long long int compteur_frames) {
     float depl_x = 0;
     float depl_y = 0;
@@ -196,6 +281,13 @@ void deplacer(t_entite * e, long long int compteur_frames) {
     }
 }
 
+
+
+/**
+ * @brief Anime une entité en fonction de son animation actuelle.
+ * @param e L'entité à animer.
+ * @param compteur_frames Le compteur de frames.
+ */
 void animer(t_entite * e, long long int compteur_frames) {
     int pas_anim;
     t_animation * anim = e->animation_courante;
@@ -218,6 +310,12 @@ void animer(t_entite * e, long long int compteur_frames) {
     }
 }
 
+
+/**
+ * @brief Change l'animation courante d'une entité.
+ * @param e L'entité dont l'animation doit être changée.
+ * @param id_anim L'identifiant de la nouvelle animation.
+ */
 void changer_animation(t_entite * e, t_id_anim id_anim) {
     t_animation * anim = recuperer_animation(e->animations, e->n_animations, id_anim);
     if (anim) {
@@ -252,6 +350,18 @@ void changer_animation(t_entite * e, t_id_anim id_anim) {
     }
 }
 
+
+
+/**
+ * @brief Crée une nouvelle entité à partir d'une texture SDL.
+ * @param texture La texture SDL à utiliser pour l'entité.
+ * @param x La coordonnée en x de l'entité.
+ * @param y La coordonnée en y de l'entité.
+ * @param w La largeur de l'entité.
+ * @param h La hauteur de l'entité.
+ * @param est_relatif Indique si les coordonnées sont relatives.
+ * @return t_entite* Un pointeur vers la nouvelle entité créée.
+ */
 t_entite * creer_entite_depuis_texture(SDL_Texture * texture,
                                        float x, float y, float w, float h,
                                        int est_relatif) {
@@ -308,6 +418,17 @@ t_entite * creer_entite_depuis_texture(SDL_Texture * texture,
     return nouv;
 }
 
+
+/**
+ * @brief Crée une nouvelle entité à partir d'une spritesheet.
+ * @param id L'identifiant de la spritesheet à utiliser.
+ * @param x La coordonnée en x de l'entité.
+ * @param y La coordonnée en y de l'entité.
+ * @param w La largeur de l'entité.
+ * @param h La hauteur de l'entité.
+ * @param est_relatif Indique si les coordonnées sont relatives.
+ * @return t_entite* Un pointeur vers la nouvelle entité créée.
+ */
 t_entite * creer_entite_depuis_spritesheet(const char * id,
                                            float x, float y, float w, float h,
                                            int est_relatif) {
@@ -321,6 +442,18 @@ t_entite * creer_entite_depuis_spritesheet(const char * id,
     return nouv;
 }
 
+
+
+/**
+ * @brief Crée une nouvelle entité à partir d'une texture chargée.
+ * @param id L'identifiant de la texture à utiliser.
+ * @param x La coordonnée en x de l'entité.
+ * @param y La coordonnée en y de l'entité.
+ * @param w La largeur de l'entité.
+ * @param h La hauteur de l'entité.
+ * @param est_relatif Indique si les coordonnées sont relatives.
+ * @return t_entite* Un pointeur vers la nouvelle entité créée.
+ */
 t_entite * creer_entite(const char * id, float x, float y, float w, float h,
                         int est_relatif) {
     SDL_Texture * texture = recuperer_texture(id);
@@ -330,6 +463,13 @@ t_entite * creer_entite(const char * id, float x, float y, float w, float h,
     return nouv;
 }
 
+
+
+/**
+ * @brief Détruit une entité et libère la mémoire allouée.
+ * @param e Un pointeur vers le pointeur de l'entité à détruire.
+ */
+ 
 // ne pas détruire (*e)->texture, detruire_ressources s’en charge
 void detruire_entite(t_entite ** e) {
     if (*e) {
