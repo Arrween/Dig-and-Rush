@@ -231,11 +231,10 @@ t_pnj * creer_pnj(char * id, t_entite * e) {
         nouv->parent->vitesse = 1./2;
         strcpy(nouv->id_son_attaque, "attaque_perso");
         strcpy(nouv->id_son_mort, "mort_perso");
-        changer_hitbox(nouv->parent, &(nouv->parent->hitbox), 30, 50, 40, 55, VRAI);
-        // Définir la hitbox d'attaque pour le côté gauche
-        changer_hitbox(nouv->parent, &(nouv->hitbox_attaque_gauche), 10, 70, 33, 20, VRAI);
-        // Définir la hitbox d'attaque pour le côté droit
-        changer_hitbox(nouv->parent, &(nouv->hitbox_attaque_droite), 50, 70, 33, 20, VRAI);
+        changer_hitbox(nouv->parent, &(nouv->parent->hitbox), 15, 30, 80, 70, VRAI);
+        changer_hitbox(nouv->parent, &(nouv->hitbox_attaque), nouv->parent->hitbox.x,
+                       nouv->parent->hitbox.y, nouv->parent->hitbox.w,
+                       nouv->parent->hitbox.h, FAUX);
     }
 
 
