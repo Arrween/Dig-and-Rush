@@ -84,6 +84,7 @@ clean :
 	rm -f $(REP_OBJ)/*
 	rm -f $(REP_DOC)/*.pdf $(REP_DOC)/*.toc $(REP_DOC)/*.aux $(REP_DOC)/*.log $(REP_DOC)/*.out
 	rm -rf $(REP_DOC)/html $(REP_DOC)/latex
+	rm *.txt
 remove : clean
 	rm $(REP_BIN)/$(NOM_BIN)
 

@@ -152,6 +152,45 @@ void creuser(t_entite * a_creuser) {
     }
 }
 
+int lire_score(int nouveau_score) {
+    int ancien_score;
+    FILE *fichier;
+
+    // Ouvrir le fichier en mode lecture
+    fichier = fopen("score.txt", "r");
+
+    // Vérifier si le fichier existe
+    if (fichier != NULL) {
+        // Lire l'ancien score
+        fscanf(fichier, "%d", &ancien_score);
+        // Fermer le fichier
+        fclose(fichier);
+
+        // Comparer les scores
+        if (nouveau_score > ancien_score) {
+            // Ouvrir le fichier en mode écriture pour écraser l'ancien score
+            fichier = fopen("score.txt", "w");
+            // Écrire le nouveau score dans le fichier
+            fprintf(fichier, "%d", nouveau_score);
+            // Fermer le fichier
+            fclose(fichier);
+            return 1; // Nouveau score enregistré
+        } 
+        else {
+            return -1; // Record non battu
+        }
+    } else {
+        // Créer un nouveau fichier score.txt et y écrire le nouveau score
+        fichier = fopen("score.txt", "w");
+        fprintf(fichier, "%d", nouveau_score);
+        fclose(fichier);
+        return 0; //Premier score enregistré
+    }
+
+    return 0;
+}
+
+
 int boucle_jeu(SDL_Renderer * rend) {
     SDL_Event event;
     int doit_boucler = VRAI;
@@ -163,6 +202,8 @@ int boucle_jeu(SDL_Renderer * rend) {
     int creusage_en_cours = FAUX; // Indicateur si l'animation de creusage est en cours
     int compteur_creusage = 0;
     int compteur_jour_nuit = 0;
+    int record ;
+    int score_enregistré = 0;
 
     srand(time(NULL));
     int n = rand()%10 + 1;
@@ -201,13 +242,15 @@ int boucle_jeu(SDL_Renderer * rend) {
     t_texte * texte_score = creer_texte("police_defaut", 255, 255, 255, 255, 20, 20, 160, 50);
     changer_texte(texte_score, "SCORE : %i", score);
 
+    t_texte * texte_record = creer_texte("police_defaut", 255, 255, 255, 255, 450, 550, 360, 50);
+
     t_texte * texte_vie = creer_texte("police_defaut", 255, 255, 255, 255, 20, 80, 160, 50);
     changer_texte(texte_vie, "HEALTH : %i", perso->perso->vie);
 
     t_texte * texte_mort = creer_texte("police_defaut", 255, 255, 255, 255, 550, 500, 160, 50);
     changer_texte(texte_mort, "GAME OVER !");
 
-    t_texte * texte_reessayer = creer_texte("police_defaut", 255, 255, 255, 255, 450, 550, 350, 50);
+    t_texte * texte_reessayer = creer_texte("police_defaut", 255, 255, 255, 255, 450, 600, 350, 50);
     changer_texte(texte_reessayer, "Press <escape> to retry");
 
     t_texte * texte_pause = creer_texte("police_defaut", 255, 255, 255, 255, 450, 550, 350, 50);
@@ -422,6 +465,22 @@ int boucle_jeu(SDL_Renderer * rend) {
         if (perso->perso->est_mort) {
             afficher_texte(rend, texte_mort);
             afficher_texte(rend, texte_reessayer);
+            record = lire_score(score);
+            if (!score_enregistré){
+                if (record > 0){
+                    changer_texte(texte_record, "New record, good game ! %d", score);
+                }
+                else if (record < 0){
+                    changer_texte(texte_record, "You failed to beat the record");
+                }
+                else 
+                    changer_texte(texte_record, "Your first score is saved");
+                score_enregistré = 1;
+            }
+
+            afficher_texte(rend, texte_record);
+            
+
         }
 
         
