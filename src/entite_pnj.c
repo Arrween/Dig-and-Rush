@@ -1,3 +1,8 @@
+/**
+ * @file entite_pnj.c
+ * @brief Définition des fonctions relatives aux entités PNJ.
+ */
+
 #include <string.h>
 
 #include "entite_pnj.h"
@@ -132,6 +137,12 @@ void comportement_patrouille_vol(t_entite * pnj, t_entite * perso) {
 
 
 
+/**
+ * @brief Comportement par défaut pour un PNJ en patrouille statique.
+ * 
+ * @param pnj Pointeur vers l'entité du PNJ.
+ */
+
 void comportement_patrouille_statique(t_entite *pnj, t_entite *perso) {
     if (pnj->pnj->est_mort)
         return;
@@ -162,7 +173,13 @@ void comportement_patrouille_statique(t_entite *pnj, t_entite *perso) {
 
 
 
-
+/**
+ * @brief Fonction pour faire mourir un PNJ.
+ * 
+ * @param pnj Pointeur vers l'entité du PNJ.
+ * @param score Pointeur vers le score.
+ * @param texte_score Pointeur vers le texte du score.
+ */
 
 void pnj_mourir(t_entite * pnj, int * score, t_texte * texte_score) {
     if (!pnj->pnj || (pnj->pnj && pnj->pnj->est_mort))
