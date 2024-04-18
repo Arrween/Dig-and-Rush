@@ -225,6 +225,7 @@ t_pnj * creer_pnj(char * id, t_entite * e) {
         nouv->est_ecrasable = VRAI;
         nouv->parent->vitesse = 1./2;
         strcpy(nouv->id_son_attaque, "attaque_squelette");
+        strcpy(nouv->id_son_mort, "mort_squelette");
         changer_hitbox(nouv->parent, &(nouv->parent->hitbox), 30, 50, 40, 55, VRAI);
         // définir initialement sur la droite, sera modifié par la patrouille
         changer_hitbox(nouv->parent, &(nouv->hitbox_attaque), 50, 70, 33, 20, VRAI);

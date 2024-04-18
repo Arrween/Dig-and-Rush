@@ -200,7 +200,7 @@ struct chargement chargements_sons[] = {
     {"ressources/Audio/SFX/destruction_bloc_3.flac", "destruction_bloc_3"},
     {"ressources/Audio/Musique/musique_menu.mp3", "musique_jour"},
     {"ressources/Audio/Musique/musique_nuit.mp3", "musique_nuit"},
-    {"ressources/Audio/SFX/attaque_squelette.ogg", "attaque_squelette"},
+    {"ressources/Audio/SFX/attaque_squelette.wav", "attaque_squelette"},
     {"ressources/Audio/SFX/coup.mp3", "blessure_perso"},
     {"ressources/Audio/SFX/blessure_perso_f.mp3", "blessure_perso_f"},
     {"ressources/Audio/SFX/swing.mp3", "attaque_perso"},
@@ -208,6 +208,7 @@ struct chargement chargements_sons[] = {
     {"ressources/Audio/SFX/mort_perso_f.mp3", "mort_perso_f"},
     {"ressources/Audio/SFX/explosion.mp3", "attaque_feu"},
     {"ressources/Audio/SFX/mort_feu.mp3", "mort_feu"},
+    {"ressources/Audio/SFX/mort_squelette.wav", "mort_squelette"},
     {"ressources/Audio/SFX/pickup.mp3", "ramasser_bonus"},
     {"ressources/Audio/SFX/loup.mp3", "loup"},
 };
