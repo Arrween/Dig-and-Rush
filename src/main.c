@@ -13,14 +13,12 @@
 #include "ressources.h"
 
 
-Persos personnages; // Assurez-vous que MAX_PERSONNAGES est défini correctement
+Persos personnages;
 
 t_entite* matt;
 t_entite* jack;
 t_entite* yohan;
 t_entite* ania;
-
-
 
 
 SDL_Rect mattRect = { (TAILLE_L - 165) / 2, (TAILLE_H - 195) / 2, 80, 100 };
