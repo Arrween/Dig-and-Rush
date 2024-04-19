@@ -1,3 +1,8 @@
+/**
+ * @file test_unit.c
+ * @brief Fichier contenant les tests des fonctions de gestion des ressources du jeu.
+ */
+
 #include <CUnit/Basic.h>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
@@ -12,6 +17,9 @@ SDL_Renderer* renderer = NULL; // Renderer global utilisé dans les tests
 
 /**
  * @brief Initialisation de la suite de tests.
+ * 
+ * Cette fonction initialise les bibliothèques SDL ainsi que le renderer nécessaire
+ * pour les tests nécessitant du rendu.
  * 
  * @return 0 si l'initialisation réussit, -1 sinon.
  */
@@ -38,6 +46,8 @@ int initialiser_suite(void) {
 /**
  * @brief Nettoyage après l'exécution des tests.
  * 
+ * Cette fonction nettoie les ressources SDL utilisées par les tests.
+ * 
  * @return 0 si le nettoyage réussit, -1 sinon.
  */
 
@@ -57,8 +67,9 @@ int nettoyer_suite(void) {
 
 /**
  * @brief Test de chargement des ressources.
+ * 
+ * Cette fonction teste le chargement des différentes ressources du jeu.
  */
-
 void test_chargement_ressources(void) {
     init_ressources(renderer);
     // Tests de récupération de ressources
@@ -71,12 +82,21 @@ void test_chargement_ressources(void) {
 
 /**
  * @brief Test de destruction des ressources.
+ * 
+ * Cette fonction teste la destruction des ressources chargées par le jeu.
  */
- 
 void test_detruire_ressources(void){
     detruire_ressources();
 }
 
+/**
+ * @brief Fonction principale.
+ * 
+ * Cette fonction initialise les tests, ajoute les tests à une suite, exécute les tests
+ * et nettoie après leur exécution.
+ * 
+ * @return Le code d'erreur des tests.
+ */
 int main() {
     CU_pSuite pSuite = NULL;
 

@@ -38,7 +38,12 @@ void generer_premiere_ligne(float y) {
 /**
  * @brief Génère un morceau de niveau aléatoire qui se répète.
  *
- * @param repere_defilement Position verticale de repère de défilement.
+ * Cette fonction génère un morceau de niveau aléatoire qui se répète verticalement.
+ * Le morceau généré consiste en une série de lignes de blocs de pierre et de blocs de terre,
+ * ainsi que des ennemis et des bonus placés au-dessus de certains blocs.
+ *
+ * @param repere_defilement Position verticale du repère de défilement, où le morceau de niveau sera généré.
+ * Cette position est utilisée comme référence pour la génération des blocs et des entités.
  */
 void generer_morceau_niveau(float repere_defilement){
     liste_en_queue(I_LISTE_ENTITES);
@@ -94,6 +99,12 @@ void generer_morceau_niveau(float repere_defilement){
 
 /**
  * @brief Génère les murs entourant le niveau.
+ *
+ * Cette fonction génère les murs qui bordent le niveau de jeu.
+ * Elle crée des obstacles en forme de blocs de pierre pour former les murs
+ * du côté gauche et du côté droit du niveau, ainsi que pour les parties
+ * inférieures de l'écran.
+ * Les murs sont générés de manière à entourer complètement le niveau de jeu.
  */
 void generer_murs(void) {
     int n_blocs_mur = 20; // nombre pour chaque mur

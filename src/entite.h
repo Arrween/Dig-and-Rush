@@ -1,3 +1,8 @@
+/**
+ * @file entite.h
+ * @brief Définitions des structures et fonctions liées aux entités du jeu.
+ */
+
 #ifndef ENTITE_H
 #define ENTITE_H
 
@@ -12,17 +17,21 @@ enum { REPOS_MVT, GAUCHE, DROITE, HAUT, BAS };
 
 typedef struct s_entite t_entite;
 
+/**
+ * @brief Structure représentant les collisions d'une entité avec d'autres entités.
+ */
 typedef struct s_collision {
-    t_entite * g; /** gauche */
-    t_entite * d; /** droite */
-    t_entite * h; /** haut */
-    t_entite * b; /** bas */
+    t_entite * g; /**< entité à gauche */
+    t_entite * d; /**< entité à droite */
+    t_entite * h; /**< entité en haut */
+    t_entite * b; /**< entité en bas */
 } t_collision;
 
 typedef struct s_destructible t_destructible;
 typedef struct s_bonus t_bonus;
 typedef struct s_pnj t_pnj;
 typedef struct s_perso t_perso;
+
 /** \brief Objet général pour toute entité affichée à l’écran
 *
 */

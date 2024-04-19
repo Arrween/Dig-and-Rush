@@ -1,3 +1,8 @@
+/**
+ * @file ressources.c
+ * @brief Fichier contenant les fonctions de gestion des ressources du jeu.
+ */
+
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <string.h>
@@ -6,29 +11,51 @@
 #include "uthash.h"
 #include "constantes.h"
 
+/** @defgroup Ressources Gestion des ressources
+ * @brief Module de gestion des ressources du jeu.
+ * @{
+ */
+
 t_texture * textures = NULL;
 t_spritesheet * spritesheets = NULL;
 t_son * sons = NULL;
 t_musique * musiques = NULL;
 t_police * polices = NULL;
 
+
+/**
+ * @struct chargement
+ * @brief Structure représentant les informations de chargement d'une ressource.
+ */
 struct chargement {
-    char chemin[TAILLE_MAX_CHEMIN];
-    char id[TAILLE_MAX_ID];
+    char chemin[TAILLE_MAX_CHEMIN];/**< Le chemin vers le fichier de la ressource. */
+    char id[TAILLE_MAX_ID]; /**< L'identifiant de la ressource. */
 };
 
+
+/**
+ * @struct chargement_spritesheet
+ * @brief Structure représentant les informations de chargement d'une feuille de sprites.
+ */
 struct chargement_spritesheet {
     char chemin[TAILLE_MAX_CHEMIN];
     char id[TAILLE_MAX_ID];
-    t_animation animations[100];
+    t_animation animations[100]; /**< Tableau des animations de la feuille de sprites. */
 };
 
+/**
+ * @struct chargement_police
+ * @brief Structure représentant les informations de chargement d'une police.
+ */
 struct chargement_police {
     char chemin[TAILLE_MAX_CHEMIN];
     char id[TAILLE_MAX_ID];
-    int taille;
+    int taille;/**< La taille de la police. */
 };
 
+/**
+ * @brief Tableau des chargements de textures.
+ */
 struct chargement chargements_texs[] = {
     {"ressources/Menu/Background_Menu/Fond_Menu.png", "menu_fond"},
     {"ressources/Menu/Nom_du_Jeu/logo.png", "menu_titre"},
@@ -65,13 +92,8 @@ struct chargement chargements_texs[] = {
     {"ressources/Menu/Boutons/energie_pleine.png", "energie_pleine"},
     {"ressources/Menu/Boutons/energie_semi.png", "energie_semi"},
 
-
-
     {"ressources/Menu/Boutons/options_logo.png", "options"},
 
-
-
-    // {"ressources/Personnages/jackPerso.png", "jack"},
     {"ressources/Tour/Arriere_plan/fond.jpg", "fond_tour"},
     {"ressources/Tour/Arriere_plan/ciel_bleu.png", "fond_jeu"},
     {"ressources/Tour/Arriere_plan/ciel_orange.png", "fond_jeu2"},
@@ -81,11 +103,14 @@ struct chargement chargements_texs[] = {
     {"ressources/Tour/pieces.png", "pieces"},
     {"ressources/Tour/coeur.png", "coeur"},
 
-    //Selections personnages
     {"ressources/Personnages/selections/koba.png", "koba"},
 
 };
 
+
+/**
+ * @brief Tableau des chargements de feuilles de sprites.
+ */
 struct chargement_spritesheet chargements_spritesheets[] = {
     {"ressources/Personnages/matthieuPerso2.png", "matt", 
             {
@@ -195,6 +220,10 @@ struct chargement_spritesheet chargements_spritesheets[] = {
     }
 };
 
+
+/**
+ * @brief Tableau des chargements de sons.
+ */
 struct chargement chargements_sons[] = {
     {"ressources/Audio/SFX/silence.mp3", "silence"},
 
@@ -224,15 +253,28 @@ struct chargement chargements_sons[] = {
     {"ressources/Audio/SFX/loup.mp3", "loup"},
 };
 
+/**
+ * @brief Tableau des chargements de musiques.
+ */
 struct chargement chargements_musiques[] = {
     {"ressources/Audio/Musique/musique_menu.mp3", "musique_menu"},
 };
 
+
+/**
+ * @brief Tableau des chargements de polices.
+ */
 struct chargement_police chargements_polices[] = {
     {"ressources/Polices/linux_libertine.ttf", "police_defaut", 50},
 };
 
-
+/**
+ * @brief Récupère une animation par son identifiant.
+ * @param anims Le tableau des animations.
+ * @param n_anims Le nombre d'animations dans le tableau.
+ * @param id L'identifiant de l'animation à récupérer.
+ * @return Le pointeur vers l'animation correspondante, ou NULL si non trouvée.
+ */
 t_animation * recuperer_animation(t_animation ** anims, int n_anims, t_id_anim id) {
     for (int i = 0; i < n_anims; i++) {
         if (anims[i]->id == id)
@@ -241,6 +283,11 @@ t_animation * recuperer_animation(t_animation ** anims, int n_anims, t_id_anim i
     return NULL;
 }
 
+/**
+ * @brief Copie une animation source dans une animation de destination.
+ * @param dest Le pointeur vers l'animation de destination.
+ * @param src L'animation source à copier.
+ */
 void copier_animation(t_animation * dest, t_animation src) {
     dest->id = src.id;
     dest->x_sprite_ini = src.x_sprite_ini;
@@ -485,3 +532,6 @@ void detruire_ressources() {
         free(mus_courant);
     }
 }
+
+
+/** @} */ // fermeture de la doxygen group

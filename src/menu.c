@@ -89,13 +89,6 @@ void action_parametres(t_etat * etat) {
 }
 
 
-void action_option(t_etat * etat) {
-    etat->i_menu = PAGE_MENU_PARAMETRES;
-    etat->boutons[4]->texture = recuperer_texture("options"); 
-    jouer_audio(CANAL_BTN_MENU, "confirmation", 0);
- 
-}
-
 /**
  * @brief Active/désactive le volume du jeu.
  *
@@ -151,7 +144,6 @@ void action_home(t_etat * etat) {
 }
 
 void action_jouer(t_etat * etat) {
-    // etat->i_menu = PAGE_MENU_PERSONNAGES;
     if (strcmp(etat->perso_selectionne, "") != 0)
         etat->doit_quitter = boucle_jeu(etat->rend, etat->perso_selectionne);
     else {
@@ -187,6 +179,13 @@ void action_quitter(t_etat * etat) {
 void action_nulle(void) {
 }
 
+
+
+/**
+ * @brief Fonction pour effectuer une action commune à tous les personnages.
+ * @param etat Pointeur vers l'état du jeu.
+ * @param nom_perso Nom du personnage sur lequel l'action est effectuée.
+ */
 void action_perso_commun(t_etat * etat, char * nom_perso) {
     printf("Personnage sélectionné : %s\n", nom_perso);
 
@@ -201,6 +200,10 @@ void action_perso_commun(t_etat * etat, char * nom_perso) {
     etat->tex_perso_selectionne = recuperer_texture(nom_perso);
 }
 
+/**
+ * @brief Fonction pour réinitialiser les attributs liés au personnage sélectionné.
+ * @param etat Pointeur vers l'état du jeu.
+ */
 void action_perso_reini(t_etat * etat) {
     strcpy(etat->perso_selectionne, "");
     etat->tex_perso_selectionne = NULL;
@@ -209,6 +212,10 @@ void action_perso_reini(t_etat * etat) {
     changer_texte(etat->texte_perso_selectionne, "");
 }
 
+/**
+ * @brief Fonction pour sélectionner ou désélectionner le personnage "Ania".
+ * @param etat Pointeur vers l'état du jeu.
+ */
 void action_perso_ania(t_etat * etat) {
     if (strcmp(etat->perso_selectionne, "ania") != 0) {
         action_perso_commun(etat, "ania");

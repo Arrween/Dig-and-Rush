@@ -1,3 +1,8 @@
+/**
+ * @file tour.c
+ * @brief Implémentation des fonctions liées à la gestion de la tour.
+ */
+
 #include <stdlib.h>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
@@ -152,6 +157,13 @@ void creuser(t_entite * a_creuser) {
     }
 }
 
+
+/**
+ * @brief Lit le score depuis un fichier et le met à jour si nécessaire.
+ * 
+ * @param nouveau_score Le nouveau score à comparer.
+ * @return 1 si un nouveau record est enregistré, -1 si le record n'est pas battu, 0 si premier score enregistré.
+ */
 int lire_score(int nouveau_score) {
     int ancien_score;
     FILE *fichier;

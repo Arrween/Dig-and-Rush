@@ -53,17 +53,16 @@ struct s_etat {
     int i_menu;/**< Indice de la page de menu actuelle. */
     t_bouton ** boutons;/**< Tableau de pointeurs vers les boutons du menu. */
     SDL_Window * fenetre;/**< Pointeur vers la fenêtre SDL du menu. */
-    char perso_selectionne[100];
-    SDL_Texture * tex_perso_selectionne;
-    t_texte * texte_perso_selectionne;
-    SDL_Texture * tex_barre_vie;
-    SDL_Texture * tex_barre_energie;
-    t_texte * texte_avertissement;
-    SDL_Renderer * rend;
+    char perso_selectionne[100]; /**< Nom du personnage sélectionné */
+    SDL_Texture * tex_perso_selectionne; /**< Texture du personnage sélectionné */
+    t_texte * texte_perso_selectionne; /**< Texte du personnage sélectionné */
+    SDL_Texture * tex_barre_vie; /**< Texture de la barre de vie */
+    SDL_Texture * tex_barre_energie; /**< Texture de la barre d'énergie */
+    t_texte * texte_avertissement; /**< Texte d'avertissement */
+    SDL_Renderer * rend; /**< Renderer */
 };
 
 void action_volume(t_etat *);
-void action_option(t_etat * );
 void action_fullscreen(t_etat *);
 void action_home(t_etat *);
 void action_quitter(t_etat *);

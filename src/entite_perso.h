@@ -1,3 +1,8 @@
+/**
+ * @file entite_perso.h
+ * @brief Définitions des structures et fonctions liées aux personnages joueurs du jeu.
+ */ 
+ 
 #ifndef ENTITE_PERSO_H
 #define ENTITE_PERSO_H
 

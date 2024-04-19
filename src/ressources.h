@@ -30,16 +30,19 @@ extern t_texture * textures;
  */
 typedef enum { ANIM_NULLE, REPOS, CHUTE_G, CHUTE_D, DEPL_G, DEPL_D, CREUSER, ATTQ_G, ATTQ_D, ANIM_MORT, ANIM_MORT_STATIQUE } t_id_anim;
 
+/**
+ * @brief Structure représentant une animation
+ */
 typedef struct {
-    t_id_anim id;
-    int x_sprite_ini;
-    int y_sprite;
-    int w_sprite;
-    int h_sprite;
-    int decalage_dest_x;
-    int decalage_dest_y;
-    int longueur;
-    float vitesse_anim;
+    t_id_anim id; /**< Identifiant de l'animation */
+    int x_sprite_ini; /**< Position initiale en x du sprite */
+    int y_sprite; /**< Position en y du sprite */
+    int w_sprite; /**< Largeur du sprite */
+    int h_sprite; /**< Hauteur du sprite */
+    int decalage_dest_x; /**< Décalage en x pour l'affichage */
+    int decalage_dest_y; /**< Décalage en y pour l'affichage */
+    int longueur; /**< Longueur de l'animation */
+    float vitesse_anim; /**< Vitesse de l'animation */
 } t_animation;
 
 
@@ -58,27 +61,33 @@ typedef struct t_spritesheet {
 
 extern t_spritesheet * spritesheets;
 
+/**
+ * @brief Structure représentant un fichier audio chargé en mémoire.
+ */
 typedef struct {
-    Mix_Chunk * tampon;
-    char id[TAILLE_MAX_ID];
-    UT_hash_handle hh;
+    Mix_Chunk * tampon; /**< Pointeur vers le fichier audio chargé en mémoire */
+    char id[TAILLE_MAX_ID]; /**< Identifiant de la ressource audio */
+    UT_hash_handle hh; /**< Handle pour utiliser la bibliothèque uthash */
 } t_son; 
 
 extern t_son * sons;
 
+/** @brief Structure représentant un fichier de musique */
 typedef struct {
-    Mix_Music * tampon;
-    char id[TAILLE_MAX_ID];
-    UT_hash_handle hh;
-} t_musique; 
+    Mix_Music * tampon; /**< Pointeur vers le fichier de musique */
+    char id[TAILLE_MAX_ID]; /**< Identifiant de la musique dans la table de hachage */
+    UT_hash_handle hh; /**< Handle de la table de hachage */
+} t_musique;
+
 
 extern t_musique * musiques;
 
+/** @brief Structure représentant une police de caractères */
 typedef struct {
-    TTF_Font * police;
-    char id[TAILLE_MAX_ID];
-    UT_hash_handle hh;
-} t_police; 
+    TTF_Font * police; /**< Pointeur vers la police de caractères */
+    char id[TAILLE_MAX_ID]; /**< Identifiant de la police dans la table de hachage */
+    UT_hash_handle hh; /**< Handle de la table de hachage */
+} t_police;
 
 extern t_police * polices;
 

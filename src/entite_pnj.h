@@ -1,3 +1,8 @@
+/**
+ * @file entite_pnj.h
+ * @brief Définitions des structures et fonctions liées aux personnages non-joueurs du jeu.
+ */
+
 #ifndef ENTITE_PNJ_H
 #define ENTITE_PNJ_H
 

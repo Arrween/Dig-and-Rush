@@ -12,6 +12,7 @@
 #include "entite_bonus.h"
 #include "constantes.h"
 
+/** @brief Variable globale pour stocker les numéros des entités. */
 int numeros_entites = 0;
 
 /**
@@ -469,7 +470,7 @@ t_entite * creer_entite(const char * id, float x, float y, float w, float h,
  * @brief Détruit une entité et libère la mémoire allouée.
  * @param e Un pointeur vers le pointeur de l'entité à détruire.
  */
- 
+
 // ne pas détruire (*e)->texture, detruire_ressources s’en charge
 void detruire_entite(t_entite ** e) {
     if (*e) {
