@@ -64,19 +64,19 @@
 % Rédaction : Yohan
 % Longueur : 1 page
 
-Les objectifs de ce projet en groupe sont de mettre en pratique nos connaissances acquises durant cette deuxième année de licence informatique, notamment en algorithmique en code C.
+Les objectifs de ce projet en groupe sont de mettre en pratique nos connaissances acquises durant cette deuxième année de licence informatique, notamment en algorithmique en langage C.
 Ce projet permet également de nous introduire à la gestion de projet qui nous sera utile dans le monde professionnel. 
 Enfin, il permet de commencer à agir en groupe et en autonomie, deux points qui nous seront également utiles en tant que professionnels.
 
-Le principe du jeu Dig \& Rush consiste à l’instar du jeu Once upon a tower, jeu mobile, de descendre dans une tour en creusant des blocs qui font office de murs et de sols comme dans un labyrinthe. 
+Le principe du jeu \textit{Dig \& Rush} consiste, à l’instar du jeu mobile \textit{Once upon a tower} \footnote{\href{https://www.pomelogames.com/once-upon-a-tower}{Lien vers le site officiel.}}, à descendre dans une tour en creusant des blocs qui font office de murs et de sols comme dans un labyrinthe. 
 Le joueur a pour outil une pelle qui lui permet de détruire les blocs. 
 Il faut en plus de cela éviter ou tuer les ennemis afin de progresser le plus rapidement dans la tour. 
 Si le personnage meurt la partie se termine. Le joueur a le choix entre plusieurs personnages qui ont chacun une particularité.
-Attention, chaque tour est différente ! Cela vous permet d’explorer à chaque nouvelle partie une nouvelle facette du jeu.
+Attention, chaque tour est différente ! Cela permet d’explorer à chaque nouvelle partie une nouvelle facette du jeu.
 
 Ce rapport se déroule en quatre parties. 
-L’organisation du projet, comment les tâches ont été définies et attribuées ; la conception, qui présentera nos choix de conception et les règles du jeu ; le développement avec les structures de données et les algorithmes ; enfin, la conclusion qui mettra en avant nos remarques, nos points d’amélioration et ce que nous avons tiré de ce projet. 
-En annexe, se trouvera les tests unitaires et tentatives de debogage, les captures d’écran du jeu et les diagrammes de Gantt.
+L’organisation du projet, comment les tâches ont été définies et attribuées ; la conception, qui présentera nos choix de conception et les règles du jeu ; le développement avec les structures de données et les algorithmes ; enfin la conclusion qui mettra en avant nos remarques, nos points d’amélioration et ce que nous avons tiré de ce projet. 
+En annexe, se trouvera les tests unitaires et tentatives de débogage, les captures d’écran du jeu et les diagrammes de Gantt.
 
 \newpage
 \section{Organisation}
@@ -87,12 +87,12 @@ En annexe, se trouvera les tests unitaires et tentatives de debogage, les captur
 
 \subsection{Définition des tâches}
 Avant de commencer à coder, l’équipe a effectué un brainstorming afin de connaître toutes les phases du projet et les tâches qui seraient susceptibles d’entrer dans ces dernières. 
-En effet, en citant exhaustivement les tâches cela permet d’avoir une estimation temporelle du projet. 
+En effet, citer exhaustivement les tâches permet d’avoir une estimation temporelle du projet. 
 Nous avons également pris en compte les attentes du corps enseignant.
 
-Sur le projet, 7 phases principales sont détectées : la définition du projet, la planification, la conception et l'analyse, la phase de réalisation, la phase de documentation, le rapport du projet et la soutenance qui font partie de la phase de livraison.
+Sur le projet, sept phases principales sont détectées : la définition du projet, la planification, la conception et l'analyse, la phase de réalisation, la phase de documentation, le rapport du projet et la soutenance qui font partie de la phase de livraison.
 
-La définition du projet est l’étape post conception, elle permet de faire une esquisse du projet et ainsi se le représenter plus facilement. 
+La définition du projet est l’étape post-conception, elle permet de faire une esquisse du projet et ainsi se le représenter plus facilement. 
 On y détermine les limites du projet. 
 La planification, qui sera évoquée dans la partie suivante, sert à se répartir les tâches. 
 La phase de réalisation est le codage ainsi que les tests. 
@@ -101,16 +101,16 @@ La documentation est la création de documents permettant la compréhension du p
 Le rapport et la soutenance sont réservés à la présentation du projet.
 
 \subsection{Répartition des tâches}
-À la suite de l’élaboration de la liste des tâches, se fait leur répartition en fonction de deux critères. 
+À la suite de l’élaboration de la liste des tâches se fait leur répartition en fonction de deux critères. 
 Tout d’abord les choix et affinités de chacuns, en effet chaque personne du groupe a préféré certaines tâches plutôt que d’autres. 
-Ensuite, nous nous sommes réparties le reste des tâches en équilibrant afin que tout le monde ait à peu près le même temps de travail.
+Ensuite, nous nous sommes répartis le reste des tâches en équilibrant afin que tout le monde ait à peu près le même temps de travail.
 
-Pour rendre visuel ces deux étapes précédentes l’équipe utilise l'outil GANTT. 
+Pour visualiser ces deux étapes précédentes l’équipe utilise l'outil du diagramme de Gantt. 
 Il s’agit d’un graphe qui représente les tâches étalées sur le temps. 
 Google Sheet est utilisé afin de pouvoir le mettre à jour et collaborer à distance.
-Sur le graphe sont présentes les tâches, les dates encadrantes ces dernières et une représentation graphique de la durée de la tâche entre la semaine du 8 janvier 2024 et celle du 22 avril 2024.
+Sur le graphe sont présentes les tâches, les dates encadrant ces dernières et une représentation graphique de la durée de la tâche entre la semaine du 8 janvier 2024 et celle du 22 avril 2024.
 L’équipe adopte deux diagrammes de Gantt, un diagramme prévisionnel qui représente l’avancement idéal du projet et un diagramme réel qui est mis à jour régulièrement. 
-Ce dernier sert principalement à voir les tâches restantes en fonction de la deadline.
+Ce dernier sert principalement à voir les tâches restantes en fonction de la date limite.
 
 \subsection{Outils consacrés à la communication et à l'organisation}
 Nous utilisons Discord pour communiquer. 
@@ -119,11 +119,10 @@ Dans le cas du projet, il y a un canal pour les ressources, un pour la conversat
 L'équipe utilise principalement le canal général pour suivre l’avancement de chacun.
 
 \begin{figure}[h]
-\begin{center}
-\includegraphics[height=5.5cm]{img/discord.png}\\
-\caption{{\emph{Outil de communication : Discord}}}
-\label{discord}
-\end{center}
+	\centering
+	\includegraphics[height=5.5cm]{img/discord.png}
+	\caption{Outil de communication : Discord}
+	\label{discord}
 \end{figure}
 
 Sur le mois d’avril un Trello est mis en place, il permet de voir plus facilement les tâches restantes et de les prioriser. 
@@ -131,20 +130,19 @@ Dans ce Trello sont présentes huit listes pour : les ressources, les idées, ce
 Contrairement au diagramme de Gantt, il se concentre principalement sur les tâches liées au codage.
 
 \begin{figure}[h]
-\begin{center}
-\includegraphics[height=5.5cm]{img/capture_trello.png}\\
-\caption{{\emph{Exemple du Trello}}}
-\label{trello}
-\end{center}
+	\centering
+	\includegraphics[height=5.5cm]{img/capture_trello.png}
+	\caption{Exemple du Trello}
+	\label{trello}
 \end{figure}
 
-Afin de gérer les différentes versions du code sources, Git est utilisé. 
-Il permet d’avoir un espace de stockage commun que ce soit pour le code ou la documentation. De plus, cela permet à chacun de travailler sur une partie du projet sans modifier ce que font les autres membres du groupe, notamment grâce à la création de branches qui permet la création d'un clone du code principal et pouvoir travailler dessus. 
-À peu près une branche a été créée pour chaque fonction principale du jeu. Une fois le code respectif fonctionnel nous le fusionnons dans le code principal.
+Nous utilisons Git pour gérer les différentes versions du code source et hébergeons le dépôt sur Github.
+Nous avons ainsi un espace de stockage commun pour le code et la documentation. De plus, cela permet à chacun de travailler sur une partie du projet sans modifier ce que font les autres membres du groupe, notamment grâce à la création de branches qui clonent le code principal afin de pouvoir travailler dessus indépendamment.
+À peu près une branche a été créée pour chaque fonction principale du jeu. Une fois le code respectif fonctionnel nous le fusionnons dans la branche principale.
 
-En plus du diagramme de Gantt et du Trello l’équipe utilise l’outil “Projects” dans Git. 
+En plus du diagramme de Gantt et du Trello l’équipe utilise l’outil « Projects » de Github.
 Il sert, dans le cas de ce projet, à communiquer notre avancement au corps enseignant. 
-Il permet également, pour chaque semaine, de mettre la tâche effectuée par chaque membre de l’équipe.
+Il permet également, pour chaque semaine, d’indiquer la tâche effectuée par chaque membre de l’équipe.
 
 
 
@@ -156,31 +154,30 @@ Il permet également, pour chaque semaine, de mettre la tâche effectuée par ch
 Développé en C en utilisant la bibliothèque SDL, notre jeu a d'abord connu une phase de conception.
 
 \subsection{Objectif du jeu}
-Il n’y a pas de fin au jeu, l’objectif est  donc d’avoir le plus de points avant de mourir.
+Il n’y a pas de fin au jeu, l’objectif est donc d’engranger le plus de points possible sans mourir.
 
 \subsection{Règles du jeu}
 Il y a cinq règles principales dans le jeu :
 \begin{itemize}
 	\item Il faut creuser les blocs de terre pour descendre dans la tour et éviter les ennemis.
-	\item Il est possible de tuer les ennemis pour ajouter des points au score et éviter de se faire tuer.
-	\item Il faut éviter de se prendre des coups des ennemis pour ne pas perdre des points.
-	\item Il ne faut pas perdre de temps car on perd des points au fil du temps même sans se faire attaquer par des ennemis. 
+	\item Il est possible d’éliminer les ennemis pour ajouter des points au score et éviter de se faire tuer.
+	\item Il faut éviter de subir des dégâts de la part des ennemis pour ne pas perdre de vie.
 	\item Il faut ramasser les bonus qui augmentent la vie ou le score.
+	\item Il faut chercher à avancer rapidement car les points se perdent au fil du temps.
 \end{itemize}
 
 \subsection{Graphismes}
 %  Rédigé par : Ania
-Les graphismes de Dig \& Rush sont fortement inspirés du jeu mobile Once Upon a Tower.
+Les graphismes de \textit{Dig \& Rush} sont fortement inspirés du jeu mobile \textit{Once Upon a Tower}.
 Pour les menus (menu principal, menu de personnages, menu de paramètres, \dots), les couleurs  chaudes telles que le rouge et le orange, mixé à une pointe de violet nous semblaient plus adaptés à l'esprit combatif et dangereux du jeu. 
-En ce qui concerne l'interface du jeu, nous avons opté pour une palette de couleurs vivantes dans les tons bleu, vert et blanc pour attirer et retenir l'attention des joueurs.
-Une fois les couleurs définies, il nous restait à trouver les bonnes ressources en libre de droit. Nous avons donc fini par opter pour des images d'intérieur médiéval pour les menus, un fond de ciel bleu pour l'interface de jeu et un fond uni blanc pour le fond de la tour.
+En ce qui concerne l'interface, nous avons opté pour une palette de couleurs vivantes dans les tons bleu, vert et blanc pour attirer et retenir l'attention des joueurs.
+Une fois les couleurs définies, il nous restait à trouver les bonnes ressources libres de droit. Nous avons donc fini par opter pour des images d'intérieur médiéval pour les menus, un fond de ciel bleu pour l'interface de jeu et un fond uni blanc pour le fond de la tour.
 La tour est quant à elle entourée de murs de blocs de pierres.
 \begin{figure}[h]
-	\begin{center}
-		\includegraphics[height=7cm]{img/menu.png}\\
-		\caption{{\emph{Menu principal}}}
-		\label{menu}
-	\end{center}
+	\centering
+	\includegraphics[height=7cm]{img/menu.png}
+	\caption{Menu principal}
+	\label{menu}
 \end{figure}
 
 \subsection{Niveaux}
@@ -189,7 +186,7 @@ Les niveaux, avec le placement des blocs qui devait être aléatoire, était l'u
 
 \subsection{Personnages}
 Sur l’aspect graphique, les personnages s’inspirent des jeux en pixel art. 
-Il y a deux catégories de personnages : les personnages qu’il est possible de jouer et les ennemis nommés PNJ.
+Il y a deux catégories de personnages : les personnages qu’il est possible de jouer et les ennemis nommés PNJ\refsuscrite{def_pnj}.
 
 L’ennemi se déplace de gauche à droite et inversement sur son niveau. 
 Lorsqu’ils rencontrent notre personnage ils se mettent à attaquer, ce qui tue le personnage ou non en fonction de ses points de vie. 
@@ -197,11 +194,10 @@ Actuellement, il y a deux types d’ennemis : les squelettes et les boules de fe
 Ces deux PNJ ont deux portées d’attaques différentes, la boule de feu doit être davantage en contact avec le personnage pour attaquer.
 
 \begin{figure}[h]
-	\begin{center}
-		\includegraphics[height=3cm]{img/exemple_feu.png}\\
-		\caption{{\emph{Ennemi de type boule de feu}}}
-		\label{boule de feu}
-	\end{center}
+	\centering
+	\includegraphics[height=3cm]{img/exemple_feu.png}
+	\caption{Ennemi de type boule de feu}
+	\label{boule de feu}
 \end{figure}
 
 Il y a quatre personnages jouables qui représentent chaque membre de l’équipe. 
@@ -209,14 +205,13 @@ Ces derniers ont chacun une caractéristique spécifique (vie plus conséquente,
 Ils peuvent se diriger à gauche, à droite et vers le bas en fonction de la touche appuyée. 
 Les personnages jouables doivent également pouvoir creuser le sol et les murs. Il est donc nécessaire d’avoir des sprites qui possèdent ces animations de déplacement et de creusage.
 Pour ces derniers, nous avons utilisé un générateur de sprite où il était possible de personnaliser nos personnages. Nous les avons donc adaptés aux quatres membres. 
-Pour les ennemis, un autre site libre de droit est utilisé afin de différencier davantage le joueur des PNJ. En effet, les ennemis crées avec le générateur de sprite se confondaient excessivement avec l'arrière plan et le joueur.
+Pour les ennemis, un autre site libre de droit est utilisé afin de différencier davantage le joueur des PNJ. En effet, les ennemis créés avec le générateur de sprite se confondaient excessivement avec l'arrière plan et le joueur.
 
 \begin{figure}[h]
-	\begin{center}
-		\includegraphics[height=3cm]{img/exemple_personnage_jouable.png}\\
-		\caption{{\emph{Personnage jouable}}}
-		\label{personnage jouable}
-	\end{center}
+	\centering
+	\includegraphics[height=3cm]{img/exemple_personnage_jouable.png}
+	\caption{Personnage jouable}
+	\label{personnage jouable}
 \end{figure}
 
 
@@ -227,11 +222,11 @@ Comme mentionné précédemment, notre jeu est composé d'une tour, de blocs de 
 	\item Les blocs de pierres délimitent la tour et les endroits par où le joueur ne peut pas passer.
 	\item Les blocs de terre sont destructibles et permettent donc de creuser un chemin pour le joueur, mais non pour le PNJ.
 	\item Les personnages joueur creusent et attaquent les ennemis pour les vaincre.
-	\item Les personnages non-joueur (ennemis) se déplacent sur un axe horizontal et attaquent le joueur dès qu'il est détécté à leur proximité.
+	\item Les personnages non-joueur (ennemis) se déplacent sur un axe horizontal et attaquent le joueur dès qu'il est détecté à leur proximité.
 	\item Effet d'ombre qui permet la transition entre le jour et la nuit pour varier la difficulté et rajouter du défi.
 \end{itemize}
 
-Chacune de ces mécaniques est agrémenté d'un son pour soit un joueur masculin ou féminin (son de blessure, d'attaque, de mort, ...).
+Chacune de ces mécaniques est agrémentée d'un son pour soit un joueur masculin ou féminin (son de blessure, d'attaque, de mort\dots).
 
 
 \subsection{Analyse des difficultés}
@@ -244,14 +239,14 @@ Deuxièmement, il y a la gestion du temps, le projet est majoritairement dépend
 
 Le jeu se base sur des graphismes, dans notre cas, il est obligatoire d’utiliser la bibliothèque SDL. Il s’agit d’une bibliothèque dont nous avons peu ou pas connaissance post projet.
 
-Chaque membre de l’équipe possède un système d’exploitation différent ce qui accroît les difficultés de portabilité pour développer en commun.
+Chaque membre de l’équipe possède un système d’exploitation différent ce qui accroit les difficultés de portabilité pour développer en commun.
 
 Le jeu tournant autour d’un personnage et d’ennemis, la question de comment animer et les faire interagir différemment se pose. 
 En effet, les personnages n’ont pas tous la même architecture de sprites :  les tailles,  les espaces entre chaque sprite, les animations et le nombre de sprites sont différents.
 
-La question du libre de droit se pose aussi pour la récupération des ressources graphiques.
+La question de la licence se pose aussi pour la récupération des ressources graphiques et sonore.
 
-Enfin, plusieurs structures de données composent le projet, une difficulté se pose sur le choix de ces dernières parmis les structures évoquées durant le cursus, comme les listes, les matrices, etc. 
+Enfin, plusieurs structures de données composent le projet, une difficulté se pose sur le choix de ces dernières parmis les structures évoquées durant le cursus, comme les listes, les matrices, etc.
 Ce point sera évoqué dans la partie développement du projet.
 
 
@@ -264,7 +259,7 @@ Dans cette section, nous traitons des aspects techniques du développement de no
 
 \subsection{Librairies et outils utilisés}
 
-Pour le développement de notre jeu, nous avons principalement opté pour l'utilisation de la bibliothèque SDL (Simple DirectMedia Layer) en langage C. SDL s'est révélée être un choix judicieux, offrant une interface simple et efficace pour la gestion des graphiques, du son et des périphériques d'entrée. Cette bibliothèque a grandement facilité le processus de développement de notre jeu en 2D. En complément, nous avons intégré GitHub comme plateforme de gestion de version, nous permettant ainsi de collaborer efficacement sur le code source et de suivre son évolution au fil du temps. De plus, nous avons utilisé des outils de développement standard tels que GCC (GNU Compiler Collection) pour la compilation du code source et GDB (GNU Debugger) pour le débogage.
+Pour le développement de notre jeu, nous avons principalement opté pour l'utilisation de la bibliothèque SDL (Simple DirectMedia Layer) en langage C. SDL s'est révélée être un choix judicieux, offrant une interface simple et efficace pour la gestion des graphiques, du son et des périphériques d'entrée. Cette bibliothèque a grandement facilité le processus de développement de notre jeu en 2D. En complément, nous avons intégré GitHub comme plateforme de gestion de version, nous permettant ainsi de collaborer efficacement sur le code source et de suivre son évolution au fil du temps. De plus, nous avons utilisé des outils de développement standards tels que GCC (GNU Compiler Collection) pour la compilation du code source et GDB (GNU Debugger) pour le débogage.
 
 \subsection{Création des personnages}
 
@@ -318,7 +313,7 @@ La conclusion de ce projet met en lumière les apprentissages, les défis surmon
     \centering
     \begin{tabular}{c p{.6\textwidth}}
 	\toprule
-	PNJ		    & Personnage Non Joueur \\
+        PNJ \label{def_pnj} & Personnage Non Joueur \\
 	\midrule
 	API \label{def_api} & \textit{Application Programming Interface}, ensemble de classes et fonctions servant d’interface vers un service \\
 	\bottomrule
@@ -335,11 +330,10 @@ Fonctions testées : init\_ressources, recuperer\_texture, recuperer\_spriteshee
 Voici le résultat des tests disponibles dans le fichier test\_unit.c\\
 
 \begin{figure}[h]
-	\begin{center}
-		\includegraphics[height=7cm]{img/capture_tests.png}\\
-		\caption{{\emph{Résultats des tests unitaires}}}
-		\label{tests}
-	\end{center}
+	\centering
+	\includegraphics[height=7cm]{img/capture_tests.png}
+	\caption{Résultats des tests unitaires}
+	\label{tests}
 \end{figure}
 
 Les résultats des cinq assertions sont logiques et indiquent que les fonctions se comportent comme prévu, ce qui signifie que les ressources sont fiables.\\
@@ -348,11 +342,10 @@ Nous avons jugé important de mettre en place une suite de tests unitaires effic
 Lors du développement du jeu, plus précisément de la fonction de génération d'ennemis, un bug revenait souvent : un ennemi était généré dans le vide. Pour régler ce problème, il a donc fallu déboger.\\
 La fonction en question (\textit{generer\_ennemi(x,y)} ) est déclarée et appelée dans le fichier source \textit{src/morceaux\_niveau.c.}\\
 \begin{figure}[h]
-	\begin{center}
-		\includegraphics[height=7cm]{img/bug.png}\\
-		\caption{{\emph{Bug du squelette}}}
-		\label{Bug}
-	\end{center}
+	\centering
+	\includegraphics[height=7cm]{img/bug.png}
+	\caption{Bug du squelette}
+	\label{Bug}
 \end{figure}
 Etapes de débogage : 
 \begin{itemize}
@@ -364,11 +357,10 @@ Etapes de débogage :
 	\item A l'aide des options de débogages telles que textit{print, display, next, \dots}, nous avons constaté que l'algorithme de base n'était pas bon.
 \end{itemize}
 \begin{figure}[h]
-	\begin{center}
-		\includegraphics[height=7cm]{img/debug.png}\\
-		\caption{{\emph{Exemple de débogage}}}
-		\label{débogage}
-	\end{center}
+	\centering
+	\includegraphics[height=7cm]{img/debug.png}
+	\caption{Exemple de débogage}
+	\label{débogage}
 \end{figure}
 Note : les instruction de débogage sont renseignées dans le manuel d'installation et d'utilisation fourni.
 
