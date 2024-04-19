@@ -17,11 +17,11 @@ Le projet prend comme modèle le jeu Once Upon a Tower : un scroller vertical o�
 ## Repères temporels
 - **Date de création :** Semaine 3 / 19/01/2024
 - **Date de fin du projet :** Semaine 17 / 22/04/2024
-- **Temps de projet :** à mettre à la fin du projet
+- **Temps de projet :** 14 semaines
 
 ## Documents
 - [Documentation Doxygen](http://web-info.univ-lemans.fr/~s123690/doxygen_dignrush/)
-- [Diagramme de Gantt](https://docs.google.com/spreadsheets/d/1yqPa0xnbJtAbjkza44KRbA65_0DE_FV-rZELULHcHd0/)
+- [Diagramme de Gantt prévisionnel](https://docs.google.com/spreadsheets/d/1yqPa0xnbJtAbjkza44KRbA65_0DE_FV-rZELULHcHd0/)
+- [Diagramme de Gantt final](https://docs.google.com/spreadsheets/d/1t6jaYUC9uxRnEXo5BzlEHTK3D8tdjiQF/edit#gid=323358893/)
 - [Manuel d'installation et d'utilisation](https://drive.google.com/drive/u/0/folders/1x9TEVcyxAcTyXzYxgOkeSghSZLmmKsb5) 
-
 
