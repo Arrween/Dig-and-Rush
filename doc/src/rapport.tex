@@ -251,7 +251,7 @@ En effet, les personnages n’ont pas tous la même architecture de sprites :  l
 
 La question de la licence se pose aussi pour la récupération des ressources graphiques et sonores.
 
-Enfin, plusieurs structures de données composant le projet, une difficulté se pose sur le choix de ces dernières parmis les structures évoquées durant le cursus, comme les listes, les matrices, etc.
+Enfin, plusieurs structures de données composant le projet, une difficulté se pose sur le choix de ces dernières parmi les structures évoquées durant le cursus, comme les listes, les matrices, etc.
 Ce point sera évoqué dans la partie développement du projet.
 
 
@@ -418,7 +418,7 @@ Nous sommes convaincus que les enseignements tirés de ce projet nous seront uti
 	\toprule
         PNJ \label{def_pnj} & Personnage Non Joueur \\
 	\midrule
-	API \label{def_api} & \textit{Application Programming Interface}, ensemble de classes et fonctions servant d’interface vers un service \\
+	API \label{def_api} & \textit{Application Programming Interface}, ensemble de classes et fonctions servant d’interface à un service \\
 	\midrule
         \textit{build} \label{def_build} & étape du développement d’un programme consistant à générer le résultat final, généralement un exécutable, à partir de l’ensemble des sources \\
 	\midrule
@@ -434,41 +434,65 @@ Nous sommes convaincus que les enseignements tirés de ce projet nous seront uti
 
 \section{Tests unitaires}
 % Rédigé par : Ania
-Les tests unitaires sont essentiels pour assurer la qualité et la fiabilité. Parmis les différentes fonctions implémentées, il nous a semblé important de vérifier le bon fonctionnement grâce à une suite de tests disponibles sur la librairie CUnit.\\
-Fonctions testées : init\_ressources, recuperer\_texture, recuperer\_spritesheet, recuperer\_son, recuperer\_musique, recuperer\_audio, recuperer\_police, jouer\_audio et detruire\_ressources.\\
-Voici le résultat des tests disponibles dans le fichier test\_unit.c\\
+Les tests unitaires sont essentiels pour assurer la qualité et la fiabilité. Parmi les différentes fonctions implémentées, il nous a semblé important de vérifier le bon fonctionnement grâce à une suite de tests disponibles sur la librairie CUnit.\\
+Fonctions testées :
+\begin{itemize}
+	\item \texttt{init\_ressources} ;
+	\item \texttt{recuperer\_texture} ;
+	\item \texttt{recuperer\_spritesheet} ;
+	\item \texttt{recuperer\_son} ;
+	\item \texttt{recuperer\_musique} ;
+	\item \texttt{recuperer\_audio} ;
+	\item \texttt{recuperer\_police} ;
+	\item \texttt{jouer\_audio} et \texttt{detruire\_ressources}.
+\end{itemize}
+Le résultat des tests disponibles dans le fichier \texttt{test\_unit.c} est visible figure \ref{tests}.
 
 \begin{figure}[h]
 	\centering
-	\includegraphics[height=7cm]{img/capture_tests.png}
+	\includegraphics[width=\textwidth]{img/capture_tests.png}
 	\caption{Résultats des tests unitaires}
 	\label{tests}
 \end{figure}
 
-Les résultats des cinq assertions sont logiques et indiquent que les fonctions se comportent comme prévu, ce qui signifie que les ressources sont fiables.\\
-Nous avons jugé important de mettre en place une suite de tests unitaires efficace qui présente une bonne base pour ajouter plus de tests au fur et à mesure que le projet s'agrandit. Cela aide au maintient de la qualité du code tout au long du développement.
+Les résultats des cinq assertions sont logiques et indiquent que les fonctions se comportent comme prévu, ce qui signifie que les ressources sont fiables.
+Nous avons jugé important de mettre en place une suite de tests unitaires efficace qui présente une bonne base pour ajouter plus de tests au fur et à mesure que le projet s'agrandit. Cela aide au maintien de la qualité du code tout au long du développement.
+
 \section{Exemple de débogage}
+<<<<<<< HEAD
 Lors du développement du jeu, plus précisément de la fonction de génération d'ennemis, un bug revenait souvent : un ennemi était généré dans le vide. Pour régler ce problème, il a donc fallu déboger.\\
 La fonction en question (\textit{generer\_ennemi(x,y)} ) est déclarée et appelée dans le fichier source \textit{src/morceaux\_niveau.c.}\\
 
 \begin{figure}[h]
+=======
+Lors du développement du jeu, plus précisément de la fonction de génération d'ennemis, un bug revenait souvent : un ennemi était généré dans le vide. Pour régler ce problème, il a donc fallu déboguer.
+La fonction en question (\texttt{generer\_ennemi(x,y)}) est déclarée et appelée dans le fichier source \texttt{src/morceaux\_niveau.c}.
+
+\begin{figure}[H]
+>>>>>>> bba772823b4bb788b9ef4f72496d393984ffdefd
 	\centering
-	\includegraphics[height=7cm]{img/bug.png}
+	\includegraphics[width=0.5\textwidth]{img/bug.png}
 	\caption{Bug du squelette}
 	\label{Bug}
 \end{figure}
-Etapes de débogage : 
+
+Étapes de débogage : 
 \begin{itemize}
 	\item Lancer GDB
-	\item Poser un point d'arrêt (\textit{(gdb) break src/morceaux\_niveau.c:generer\_ennemi}).
-	\item Appuyer sur \textit{PLAY}.
+	\item Poser un point d'arrêt (\texttt{(gdb) break src/morceaux\_niveau.c:generer\_ennemi}).
+	\item Appuyer sur \texttt{PLAY}.
 	\item On avance dans le jeu jusqu'à rencontrer le point d'arrêt.
+<<<<<<< HEAD
 	\item On execute \textit{step} pour rentrer dans l'appel de fonction.
 	\item A l'aide des options de débogages telles que textit{print, display, next, \dots}, nous avons constaté que l'algorithme de base n'était pas bon. \\
+=======
+	\item On exécute \texttt{step} pour rentrer dans l'appel de fonction.
+	\item À l'aide des options de débogage telles que \texttt{print}, \texttt{display}, \texttt{next} et autres nous avons constaté que l'algorithme de base n'était pas correct.
+>>>>>>> bba772823b4bb788b9ef4f72496d393984ffdefd
 \end{itemize}
-\begin{figure}[h]
+\begin{figure}[H]
 	\centering
-	\includegraphics[height=7cm]{img/debug.png}
+	\includegraphics[width=\textwidth]{img/debug.png}
 	\caption{Exemple de débogage}
 	\label{débogage}
 \end{figure}
@@ -482,7 +506,7 @@ Voici une liste des ressources externes utilisées dans le projet:
 \begin{itemize}
     \item Graphiques du jeu:
     \begin{itemize}
-        \item Personnages joueur: \href{http://example.com/ressources/personnages}{Lien vers le site de création de personnages}
+        \item Personnages joueur: \href{https://sanderfrenken.github.io/Universal-LPC-Spritesheet-Character-Generator/#?body=Body_color_light&head=Human_male_light}{Lien vers le site de création de personnages}
         \item Personnages non-joueur: \href{https://craftpix.net/freebies/free-fantasy-enemies-pixel-art-sprite-pack/}{Lien vers les graphiques des personnages non-joueur}
         \item Arrières-plan du menu: \href{https://fr.freepik.com/psd-gratuit/rendu-3d-illustration-chambre-royale_38612904.htm#query=jeux%202d%20medievale&position=3&from_view=keyword&track=ais&uuid=be1b354a-483d-48a5-867b-e3027182dea7}{Lien vers le site des images des menus}
         \item Arrières-plan de la tour: \href{https://free-game-assets.itch.io/free-sky-with-clouds-background-pixel-art-set}{Lien vers le site des images de l'arrière plan de la tour}
@@ -500,20 +524,26 @@ Voici une liste des ressources externes utilisées dans le projet:
 \newpage
 \section{Illustrations}
 \begin{figure}[h]
+Note : les instructions de débogage sont renseignées dans le manuel d'installation et d'utilisation fourni.
+
+\newpage
+\section{Captures d’écran}
+\begin{figure}[H]
 	\centering
-	\includegraphics[height=8.5cm]{img/ecran_selection.png}
+	\includegraphics[width=0.8\textwidth]{img/ecran_selection.png}
 	\caption{Sélection du personnage}
 	\label{selection_personnage}
 \end{figure}
-\begin{figure}[h]
+\begin{figure}[H]
 	\centering
-	\includegraphics[height=8.5cm]{img/ecran_debut.png}
+	\includegraphics[width=0.8\textwidth]{img/ecran_debut.png}
 	\caption{Départ de la descente de la tour}
 	\label{départ}
 \end{figure}
 \newpage
-\begin{figure}[h]
-	\includegraphics[height=8.5cm]{img/ecran_nuit.png}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.8\textwidth]{img/ecran_nuit.png}
 	\caption{Parcours de la tour pendant la nuit}
 	\label{tour_nuit}
 \end{figure}
