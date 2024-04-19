@@ -5,6 +5,7 @@
 % \usepackage[margin=3cm,tmargin=5cm,bmargin=3.5cm]{geometry}
 \usepackage{color}
 \usepackage{parskip}
+\usepackage{hyperref} % Pour les hyperliens
 
 \usepackage{float} % forcer impérativement le placement d’un flottant (figure ou table)
 
@@ -449,6 +450,7 @@ Nous avons jugé important de mettre en place une suite de tests unitaires effic
 \section{Exemple de débogage}
 Lors du développement du jeu, plus précisément de la fonction de génération d'ennemis, un bug revenait souvent : un ennemi était généré dans le vide. Pour régler ce problème, il a donc fallu déboger.\\
 La fonction en question (\textit{generer\_ennemi(x,y)} ) est déclarée et appelée dans le fichier source \textit{src/morceaux\_niveau.c.}\\
+
 \begin{figure}[h]
 	\centering
 	\includegraphics[height=7cm]{img/bug.png}
@@ -462,7 +464,7 @@ Etapes de débogage :
 	\item Appuyer sur \textit{PLAY}.
 	\item On avance dans le jeu jusqu'à rencontrer le point d'arrêt.
 	\item On execute \textit{step} pour rentrer dans l'appel de fonction.
-	\item A l'aide des options de débogages telles que textit{print, display, next, \dots}, nous avons constaté que l'algorithme de base n'était pas bon.
+	\item A l'aide des options de débogages telles que textit{print, display, next, \dots}, nous avons constaté que l'algorithme de base n'était pas bon. \\
 \end{itemize}
 \begin{figure}[h]
 	\centering
@@ -470,9 +472,33 @@ Etapes de débogage :
 	\caption{Exemple de débogage}
 	\label{débogage}
 \end{figure}
-Note : les instruction de débogage sont renseignées dans le manuel d'installation et d'utilisation fourni.
+Note : les instruction de débogage sont renseignées dans le manuel d'installation et d'utilisation fourni. \\
+
+\section{Sources}
+
+
+Voici une liste des ressources externes utilisées dans le projet:
+
+\begin{itemize}
+    \item Graphiques du jeu:
+    \begin{itemize}
+        \item Personnages joueur: \href{http://example.com/ressources/personnages}{Lien vers le site de création de personnages}
+        \item Personnages non-joueur: \href{https://craftpix.net/freebies/free-fantasy-enemies-pixel-art-sprite-pack/}{Lien vers les graphiques des personnages non-joueur}
+        \item Arrières-plan du menu: \href{https://fr.freepik.com/psd-gratuit/rendu-3d-illustration-chambre-royale_38612904.htm#query=jeux%202d%20medievale&position=3&from_view=keyword&track=ais&uuid=be1b354a-483d-48a5-867b-e3027182dea7}{Lien vers le site des images des menus}
+        \item Arrières-plan de la tour: \href{https://free-game-assets.itch.io/free-sky-with-clouds-background-pixel-art-set}{Lien vers le site des images de l'arrière plan de la tour}
+    \end{itemize}
+    \item Sons et Musiques:
+    \begin{itemize}
+        \item Effets sonores: \href{https://pixabay.com/fr/sound-effects/}{Lien vers les effets sonores}
+        \item Musique de jour \href{https://www.jamendo.com/?language=fr}{Lien vers le site de musiques}
+        \item Musique de nuit \href{https://www.udio.com/}{Lien vers un site d'intelligence artificielle générant des musiques}
+    \end{itemize}
+    \item Documentation technique: \href{https://openclassrooms.com/forum/sujet/projet-termine-jeu-de-plateforme-cree-en-sdl-2}{Lien vers un site de tutoriel}
+    \end{itemize}
+\end{itemize}
 
 \newpage
+\section{Illustrations}
 \begin{figure}[h]
 	\centering
 	\includegraphics[height=8.5cm]{img/ecran_selection.png}
