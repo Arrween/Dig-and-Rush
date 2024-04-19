@@ -76,6 +76,7 @@ void * liste_lire(int i) {
 
 /** @brief modifier la valeur utile de l’élément courant
 *   @param i indice de la liste à utiliser dans le tableau global
+*   @param v valeur utile de l’élément à rajouter
 */
 void liste_ecrire(int i, void * v) {
     if (!hors_liste(i))
