@@ -216,7 +216,7 @@ int boucle_jeu(SDL_Renderer * rend, char * nom_perso) {
     int compteur_creusage = 0;
     int compteur_jour_nuit = 0;
     int record ;
-    int score_enregistré = 0;
+    int score_enregistre = 0;
 
     srand(time(NULL));
     int n = rand()%10 + 1;
@@ -481,7 +481,7 @@ int boucle_jeu(SDL_Renderer * rend, char * nom_perso) {
             afficher_texte(rend, texte_mort);
             afficher_texte(rend, texte_reessayer);
             record = lire_score(score);
-            if (!score_enregistré){
+            if (!score_enregistre){
                 if (record > 0){
                     changer_texte(texte_record, "New record, good game ! %d", score);
                 }
@@ -490,7 +490,7 @@ int boucle_jeu(SDL_Renderer * rend, char * nom_perso) {
                 }
                 else 
                     changer_texte(texte_record, "Your first score is saved");
-                score_enregistré = 1;
+                score_enregistre = 1;
             }
 
             afficher_texte(rend, texte_record);
