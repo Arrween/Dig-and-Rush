@@ -50,7 +50,7 @@ t_entite * creer_entite_bonus(char * id, float x, float y, float w, float h, int
 /**
  * @brief Détruit une structure d'entité bonus et libère la mémoire associée.
  * 
- * @param d Pointeur vers le pointeur de la structure d'entité bonus à détruire.
+ * @param b Pointeur vers le pointeur de la structure d'entité bonus à détruire.
  */
 
 void detruire_bonus(t_bonus ** b) {

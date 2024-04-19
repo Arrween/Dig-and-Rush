@@ -23,6 +23,7 @@ void comportement_oisif(void) {
  * @brief Comportement par défaut pour un PNJ en patrouille.
  * 
  * @param pnj Pointeur vers l'entité du PNJ.
+ * @param perso Pointeur vers l'entité du perso.
  */
 void comportement_patrouille(t_entite * pnj, t_entite * perso) {
     if (pnj->pnj->est_mort)
@@ -88,6 +89,7 @@ void comportement_patrouille(t_entite * pnj, t_entite * perso) {
  * @brief Comportement par défaut pour un PNJ volant en patrouille.
  * 
  * @param pnj Pointeur vers l'entité du PNJ.
+ * @param perso Pointeur vers l'entité du perso.
  */
 void comportement_patrouille_vol(t_entite * pnj, t_entite * perso) {
     if (pnj->pnj->est_mort)
@@ -141,6 +143,7 @@ void comportement_patrouille_vol(t_entite * pnj, t_entite * perso) {
  * @brief Comportement par défaut pour un PNJ en patrouille statique.
  * 
  * @param pnj Pointeur vers l'entité du PNJ.
+ * @param perso Pointeur vers l'entité du perso.
  */
 
 void comportement_patrouille_statique(t_entite *pnj, t_entite *perso) {

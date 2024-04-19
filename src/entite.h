@@ -13,10 +13,10 @@ enum { REPOS_MVT, GAUCHE, DROITE, HAUT, BAS };
 typedef struct s_entite t_entite;
 
 typedef struct s_collision {
-    t_entite * g;
-    t_entite * d;
-    t_entite * h;
-    t_entite * b;
+    t_entite * g; /** gauche */
+    t_entite * d; /** droite */
+    t_entite * h; /** haut */
+    t_entite * b; /** bas */
 } t_collision;
 
 typedef struct s_destructible t_destructible;
@@ -27,6 +27,7 @@ typedef struct s_perso t_perso;
 *
 */
 typedef struct s_entite {
+    /** numéro de l’entité */    
     int numero;
     /** type de l’entité (bloc de terre, personnage, ennemi etc.) */
     char type[100];
@@ -44,6 +45,7 @@ typedef struct s_entite {
     int w_src_prec;
     /** voir w_src_prec */
     int h_src_prec; 
+    /** indique si le rectangle de destination doit être restauré */
     int doit_restaurer_dst;
 
      /** booléen indiquant si le rect_dst est relatif à la zone de jeu (la tour) ou absolu (relatif à la fenêtre) */
@@ -52,14 +54,16 @@ typedef struct s_entite {
     SDL_FRect hitbox;
     /** booléen régissant l’affichage du rectangle de collision */
     int doit_afficher_hitbox;
-
-    t_collision collisions;
+    /** collisions */
+    t_collision collisions; 
 
     /** sens vers lequel se déplace l’entité */
     int deplacement;
+    /** sens de déplacement précédent */
     int deplacement_prec;
     /** sens (gauche ou droite) vers lequel regarde l’entité */
     int sens_regard;
+    /** sens du regard précédent */
     int sens_regard_prec;
     /** position horizontale dans la grille de la spritesheet, si l’entité est chargée d’une spritesheet */ 
     int x_sprite;
@@ -72,7 +76,7 @@ typedef struct s_entite {
     int n_animations;
     /** position courante dans le tableau `animations` */
     t_animation * animation_courante;
-
+    /** ID de l'animation suivante */
     t_id_anim id_animation_suivante;
 
     /** vitesse de déplacement en pourcentage de la zone de jeu frame d’affichage */
