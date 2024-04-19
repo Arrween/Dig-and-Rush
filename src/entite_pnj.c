@@ -190,7 +190,7 @@ void pnj_mourir(t_entite * pnj, int * score, t_texte * texte_score) {
     pnj->pnj->est_mort = VRAI;
     *score += pnj->pnj->valeur_vaincu;
     changer_texte(texte_score, "SCORE : %i", *score);
-    jouer_audio(4, pnj->pnj->id_son_mort, 0);
+    jouer_audio(CANAL_MORT_PNJ, pnj->pnj->id_son_mort, 0);
 }
 
 /**

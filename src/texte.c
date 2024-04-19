@@ -109,8 +109,6 @@ void detruire_texte(t_texte ** texte) {
 
 // Fonction pour afficher un message au milieu de la fenêtre avec un fond noir
 void afficher_message(SDL_Renderer * rend, const char * message) {
-    SDL_Color couleurBlanche = {255, 255, 255}; 
-
     // Obtenir les dimensions de la fenêtre
     int largeurFenetre, hauteurFenetre;
     SDL_GetRendererOutputSize(rend, &largeurFenetre, &hauteurFenetre);

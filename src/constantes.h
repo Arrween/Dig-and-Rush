@@ -22,6 +22,7 @@
 #define CANAL_BLESSURE_PERSO 3
 #define CANAL_MORT_PERSO 3
 #define CANAL_ATTAQUE_PNJ 4
+#define CANAL_MORT_PNJ 4
 #define CANAL_BONUS 5
 #define CANAL_CREUSAGE 6
 /** @brief canal audio réservé pour la musique de jour */

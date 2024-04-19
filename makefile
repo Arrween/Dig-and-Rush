@@ -71,7 +71,7 @@ else
 endif
 docs_doxy: $(DOXYFILE)
 	@ $(OUTIL_MESSAGE) Génération de la doc Doxygen…
-	doxygen $< && mv html latex $(REP_DOC)/
+	doxygen $< && rm -r $(REP_DOC)/html $(REP_DOC)/latex; mv html latex $(REP_DOC)/
 ifeq ($(shell whoami), s123690)
 	rm -r $(HOME)/public_html/doxygen_dignrush
 	cp -r $(REP_DOC)/html $(HOME)/public_html/doxygen_dignrush
