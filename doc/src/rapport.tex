@@ -259,13 +259,17 @@ Dans cette section, nous traitons des aspects techniques du développement de no
 
 \subsection{Librairies et outils utilisés}
 
-Pour le développement de notre jeu, nous avons principalement opté pour l'utilisation de la bibliothèque SDL (Simple DirectMedia Layer) en langage C. SDL s'est révélée être un choix judicieux, offrant une interface simple et efficace pour la gestion des graphiques, du son et des périphériques d'entrée. Cette bibliothèque a grandement facilité le processus de développement de notre jeu en 2D. En complément, nous avons intégré GitHub comme plateforme de gestion de version, nous permettant ainsi de collaborer efficacement sur le code source et de suivre son évolution au fil du temps. De plus, nous avons utilisé des outils de développement standards tels que GCC (GNU Compiler Collection) pour la compilation du code source et GDB (GNU Debugger) pour le débogage.
+Pour le développement de notre jeu, nous avons principalement opté pour l'utilisation de la bibliothèque SDL (Simple DirectMedia Layer) en langage C.
+SDL et ses librairies annexes SDL\_image, SDL\_TTF et SDL\_mixer se sont révélées être des choix judicieux, offrant une interface simple et efficace pour la gestion des graphismes, du texte, du son et des périphériques d'entrée.
+Ces bibliothèques ont grandement facilité le processus de développement de notre jeu en 2D.
+Nous avons également fait usage d’un fichier d’entête tiers, \texttt{uthash.h} \footnote{\href{https://troydhanson.github.io/uthash/userguide.html}{Lien vers la page de l’outil.}}, pour nous fournir un mécanisme de tables de hachage.
 
-\subsection{Création des personnages}
+Concernant les outils liés au code mais non directement à la programmation, nous avons intégré GitHub comme plateforme de gestion de version, nous permettant ainsi de collaborer efficacement sur le code source et de suivre son évolution au fil du temps.
+De plus, nous avons utilisé des outils de développement standards tels que GCC (GNU Compiler Collection) pour la compilation du code source, GNU Make pour le processus de \textit{build}\refsuscrite{def_build} et GDB (GNU Debugger) pour le débogage.
 
+\subsection{Architecture des sources}
 
-
-\subsection{Architecture du code}
+Les modules de code source ont été séparés comme présenté dans la table \ref{table_archi} pour se concentrer chacun sur une fonction essentielle du programme.
 
 \begin{table}[H]
     \centering
@@ -277,29 +281,73 @@ Pour le développement de notre jeu, nous avons principalement opté pour l'util
 	\midrule
 	\texttt{tour.c}			    & cœur du jeu avec notamment la boucle principale	\\
 	\midrule
+        \texttt{morceaux\_niveau.c}	    & génération du parcours de la tour \\
+	\midrule
 	\texttt{entite.c}                   & structure utilisée pour tout objet devant être affiché, déplacé et animé  \\
 	\midrule
-	\texttt{entite\_obstacle.c}          & spécialisation des entités qui agissent comme obstacles  \\
+        \texttt{entite\_*.c}                & spécialisation des entités selon différents rôles (obstacle, obstacle destructible, PNJ, personnage joueur, bonus)  \\
 	\midrule
-	\texttt{entite\_destructible.c}	    & spécialisation des entités qui peuvent être détruites \\
+	\texttt{nuit.c}			    & structure et fonctions implémentant une transition jour/nuit \\
 	\midrule
-	\texttt{entite\_pnj.c}		    & spécialisation des entités représentant un personnage non joueur	\\
-	\midrule
-	\texttt{entite\_perso.c}		    & spécialisation des entités représentant le personnage du joueur	\\
+	\texttt{menu.c} 		    & fonctions d’initialisation des bibliothèques et d’actions déclenchées par les boutons de menu \\
 	\midrule
 	\texttt{texte.c}		    & API\refsuscrite{def_api} pour simplifier la gestion des textes   \\
 	\midrule
-	\texttt{nuit.c}			    & structure et fonctions implémentant une transition jour/nuit \\
+	\texttt{listes.c}		    & implémentation du type abstrait liste chainée \\
 	\bottomrule
     \end{tabular}
     \caption{Rôle des différents modules}
+    \label{table_archi}
 \end{table}
+
+\subsection{Implémentation des structures de données}
+
+La majorité des éléments graphiques affichés en jeu est stockée dans une liste chainée de structures \texttt{t\_entite}.
+Si une entité ne doit plus apparaitre elle est retirée de la liste et son espace mémoire est restitué.
+Le choix de type de données abstrait itérable s’est porté sur la liste chainée pour les raisons suivantes :
+\begin{itemize}
+    \item la possibilité d’avoir un nombre d’éléments non limité \textit{a priori}, ce qui offre la souplesse nécessaire à l’ajout d’entités dans le cadre de la génération procédurale de la tour ;
+    \item le fait que l’ajout et la suppression d’éléments sont des opérations simples et peu coûteuses ;
+    \item le fait que les entités n’ont pas besoin d’être triées.
+\end{itemize}
+
+La structure \texttt{t\_entite} concentre les attributs nécessaires aux fonctionnalités suivantes :
+\begin{itemize}
+	\item l’affichage de l’entité, avec entre autres sa texture, sa position ou ses dimensions ;
+	\item son déplacement dans la zone de jeu ;
+	\item la gestion de ses collisions avec d’autres entités, notamment au moyen d’une \textit{hitbox}\refsuscrite{def_hitbox} ;
+	\item son animation éventuelle au moyen de coordonnées dans une \textit{spritesheet}\refsuscrite{def_spritesheet} ;
+	\item des sous-structures \texttt{t\_obstacle}, \texttt{t\_destructible}, \texttt{t\_perso}, \texttt{t\_pnj} et \texttt{t\_bonus} renseignant le rôle spécialisé de l’entité, avec une valeur de pointeur nul si le rôle correspondant n’est pas pertinent.
+\end{itemize}
+Une entité peut être créée avec un des rôles indiqué par les sous-structures mentionnées au dernier point au moyen d’un identifiant de ressource (une clé dans les tables de hachage des ressources). La sous-structure est alors initialisée par une fonction dans le module correspondant selon l’identifiant de ressource. Ainsi on attribue par exemple par défaut à tous les squelettes ennemis une vitesse de $\frac12$ pixel par frame, un comportement de patrouille, des effets sonores particuliers, etc.
+
+
+\subsection{Chargement des ressources}
+
+Dans un souci de centralisation, le module \texttt{ressources.c} définit les tables de hachage \texttt{textures}, \texttt{spritesheets}, \texttt{sons}, \texttt{musiques} et \texttt{polices} remplies au lancement du programme avec les objets correspondants à partir des fichiers de ressources.
+Il est alors possible d’accéder au même objet dans le reste du code par sa clé, sans dupliquer la ressource et en évitant d’avoir à ouvrir à nouveau les fichiers.
+
+% ressources
+
+\subsection{Moteur de Jeu}
+
+\subsection{Graphismes et Interface Utilisateur}
+% Techniques utilisées pour le rendu des sprites, des animations, et des environnements du jeu.
+% Mise en place de l'interface utilisateur, des menus, et des écrans de jeu.
+
+\subsection{Physique et mécaniques du jeu}
+% Comment les collisions sont-elles détectées et gérées ?
+% Implémentation des mécaniques (cf Conception)
+
+\subsection{Son}
+
+\subsection{Techniques d'optimisation}
 
 \section{Conclusion}
 % Rédaction : Jacques, Matthieu
 % Longueur : 1 page et demi
 
-La conclusion de ce projet met en lumière les apprentissages, les défis surmontés et les perspectives pour l'avenir. Nous avons réussi à concrétiser notre vision du jeu Dig \& Rush grâce à une collaboration efficace et à une répartition équilibrée des tâches. En utilisant des outils tels que Discord, Trello et Git, nous avons pu organiser notre travail de manière transparente et coordonnée, facilitant ainsi la communication et la gestion des versions du code.
+La conclusion de ce projet met en lumière les apprentissages, les défis surmontés et les perspectives pour l'avenir. Nous avons réussi à concrétiser notre vision du jeu \textit{Dig \& Rush} grâce à une collaboration efficace et à une répartition équilibrée des tâches. En utilisant des outils tels que Discord, Trello et Git, nous avons pu organiser notre travail de manière transparente et coordonnée, facilitant ainsi la communication et la gestion des versions du code.
 
 Nos apprentissages au cours de ce projet ont été nombreux. Nous avons pu mettre en pratique les connaissances acquises au cours de notre formation en informatique, en particulier en ce qui concerne l'algorithmique et la programmation en langage C. La conception et le développement du jeu nous ont permis d'approfondir nos compétences dans divers domaines, tels que la gestion des ressources graphiques et sonores, ainsi que la résolution de problèmes liés au développement de jeux.
 
@@ -320,6 +368,12 @@ Malgré ces défis, nous sommes fiers du résultat final. Nous avons réussi à 
         PNJ \label{def_pnj} & Personnage Non Joueur \\
 	\midrule
 	API \label{def_api} & \textit{Application Programming Interface}, ensemble de classes et fonctions servant d’interface vers un service \\
+	\midrule
+        \textit{build} \label{def_build} & étape du développement d’un programme consistant à générer le résultat final, généralement un exécutable, à partir de l’ensemble des sources \\
+	\midrule
+        \textit{hitbox} \label{def_hitbox} & masque de collision en français, soit un rectangle dont on vérifie l’intersection avec celui d’un autre objet pour déterminer s’il y a collision\\
+	\midrule
+        \textit{spritesheet} \label{def_spritesheet} & autrement appelée « atlas de textures », soit une image regroupant les différentes images d’une ou plusieurs animations d’une entité graphique \\
 	\bottomrule
     \end{tabular}
     \caption{Définitions des termes techniques employés dans le document}
