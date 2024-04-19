@@ -24,6 +24,4 @@ Le projet prend comme mod√®le le jeu Once Upon a Tower : un scroller vertical o√
 - [Diagramme de Gantt](https://docs.google.com/spreadsheets/d/1yqPa0xnbJtAbjkza44KRbA65_0DE_FV-rZELULHcHd0/)
 - [Manuel d'installation et d'utilisation](https://drive.google.com/drive/u/0/folders/1x9TEVcyxAcTyXzYxgOkeSghSZLmmKsb5) 
 
-## Roadmap
-( futur du projet ?)
 
