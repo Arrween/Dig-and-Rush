@@ -51,7 +51,7 @@ int main() {
 
     // écran de chargement
     SDL_Color couleur_txt_chargement = {255,255,255,255};
-    TTF_Font * police = TTF_OpenFont("ressources/Menu/Police/font1.ttf", 50);
+    TTF_Font * police = TTF_OpenFont("ressources/Polices/linux_libertine.ttf", 50);
     SDL_Surface * surface_txt_chargement = TTF_RenderText_Solid(police, "Loading...", couleur_txt_chargement);
     SDL_Rect dst_txt_chargement = {TAILLE_L/2 - 100, TAILLE_H/2 - 40, 200, 80};
     SDL_Texture * tex_txt_chargement = SDL_CreateTextureFromSurface(rend, surface_txt_chargement);;
