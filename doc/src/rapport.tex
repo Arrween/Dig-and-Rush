@@ -70,7 +70,7 @@ Les objectifs de ce projet en groupe sont de mettre en pratique nos connaissance
 Ce projet permet également de nous introduire à la gestion de projet qui nous sera utile dans le monde professionnel. 
 Enfin, il permet de commencer à agir en groupe et en autonomie, deux points qui nous seront également utiles en tant que professionnels.
 
-Le principe du jeu \textit{Dig \& Rush} consiste, à l’instar du jeu mobile \textit{Once upon a tower} \footnote{\href{https://www.pomelogames.com/once-upon-a-tower}{Lien vers le site officiel.}}, à descendre dans une tour en creusant des blocs qui font office de murs et de sols comme dans un labyrinthe. 
+Le principe du jeu \textit{Dig \& Rush} consiste, à l’instar du jeu mobile \textit{Once upon a tower} \footnote{\href{https://www.pomelogames.com/once-upon-a-tower}{Lien vers le site officiel.}}, à descendre dans une tour en creusant des blocs qui font office de sols. 
 Le joueur a pour outil une pelle qui lui permet de détruire les blocs. 
 Il faut en plus de cela éviter ou tuer les ennemis afin de progresser le plus rapidement dans la tour. 
 Si le personnage meurt la partie se termine. Le joueur a le choix entre plusieurs personnages qui ont chacun une particularité.
@@ -97,8 +97,8 @@ Sur le projet, sept phases principales sont détectées : la définition du proj
 La définition du projet est l’étape pre-conception, elle permet de faire une esquisse du projet et ainsi se le représenter plus facilement. 
 On y détermine les limites du projet. 
 La planification, qui sera évoquée dans la partie suivante, sert à se répartir les tâches. 
+La conception entre dans l’architecture du projet.
 La phase de réalisation est le codage ainsi que les tests. 
-La conception entre dans l’architecture du projet. 
 La documentation est la création de documents permettant la compréhension du projet. 
 Le rapport et la soutenance sont réservés à la présentation du projet.
 
@@ -193,10 +193,10 @@ Les niveaux, avec le placement des blocs qui devait être aléatoire, était l'u
 Sur l’aspect graphique, les personnages s’inspirent des jeux en pixel art. 
 Il y a deux catégories de personnages : les personnages qu’il est possible de jouer et les ennemis nommés PNJ\refsuscrite{def_pnj}.
 
-L’ennemi se déplace de gauche à droite et inversement sur son niveau. 
-Lorsqu’ils rencontrent notre personnage ils se mettent à attaquer, ce qui tue le personnage ou non en fonction de ses points de vie. 
-Actuellement, il y a deux types d’ennemis : les squelettes et les boules de feu vivantes. 
-Ces deux PNJ ont deux portées d’attaques différentes, la boule de feu doit être davantage en contact avec le personnage pour attaquer.
+Lorsque les ennemis rencontrent notre personnage ils se mettent à attaquer, ce qui tue le personnage ou non en fonction de ses points de vie. 
+Actuellement, il y a trois types d’ennemis : les squelettes, les boules de feu vivantes et l'oncle. 
+Ces trois PNJ ont deux portées d’attaques différentes, la boule de feu doit être davantage en contact avec le personnage pour attaquer.
+Les ennemis se déplacent de gauche à droite et inversement sur leurs niveaux sauf l'oncle, qui lui, est statique. 
 
 \begin{figure}[h]
 	\centering
@@ -472,6 +472,26 @@ Etapes de débogage :
 	\label{débogage}
 \end{figure}
 Note : les instruction de débogage sont renseignées dans le manuel d'installation et d'utilisation fourni.
+
+\newpage
+\begin{figure}[h]
+	\centering
+	\includegraphics[height=8.5cm]{img/ecran_selection.png}
+	\caption{Sélection du personnage}
+	\label{selection_personnage}
+\end{figure}
+\begin{figure}[h]
+	\centering
+	\includegraphics[height=8.5cm]{img/ecran_debut.png}
+	\caption{Départ de la descente de la tour}
+	\label{départ}
+\end{figure}
+\newpage
+\begin{figure}[h]
+	\includegraphics[height=8.5cm]{img/ecran_nuit.png}
+	\caption{Parcours de la tour pendant la nuit}
+	\label{tour_nuit}
+\end{figure}
 
 \end{appendices}
 
