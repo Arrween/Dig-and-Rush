@@ -22,9 +22,6 @@ Le projet prend comme modèle le jeu Once Upon a Tower : un scroller vertical o�
 ## Documents
 - [Documentation Doxygen](http://web-info.univ-lemans.fr/~s123690/doxygen_dignrush/)
 - [Diagramme de Gantt](https://docs.google.com/spreadsheets/d/1yqPa0xnbJtAbjkza44KRbA65_0DE_FV-rZELULHcHd0/)
-- [Guide d’installation]() (à renseigner)
-- [Guide d’utilisation]() (à renseigner)
+- [Manuel d'installation et d'utilisation](https://drive.google.com/drive/u/0/folders/1x9TEVcyxAcTyXzYxgOkeSghSZLmmKsb5) 
 
-## Roadmap
-( futur du projet ?)
 
