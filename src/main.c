@@ -302,9 +302,12 @@ t_bouton * menus[3][10] = {
                             mattSelectionne = 0;
                             yohanSelectionne = 0;
                             aniaSelectionne = 0;
+                            if (jackSelectionne) {
+                                printf("Personnage sélectionné : Jack\n");
+                                jouer_audio(CANAL_ACCROCHE, "accroche_jacques", 0);
+                            }
 
-
-                            printf("Personnage sélectionné : Jack\n");
+                            
 
                         }  
                         else if (SDL_PointInRect(&pointeur, &yohanRect)) {

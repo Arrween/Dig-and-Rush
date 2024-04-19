@@ -1,3 +1,8 @@
+/**
+ * @file morceaux_niveau.c
+ * @brief Programme pour la génération de morceaux de niveau et de murs.
+ */
+
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
@@ -10,13 +15,18 @@
 #include "entite_pnj.h"
 #include "listes.h"
 
-#define LARGEUR_MUR 10
+#define LARGEUR_MUR 10 ///< Largeur des murs entourant le niveau
 
-#define CHANCE_BLOC_PIERRE 4 // en dizaine de %
-#define CHANCE_BLOC_TERRE 4 // en dizaine de %
-#define CHANCE_BLOC_VIDE 2 // en dizaine de %
-#define MAX_BLOCS_PIERRE 7
+#define CHANCE_BLOC_PIERRE 4 ///< Chance de générer un bloc de pierre (en dizaines de %)
+#define CHANCE_BLOC_TERRE 4 ///< Chance de générer un bloc de terre (en dizaines de %)
+#define CHANCE_BLOC_VIDE 2 ///< Chance de générer un bloc vide (en dizaines de %)
+#define MAX_BLOCS_PIERRE 7 ///< Nombre maximum de blocs de pierre par ligne
 
+/**
+ * @brief Génère la première ligne du niveau avec des blocs de terre.
+ *
+ * @param y Position en y de la première ligne.
+ */
 void generer_premiere_ligne(float y) {
     liste_en_queue(I_LISTE_ENTITES);
 
@@ -27,12 +37,13 @@ void generer_premiere_ligne(float y) {
 
 /**
  * @brief Génère un morceau de niveau aléatoire qui se répète.
+ *
+ * @param repere_defilement Position verticale de repère de défilement.
  */
-
 void generer_morceau_niveau(float repere_defilement){
     liste_en_queue(I_LISTE_ENTITES);
 
-    // générer un nombre aléatoire entre 0 et 9
+    // Générer un nombre aléatoire entre 0 et 9
     int random;
     srand(time(NULL));
 
@@ -47,22 +58,22 @@ void generer_morceau_niveau(float repere_defilement){
             presences_blocs[j] = FAUX;
         for (j = 0, x = 10; j < 8; j++, x += 10) {
             random = rand() % 10;
-            // génération d’un bloc de pierre en (x,y) avec proba CHANCE_BLOC_PIERRE * 10% et un max de MAX_BLOCS_PIERRE
+            // Génération d’un bloc de pierre avec probabilité CHANCE_BLOC_PIERRE * 10% et un maximum de MAX_BLOCS_PIERRE
             if (random < CHANCE_BLOC_PIERRE && n_pierres_ligne < MAX_BLOCS_PIERRE) {
                 liste_ajouter_droite(I_LISTE_ENTITES, creer_entite_obstacle("bloc_pierre", x, y, 10, 10, VRAI));
                 n_pierres_ligne++;
                 presences_blocs[j] = VRAI;
             }
-            // génération d’un bloc de terre en (x,y) avec proba CHANCE_BLOC_TERRE * 10%
+            // Génération d’un bloc de terre avec probabilité CHANCE_BLOC_TERRE * 10%
             else if (random >= CHANCE_BLOC_PIERRE && random < CHANCE_BLOC_PIERRE + CHANCE_BLOC_TERRE) {
                 liste_ajouter_droite(I_LISTE_ENTITES, creer_entite_destructible("bloc_terre", x, y, 10, 10, VRAI));
                 presences_blocs[j] = VRAI;
             }
         }
-        // ajouter un ennemi ou un bonus au-dessus d’un bloc aléatoire de la ligne
+        // Ajout d'un ennemi ou d'un bonus au-dessus d’un bloc aléatoire de la ligne
         random = rand() % 8;
         int limite = random - 1 > 0 ? random - 1 : 0;
-        // parcourir la ligne à partir d’une colonne aléatoire jusqu’à trouver un bloc où poser l’ennemi
+        // Parcours de la ligne à partir d’une colonne aléatoire jusqu’à trouver un bloc où poser l’ennemi
         for (j = random; j != limite && !presences_blocs[j]; j = (j + 1) % 8);
         if (presences_blocs[j]) {
             if (i == 5)
@@ -77,7 +88,6 @@ void generer_morceau_niveau(float repere_defilement){
             }
             else if(i == 1)
                 liste_ajouter_droite(I_LISTE_ENTITES, creer_entite_pnj_depuis_spritesheet("oncle", 10*(j+1)-1.5, y-11.5, 15, 12, VRAI));
-
         }
     }
 }
@@ -85,7 +95,6 @@ void generer_morceau_niveau(float repere_defilement){
 /**
  * @brief Génère les murs entourant le niveau.
  */
-
 void generer_murs(void) {
     int n_blocs_mur = 20; // nombre pour chaque mur
 

@@ -34,22 +34,30 @@ extern TTF_Font * chargement_font(char * chemin, int taille, SDL_Renderer ** ren
 
 // Données des boutons
 
-enum { PAGE_MENU, PAGE_MENU_PERSONNAGES, /*PAGE_MENU_SERVEUR,*/ PAGE_MENU_PARAMETRES };
+enum { PAGE_MENU, PAGE_MENU_PERSONNAGES, PAGE_MENU_PARAMETRES };
+
 
 typedef struct s_etat t_etat;
+
+/**
+ * @brief Structure représentant un bouton du menu.
+ */
 typedef struct { 
-    SDL_Texture * texture;
-    SDL_Rect rect;
-    void (*action) (t_etat * etat);
-    char nom[100];
+    SDL_Texture * texture; /**< Texture du bouton. */
+    SDL_Rect rect; /**< Rectangle délimitant la zone du bouton. */
+    void (*action) (t_etat * etat);/**< Fonction à exécuter lors du clic sur le bouton. */
+    char nom[100];/**< Nom du bouton. */
 } t_bouton;
 
+/**
+ * @brief Structure représentant l'état du menu.
+ */
 struct s_etat {
-    int doit_quitter;
-    int est_fullscreen;
-    int i_menu;
-    t_bouton ** boutons;
-    SDL_Window * fenetre;
+    int doit_quitter;/**< Indique si le menu doit être quitté. */
+    int est_fullscreen;/**< Indique si le menu est en mode plein écran. */
+    int i_menu;/**< Indice de la page de menu actuelle. */
+    t_bouton ** boutons;/**< Tableau de pointeurs vers les boutons du menu. */
+    SDL_Window * fenetre;/**< Pointeur vers la fenêtre SDL du menu. */
 };
 
 void action_volume(t_etat *);

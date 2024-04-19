@@ -58,20 +58,30 @@ SDL_Renderer * creation_renderer(SDL_Window ** fenetre){
     return rend;
 }
 
+
+/**
+ * @brief Change le menu vers la page des paramètres.
+ *
+ * @param etat État du menu.
+ */
 void action_parametres(t_etat * etat) {
     etat->i_menu = PAGE_MENU_PARAMETRES;
-    jouer_audio(CANAL_BTN_MENU, "confirmation", 0);
-
-      
+    jouer_audio(0, "confirmation", 0);
 }
+
 
 void action_option(t_etat * etat) {
     etat->i_menu = PAGE_MENU_PARAMETRES;
     etat->boutons[4]->texture = recuperer_texture("options"); 
-    jouer_audio(CANAL_BTN_MENU, "confirmation", 0);
+    jouer_audio(0, "confirmation", 0);
  
 }
 
+/**
+ * @brief Active/désactive le volume du jeu.
+ *
+ * @param etat État du menu.
+ */
 void action_volume(t_etat * etat) {
     if (etat->boutons[1]->texture == recuperer_texture("bouton_volume_on")) {
         etat->boutons[1]->texture = recuperer_texture("bouton_volume_off");
@@ -85,12 +95,22 @@ void action_volume(t_etat * etat) {
     }
 }
 
+/**
+ * @brief Change le menu vers la page des personnages.
+ *
+ * @param etat État du menu.
+ */
 void action_personnages(t_etat * etat) {
     etat->i_menu = PAGE_MENU_PERSONNAGES;
-    jouer_audio(CANAL_BTN_MENU, "confirmation", 0);
+    jouer_audio(0, "confirmation", 0);
 
 }
 
+/**
+ * @brief Active/désactive le mode plein écran.
+ *
+ * @param etat État du menu.
+ */
 void action_fullscreen(t_etat * etat) {
     if (etat->boutons[0]->texture == recuperer_texture("bouton_fullscreen_off"))
         etat->boutons[0]->texture = recuperer_texture("bouton_fullscreen_on");
@@ -100,28 +120,43 @@ void action_fullscreen(t_etat * etat) {
     SDL_SetWindowFullscreen(etat->fenetre, etat->est_fullscreen ? SDL_WINDOW_FULLSCREEN : 0);
 }
 
+/**
+ * @brief Retourne au menu principal.
+ *
+ * @param etat État du menu.
+ */
 void action_home(t_etat * etat) {
     etat->i_menu = PAGE_MENU;
-    jouer_audio(CANAL_BTN_MENU, "confirmation", 0);
+    jouer_audio(0, "confirmation", 0);
 
 }
 
 void action_jouer(t_etat * etat) {
     etat->i_menu = PAGE_MENU_PERSONNAGES;
-    jouer_audio(CANAL_BTN_MENU, "confirmation", 0);
+    jouer_audio(0, "confirmation", 0);
 }
 
+/**
+ * @brief Revient en arrière dans le menu.
+ *
+ * @param etat État du menu.
+ */
 void action_retour(t_etat *etat) {
     if (etat->i_menu > 0) {
         etat->i_menu--; // Décrémenter l'index du menu pour revenir en arrière
     }
-    jouer_audio(CANAL_BTN_MENU, "confirmation", 0);
+    jouer_audio(0, "confirmation", 0);
 
 }
 
+/**
+ * @brief Quitte le jeu.
+ *
+ * @param etat État du menu.
+ */
 void action_quitter(t_etat * etat) {
     etat->doit_quitter = VRAI;
-    jouer_audio(CANAL_BTN_MENU, "confirmation", 0);
+    jouer_audio(0, "confirmation", 0);
 
 }
 
