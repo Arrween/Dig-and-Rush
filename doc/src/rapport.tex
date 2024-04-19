@@ -459,17 +459,10 @@ Les résultats des cinq assertions sont logiques et indiquent que les fonctions 
 Nous avons jugé important de mettre en place une suite de tests unitaires efficace qui présente une bonne base pour ajouter plus de tests au fur et à mesure que le projet s'agrandit. Cela aide au maintien de la qualité du code tout au long du développement.
 
 \section{Exemple de débogage}
-<<<<<<< HEAD
-Lors du développement du jeu, plus précisément de la fonction de génération d'ennemis, un bug revenait souvent : un ennemi était généré dans le vide. Pour régler ce problème, il a donc fallu déboger.\\
-La fonction en question (\textit{generer\_ennemi(x,y)} ) est déclarée et appelée dans le fichier source \textit{src/morceaux\_niveau.c.}\\
-
-\begin{figure}[h]
-=======
 Lors du développement du jeu, plus précisément de la fonction de génération d'ennemis, un bug revenait souvent : un ennemi était généré dans le vide. Pour régler ce problème, il a donc fallu déboguer.
 La fonction en question (\texttt{generer\_ennemi(x,y)}) est déclarée et appelée dans le fichier source \texttt{src/morceaux\_niveau.c}.
 
 \begin{figure}[H]
->>>>>>> bba772823b4bb788b9ef4f72496d393984ffdefd
 	\centering
 	\includegraphics[width=0.5\textwidth]{img/bug.png}
 	\caption{Bug du squelette}
@@ -482,13 +475,8 @@ La fonction en question (\texttt{generer\_ennemi(x,y)}) est déclarée et appel�
 	\item Poser un point d'arrêt (\texttt{(gdb) break src/morceaux\_niveau.c:generer\_ennemi}).
 	\item Appuyer sur \texttt{PLAY}.
 	\item On avance dans le jeu jusqu'à rencontrer le point d'arrêt.
-<<<<<<< HEAD
 	\item On execute \textit{step} pour rentrer dans l'appel de fonction.
-	\item A l'aide des options de débogages telles que textit{print, display, next, \dots}, nous avons constaté que l'algorithme de base n'était pas bon. \\
-=======
-	\item On exécute \texttt{step} pour rentrer dans l'appel de fonction.
-	\item À l'aide des options de débogage telles que \texttt{print}, \texttt{display}, \texttt{next} et autres nous avons constaté que l'algorithme de base n'était pas correct.
->>>>>>> bba772823b4bb788b9ef4f72496d393984ffdefd
+	\item À l'aide des options de débogage telles que \texttt{print}, \texttt{display}, \texttt{next} et autres, nous avons constaté que l'algorithme de base n'était pas correct.
 \end{itemize}
 \begin{figure}[H]
 	\centering
@@ -500,34 +488,33 @@ Note : les instruction de débogage sont renseignées dans le manuel d'installat
 
 \section{Sources}
 
+Dans cet annexe, une liste des ressources externes utilisées dans le projet.
 
-Voici une liste des ressources externes utilisées dans le projet:
+\subsection{Graphismes}
+\begin{description}
+	\item[Personnages joueur :] \href{https://sanderfrenken.github.io/Universal-LPC-Spritesheet-Character-Generator/#?body=Body_color_light&head=Human_male_light}{Lien vers le site de création de personnages}
+	\item[Personnages non-joueur :] \href{https://craftpix.net/freebies/free-fantasy-enemies-pixel-art-sprite-pack/}{Lien vers les graphismes des personnages non-joueur}
+	\item[Arrières-plans du menu :] \href{https://fr.freepik.com/psd-gratuit/rendu-3d-illustration-chambre-royale_38612904.htm#query=jeux\%202d\%20medievale&position=3&from_view=keyword&track=ais&uuid=be1b354a-483d-48a5-867b-e3027182dea7}{Lien vers le site des images des menus}
+	\item[Arrières-plans de la tour :] \href{https://free-game-assets.itch.io/free-sky-with-clouds-background-pixel-art-set}{Lien vers le site des images de l'arrière-plan de la tour}.
+\end{description}
 
-\begin{itemize}
-    \item Graphiques du jeu:
-    \begin{itemize}
-        \item Personnages joueur: \href{https://sanderfrenken.github.io/Universal-LPC-Spritesheet-Character-Generator/#?body=Body_color_light&head=Human_male_light}{Lien vers le site de création de personnages}
-        \item Personnages non-joueur: \href{https://craftpix.net/freebies/free-fantasy-enemies-pixel-art-sprite-pack/}{Lien vers les graphiques des personnages non-joueur}
-        \item Arrières-plan du menu: \href{https://fr.freepik.com/psd-gratuit/rendu-3d-illustration-chambre-royale_38612904.htm#query=jeux%202d%20medievale&position=3&from_view=keyword&track=ais&uuid=be1b354a-483d-48a5-867b-e3027182dea7}{Lien vers le site des images des menus}
-        \item Arrières-plan de la tour: \href{https://free-game-assets.itch.io/free-sky-with-clouds-background-pixel-art-set}{Lien vers le site des images de l'arrière plan de la tour}
-    \end{itemize}
-    \item Sons et Musiques:
-    \begin{itemize}
-        \item Effets sonores: \href{https://pixabay.com/fr/sound-effects/}{Lien vers les effets sonores}
-        \item Musique de jour \href{https://www.jamendo.com/?language=fr}{Lien vers le site de musiques}
-        \item Musique de nuit \href{https://www.udio.com/}{Lien vers un site d'intelligence artificielle générant des musiques}
-    \end{itemize}
-    \item Documentation technique: \href{https://openclassrooms.com/forum/sujet/projet-termine-jeu-de-plateforme-cree-en-sdl-2}{Lien vers un site de tutoriel}
-    \end{itemize}
-\end{itemize}
+\subsection{Sons et musiques}
+\begin{description}
+	\item[Effets sonores :] \href{https://pixabay.com/fr/sound-effects/}{Lien vers les effets sonores}
+	\item[Musique de jour :] \href{https://www.jamendo.com/?language=fr}{Lien vers le site de musiques}
+	\item[Musique de nuit :] \href{https://www.udio.com/}{Lien vers un site d'intelligence artificielle générant des musiques}
+\end{description}
+
+\subsection{Documentation technique}
+\href{https://openclassrooms.com/forum/sujet/projet-termine-jeu-de-plateforme-cree-en-sdl-2}{Lien vers un site de tutoriel}
 
 \newpage
 \section{Illustrations}
-\begin{figure}[h]
-Note : les instructions de débogage sont renseignées dans le manuel d'installation et d'utilisation fourni.
-
-\newpage
-\section{Captures d’écran}
+% \begin{figure}[h]
+% Note : les instructions de débogage sont renseignées dans le manuel d'installation et d'utilisation fourni.
+%
+% \newpage
+% \section{Captures d’écran}
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.8\textwidth]{img/ecran_selection.png}
