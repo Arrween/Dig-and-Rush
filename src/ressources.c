@@ -231,6 +231,7 @@ struct chargement chargements_sons[] = {
     {"ressources/Audio/SFX/menu_erreur.ogg", "erreur"},
     {"ressources/Audio/SFX/accroche_matthieu.ogg", "accroche_matt"},
     {"ressources/Audio/SFX/accroche_jacques.ogg", "accroche_jack"},
+    {"ressources/Audio/SFX/accroche_ania.ogg", "accroche_ania"},
 
 
     {"ressources/Audio/SFX/coq.mp3", "coq"},
