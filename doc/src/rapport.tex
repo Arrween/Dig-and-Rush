@@ -355,11 +355,25 @@ L'interface utilisateur et les graphismes sont intégrés au moteur de jeu pour 
 En résumé, la gestion des graphismes et de l'interface utilisateur repose sur l'utilisation efficace des ressources chargées, l'affichage des éléments graphiques à l'écran, l'interaction avec l'utilisateur et l'intégration avec le moteur de jeu. Cette approche garantit une expérience de jeu immersive et engageante pour les joueurs.
 
 
-\subsection{Physique et mécaniques du jeu}
+\subsection{Physique et mécaniques du jeu}%Jacques
 % Comment les collisions sont-elles détectées et gérées ?
 % Implémentation des mécaniques (cf Conception)
 
-\subsection{Son}
+Les mécaniques du jeu sont un élément essentiel de l'expérience de jeu, déterminant les interactions entre les différents éléments du jeu et les actions disponibles pour les joueurs. Cette section détaille les principales mécaniques de jeu implémentées dans notre projet, en mettant l'accent sur la détection des collisions et l'implémentation des mécaniques spécifiques.
+
+\subsubsection{Détection et Gestion des Collisions}
+
+La détection des collisions est réalisée en utilisant des algorithmes appropriés pour vérifier si deux objets entrent en contact dans le jeu. Dans notre cas, les collisions sont détectées entre les personnages, les blocs de pierres, les blocs de terre et les ennemis. Lorsqu'une collision est détectée, des actions spécifiques sont déclenchées, telles que la destruction des blocs de terre, la réduction des points de vie des personnages, ou le déclenchement d'une attaque.
+
+\subsubsection{Implémentation des Mécaniques}
+
+Les mécaniques de jeu décrites comprennent la gestion des blocs de pierres et de terre, les interactions entre les personnages joueurs et non-joueurs, ainsi que l'effet de transition entre le jour et la nuit. Les blocs de pierres servent à délimiter la tour et bloquer les mouvements du joueur, tandis que les blocs de terre peuvent être détruits par le joueur pour ouvrir un chemin. Les personnages joueurs peuvent creuser et attaquer les ennemis, tandis que les ennemis se déplacent horizontalement et attaquent le joueur lorsqu'ils sont détectés à proximité. L'effet de transition entre le jour et la nuit ajoute de la variété et de la difficulté au jeu.
+
+\subsubsection{Intégration des Sons}
+
+Chaque mécanique est accompagnée de sons appropriés pour renforcer l'immersion et l'expérience de jeu. Les sons incluent des effets sonores tels que des bruits de blessure, des sons d'attaque et des sons de mort pour les personnages masculins et féminins. Ces sons sont déclenchés en fonction des actions des joueurs et des ennemis, ajoutant ainsi une dimension audio à l'expérience de jeu.
+
+En résumé, l'implémentation des mécaniques de jeu, la détection des collisions et l'intégration des sons sont des aspects essentiels de la création d'une expérience de jeu immersive et engageante. Ces mécaniques permettent aux joueurs d'interagir avec le monde du jeu de manière significative, tout en ajoutant des éléments audiovisuels qui enrichissent l'expérience globale.
 
 \subsection{Techniques d'optimisation}
 \newpage
