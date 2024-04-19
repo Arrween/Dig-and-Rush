@@ -192,7 +192,7 @@ int lire_score(int nouveau_score) {
 }
 
 
-int boucle_jeu(SDL_Renderer * rend) {
+int boucle_jeu(SDL_Renderer * rend, char * nom_perso) {
     SDL_Event event;
     int doit_boucler = VRAI;
     int est_en_pause = FAUX;
@@ -228,7 +228,7 @@ int boucle_jeu(SDL_Renderer * rend) {
     t_entite * fond_nuit = creer_entite("fond_jeu_nuit", -1, -1, -1, -1, FAUX);
     t_entite * fond_tour = creer_entite("fond_tour", 0, 0, 100, 100, VRAI);
     t_entite * fond_tour_2 = creer_entite("fond_tour", 0, 100, 100, 100, VRAI);
-    t_entite * perso = creer_entite_perso((char*)personnage_selectionne, 40, 20, 15, 12, VRAI);
+    t_entite * perso = creer_entite_perso(nom_perso, 40, 20, 15, 12, VRAI);
 
     generer_murs();
 

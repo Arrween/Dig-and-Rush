@@ -28,6 +28,7 @@ t_texte * creer_texte(char * id, int r, int v, int b, int a,
                                  int x, int y, int w, int h);
 void detruire_texte(t_texte**);
 void changer_texte(t_texte*, char* format_contenu, ...);
+void changer_couleur_texte(t_texte*, int, int, int, int);
 void afficher_texte(SDL_Renderer*, t_texte*);
 void afficher_message(SDL_Renderer * rend, /*TTF_Font * font,*/ const char * message);
 

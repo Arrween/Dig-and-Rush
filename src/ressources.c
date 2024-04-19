@@ -39,7 +39,10 @@ struct chargement chargements_texs[] = {
     {"ressources/Menu/Background_Menu/menu_personnages.png", "menu_personnages"},
     {"ressources/Menu/Background_Menu/menu_commandes.png", "menu_commandes"},
 
-
+    {"ressources/Menu/ania_img.png", "ania"},
+    {"ressources/Menu/jack_img.png", "jack"},
+    {"ressources/Menu/matt_img.png", "matt"},
+    {"ressources/Menu/yohan_img.png", "yohan"},
 
     {"ressources/Menu/Boutons/bouton_parametre.png", "bouton_paramètres"},
     {"ressources/Menu/Boutons/bouton_volume_on.png", "bouton_volume_on"},
@@ -68,7 +71,7 @@ struct chargement chargements_texs[] = {
 
 
 
-    {"ressources/Personnages/jackPerso.png", "jack"},
+    // {"ressources/Personnages/jackPerso.png", "jack"},
     {"ressources/Tour/Arriere_plan/fond.jpg", "fond_tour"},
     {"ressources/Tour/Arriere_plan/ciel_bleu.png", "fond_jeu"},
     {"ressources/Tour/Arriere_plan/ciel_orange.png", "fond_jeu2"},
@@ -196,8 +199,8 @@ struct chargement chargements_sons[] = {
     {"ressources/Audio/SFX/silence.mp3", "silence"},
 
     {"ressources/Audio/SFX/menu_confirmation.wav", "confirmation"},
-    {"ressources/Audio/SFX/accroche_matthieu.ogg", "accroche_matthieu"},
-    {"ressources/Audio/SFX/accroche_jacques.ogg", "accroche_jacques"},
+    {"ressources/Audio/SFX/accroche_matthieu.ogg", "accroche_matt"},
+    {"ressources/Audio/SFX/accroche_jacques.ogg", "accroche_jack"},
 
 
     {"ressources/Audio/SFX/coq.mp3", "coq"},

@@ -45,7 +45,7 @@ t_nuit * creer_nuit(SDL_Renderer * rend, t_entite * perso, SDL_FRect zone_jeu,
     nouv->texture_ombre = SDL_CreateTexture(rend, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_STREAMING, TAILLE_L, TAILLE_H);
     SDL_SetTextureBlendMode(nouv->texture_ombre, SDL_BLENDMODE_BLEND);
 
-    nouv->max_musique = MIX_MAX_VOLUME * FACTEUR_VOLUME_SONS_INI;
+    nouv->max_musique = VOLUME_SONS_INI;
     nouv->min_musique = 0;
     nouv->volume_musique_jour = nouv->max_musique;
 

@@ -7,24 +7,9 @@
 #include "tour.h"
 #include "texte.h"
 #include "constantes.h"
-#include "selection_personnages.h"
-#include "entite.h"
 #include "menu.h"
 #include "ressources.h"
 
-
-Persos personnages;
-
-t_entite* matt;
-t_entite* jack;
-t_entite* yohan;
-t_entite* ania;
-
-
-SDL_Rect mattRect = { (TAILLE_L - 165) / 2, (TAILLE_H - 195) / 2, 80, 100 };
-SDL_Rect jackRect = { (TAILLE_L + 30) / 2, (TAILLE_H - 195) / 2, 80, 100 };
-SDL_Rect yohanRect = { (TAILLE_L - 165) / 2, (TAILLE_H + 15) / 2, 80, 100 };
-SDL_Rect aniaRect = { (TAILLE_L + 30) / 2, (TAILLE_H + 15) / 2, 80, 100 };
 
 SDL_Rect controlsRect = { (TAILLE_L - 400) / 2, (TAILLE_H +15) / 2, 230, 75 };
 
@@ -47,7 +32,7 @@ int main() {
     rend = creation_renderer(&fenetre);
     SDL_RenderSetLogicalSize(rend, TAILLE_L, TAILLE_H);
 
-    TTF_Init();
+    initialiser_sdl_ttf();
 
     // écran de chargement
     SDL_Color couleur_txt_chargement = {255,255,255,255};
@@ -64,15 +49,11 @@ int main() {
     initialiser_sdl_img();
 
     // initialiser l’audio
-    if (Mix_OpenAudio(FREQ_AUDIO, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, TAILLE_TAMPON_AUDIO) < 0) {
-        SDL_Log("Erreur initialisation SDL_mixer : %s", Mix_GetError());
-        SDL_Quit();
-        exit(EXIT_FAILURE);
-    }
+    initialiser_sdl_mixer();
     Mix_AllocateChannels(N_CANAUX);
     // réglage du volume, -1 pour tous les canaux
-    Mix_Volume(-1, MIX_MAX_VOLUME * FACTEUR_VOLUME_SONS_INI);
-    Mix_VolumeMusic(MIX_MAX_VOLUME * FACTEUR_VOLUME_MUSIQUE_INI);
+    Mix_Volume(-1, VOLUME_SONS_INI);
+    Mix_VolumeMusic(VOLUME_MUSIQUE_INI);
 
     init_ressources(rend);
         
@@ -85,38 +66,6 @@ int main() {
             "TITRE"
         };
 
-    t_bouton btn_barre_de_vie_pleine = { recuperer_texture("barre_de_vie_pleine"),
-        {TAILLE_L * 0.15,
-            TAILLE_H * 0.35,
-            TAILLE_L * 0.20,
-            TAILLE_H * 0.15},
-        (void(*)(t_etat*)) action_nulle,
-        "PDV PLEINE"
-    };
-    t_bouton btn_barre_de_vie_semi = { recuperer_texture("barre_de_vie_semi"),
-        {TAILLE_L * 0.15,
-            TAILLE_H * 0.32,
-            TAILLE_L * 0.205,
-            TAILLE_H * 0.20},
-        (void(*)(t_etat*)) action_nulle,
-        "PDV SEMI"
-    };
-    t_bouton btn_energie_pleine = { recuperer_texture("energie_pleine"),
-        {TAILLE_L * 0.15,
-            TAILLE_H * 0.50,
-            TAILLE_L * 0.20,
-            TAILLE_H * 0.15},
-        (void(*)(t_etat*)) action_nulle,
-        "ENERGIE PLEINE"
-    };
-    t_bouton btn_energie_semi = { recuperer_texture("energie_semi"),
-        {TAILLE_L * 0.15,
-            TAILLE_H * 0.50,
-            TAILLE_L * 0.20,
-            TAILLE_H * 0.15},
-        (void(*)(t_etat*)) action_nulle,
-        "ENERGIE SEMI"
-    };
     t_bouton btn_titre_perso = { recuperer_texture("titre_personnages"),
         {TAILLE_L * (0.5 - 0.238),
             TAILLE_H * (0.35 - 0.42),
@@ -205,16 +154,49 @@ int main() {
             action_parametres,
             "OPTIONS"
         };
+    // SDL_Rect mattRect = { (TAILLE_L - 165) / 2, (TAILLE_H - 195) / 2, 80, 100 };
+    t_bouton btn_perso_matt = { recuperer_texture("matt"),
+            {(TAILLE_L - 165) / 2,
+                (TAILLE_H - 215) / 2,
+                80,
+                100},
+            action_perso_matt,
+            "PERSO_MATT"
+        };
+    t_bouton btn_perso_jack = { recuperer_texture("jack"),
+            {(TAILLE_L + 30) / 2,
+                (TAILLE_H - 215) / 2,
+                80,
+                100},
+            action_perso_jack,
+            "PERSO_JACK"
+        };
+    t_bouton btn_perso_yohan = { recuperer_texture("yohan"),
+            {(TAILLE_L - 165) / 2,
+                (TAILLE_H ) / 2,
+                80,
+                100},
+            action_perso_yohan,
+            "PERSO_YOHAN"
+        };
+    t_bouton btn_perso_ania = { recuperer_texture("ania"),
+            {(TAILLE_L + 30) / 2,
+                (TAILLE_H ) / 2,
+                80,
+                100},
+            action_perso_ania,
+            "PERSO_ANIA"
+        };
 
 
 
-t_bouton * menus[3][10] = {
-    {&btn_fullscreen, &btn_volume, &btn_continue , &btn_quitter, &btn_parametres, &btn_personnages, &btn_titre, NULL}, // menu principal
-    {&btn_fullscreen, &btn_volume, &btn_menu, &btn_jouer, &btn_parametres, &btn_titre_perso, &btn_back, NULL},// menu personnages
-    {&btn_fullscreen, &btn_volume, &btn_menu, &btn_personnages, &btn_option, NULL}, // menu paramètres
-    //{&btn_fullscreen, &btn_volume, &btn_menu, &btn_jouer, &btn_parametres, &btn_titre_perso, &btn_back, NULL} 
-
-};
+    t_bouton * menus[3][14] = {
+        {&btn_fullscreen, &btn_volume, &btn_continue , &btn_quitter, &btn_parametres, &btn_personnages, &btn_titre, NULL}, // menu principal
+        {&btn_fullscreen, &btn_volume, &btn_menu, &btn_jouer, &btn_parametres, &btn_titre_perso, &btn_back, 
+                &btn_perso_matt, &btn_perso_jack, &btn_perso_yohan, &btn_perso_ania, NULL},// menu personnages
+        {&btn_fullscreen, &btn_volume, &btn_menu, &btn_personnages, &btn_option, NULL}, // menu paramètres
+        //{&btn_fullscreen, &btn_volume, &btn_menu, &btn_jouer, &btn_parametres, &btn_titre_perso, &btn_back, NULL} 
+    };
 
     SDL_Texture * fonds_menus[3] = {
         recuperer_texture("menu_fond"),
@@ -224,12 +206,27 @@ t_bouton * menus[3][10] = {
 
     };
 
+    SDL_Rect rect_perso_selectionne = {TAILLE_L * (.25 + .75/2), TAILLE_H * .175, TAILLE_L * .25, TAILLE_H * .5};
+    SDL_Rect rect_barre_vie = {TAILLE_L * .15, TAILLE_H * .35, TAILLE_L * .2, TAILLE_H * .15};
+    SDL_Rect rect_barre_energie = {TAILLE_L * .15, TAILLE_H * .5, TAILLE_L * .2, TAILLE_H * .15};
+    SDL_Rect rect_contour = {(TAILLE_L - 220) / 2, (TAILLE_H - 280) / 2, 220, 280};
+    SDL_Texture * tex_perso_selectionne = NULL;
+    SDL_Texture * tex_barre_vie = NULL;
+    SDL_Texture * tex_barre_energie = NULL;
+    SDL_Texture * tex_contour = recuperer_texture("koba");
+    t_texte * texte_perso_selectionne = creer_texte("police_defaut", 255, 0, 0, 255, TAILLE_L/2 + 215, TAILLE_H/2 - 215, 200, 50);
+
     t_etat etat = {
         FAUX,
         FAUX,
         PAGE_MENU,
         menus[PAGE_MENU],
-        fenetre
+        fenetre,
+        "",
+        tex_perso_selectionne,
+        texte_perso_selectionne,
+        tex_barre_vie,
+        tex_barre_energie,
     };
 
     jouer_audio(0, "musique_menu", -1);
@@ -237,27 +234,6 @@ t_bouton * menus[3][10] = {
     int i_btn;
     int pause = 0;
     t_bouton * btn;
-
-    matt = creer_entite_depuis_spritesheet("matt", 75, 17.5, 50, 50, VRAI);
-    jack = creer_entite_depuis_spritesheet("jack", 75, 17.5, 50, 50, VRAI);
-    yohan = creer_entite_depuis_spritesheet("yohan", 75, 17.5, 50, 50, VRAI);
-    ania = creer_entite_depuis_spritesheet("ania", 75, 17.5, 50, 50, VRAI);
-
-
-
-    int mattSelectionne = 0; // Matt n'est pas sélectionné initialement
-    int jackSelectionne = 0; 
-    int yohanSelectionne = 0; 
-    int aniaSelectionne = 0; 
-
-
-
-
-    
-    // Afficher les personnages uniquement si le menu actuel est celui des personnages
-    if (etat.i_menu == PAGE_MENU_PERSONNAGES) {
-        afficher_images(rend, personnages);
-    }
 
     while (!etat.doit_quitter) {
         while (SDL_PollEvent(&event)) {
@@ -284,59 +260,17 @@ t_bouton * menus[3][10] = {
                                 
                             }
                         }
-                        // Vérifier si le clic se trouve à l'intérieur du rectangle de Matt
-                        if (SDL_PointInRect(&pointeur, &mattRect)) {
-                            // Gérer l'action lorsque Matt est cliqué
-                            mattSelectionne = !mattSelectionne; // Inverser l'état de sélection de Matt
-                            jackSelectionne = 0; // Désélectionner Jack
-                            yohanSelectionne = 0; // Désélectionner Yohan
-                            aniaSelectionne = 0; // Désélectionner Ania
-                            if (mattSelectionne) {
-                                printf("Personnage sélectionné : Matt\n");
-                                jouer_audio(CANAL_ACCROCHE, "accroche_matthieu", 0);
-                            }
-
-                        }
-                        else if (SDL_PointInRect(&pointeur, &jackRect)) {
-                            jackSelectionne = !jackSelectionne; 
-                            mattSelectionne = 0;
-                            yohanSelectionne = 0;
-                            aniaSelectionne = 0;
-                            if (jackSelectionne) {
-                                printf("Personnage sélectionné : Jack\n");
-                                jouer_audio(CANAL_ACCROCHE, "accroche_jacques", 0);
-                            }
-
-                            
-
-                        }  
-                        else if (SDL_PointInRect(&pointeur, &yohanRect)) {
-                            yohanSelectionne = !yohanSelectionne;
-                            mattSelectionne = 0;
-                            jackSelectionne = 0;
-                            aniaSelectionne = 0;
-
-                            printf("Personnage sélectionné : Yohan\n");
-
-                        }                                        
-                        else if (SDL_PointInRect(&pointeur, &aniaRect)) {
-                            aniaSelectionne = !aniaSelectionne;
-                            mattSelectionne = 0;
-                            jackSelectionne = 0;
-                            yohanSelectionne = 0;
-                            printf("Personnage sélectionné : Ania\n");
-
-                        }                          
                         for (i_btn = 0; (btn = menus[etat.i_menu][i_btn]); i_btn++) {
                             if (SDL_PointInRect(&pointeur, &btn->rect)) {
                                 btn->action(&etat);
                                 printf("Bouton %s cliqué\n", btn->nom);
                         
-                                if (btn == &btn_jouer && strcmp(personnage_selectionne, "") != 0) {
-                                    jouer_audio(CANAL_COQ, "coq", 0);
-                                    etat.doit_quitter = boucle_jeu(rend);
-                                }else{
-                                    if (btn == &btn_jouer && strcmp(personnage_selectionne, "") == 0) {
+                                if (btn == &btn_jouer) {
+                                    if (strcmp(etat.perso_selectionne, "") != 0) {
+                                        jouer_audio(CANAL_COQ, "coq", 0);
+                                        etat.doit_quitter = boucle_jeu(rend, etat.perso_selectionne);
+                                    }
+                                    else {
                                         afficher_message(rend, "Please, select a character!");
 
                                         SDL_RenderPresent(rend);
@@ -357,24 +291,20 @@ t_bouton * menus[3][10] = {
                             etat.doit_quitter = VRAI;
                             break;
                         case SDL_SCANCODE_A:
-                            selectionner_personnage("matt");
                             jouer_audio(CANAL_COQ, "coq", 0);
-                            etat.doit_quitter = boucle_jeu(rend);
+                            etat.doit_quitter = boucle_jeu(rend, "matt");
                             break;
                         case SDL_SCANCODE_S:
-                            selectionner_personnage("jack");
                             jouer_audio(CANAL_COQ, "coq", 0);
-                            etat.doit_quitter = boucle_jeu(rend);
+                            etat.doit_quitter = boucle_jeu(rend, "jack");
                             break;
                         case SDL_SCANCODE_D:
-                            selectionner_personnage("yohan");
                             jouer_audio(CANAL_COQ, "coq", 0);
-                            etat.doit_quitter = boucle_jeu(rend);
+                            etat.doit_quitter = boucle_jeu(rend, "yohan");
                             break;
                         case SDL_SCANCODE_W:
-                            selectionner_personnage("ania");
                             jouer_audio(CANAL_COQ, "coq", 0);
-                            etat.doit_quitter = boucle_jeu(rend);
+                            etat.doit_quitter = boucle_jeu(rend, "ania");
                             break;
                         case SDLK_SPACE:
                             pause = !pause;
@@ -391,100 +321,31 @@ t_bouton * menus[3][10] = {
         SDL_RenderClear(rend);
         SDL_RenderCopy(rend, fonds_menus[etat.i_menu], NULL, NULL);
 
-
         if (etat.i_menu == PAGE_MENU_PERSONNAGES) {
-        afficher_persos(rend);
-        afficher_images(rend, personnages);
-        // Afficher Matt en fonction de son état de sélection
-        if (mattSelectionne) {   
-            selectionner_personnage("matt");
- 
-          // Afficher Matt avec un effet de sélection
-            afficher_entite(rend, matt);
-
-            SDL_Color couleur_txt_matt = {0,255,0,255};
-            TTF_Font * font = TTF_OpenFont("ressources/Menu/Police/font1.ttf", 50);
-            SDL_Surface * surface_txt_chargement = TTF_RenderText_Solid(font, "IDLUSEN", couleur_txt_matt);
-            SDL_Rect dst_txt_chargement = {TAILLE_L/2 + 215, TAILLE_H/2 - 215, 200, 50};
-            SDL_Texture * tex_txt_chargement = SDL_CreateTextureFromSurface(rend, surface_txt_chargement);;
-            SDL_RenderCopy(rend, tex_txt_chargement, NULL, &dst_txt_chargement);
-
-            SDL_RenderCopy(rend, btn_barre_de_vie_pleine.texture, NULL, &btn_barre_de_vie_pleine.rect);
-            SDL_RenderCopy(rend, btn_energie_semi.texture, NULL, &btn_energie_semi.rect);
-
-
-
-        }
-        if (jackSelectionne) { 
-            selectionner_personnage("jack");
-   
-            afficher_entite(rend, jack);
-
-            SDL_Color couleur_txt_jack = {0,0,255,255};
-            TTF_Font * font2 = TTF_OpenFont("ressources/Menu/Police/font1.ttf", 50);
-            SDL_Surface * surface_txt_chargement = TTF_RenderText_Solid(font2, "STENFRESH", couleur_txt_jack);
-            SDL_Rect dst_txt_chargement = {TAILLE_L/2 + 215, TAILLE_H/2 - 215, 200, 50};
-            SDL_Texture * tex_txt_chargement = SDL_CreateTextureFromSurface(rend, surface_txt_chargement);;
-            SDL_RenderCopy(rend, tex_txt_chargement, NULL, &dst_txt_chargement);
-
-            SDL_RenderCopy(rend, btn_barre_de_vie_semi.texture, NULL, &btn_barre_de_vie_semi.rect);
-            SDL_RenderCopy(rend, btn_energie_pleine.texture, NULL, &btn_energie_pleine.rect);
-
-
+            SDL_RenderCopy(rend, etat.tex_perso_selectionne, NULL, &rect_perso_selectionne);
+            SDL_RenderCopy(rend, etat.tex_barre_vie, NULL, &rect_barre_vie);
+            SDL_RenderCopy(rend, etat.tex_barre_energie, NULL, &rect_barre_energie);
+            afficher_texte(rend, etat.texte_perso_selectionne);
+            SDL_RenderCopy(rend, tex_contour, NULL, &rect_contour);
         }
         
-        if (yohanSelectionne) {  
-            selectionner_personnage("yohan");
-  
-            afficher_entite(rend, yohan);
+        // Afficher les autres boutons du menu
+        for (i_btn = 0; (btn = menus[etat.i_menu][i_btn]); i_btn++)
+            SDL_RenderCopy(rend, btn->texture, NULL, &btn->rect);
 
-            SDL_Color couleur_txt_yohan = {255,165,0,255};
-            TTF_Font * font3 = TTF_OpenFont("ressources/Menu/Police/font1.ttf", 50);
-            SDL_Surface * surface_txt_chargement = TTF_RenderText_Solid(font3, "AOHYN", couleur_txt_yohan);
-            SDL_Rect dst_txt_chargement = {TAILLE_L/2 + 215, TAILLE_H/2 - 215, 200, 50};
-            SDL_Texture * tex_txt_chargement = SDL_CreateTextureFromSurface(rend, surface_txt_chargement);;
-            SDL_RenderCopy(rend, tex_txt_chargement, NULL, &dst_txt_chargement);
-
-            SDL_RenderCopy(rend, btn_barre_de_vie_pleine.texture, NULL, &btn_barre_de_vie_pleine.rect);
-            SDL_RenderCopy(rend, btn_energie_pleine.texture, NULL, &btn_energie_pleine.rect);
-
-
-        }
-        if (aniaSelectionne) {  
-            selectionner_personnage("ania");
-  
-            afficher_entite(rend, ania);
-
-            SDL_Color couleur_txt_ania = {255,0,0,255};
-            TTF_Font * font4 = TTF_OpenFont("ressources/Menu/Police/font1.ttf", 50);
-            SDL_Surface * surface_txt_chargement = TTF_RenderText_Solid(font4, "Arrween", couleur_txt_ania);
-            SDL_Rect dst_txt_chargement = {TAILLE_L/2 + 215, TAILLE_H/2 - 215, 200, 50};
-            SDL_Texture * tex_txt_chargement = SDL_CreateTextureFromSurface(rend, surface_txt_chargement);;
-            SDL_RenderCopy(rend, tex_txt_chargement, NULL, &dst_txt_chargement);
-
-            SDL_RenderCopy(rend, btn_barre_de_vie_pleine.texture, NULL, &btn_barre_de_vie_pleine.rect);
-            SDL_RenderCopy(rend, btn_energie_pleine.texture, NULL, &btn_energie_pleine.rect);
-        }
-        
-    }
-    
-    // Afficher les autres boutons du menu
-    for (i_btn = 0; (btn = menus[etat.i_menu][i_btn]); i_btn++)
-        SDL_RenderCopy(rend, btn->texture, NULL, &btn->rect);
-
-    SDL_RenderPresent(rend);
-    SDL_Delay(1000 / FPS);
-
-    if (pause) {
-        printf("Pause\n");
-        // Afficher un message de pause ou un écran de pause
-        SDL_SetRenderDrawColor(rend, 255, 255, 255, 255); // Fond blanc pour la pause
-        SDL_RenderClear(rend);
-        // Afficher un message de pause, par exemple :
-        // SDL_RenderCopy(renderer, textureMessagePause, NULL, &destRectMessagePause);
         SDL_RenderPresent(rend);
+        SDL_Delay(1000 / FPS);
+
+        if (pause) {
+            printf("Pause\n");
+            // Afficher un message de pause ou un écran de pause
+            SDL_SetRenderDrawColor(rend, 255, 255, 255, 255); // Fond blanc pour la pause
+            SDL_RenderClear(rend);
+            // Afficher un message de pause, par exemple :
+            // SDL_RenderCopy(renderer, textureMessagePause, NULL, &destRectMessagePause);
+            SDL_RenderPresent(rend);
+        }
     }
-}
 
 //
     // Nettoyage

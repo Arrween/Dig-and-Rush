@@ -27,6 +27,13 @@ void changer_texte(t_texte * texte, char * format_contenu, ...) {
     va_end(ap);
 }
 
+void changer_couleur_texte(t_texte * texte, int r, int v, int b, int a) {
+    texte->couleur.r = r;
+    texte->couleur.g = v;
+    texte->couleur.b = b;
+    texte->couleur.a = a;
+}
+
 /**
  * @brief Affiche le texte sur le rendu spécifié.
  * 

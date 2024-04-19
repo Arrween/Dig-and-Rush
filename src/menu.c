@@ -11,6 +11,7 @@
 #include "menu.h"
 #include "constantes.h"
 #include "ressources.h"
+#include "texte.h"
 
 // Fonction qui initialise la SDL
 void initialiser_sdl(){
@@ -24,6 +25,23 @@ void initialiser_sdl(){
 void initialiser_sdl_img(){
     if (!(IMG_Init(IMG_INIT_PNG) & IMG_INIT_PNG)) {
         fprintf(stderr, "Erreur IMG_Init : %s\n", IMG_GetError());
+        SDL_Quit();
+        exit(EXIT_FAILURE);
+    }
+}
+
+// Fonction qui initialise la SDL_IMG
+void initialiser_sdl_ttf(){
+    if (TTF_Init() < 0) {
+        fprintf(stderr, "Erreur TTF_Init : %s\n", TTF_GetError());
+        SDL_Quit();
+        exit(EXIT_FAILURE);
+    }
+}
+
+void initialiser_sdl_mixer(){
+    if (Mix_OpenAudio(FREQ_AUDIO, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, TAILLE_TAMPON_AUDIO) < 0) {
+        SDL_Log("Erreur initialisation SDL_mixer : %s", Mix_GetError());
         SDL_Quit();
         exit(EXIT_FAILURE);
     }
@@ -90,8 +108,8 @@ void action_volume(t_etat * etat) {
     }
     else {
         etat->boutons[1]->texture = recuperer_texture("bouton_volume_on");
-        Mix_VolumeMusic(MIX_MAX_VOLUME * FACTEUR_VOLUME_MUSIQUE_INI);
-        Mix_Volume(-1, MIX_MAX_VOLUME * FACTEUR_VOLUME_SONS_INI);
+        Mix_VolumeMusic(VOLUME_MUSIQUE_INI);
+        Mix_Volume(-1, VOLUME_SONS_INI);
     }
 }
 
@@ -133,7 +151,6 @@ void action_home(t_etat * etat) {
 
 void action_jouer(t_etat * etat) {
     etat->i_menu = PAGE_MENU_PERSONNAGES;
-    jouer_audio(0, "confirmation", 0);
 }
 
 /**
@@ -161,4 +178,69 @@ void action_quitter(t_etat * etat) {
 }
 
 void action_nulle(void) {
+}
+
+void action_perso_commun(t_etat * etat, char * nom_perso) {
+    printf("Personnage sélectionné : %s\n", nom_perso);
+
+    char id_son[100] = "accroche_";
+    strcat(id_son, nom_perso);
+    jouer_audio(CANAL_ACCROCHE, id_son, 0);
+
+    strcpy(etat->perso_selectionne, nom_perso);
+
+    etat->tex_perso_selectionne = recuperer_texture(nom_perso);
+}
+
+void action_perso_reini(t_etat * etat) {
+    strcpy(etat->perso_selectionne, "");
+    etat->tex_perso_selectionne = NULL;
+    etat->tex_barre_vie = NULL;
+    etat->tex_barre_energie = NULL;
+    changer_texte(etat->texte_perso_selectionne, "");
+}
+
+void action_perso_ania(t_etat * etat) {
+    if (strcmp(etat->perso_selectionne, "ania") != 0) {
+        action_perso_commun(etat, "ania");
+        changer_couleur_texte(etat->texte_perso_selectionne, 255, 0, 0, 255);
+        changer_texte(etat->texte_perso_selectionne, "Arrween");
+        etat->tex_barre_vie = recuperer_texture("barre_de_vie_pleine");
+        etat->tex_barre_energie = recuperer_texture("energie_pleine");
+    }
+    else
+        action_perso_reini(etat);
+}
+void action_perso_jack(t_etat * etat) {
+    if (strcmp(etat->perso_selectionne, "jack") != 0) {
+        action_perso_commun(etat, "jack");
+        changer_couleur_texte(etat->texte_perso_selectionne, 0, 0, 255, 255);
+        changer_texte(etat->texte_perso_selectionne, "Stenfresh");
+        etat->tex_barre_vie = recuperer_texture("barre_de_vie_semi");
+        etat->tex_barre_energie = recuperer_texture("energie_pleine");
+    }
+    else
+        action_perso_reini(etat);
+}
+void action_perso_matt(t_etat * etat) {
+    if (strcmp(etat->perso_selectionne, "matt") != 0) {
+        action_perso_commun(etat, "matt");
+        changer_couleur_texte(etat->texte_perso_selectionne, 0, 255, 0, 255);
+        changer_texte(etat->texte_perso_selectionne, "Idlusen");
+        etat->tex_barre_vie = recuperer_texture("barre_de_vie_pleine");
+        etat->tex_barre_energie = recuperer_texture("energie_semi");
+    }
+    else
+        action_perso_reini(etat);
+}
+void action_perso_yohan(t_etat * etat) {
+    if (strcmp(etat->perso_selectionne, "yohan") != 0) {
+        action_perso_commun(etat, "yohan");
+        changer_couleur_texte(etat->texte_perso_selectionne, 255, 165, 0, 255);
+        changer_texte(etat->texte_perso_selectionne, "Aohyn");
+        etat->tex_barre_vie = recuperer_texture("barre_de_vie_pleine");
+        etat->tex_barre_energie = recuperer_texture("energie_pleine");
+    }
+    else
+        action_perso_reini(etat);
 }

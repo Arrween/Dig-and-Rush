@@ -3,6 +3,6 @@
 
 #include <SDL2/SDL.h>
 
-int boucle_jeu(SDL_Renderer *);
+int boucle_jeu(SDL_Renderer *, char * nom_perso);
 
 #endif
