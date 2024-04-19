@@ -1,0 +1,6 @@
+définir identité (nom et mél) apparaissant notamment dans l’historique
+    pour le dépôt courant
+        git config user.name <nom>
+        git config user.email <mél>
+    pour tous les dépôts
+        git config --global etc. 
