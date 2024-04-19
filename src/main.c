@@ -195,14 +195,12 @@ int main() {
         {&btn_fullscreen, &btn_volume, &btn_menu, &btn_jouer, &btn_parametres, &btn_titre_perso, &btn_back, 
                 &btn_perso_matt, &btn_perso_jack, &btn_perso_yohan, &btn_perso_ania, NULL},// menu personnages
         {&btn_fullscreen, &btn_volume, &btn_menu, &btn_personnages, &btn_option, NULL}, // menu paramètres
-        //{&btn_fullscreen, &btn_volume, &btn_menu, &btn_jouer, &btn_parametres, &btn_titre_perso, &btn_back, NULL} 
     };
 
     SDL_Texture * fonds_menus[3] = {
         recuperer_texture("menu_fond"),
         recuperer_texture("menu_personnages"),
         recuperer_texture("menu_paramètres"),
-        //recuperer_texture("menu_personnages")
 
     };
 

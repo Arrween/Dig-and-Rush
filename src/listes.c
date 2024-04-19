@@ -156,13 +156,3 @@ int taille_liste(int i) {
     return taille;
 }
 
-// void afficher_liste(int i) {
-//     void * elem;
-//     liste_en_tete(i);
-//     printf("affichage liste %i\n", i);
-//     while (!hors_liste(i)) {
-//         elem = liste_lire(i);
-//         printf("%s %i\n", elem->type, elem->rect_dst->y+elem->rect_dst->h);
-//         liste_suivant(i);
-//     }
-// }

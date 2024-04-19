@@ -20,6 +20,7 @@ t_destructible * creer_destructible(char * id) {
     int alea;
     if (strcmp(id, "bloc_terre") == 0) {
         alea = rand() % 3;
+        // Sélection aléatoire du son de destruction en fonction du nombre aléatoire
         if (alea == 0)
             strcpy(nouv->id_son, "destruction_bloc_1");
         else if (alea == 1)

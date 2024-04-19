@@ -30,8 +30,10 @@
  */
 
 void perso_porter_coup(t_entite * e, int * score, t_texte * texte_score) {
+    // Vérifie si l'entité passée en paramètre représente un personnage contrôlé par le joueur
     if (!e->perso)
-        return;
+        return;  // Si ce n'est pas le cas,ça s'arrête
+
     SDL_FRect * hitbox_attaque = &e->perso->hitbox_attaque;
 
     liste_en_tete(I_LISTE_ENTITES);
@@ -74,12 +76,14 @@ void perso_mourir(t_entite * perso) {
  * @param perso Pointeur vers l'entité du personnage joueur.
  */
 void perso_prendre_coup(t_entite * perso) {
+     // Vérifie si le personnage est en période d'invincibilité
     if (perso->perso->temps_invu > 0)
         return;
     perso->perso->vie--;
     if (perso->perso->vie <= 0)
         perso_mourir(perso);
     else{
+        // Met à jour le temps d'invincibilité du personnage avec la valeur maximale
         perso->perso->temps_invu = perso->perso->temps_invu_max;
         jouer_audio(CANAL_BLESSURE_PERSO, perso->perso->id_son_blessure, 0);
     }
@@ -96,6 +100,8 @@ void perso_prendre_coup(t_entite * perso) {
 t_perso * creer_perso(char * id, t_entite * e) {
     t_perso * nouv = malloc(sizeof(t_perso));
     nouv->parent = e;
+
+    // Affecte les attributs du personnage en fonction de son identifiant
     if (strcmp(id, "ania") == 0) {
         nouv->parent->vitesse = 2.;
         nouv->vie_max = nouv->vie = 3;
@@ -123,9 +129,12 @@ t_perso * creer_perso(char * id, t_entite * e) {
         strcpy(nouv->id_son_mort, "mort_perso");
     }
     
+    // Configuration des hitbox du personnage
     changer_hitbox(nouv->parent, &(nouv->parent->hitbox), 26, 22, 51, 73.4, VRAI);
     // définir initialement sur la droite, sera modifié par le déplacement
     changer_hitbox(nouv->parent, &(nouv->hitbox_attaque), 50, 45, 62, 45, VRAI);
+
+    // Configuration des autres attributs du personnage
     nouv->doit_afficher_hitbox_attaque = FAUX;
     nouv->parent->doit_afficher_hitbox = FAUX;
     nouv->est_mort = FAUX;

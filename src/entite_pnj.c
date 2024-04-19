@@ -207,6 +207,8 @@ void pnj_mourir(t_entite * pnj, int * score, t_texte * texte_score) {
 t_pnj * creer_pnj(char * id, t_entite * e) {
     t_pnj * nouv = malloc(sizeof(t_pnj));
     nouv->parent = e;
+
+    // Initialise les attributs communs à tous les PNJ
     nouv->doit_afficher_hitbox_attaque = FAUX;
     nouv->parent->doit_afficher_hitbox = FAUX;
     nouv->x_patrouille_g = 0;
@@ -216,12 +218,15 @@ t_pnj * creer_pnj(char * id, t_entite * e) {
     nouv->valeur_vaincu = 0;
     nouv->est_ecrasable = FAUX;
     nouv->parent->vitesse = 1.;
+    
+    // Configuration des hitbox du PNJ
     changer_hitbox(nouv->parent, &(nouv->hitbox_attaque), nouv->parent->hitbox.x,
                    nouv->parent->hitbox.y, nouv->parent->hitbox.w,
                    nouv->parent->hitbox.h, FAUX);
     strcpy(nouv->id_son_attaque, "silence");
     strcpy(nouv->id_son_mort, "silence");
 
+    // Configuration spécifique selon l'identifiant du PNJ
     if (strcmp(id, "squelette") == 0) {
         nouv->comportement = comportement_patrouille;
         nouv->valeur_vaincu = 5;

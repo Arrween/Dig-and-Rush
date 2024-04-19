@@ -53,28 +53,39 @@ SDL_FRect convertir_vers_absolu(SDL_FRect * rect, SDL_FRect rect_abs) {
 
 void afficher_entite(SDL_Renderer * rend, t_entite * e) {
 
+    // Définition de la zone de jeu
     SDL_FRect zone_jeu = {TAILLE_L/4., 0, TAILLE_L/2., TAILLE_H};
 
+    // Vérification des coordonnées source et destination
     SDL_Rect * src = e->rect_src->w >= 0 ? e->rect_src : NULL;
     SDL_FRect * dst = e->rect_dst->w >= 0 ? e->rect_dst : NULL;
+
+    // Si les coordonnées sont relatives, convertir en coordonnées absolues
     if (e->est_relatif) {
         SDL_FRect rect_absolu = convertir_vers_absolu(dst, zone_jeu);
         SDL_RenderCopyF(rend, e->texture, src, &rect_absolu);
     }
+    // Sinon, afficher directement à l'emplacement donné
     else
         SDL_RenderCopyF(rend, e->texture, src, dst);
+
+    // Affichage de la hitbox de l'entité si nécessaire
     if (e->doit_afficher_hitbox) {
         SDL_FRect rect_absolu = convertir_vers_absolu(&(e->hitbox), zone_jeu);
         SDL_SetRenderDrawColor(rend, COULEUR_HITBOX_R, COULEUR_HITBOX_V,
                                COULEUR_HITBOX_B, COULEUR_HITBOX_A);
         SDL_RenderDrawRectF(rend, &rect_absolu);
     }
+
+    // Affichage de la hitbox d'attaque du PNJ si nécessaire
     if (e->pnj && e->pnj->doit_afficher_hitbox_attaque) {
         SDL_FRect rect_absolu = convertir_vers_absolu(&(e->pnj->hitbox_attaque), zone_jeu);
         SDL_SetRenderDrawColor(rend, COULEUR_HITBOX_ATTQ_R, COULEUR_HITBOX_ATTQ_V,
                                COULEUR_HITBOX_ATTQ_B, COULEUR_HITBOX_ATTQ_A);
         SDL_RenderDrawRectF(rend, &rect_absolu);
     }
+
+    // Affichage de la hitbox d'attaque du personnage si nécessaire
     if (e->perso && e->perso->doit_afficher_hitbox_attaque) {
         SDL_FRect rect_absolu = convertir_vers_absolu(&(e->perso->hitbox_attaque), zone_jeu);
         SDL_SetRenderDrawColor(rend, COULEUR_HITBOX_ATTQ_R, COULEUR_HITBOX_ATTQ_V,
@@ -82,6 +93,7 @@ void afficher_entite(SDL_Renderer * rend, t_entite * e) {
         SDL_RenderDrawRectF(rend, &rect_absolu);
     }
 }
+
 
 /**
  * @brief Change les coordonnées et les dimensions d'un rectangle.
@@ -148,24 +160,37 @@ void changer_sprite(t_entite * e, int x, int y) {
  * @param y La nouvelle coordonnée en y.
  */
 void changer_pos_entite(t_entite * e, float x, float y) {
-    float xx = e->rect_dst->x;
-    float yy = e->rect_dst->y;
-    float nouv_hitbox_x = e->hitbox.x + x - xx;
+    // Sauvegarde des anciennes coordonnées x et y
+    float ancien_x = e->rect_dst->x;
+    float ancien_y = e->rect_dst->y;
+
+    // Calcul de la nouvelle coordonnée x de la hitbox par rapport à la position absolue
+    float nouv_hitbox_x = e->hitbox.x + x - ancien_x;
+
+    // Vérification si la nouvelle position de la hitbox est valide (dans les limites de l'écran)
     if (nouv_hitbox_x > 0 && nouv_hitbox_x < 100) {
+        // Mise à jour de la position de l'entité et de la hitbox en x
         e->rect_dst->x = x;
         e->hitbox.x = nouv_hitbox_x;
     }
+
+    // Mise à jour de la position de l'entité en y et de la position y de la hitbox
     e->rect_dst->y = y;
-    e->hitbox.y += y - yy;
+    e->hitbox.y += y - ancien_y;
+
+    // Mise à jour des coordonnées de la hitbox d'attaque du PNJ, le cas échéant
     if (e->pnj) {
-        e->pnj->hitbox_attaque.x += x - xx;
-        e->pnj->hitbox_attaque.y += y - yy;
+        e->pnj->hitbox_attaque.x += x - ancien_x;
+        e->pnj->hitbox_attaque.y += y - ancien_y;
     }
+
+    // Mise à jour des coordonnées de la hitbox d'attaque du personnage, le cas échéant
     if (e->perso) {
-        e->perso->hitbox_attaque.x += x - xx;
-        e->perso->hitbox_attaque.y += y - yy;
+        e->perso->hitbox_attaque.x += x - ancien_x;
+        e->perso->hitbox_attaque.y += y - ancien_y;
     }
 }
+
 
 
 
