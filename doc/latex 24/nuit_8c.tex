@@ -1,0 +1,167 @@
+\doxysection{Référence du fichier src/nuit.c}
+\hypertarget{nuit_8c}{}\label{nuit_8c}\index{src/nuit.c@{src/nuit.c}}
+
+
+Implémentation d’un effet de nuit.  
+
+
+{\ttfamily \#include "{}nuit.\+h"{}}\newline
+\doxysubsubsection*{Fonctions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{nuit_8c_a30192a62eb6857fae9f4a86efebf1bc3}{calculer\+\_\+ombre}} (\mbox{\hyperlink{structt__nuit}{t\+\_\+nuit}} \texorpdfstring{$\ast$}{*}nuit)
+\begin{DoxyCompactList}\small\item\em calculer les pixels de la texture d’un effet de nuit \end{DoxyCompactList}\item 
+\mbox{\hyperlink{structt__nuit}{t\+\_\+nuit}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{nuit_8c_a081462f35334b4c0fb7faca3720cf995}{creer\+\_\+nuit}} (SDL\+\_\+\+Renderer \texorpdfstring{$\ast$}{*}rend, \mbox{\hyperlink{entite_8h_a2cbf188682c05adae88dc39bdd7ef995}{t\+\_\+entite}} \texorpdfstring{$\ast$}{*}perso, SDL\+\_\+\+FRect zone\+\_\+jeu, SDL\+\_\+\+Texture \texorpdfstring{$\ast$}{*}texture\+\_\+jour, SDL\+\_\+\+Texture \texorpdfstring{$\ast$}{*}texture\+\_\+nuit)
+\begin{DoxyCompactList}\small\item\em alloue la mémoire pour un objet {\ttfamily \doxylink{structt__nuit}{t\+\_\+nuit}} et initialise ses champs \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{nuit_8c_aeb68e405e3dd7b96307921af05b01b30}{basculer\+\_\+nuit}} (\mbox{\hyperlink{structt__nuit}{t\+\_\+nuit}} \texorpdfstring{$\ast$}{*}nuit)
+\begin{DoxyCompactList}\small\item\em basculer le mode jour ou nuit de l’effet pour effectuer une transition \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{nuit_8c_ab82b85a71f95efba73d5d7d04dacdf76}{decrementer\+\_\+parametre}} (float \texorpdfstring{$\ast$}{*}param, float min, float max, float pas)
+\begin{DoxyCompactList}\small\item\em décrémenter un paramètre de l’effet de nuit d’un pourcentage de sa plage de valeurs \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{nuit_8c_add6a69834e51b229b5011d6001634e75}{incrementer\+\_\+parametre}} (float \texorpdfstring{$\ast$}{*}param, float min, float max, float pas)
+\begin{DoxyCompactList}\small\item\em incrémenter un paramètre de l’effet de nuit d’un pourcentage de sa plage de valeurs \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{nuit_8c_ab3c7286ce522aa72ef5b4b383ccf6768}{transitionner\+\_\+nuit}} (\mbox{\hyperlink{structt__nuit}{t\+\_\+nuit}} \texorpdfstring{$\ast$}{*}nuit)
+\begin{DoxyCompactList}\small\item\em effectuer un pas de transition entre le mode jour et le mode nuit ou l’inverse \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{nuit_8c_a4303b85b5050edb55214185fc6a8df7e}{detruire\+\_\+nuit}} (\mbox{\hyperlink{structt__nuit}{t\+\_\+nuit}} \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}nuit)
+\begin{DoxyCompactList}\small\item\em libérer la mémoire d’un objet {\ttfamily \doxylink{structt__nuit}{t\+\_\+nuit}} \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Description détaillée}
+Implémentation d’un effet de nuit. 
+
+L’effet consiste à cacher la zone de jeu derrière une texture remplie de noir à l’exception d’un cercle centré sur le joueur avec une transition de transparence entre la zone cachée et la zone visible. 
+
+\doxysubsection{Documentation des fonctions}
+\Hypertarget{nuit_8c_aeb68e405e3dd7b96307921af05b01b30}\label{nuit_8c_aeb68e405e3dd7b96307921af05b01b30} 
+\index{nuit.c@{nuit.c}!basculer\_nuit@{basculer\_nuit}}
+\index{basculer\_nuit@{basculer\_nuit}!nuit.c@{nuit.c}}
+\doxysubsubsection{\texorpdfstring{basculer\_nuit()}{basculer\_nuit()}}
+{\footnotesize\ttfamily void basculer\+\_\+nuit (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structt__nuit}{t\+\_\+nuit}} \texorpdfstring{$\ast$}{*}}]{nuit }\end{DoxyParamCaption})}
+
+
+
+basculer le mode jour ou nuit de l’effet pour effectuer une transition 
+
+
+\begin{DoxyParams}{Paramètres}
+{\em nuit} & objet d’effet de nuit à modifier \\
+\hline
+\end{DoxyParams}
+\Hypertarget{nuit_8c_a30192a62eb6857fae9f4a86efebf1bc3}\label{nuit_8c_a30192a62eb6857fae9f4a86efebf1bc3} 
+\index{nuit.c@{nuit.c}!calculer\_ombre@{calculer\_ombre}}
+\index{calculer\_ombre@{calculer\_ombre}!nuit.c@{nuit.c}}
+\doxysubsubsection{\texorpdfstring{calculer\_ombre()}{calculer\_ombre()}}
+{\footnotesize\ttfamily void calculer\+\_\+ombre (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structt__nuit}{t\+\_\+nuit}} \texorpdfstring{$\ast$}{*}}]{nuit }\end{DoxyParamCaption})}
+
+
+
+calculer les pixels de la texture d’un effet de nuit 
+
+
+\begin{DoxyParams}{Paramètres}
+{\em nuit} & objet de l’effet de nuit à calculer \\
+\hline
+\end{DoxyParams}
+\Hypertarget{nuit_8c_a081462f35334b4c0fb7faca3720cf995}\label{nuit_8c_a081462f35334b4c0fb7faca3720cf995} 
+\index{nuit.c@{nuit.c}!creer\_nuit@{creer\_nuit}}
+\index{creer\_nuit@{creer\_nuit}!nuit.c@{nuit.c}}
+\doxysubsubsection{\texorpdfstring{creer\_nuit()}{creer\_nuit()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structt__nuit}{t\+\_\+nuit}} \texorpdfstring{$\ast$}{*} creer\+\_\+nuit (\begin{DoxyParamCaption}\item[{SDL\+\_\+\+Renderer \texorpdfstring{$\ast$}{*}}]{rend,  }\item[{\mbox{\hyperlink{entite_8h_a2cbf188682c05adae88dc39bdd7ef995}{t\+\_\+entite}} \texorpdfstring{$\ast$}{*}}]{perso,  }\item[{SDL\+\_\+\+FRect}]{zone\+\_\+jeu,  }\item[{SDL\+\_\+\+Texture \texorpdfstring{$\ast$}{*}}]{texture\+\_\+jour,  }\item[{SDL\+\_\+\+Texture \texorpdfstring{$\ast$}{*}}]{texture\+\_\+nuit }\end{DoxyParamCaption})}
+
+
+
+alloue la mémoire pour un objet {\ttfamily \doxylink{structt__nuit}{t\+\_\+nuit}} et initialise ses champs 
+
+
+\begin{DoxyParams}{Paramètres}
+{\em rend} & Rendu SDL auquel rattacher la texture contenant l’effet de nuit \\
+\hline
+{\em perso} & entité sur laquelle centrer la zone visible \\
+\hline
+{\em zone\+\_\+jeu} & rectangle auquel appliquer l’effet \\
+\hline
+{\em texture\+\_\+jour} & texture du fond de jeu pour le mode jour \\
+\hline
+{\em texture\+\_\+jour} & texture du fond de jeu pour le mode nuit \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Renvoie}
+l’objet {\ttfamily \doxylink{structt__nuit}{t\+\_\+nuit}} alloué et initialisé 
+\end{DoxyReturn}
+activer la transparence des textures de fond de jeu
+
+créer la texture utilisée pour dessiner l’effet et activer sa transparence
+
+définir initialement l’effet comme non actif et précédemment actif pour commencer par une transition nuit vers jour\Hypertarget{nuit_8c_ab82b85a71f95efba73d5d7d04dacdf76}\label{nuit_8c_ab82b85a71f95efba73d5d7d04dacdf76} 
+\index{nuit.c@{nuit.c}!decrementer\_parametre@{decrementer\_parametre}}
+\index{decrementer\_parametre@{decrementer\_parametre}!nuit.c@{nuit.c}}
+\doxysubsubsection{\texorpdfstring{decrementer\_parametre()}{decrementer\_parametre()}}
+{\footnotesize\ttfamily void decrementer\+\_\+parametre (\begin{DoxyParamCaption}\item[{float \texorpdfstring{$\ast$}{*}}]{param,  }\item[{float}]{min,  }\item[{float}]{max,  }\item[{float}]{pas }\end{DoxyParamCaption})}
+
+
+
+décrémenter un paramètre de l’effet de nuit d’un pourcentage de sa plage de valeurs 
+
+
+\begin{DoxyParams}{Paramètres}
+{\em param} & paramètre à décrémenter \\
+\hline
+{\em min} & valeur minimum du paramètre \\
+\hline
+{\em max} & valeur maximum du paramètre \\
+\hline
+{\em pas} & pas à retirer, en pourcentage \\
+\hline
+\end{DoxyParams}
+\Hypertarget{nuit_8c_a4303b85b5050edb55214185fc6a8df7e}\label{nuit_8c_a4303b85b5050edb55214185fc6a8df7e} 
+\index{nuit.c@{nuit.c}!detruire\_nuit@{detruire\_nuit}}
+\index{detruire\_nuit@{detruire\_nuit}!nuit.c@{nuit.c}}
+\doxysubsubsection{\texorpdfstring{detruire\_nuit()}{detruire\_nuit()}}
+{\footnotesize\ttfamily void detruire\+\_\+nuit (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structt__nuit}{t\+\_\+nuit}} \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{nuit }\end{DoxyParamCaption})}
+
+
+
+libérer la mémoire d’un objet {\ttfamily \doxylink{structt__nuit}{t\+\_\+nuit}} 
+
+
+\begin{DoxyParams}{Paramètres}
+{\em nuit} & pointeur sur pointeur de l’objet à détruire \\
+\hline
+\end{DoxyParams}
+\Hypertarget{nuit_8c_add6a69834e51b229b5011d6001634e75}\label{nuit_8c_add6a69834e51b229b5011d6001634e75} 
+\index{nuit.c@{nuit.c}!incrementer\_parametre@{incrementer\_parametre}}
+\index{incrementer\_parametre@{incrementer\_parametre}!nuit.c@{nuit.c}}
+\doxysubsubsection{\texorpdfstring{incrementer\_parametre()}{incrementer\_parametre()}}
+{\footnotesize\ttfamily void incrementer\+\_\+parametre (\begin{DoxyParamCaption}\item[{float \texorpdfstring{$\ast$}{*}}]{param,  }\item[{float}]{min,  }\item[{float}]{max,  }\item[{float}]{pas }\end{DoxyParamCaption})}
+
+
+
+incrémenter un paramètre de l’effet de nuit d’un pourcentage de sa plage de valeurs 
+
+
+\begin{DoxyParams}{Paramètres}
+{\em param} & paramètre à incrémenter \\
+\hline
+{\em min} & valeur minimum du paramètre \\
+\hline
+{\em max} & valeur maximum du paramètre \\
+\hline
+{\em pas} & pas à ajouter, en pourcentage \\
+\hline
+\end{DoxyParams}
+\Hypertarget{nuit_8c_ab3c7286ce522aa72ef5b4b383ccf6768}\label{nuit_8c_ab3c7286ce522aa72ef5b4b383ccf6768} 
+\index{nuit.c@{nuit.c}!transitionner\_nuit@{transitionner\_nuit}}
+\index{transitionner\_nuit@{transitionner\_nuit}!nuit.c@{nuit.c}}
+\doxysubsubsection{\texorpdfstring{transitionner\_nuit()}{transitionner\_nuit()}}
+{\footnotesize\ttfamily void transitionner\+\_\+nuit (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structt__nuit}{t\+\_\+nuit}} \texorpdfstring{$\ast$}{*}}]{nuit }\end{DoxyParamCaption})}
+
+
+
+effectuer un pas de transition entre le mode jour et le mode nuit ou l’inverse 
+
+Modifier les paramètres de l’effet de nuit par un pas de transition et actualiser les variables textures et musique en conséquence
+
+
+\begin{DoxyParams}{Paramètres}
+{\em nuit} & objet d’effet de nuit sur lequel effectuer la transition \\
+\hline
+\end{DoxyParams}

@@ -1,0 +1,94 @@
+\doxysection{Référence du fichier src/morceaux\+\_\+niveau.c}
+\hypertarget{morceaux__niveau_8c}{}\label{morceaux__niveau_8c}\index{src/morceaux\_niveau.c@{src/morceaux\_niveau.c}}
+
+
+Programme pour la génération de morceaux de niveau et de murs.  
+
+
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \#include $<$string.\+h$>$}\newline
+{\ttfamily \#include $<$time.\+h$>$}\newline
+{\ttfamily \#include "{}morceaux\+\_\+niveau.\+h"{}}\newline
+{\ttfamily \#include "{}constantes.\+h"{}}\newline
+{\ttfamily \#include "{}entite\+\_\+destructible.\+h"{}}\newline
+{\ttfamily \#include "{}entite\+\_\+bonus.\+h"{}}\newline
+{\ttfamily \#include "{}entite\+\_\+obstacle.\+h"{}}\newline
+{\ttfamily \#include "{}entite\+\_\+pnj.\+h"{}}\newline
+{\ttfamily \#include "{}listes.\+h"{}}\newline
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{morceaux__niveau_8c_ac8c94d7db7a1273894ea47079dadc3dd}\label{morceaux__niveau_8c_ac8c94d7db7a1273894ea47079dadc3dd} 
+\#define {\bfseries LARGEUR\+\_\+\+MUR}~10
+\begin{DoxyCompactList}\small\item\em Largeur des murs entourant le niveau. \end{DoxyCompactList}\item 
+\Hypertarget{morceaux__niveau_8c_a00b51eee5cb0c5bff203e3187a17a836}\label{morceaux__niveau_8c_a00b51eee5cb0c5bff203e3187a17a836} 
+\#define {\bfseries CHANCE\+\_\+\+BLOC\+\_\+\+PIERRE}~4
+\begin{DoxyCompactList}\small\item\em Chance de générer un bloc de pierre (en dizaines de \%) \end{DoxyCompactList}\item 
+\Hypertarget{morceaux__niveau_8c_abe45430256d486a1227aa1843b83f6af}\label{morceaux__niveau_8c_abe45430256d486a1227aa1843b83f6af} 
+\#define {\bfseries CHANCE\+\_\+\+BLOC\+\_\+\+TERRE}~4
+\begin{DoxyCompactList}\small\item\em Chance de générer un bloc de terre (en dizaines de \%) \end{DoxyCompactList}\item 
+\Hypertarget{morceaux__niveau_8c_a3b9f1921beaac3df826359fdb87b7800}\label{morceaux__niveau_8c_a3b9f1921beaac3df826359fdb87b7800} 
+\#define {\bfseries CHANCE\+\_\+\+BLOC\+\_\+\+VIDE}~2
+\begin{DoxyCompactList}\small\item\em Chance de générer un bloc vide (en dizaines de \%) \end{DoxyCompactList}\item 
+\Hypertarget{morceaux__niveau_8c_a294dd584f49a62598122ca94da035527}\label{morceaux__niveau_8c_a294dd584f49a62598122ca94da035527} 
+\#define {\bfseries MAX\+\_\+\+BLOCS\+\_\+\+PIERRE}~7
+\begin{DoxyCompactList}\small\item\em Nombre maximum de blocs de pierre par ligne. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Fonctions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{morceaux__niveau_8c_aaf8353b0568962c89e303af08de88efa}{generer\+\_\+premiere\+\_\+ligne}} (float y)
+\begin{DoxyCompactList}\small\item\em Génère la première ligne du niveau avec des blocs de terre. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{morceaux__niveau_8c_a04b0cbafca0f90092cd65afdb2b07c80}{generer\+\_\+morceau\+\_\+niveau}} (float repere\+\_\+defilement)
+\begin{DoxyCompactList}\small\item\em Génère un morceau de niveau aléatoire qui se répète. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{morceaux__niveau_8c_af8430f4f5b9096e988c1c867ce7df875}{generer\+\_\+murs}} (void)
+\begin{DoxyCompactList}\small\item\em Génère les murs entourant le niveau. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Description détaillée}
+Programme pour la génération de morceaux de niveau et de murs. 
+
+
+
+\doxysubsection{Documentation des fonctions}
+\Hypertarget{morceaux__niveau_8c_a04b0cbafca0f90092cd65afdb2b07c80}\label{morceaux__niveau_8c_a04b0cbafca0f90092cd65afdb2b07c80} 
+\index{morceaux\_niveau.c@{morceaux\_niveau.c}!generer\_morceau\_niveau@{generer\_morceau\_niveau}}
+\index{generer\_morceau\_niveau@{generer\_morceau\_niveau}!morceaux\_niveau.c@{morceaux\_niveau.c}}
+\doxysubsubsection{\texorpdfstring{generer\_morceau\_niveau()}{generer\_morceau\_niveau()}}
+{\footnotesize\ttfamily void generer\+\_\+morceau\+\_\+niveau (\begin{DoxyParamCaption}\item[{float}]{repere\+\_\+defilement }\end{DoxyParamCaption})}
+
+
+
+Génère un morceau de niveau aléatoire qui se répète. 
+
+Cette fonction génère un morceau de niveau aléatoire qui se répète verticalement. Le morceau généré consiste en une série de lignes de blocs de pierre et de blocs de terre, ainsi que des ennemis et des bonus placés au-\/dessus de certains blocs.
+
+
+\begin{DoxyParams}{Paramètres}
+{\em repere\+\_\+defilement} & Position verticale du repère de défilement, où le morceau de niveau sera généré. Cette position est utilisée comme référence pour la génération des blocs et des entités. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{morceaux__niveau_8c_af8430f4f5b9096e988c1c867ce7df875}\label{morceaux__niveau_8c_af8430f4f5b9096e988c1c867ce7df875} 
+\index{morceaux\_niveau.c@{morceaux\_niveau.c}!generer\_murs@{generer\_murs}}
+\index{generer\_murs@{generer\_murs}!morceaux\_niveau.c@{morceaux\_niveau.c}}
+\doxysubsubsection{\texorpdfstring{generer\_murs()}{generer\_murs()}}
+{\footnotesize\ttfamily void generer\+\_\+murs (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Génère les murs entourant le niveau. 
+
+Cette fonction génère les murs qui bordent le niveau de jeu. Elle crée des obstacles en forme de blocs de pierre pour former les murs du côté gauche et du côté droit du niveau, ainsi que pour les parties inférieures de l\textquotesingle{}écran. Les murs sont générés de manière à entourer complètement le niveau de jeu. \Hypertarget{morceaux__niveau_8c_aaf8353b0568962c89e303af08de88efa}\label{morceaux__niveau_8c_aaf8353b0568962c89e303af08de88efa} 
+\index{morceaux\_niveau.c@{morceaux\_niveau.c}!generer\_premiere\_ligne@{generer\_premiere\_ligne}}
+\index{generer\_premiere\_ligne@{generer\_premiere\_ligne}!morceaux\_niveau.c@{morceaux\_niveau.c}}
+\doxysubsubsection{\texorpdfstring{generer\_premiere\_ligne()}{generer\_premiere\_ligne()}}
+{\footnotesize\ttfamily void generer\+\_\+premiere\+\_\+ligne (\begin{DoxyParamCaption}\item[{float}]{y }\end{DoxyParamCaption})}
+
+
+
+Génère la première ligne du niveau avec des blocs de terre. 
+
+
+\begin{DoxyParams}{Paramètres}
+{\em y} & Position en y de la première ligne. \\
+\hline
+\end{DoxyParams}

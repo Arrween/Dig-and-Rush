@@ -22,6 +22,7 @@
 #include "listes.h"
 #include "texte.h"
 
+
 #define Y_PREMIERE_LIGNE 80
 #define DELAI_CREUSAGE 18 // en nombre de frames
 #define DELAI_PERTE_SCORE 150 // en nombre de frames

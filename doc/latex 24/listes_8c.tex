@@ -1,0 +1,286 @@
+\doxysection{Référence du fichier src/listes.c}
+\hypertarget{listes_8c}{}\label{listes_8c}\index{src/listes.c@{src/listes.c}}
+
+
+Structure de données liste chainée (source)  
+
+
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \#include "{}listes.\+h"{}}\newline
+\doxysubsubsection*{Fonctions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{listes_8c_aa23490685933e5bc6823e5353c1caa20}{init\+\_\+liste}} (int i)
+\begin{DoxyCompactList}\small\item\em initialiser une liste vide avec son drapeau \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{listes_8c_a372f5d1bf8ef45b1dbb4e2071ee4c17d}{liste\+\_\+vide}} (int i)
+\begin{DoxyCompactList}\small\item\em vérifier si une liste est vide \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{listes_8c_ac6e710de78187fc399ce1a672ad633b3}{hors\+\_\+liste}} (int i)
+\begin{DoxyCompactList}\small\item\em vérifier l’élément courant se situe hors de la liste \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{listes_8c_a289aa33fa027fc54054d732de7a96406}{liste\+\_\+en\+\_\+tete}} (int i)
+\begin{DoxyCompactList}\small\item\em placer l’élément courant au début de la liste \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{listes_8c_a8c08952871314c00840655269c1b7e48}{liste\+\_\+en\+\_\+queue}} (int i)
+\begin{DoxyCompactList}\small\item\em placer l’élément courant à la fin de la liste \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{listes_8c_a460c7cbaa2c27f87c9362964be7b066c}{liste\+\_\+suivant}} (int i)
+\begin{DoxyCompactList}\small\item\em placer l’élément courant sur l’élément suivant \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{listes_8c_a0e5b2ebd87915562e3d40ba73a43baaf}{liste\+\_\+precedent}} (int i)
+\begin{DoxyCompactList}\small\item\em placer l’élément courant sur l’élément précédent \end{DoxyCompactList}\item 
+void \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{listes_8c_a3fac06547f1a51426fa7591bf602d762}{liste\+\_\+lire}} (int i)
+\begin{DoxyCompactList}\small\item\em lire la valeur utile de l’élément courant \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{listes_8c_affba51752f34dbb6d56b8d9bb66905ac}{liste\+\_\+ecrire}} (int i, void \texorpdfstring{$\ast$}{*}v)
+\begin{DoxyCompactList}\small\item\em modifier la valeur utile de l’élément courant \end{DoxyCompactList}\item 
+void \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{listes_8c_ab61880a802b08dc6a33d6dc5658018c8}{liste\+\_\+retirer}} (int i)
+\begin{DoxyCompactList}\small\item\em retirer l’élément courant \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{listes_8c_a9c4e6c89d332ce7731e3f35b3e315ca4}{liste\+\_\+ajouter\+\_\+droite}} (int i, void \texorpdfstring{$\ast$}{*}v)
+\begin{DoxyCompactList}\small\item\em ajouter un élémetn à droite de l’élément courant \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{listes_8c_a0ce59f8658952fba82dd0f4d8f9e81d1}{liste\+\_\+ajouter\+\_\+gauche}} (int i, void \texorpdfstring{$\ast$}{*}v)
+\begin{DoxyCompactList}\small\item\em ajouter un élémetn à gauche de l’élément courant \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{listes_8c_a68866d7d20e5dece4c5bb010b17d4676}{vider\+\_\+liste}} (int i)
+\begin{DoxyCompactList}\small\item\em retirer tous les éléments de la liste chainée \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{listes_8c_aa0a5233072d50b8e7f773eb5ecc6d408}{taille\+\_\+liste}} (int i)
+\begin{DoxyCompactList}\small\item\em calculer le nombre d’éléments de la liste chainée \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{listes_8c_a5c8f944b02350454864a9af6f149bbef}\label{listes_8c_a5c8f944b02350454864a9af6f149bbef} 
+\mbox{\hyperlink{structt__liste}{t\+\_\+liste}} {\bfseries listes} \mbox{[}\mbox{\hyperlink{listes_8h_a3771de140d728ce4cc0d580e536bd164}{N\+\_\+\+MAX\+\_\+\+LISTES}}\mbox{]}
+\begin{DoxyCompactList}\small\item\em tableau global des listes chainées utilisables \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Description détaillée}
+Structure de données liste chainée (source) 
+
+
+
+\doxysubsection{Documentation des fonctions}
+\Hypertarget{listes_8c_ac6e710de78187fc399ce1a672ad633b3}\label{listes_8c_ac6e710de78187fc399ce1a672ad633b3} 
+\index{listes.c@{listes.c}!hors\_liste@{hors\_liste}}
+\index{hors\_liste@{hors\_liste}!listes.c@{listes.c}}
+\doxysubsubsection{\texorpdfstring{hors\_liste()}{hors\_liste()}}
+{\footnotesize\ttfamily int hors\+\_\+liste (\begin{DoxyParamCaption}\item[{int}]{i }\end{DoxyParamCaption})}
+
+
+
+vérifier l’élément courant se situe hors de la liste 
+
+
+\begin{DoxyParams}{Paramètres}
+{\em i} & indice de la liste à utiliser dans le tableau global \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Renvoie}
+VRAI si l’élément courant est hors liste, FAUX sinon 
+\end{DoxyReturn}
+\Hypertarget{listes_8c_aa23490685933e5bc6823e5353c1caa20}\label{listes_8c_aa23490685933e5bc6823e5353c1caa20} 
+\index{listes.c@{listes.c}!init\_liste@{init\_liste}}
+\index{init\_liste@{init\_liste}!listes.c@{listes.c}}
+\doxysubsubsection{\texorpdfstring{init\_liste()}{init\_liste()}}
+{\footnotesize\ttfamily void init\+\_\+liste (\begin{DoxyParamCaption}\item[{int}]{i }\end{DoxyParamCaption})}
+
+
+
+initialiser une liste vide avec son drapeau 
+
+
+\begin{DoxyParams}{Paramètres}
+{\em i} & indice de la liste à initialiser dans le tableau global \\
+\hline
+\end{DoxyParams}
+\Hypertarget{listes_8c_a9c4e6c89d332ce7731e3f35b3e315ca4}\label{listes_8c_a9c4e6c89d332ce7731e3f35b3e315ca4} 
+\index{listes.c@{listes.c}!liste\_ajouter\_droite@{liste\_ajouter\_droite}}
+\index{liste\_ajouter\_droite@{liste\_ajouter\_droite}!listes.c@{listes.c}}
+\doxysubsubsection{\texorpdfstring{liste\_ajouter\_droite()}{liste\_ajouter\_droite()}}
+{\footnotesize\ttfamily void liste\+\_\+ajouter\+\_\+droite (\begin{DoxyParamCaption}\item[{int}]{i,  }\item[{void \texorpdfstring{$\ast$}{*}}]{v }\end{DoxyParamCaption})}
+
+
+
+ajouter un élémetn à droite de l’élément courant 
+
+
+\begin{DoxyParams}{Paramètres}
+{\em i} & indice de la liste à utiliser dans le tableau global \\
+\hline
+{\em v} & valeur utile de l’élément à rajouter \\
+\hline
+\end{DoxyParams}
+\Hypertarget{listes_8c_a0ce59f8658952fba82dd0f4d8f9e81d1}\label{listes_8c_a0ce59f8658952fba82dd0f4d8f9e81d1} 
+\index{listes.c@{listes.c}!liste\_ajouter\_gauche@{liste\_ajouter\_gauche}}
+\index{liste\_ajouter\_gauche@{liste\_ajouter\_gauche}!listes.c@{listes.c}}
+\doxysubsubsection{\texorpdfstring{liste\_ajouter\_gauche()}{liste\_ajouter\_gauche()}}
+{\footnotesize\ttfamily void liste\+\_\+ajouter\+\_\+gauche (\begin{DoxyParamCaption}\item[{int}]{i,  }\item[{void \texorpdfstring{$\ast$}{*}}]{v }\end{DoxyParamCaption})}
+
+
+
+ajouter un élémetn à gauche de l’élément courant 
+
+
+\begin{DoxyParams}{Paramètres}
+{\em i} & indice de la liste à utiliser dans le tableau global \\
+\hline
+{\em v} & valeur utile de l’élément à rajouter \\
+\hline
+\end{DoxyParams}
+\Hypertarget{listes_8c_affba51752f34dbb6d56b8d9bb66905ac}\label{listes_8c_affba51752f34dbb6d56b8d9bb66905ac} 
+\index{listes.c@{listes.c}!liste\_ecrire@{liste\_ecrire}}
+\index{liste\_ecrire@{liste\_ecrire}!listes.c@{listes.c}}
+\doxysubsubsection{\texorpdfstring{liste\_ecrire()}{liste\_ecrire()}}
+{\footnotesize\ttfamily void liste\+\_\+ecrire (\begin{DoxyParamCaption}\item[{int}]{i,  }\item[{void \texorpdfstring{$\ast$}{*}}]{v }\end{DoxyParamCaption})}
+
+
+
+modifier la valeur utile de l’élément courant 
+
+
+\begin{DoxyParams}{Paramètres}
+{\em i} & indice de la liste à utiliser dans le tableau global \\
+\hline
+{\em v} & valeur utile de l’élément à rajouter \\
+\hline
+\end{DoxyParams}
+\Hypertarget{listes_8c_a8c08952871314c00840655269c1b7e48}\label{listes_8c_a8c08952871314c00840655269c1b7e48} 
+\index{listes.c@{listes.c}!liste\_en\_queue@{liste\_en\_queue}}
+\index{liste\_en\_queue@{liste\_en\_queue}!listes.c@{listes.c}}
+\doxysubsubsection{\texorpdfstring{liste\_en\_queue()}{liste\_en\_queue()}}
+{\footnotesize\ttfamily void liste\+\_\+en\+\_\+queue (\begin{DoxyParamCaption}\item[{int}]{i }\end{DoxyParamCaption})}
+
+
+
+placer l’élément courant à la fin de la liste 
+
+
+\begin{DoxyParams}{Paramètres}
+{\em i} & indice de la liste à utiliser dans le tableau global \\
+\hline
+\end{DoxyParams}
+\Hypertarget{listes_8c_a289aa33fa027fc54054d732de7a96406}\label{listes_8c_a289aa33fa027fc54054d732de7a96406} 
+\index{listes.c@{listes.c}!liste\_en\_tete@{liste\_en\_tete}}
+\index{liste\_en\_tete@{liste\_en\_tete}!listes.c@{listes.c}}
+\doxysubsubsection{\texorpdfstring{liste\_en\_tete()}{liste\_en\_tete()}}
+{\footnotesize\ttfamily void liste\+\_\+en\+\_\+tete (\begin{DoxyParamCaption}\item[{int}]{i }\end{DoxyParamCaption})}
+
+
+
+placer l’élément courant au début de la liste 
+
+
+\begin{DoxyParams}{Paramètres}
+{\em i} & indice de la liste à utiliser dans le tableau global \\
+\hline
+\end{DoxyParams}
+\Hypertarget{listes_8c_a3fac06547f1a51426fa7591bf602d762}\label{listes_8c_a3fac06547f1a51426fa7591bf602d762} 
+\index{listes.c@{listes.c}!liste\_lire@{liste\_lire}}
+\index{liste\_lire@{liste\_lire}!listes.c@{listes.c}}
+\doxysubsubsection{\texorpdfstring{liste\_lire()}{liste\_lire()}}
+{\footnotesize\ttfamily void \texorpdfstring{$\ast$}{*} liste\+\_\+lire (\begin{DoxyParamCaption}\item[{int}]{i }\end{DoxyParamCaption})}
+
+
+
+lire la valeur utile de l’élément courant 
+
+
+\begin{DoxyParams}{Paramètres}
+{\em i} & indice de la liste à utiliser dans le tableau global \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Renvoie}
+la valeur utile de l’élément courant, NULL s’il est hors-\/liste 
+\end{DoxyReturn}
+\Hypertarget{listes_8c_a0e5b2ebd87915562e3d40ba73a43baaf}\label{listes_8c_a0e5b2ebd87915562e3d40ba73a43baaf} 
+\index{listes.c@{listes.c}!liste\_precedent@{liste\_precedent}}
+\index{liste\_precedent@{liste\_precedent}!listes.c@{listes.c}}
+\doxysubsubsection{\texorpdfstring{liste\_precedent()}{liste\_precedent()}}
+{\footnotesize\ttfamily void liste\+\_\+precedent (\begin{DoxyParamCaption}\item[{int}]{i }\end{DoxyParamCaption})}
+
+
+
+placer l’élément courant sur l’élément précédent 
+
+
+\begin{DoxyParams}{Paramètres}
+{\em i} & indice de la liste à utiliser dans le tableau global \\
+\hline
+\end{DoxyParams}
+\Hypertarget{listes_8c_ab61880a802b08dc6a33d6dc5658018c8}\label{listes_8c_ab61880a802b08dc6a33d6dc5658018c8} 
+\index{listes.c@{listes.c}!liste\_retirer@{liste\_retirer}}
+\index{liste\_retirer@{liste\_retirer}!listes.c@{listes.c}}
+\doxysubsubsection{\texorpdfstring{liste\_retirer()}{liste\_retirer()}}
+{\footnotesize\ttfamily void \texorpdfstring{$\ast$}{*} liste\+\_\+retirer (\begin{DoxyParamCaption}\item[{int}]{i }\end{DoxyParamCaption})}
+
+
+
+retirer l’élément courant 
+
+
+\begin{DoxyParams}{Paramètres}
+{\em i} & indice de la liste à utiliser dans le tableau global \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Renvoie}
+la valeur utile de l’élément retiré 
+\end{DoxyReturn}
+\Hypertarget{listes_8c_a460c7cbaa2c27f87c9362964be7b066c}\label{listes_8c_a460c7cbaa2c27f87c9362964be7b066c} 
+\index{listes.c@{listes.c}!liste\_suivant@{liste\_suivant}}
+\index{liste\_suivant@{liste\_suivant}!listes.c@{listes.c}}
+\doxysubsubsection{\texorpdfstring{liste\_suivant()}{liste\_suivant()}}
+{\footnotesize\ttfamily void liste\+\_\+suivant (\begin{DoxyParamCaption}\item[{int}]{i }\end{DoxyParamCaption})}
+
+
+
+placer l’élément courant sur l’élément suivant 
+
+
+\begin{DoxyParams}{Paramètres}
+{\em i} & indice de la liste à utiliser dans le tableau global \\
+\hline
+\end{DoxyParams}
+\Hypertarget{listes_8c_a372f5d1bf8ef45b1dbb4e2071ee4c17d}\label{listes_8c_a372f5d1bf8ef45b1dbb4e2071ee4c17d} 
+\index{listes.c@{listes.c}!liste\_vide@{liste\_vide}}
+\index{liste\_vide@{liste\_vide}!listes.c@{listes.c}}
+\doxysubsubsection{\texorpdfstring{liste\_vide()}{liste\_vide()}}
+{\footnotesize\ttfamily int liste\+\_\+vide (\begin{DoxyParamCaption}\item[{int}]{i }\end{DoxyParamCaption})}
+
+
+
+vérifier si une liste est vide 
+
+
+\begin{DoxyParams}{Paramètres}
+{\em i} & indice de la liste à utiliser dans le tableau global \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Renvoie}
+VRAI si la liste est vide, FAUX sinon 
+\end{DoxyReturn}
+\Hypertarget{listes_8c_aa0a5233072d50b8e7f773eb5ecc6d408}\label{listes_8c_aa0a5233072d50b8e7f773eb5ecc6d408} 
+\index{listes.c@{listes.c}!taille\_liste@{taille\_liste}}
+\index{taille\_liste@{taille\_liste}!listes.c@{listes.c}}
+\doxysubsubsection{\texorpdfstring{taille\_liste()}{taille\_liste()}}
+{\footnotesize\ttfamily int taille\+\_\+liste (\begin{DoxyParamCaption}\item[{int}]{i }\end{DoxyParamCaption})}
+
+
+
+calculer le nombre d’éléments de la liste chainée 
+
+
+\begin{DoxyParams}{Paramètres}
+{\em i} & indice de la liste à utiliser dans le tableau global \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Renvoie}
+le nombre d’éléments 
+\end{DoxyReturn}
+\Hypertarget{listes_8c_a68866d7d20e5dece4c5bb010b17d4676}\label{listes_8c_a68866d7d20e5dece4c5bb010b17d4676} 
+\index{listes.c@{listes.c}!vider\_liste@{vider\_liste}}
+\index{vider\_liste@{vider\_liste}!listes.c@{listes.c}}
+\doxysubsubsection{\texorpdfstring{vider\_liste()}{vider\_liste()}}
+{\footnotesize\ttfamily void vider\+\_\+liste (\begin{DoxyParamCaption}\item[{int}]{i }\end{DoxyParamCaption})}
+
+
+
+retirer tous les éléments de la liste chainée 
+
+
+\begin{DoxyParams}{Paramètres}
+{\em i} & indice de la liste à vider dans le tableau global \\
+\hline
+\end{DoxyParams}

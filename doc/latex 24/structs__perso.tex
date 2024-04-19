@@ -1,0 +1,113 @@
+\doxysection{Référence de la structure s\+\_\+perso}
+\hypertarget{structs__perso}{}\label{structs__perso}\index{s\_perso@{s\_perso}}
+
+
+Structure représentant un personnage joueur.  
+
+
+
+
+{\ttfamily \#include $<$entite\+\_\+perso.\+h$>$}
+
+\doxysubsubsection*{Attributs publics}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{entite_8h_a2cbf188682c05adae88dc39bdd7ef995}{t\+\_\+entite}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structs__perso_ad34e037d34e34d79150f6cc9e6fd93f3}{parent}}
+\item 
+int \mbox{\hyperlink{structs__perso_a747d0ebc1b1bca54480ea6fe376472ce}{est\+\_\+mort}}
+\item 
+SDL\+\_\+\+FRect \mbox{\hyperlink{structs__perso_ab224f305c08226538b3ab8e9e19531c5}{hitbox\+\_\+attaque}}
+\item 
+int \mbox{\hyperlink{structs__perso_ada9b608392c523863f61a67d29c84d1d}{doit\+\_\+afficher\+\_\+hitbox\+\_\+attaque}}
+\item 
+int \mbox{\hyperlink{structs__perso_aba7c2b7947b319f0210950e023ca5d03}{vie}}
+\item 
+int \mbox{\hyperlink{structs__perso_a349991e44c681d88a30f15e11654e666}{vie\+\_\+max}}
+\item 
+int \mbox{\hyperlink{structs__perso_a7129ab72244627a7547aab7fcbd12c56}{temps\+\_\+invu}}
+\item 
+int \mbox{\hyperlink{structs__perso_a0a0cceb7fdbaa1c5da17dfc41fba5a54}{temps\+\_\+invu\+\_\+max}}
+\item 
+char \mbox{\hyperlink{structs__perso_a554fd03d434f9a5e58f2405f36dd793a}{id\+\_\+son\+\_\+attaque}} \mbox{[}TAILLE\+\_\+\+MAX\+\_\+\+ID\mbox{]}
+\item 
+char \mbox{\hyperlink{structs__perso_a04dcf3bb7b7eef9c2714b78bf0ad86cc}{id\+\_\+son\+\_\+blessure}} \mbox{[}TAILLE\+\_\+\+MAX\+\_\+\+ID\mbox{]}
+\item 
+char \mbox{\hyperlink{structs__perso_a1a8c412aa5303d95b13b301f421e8ffd}{id\+\_\+son\+\_\+mort}} \mbox{[}TAILLE\+\_\+\+MAX\+\_\+\+ID\mbox{]}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Description détaillée}
+Structure représentant un personnage joueur. 
+
+\doxysubsection{Documentation des données membres}
+\Hypertarget{structs__perso_ada9b608392c523863f61a67d29c84d1d}\label{structs__perso_ada9b608392c523863f61a67d29c84d1d} 
+\index{s\_perso@{s\_perso}!doit\_afficher\_hitbox\_attaque@{doit\_afficher\_hitbox\_attaque}}
+\index{doit\_afficher\_hitbox\_attaque@{doit\_afficher\_hitbox\_attaque}!s\_perso@{s\_perso}}
+\doxysubsubsection{\texorpdfstring{doit\_afficher\_hitbox\_attaque}{doit\_afficher\_hitbox\_attaque}}
+{\footnotesize\ttfamily int s\+\_\+perso\+::doit\+\_\+afficher\+\_\+hitbox\+\_\+attaque}
+
+booléen régissant l’affichage de {\ttfamily hitbox\+\_\+attaque} \Hypertarget{structs__perso_a747d0ebc1b1bca54480ea6fe376472ce}\label{structs__perso_a747d0ebc1b1bca54480ea6fe376472ce} 
+\index{s\_perso@{s\_perso}!est\_mort@{est\_mort}}
+\index{est\_mort@{est\_mort}!s\_perso@{s\_perso}}
+\doxysubsubsection{\texorpdfstring{est\_mort}{est\_mort}}
+{\footnotesize\ttfamily int s\+\_\+perso\+::est\+\_\+mort}
+
+Indique si le joueur est mort (1) ou non (0). \Hypertarget{structs__perso_ab224f305c08226538b3ab8e9e19531c5}\label{structs__perso_ab224f305c08226538b3ab8e9e19531c5} 
+\index{s\_perso@{s\_perso}!hitbox\_attaque@{hitbox\_attaque}}
+\index{hitbox\_attaque@{hitbox\_attaque}!s\_perso@{s\_perso}}
+\doxysubsubsection{\texorpdfstring{hitbox\_attaque}{hitbox\_attaque}}
+{\footnotesize\ttfamily SDL\+\_\+\+FRect s\+\_\+perso\+::hitbox\+\_\+attaque}
+
+utilisée pour vérifier si une entité est touchée par l’attaque du joueur \Hypertarget{structs__perso_a554fd03d434f9a5e58f2405f36dd793a}\label{structs__perso_a554fd03d434f9a5e58f2405f36dd793a} 
+\index{s\_perso@{s\_perso}!id\_son\_attaque@{id\_son\_attaque}}
+\index{id\_son\_attaque@{id\_son\_attaque}!s\_perso@{s\_perso}}
+\doxysubsubsection{\texorpdfstring{id\_son\_attaque}{id\_son\_attaque}}
+{\footnotesize\ttfamily char s\+\_\+perso\+::id\+\_\+son\+\_\+attaque\mbox{[}TAILLE\+\_\+\+MAX\+\_\+\+ID\mbox{]}}
+
+Identifiant de ressource du son d\textquotesingle{}attaque \Hypertarget{structs__perso_a04dcf3bb7b7eef9c2714b78bf0ad86cc}\label{structs__perso_a04dcf3bb7b7eef9c2714b78bf0ad86cc} 
+\index{s\_perso@{s\_perso}!id\_son\_blessure@{id\_son\_blessure}}
+\index{id\_son\_blessure@{id\_son\_blessure}!s\_perso@{s\_perso}}
+\doxysubsubsection{\texorpdfstring{id\_son\_blessure}{id\_son\_blessure}}
+{\footnotesize\ttfamily char s\+\_\+perso\+::id\+\_\+son\+\_\+blessure\mbox{[}TAILLE\+\_\+\+MAX\+\_\+\+ID\mbox{]}}
+
+Identifiant de ressource du son de blessure \Hypertarget{structs__perso_a1a8c412aa5303d95b13b301f421e8ffd}\label{structs__perso_a1a8c412aa5303d95b13b301f421e8ffd} 
+\index{s\_perso@{s\_perso}!id\_son\_mort@{id\_son\_mort}}
+\index{id\_son\_mort@{id\_son\_mort}!s\_perso@{s\_perso}}
+\doxysubsubsection{\texorpdfstring{id\_son\_mort}{id\_son\_mort}}
+{\footnotesize\ttfamily char s\+\_\+perso\+::id\+\_\+son\+\_\+mort\mbox{[}TAILLE\+\_\+\+MAX\+\_\+\+ID\mbox{]}}
+
+Identifiant de ressource du son de mort \Hypertarget{structs__perso_ad34e037d34e34d79150f6cc9e6fd93f3}\label{structs__perso_ad34e037d34e34d79150f6cc9e6fd93f3} 
+\index{s\_perso@{s\_perso}!parent@{parent}}
+\index{parent@{parent}!s\_perso@{s\_perso}}
+\doxysubsubsection{\texorpdfstring{parent}{parent}}
+{\footnotesize\ttfamily \mbox{\hyperlink{entite_8h_a2cbf188682c05adae88dc39bdd7ef995}{t\+\_\+entite}}\texorpdfstring{$\ast$}{*} s\+\_\+perso\+::parent}
+
+entité caractérisée comme entité de personnage joueur par cette structure \Hypertarget{structs__perso_a7129ab72244627a7547aab7fcbd12c56}\label{structs__perso_a7129ab72244627a7547aab7fcbd12c56} 
+\index{s\_perso@{s\_perso}!temps\_invu@{temps\_invu}}
+\index{temps\_invu@{temps\_invu}!s\_perso@{s\_perso}}
+\doxysubsubsection{\texorpdfstring{temps\_invu}{temps\_invu}}
+{\footnotesize\ttfamily int s\+\_\+perso\+::temps\+\_\+invu}
+
+compteur de frames qui conditionne l’état d’invulnérabilité après un coup pris \Hypertarget{structs__perso_a0a0cceb7fdbaa1c5da17dfc41fba5a54}\label{structs__perso_a0a0cceb7fdbaa1c5da17dfc41fba5a54} 
+\index{s\_perso@{s\_perso}!temps\_invu\_max@{temps\_invu\_max}}
+\index{temps\_invu\_max@{temps\_invu\_max}!s\_perso@{s\_perso}}
+\doxysubsubsection{\texorpdfstring{temps\_invu\_max}{temps\_invu\_max}}
+{\footnotesize\ttfamily int s\+\_\+perso\+::temps\+\_\+invu\+\_\+max}
+
+valeur maximum affectée à {\ttfamily temps\+\_\+invu}, en nombre de frames \Hypertarget{structs__perso_aba7c2b7947b319f0210950e023ca5d03}\label{structs__perso_aba7c2b7947b319f0210950e023ca5d03} 
+\index{s\_perso@{s\_perso}!vie@{vie}}
+\index{vie@{vie}!s\_perso@{s\_perso}}
+\doxysubsubsection{\texorpdfstring{vie}{vie}}
+{\footnotesize\ttfamily int s\+\_\+perso\+::vie}
+
+points de vie \Hypertarget{structs__perso_a349991e44c681d88a30f15e11654e666}\label{structs__perso_a349991e44c681d88a30f15e11654e666} 
+\index{s\_perso@{s\_perso}!vie\_max@{vie\_max}}
+\index{vie\_max@{vie\_max}!s\_perso@{s\_perso}}
+\doxysubsubsection{\texorpdfstring{vie\_max}{vie\_max}}
+{\footnotesize\ttfamily int s\+\_\+perso\+::vie\+\_\+max}
+
+maximume de points de vie 
+
+La documentation de cette structure a été générée à partir du fichier suivant \+:\begin{DoxyCompactItemize}
+\item 
+src/\mbox{\hyperlink{entite__perso_8h}{entite\+\_\+perso.\+h}}\end{DoxyCompactItemize}

@@ -1,0 +1,47 @@
+\doxysection{nuit.\+h}
+\hypertarget{nuit_8h_source}{}\label{nuit_8h_source}\index{src/nuit.h@{src/nuit.h}}
+\mbox{\hyperlink{nuit_8h}{Aller à la documentation de ce fichier.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#ifndef\ NUIT\_H}}
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#define\ NUIT\_H}}
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#include\ <SDL2/SDL.h>}}
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00016\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{entite_8h}{entite.h}}"{}}}
+\DoxyCodeLine{00017\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{constantes_8h}{constantes.h}}"{}}}
+\DoxyCodeLine{00018\ }
+\DoxyCodeLine{00022\ \textcolor{preprocessor}{\#define\ MAX\_RAYON\_VISIBLE\ TAILLE\_H}}
+\DoxyCodeLine{00026\ \textcolor{preprocessor}{\#define\ FACTEUR\_MIN\_RAYON\_VISIBLE\ 4}}
+\DoxyCodeLine{00030\ \textcolor{preprocessor}{\#define\ FACTEUR\_OBSCURCISSEMENT\ 6.}}
+\DoxyCodeLine{00031\ }
+\DoxyCodeLine{00035\ \textcolor{preprocessor}{\#define\ PAS\_TRANSITION\ 5}}
+\DoxyCodeLine{00036\ }
+\DoxyCodeLine{00041\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\{}
+\DoxyCodeLine{00042\ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{structt__nuit_a5dfcf43af65d3294a776775691ea96b5}{alpha}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00043\ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{structt__nuit_aae9a1852485a930caf9bcc5d909e9c27}{min\_alpha}};\ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00044\ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{structt__nuit_a84d941aa6392bbd406f2e4e9ae0bf39d}{max\_alpha}};\ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00045\ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{structt__nuit_ac775d29f7e0a46b344d301e5b78251cc}{rayon}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00046\ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{structt__nuit_a06edab75a1485c9d68c2fc792a7fa9ff}{min\_rayon}};\ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00047\ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{structt__nuit_ab675c9ad16640064fc078089629ca940}{max\_rayon}};\ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00048\ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{structt__nuit_a10c59a53dac27411629bbc504b358fbe}{volume\_musique\_jour}};\ \ }
+\DoxyCodeLine{00049\ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{structt__nuit_af6408b174eea5666311f3b4f57801725}{min\_musique}};\ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00050\ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{structt__nuit_ae8178035f0c9026292f76fa609aa4174}{max\_musique}};\ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00051\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{structt__nuit_a75fb783ac5e54f0e6166181fddb9c684}{est\_active}};\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00052\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{structt__nuit_a3a892f8bbe4c8116bc52c0fd945728d1}{est\_active\_prec}};\ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00053\ \ \ \ \ \mbox{\hyperlink{structs__entite}{t\_entite}}\ *\ \mbox{\hyperlink{structt__nuit_ae2b2ef771acf749d6c24c6c755039f96}{centre}};\ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00054\ \ \ \ \ SDL\_FRect\ \mbox{\hyperlink{structt__nuit_a540c12502bd3ce78e8f3b3189f867919}{etendue}};\ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00055\ \ \ \ \ SDL\_Texture\ *\ \mbox{\hyperlink{structt__nuit_a1675f4b7feccb5dea181e7e59658f351}{texture\_ombre}};}
+\DoxyCodeLine{00056\ \ \ \ \ SDL\_Texture\ *\ \mbox{\hyperlink{structt__nuit_a93e500e6262afc5c9f5fbdd6ba7a7887}{texture\_jour}};\ }
+\DoxyCodeLine{00057\ \ \ \ \ SDL\_Texture\ *\ \mbox{\hyperlink{structt__nuit_a94276a7f8260a3327c7cc092fa045327}{texture\_nuit}};\ }
+\DoxyCodeLine{00058\ \}\ \mbox{\hyperlink{structt__nuit}{t\_nuit}};}
+\DoxyCodeLine{00059\ }
+\DoxyCodeLine{00060\ \mbox{\hyperlink{structt__nuit}{t\_nuit}}\ *\ \mbox{\hyperlink{nuit_8h_a4a5bb24f9a7369291aa45bcad3ab85ba}{creer\_nuit}}(SDL\_Renderer*,\ \mbox{\hyperlink{structs__entite}{t\_entite}}*\ centre,\ SDL\_FRect\ zone\_jeu,}
+\DoxyCodeLine{00061\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ SDL\_Texture*\ texture\_jour,\ SDL\_Texture*\ texture\_nuit);}
+\DoxyCodeLine{00062\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{nuit_8h_a61f4b7f050df29851049e1624eaecbb6}{transitionner\_nuit}}(\mbox{\hyperlink{structt__nuit}{t\_nuit}}*);}
+\DoxyCodeLine{00063\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{nuit_8h_a78981017230fdda5e46687f4714cddc4}{basculer\_nuit}}(\mbox{\hyperlink{structt__nuit}{t\_nuit}}*);}
+\DoxyCodeLine{00064\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{nuit_8h_a4303b85b5050edb55214185fc6a8df7e}{detruire\_nuit}}(\mbox{\hyperlink{structt__nuit}{t\_nuit}}\ **\ nuit);}
+\DoxyCodeLine{00065\ }
+\DoxyCodeLine{00066\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

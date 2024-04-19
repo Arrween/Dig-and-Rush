@@ -1,0 +1,77 @@
+\doxysection{menu.\+h}
+\hypertarget{menu_8h_source}{}\label{menu_8h_source}\index{src/menu.h@{src/menu.h}}
+\mbox{\hyperlink{menu_8h}{Aller à la documentation de ce fichier.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#ifndef\ MENU\_H}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#define\ MENU\_H}}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ <stdio.h>}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ <SDL2/SDL.h>}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ <SDL2/SDL\_image.h>}}
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ <SDL2/SDL\_ttf.h>}}
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{texte_8h}{texte.h}}"{}}}
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00016\ \textcolor{comment}{//\ Déclarations\ des\ fonctions\ externes}}
+\DoxyCodeLine{00017\ }
+\DoxyCodeLine{00018\ \textcolor{keyword}{extern}\ \textcolor{keywordtype}{void}\ initialiser\_sdl();\ \textcolor{comment}{//\ Fonction\ pour\ initialiser\ SDL}}
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00020\ \textcolor{keyword}{extern}\ \textcolor{keywordtype}{void}\ initialiser\_sdl\_img();\ \textcolor{comment}{//\ Fonction\ pour\ initialiser\ SDL\_image}}
+\DoxyCodeLine{00021\ }
+\DoxyCodeLine{00022\ \textcolor{keyword}{extern}\ \textcolor{keywordtype}{void}\ initialiser\_sdl\_ttf();\ \textcolor{comment}{//\ Fonction\ pour\ initialiser\ SDL\_ttf}}
+\DoxyCodeLine{00023\ }
+\DoxyCodeLine{00024\ \textcolor{keyword}{extern}\ \textcolor{keywordtype}{void}\ initialiser\_sdl\_mixer();\ \textcolor{comment}{//\ Fonction\ pour\ initialiser\ SDL\_mixer}}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ \textcolor{keyword}{extern}\ SDL\_Window\ *\ creation\_fenetre();\ \textcolor{comment}{//\ Fonction\ pour\ créer\ une\ fenêtre\ SDL}}
+\DoxyCodeLine{00027\ }
+\DoxyCodeLine{00028\ \textcolor{keyword}{extern}\ SDL\_Renderer\ *\ creation\_renderer(SDL\_Window\ **\ fenetre);\ \textcolor{comment}{//\ Fonction\ pour\ créer\ un\ renderer\ SDL}}
+\DoxyCodeLine{00029\ }
+\DoxyCodeLine{00030\ \textcolor{comment}{//\ Données\ des\ boutons}}
+\DoxyCodeLine{00031\ }
+\DoxyCodeLine{00032\ \textcolor{keyword}{enum}\ \{\ PAGE\_MENU,\ PAGE\_MENU\_PERSONNAGES,\ PAGE\_MENU\_PARAMETRES\ \};}
+\DoxyCodeLine{00033\ }
+\DoxyCodeLine{00034\ }
+\DoxyCodeLine{00035\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structs__etat}{s\_etat}}\ \mbox{\hyperlink{structs__etat}{t\_etat}};}
+\DoxyCodeLine{00036\ }
+\DoxyCodeLine{00040\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\{\ }
+\DoxyCodeLine{00041\ \ \ \ \ SDL\_Texture\ *\ \mbox{\hyperlink{structt__bouton_a03432e7303d39830a6c4c9508048495a}{texture}};\ }
+\DoxyCodeLine{00042\ \ \ \ \ SDL\_Rect\ \mbox{\hyperlink{structt__bouton_a9484673090f3fb117372ebc73d15b469}{rect}};\ }
+\DoxyCodeLine{00043\ \ \ \ \ void\ (*action)\ (\mbox{\hyperlink{structs__etat}{t\_etat}}\ *\ etat);}
+\DoxyCodeLine{00044\ \ \ \ \ \textcolor{keywordtype}{char}\ nom[100];}
+\DoxyCodeLine{00045\ \}\ \mbox{\hyperlink{structt__bouton}{t\_bouton}};}
+\DoxyCodeLine{00046\ }
+\DoxyCodeLine{00050\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structs__etat}{s\_etat}}\ \{}
+\DoxyCodeLine{00051\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{structs__etat_aaead14826d9f85bf13fbeab85809c484}{doit\_quitter}};}
+\DoxyCodeLine{00052\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{structs__etat_afadc8892ed1a31cb35d3495b0a036296}{est\_fullscreen}};}
+\DoxyCodeLine{00053\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{structs__etat_a26484d6a91b2a15c2cdf0e5703239557}{i\_menu}};}
+\DoxyCodeLine{00054\ \ \ \ \ \mbox{\hyperlink{structt__bouton}{t\_bouton}}\ **\ \mbox{\hyperlink{structs__etat_a4724972a794b76faef2d69f73b6ae918}{boutons}};}
+\DoxyCodeLine{00055\ \ \ \ \ SDL\_Window\ *\ \mbox{\hyperlink{structs__etat_a86e56ce23bae9bcd8f8fb0af4e9571c4}{fenetre}};}
+\DoxyCodeLine{00056\ \ \ \ \ \textcolor{keywordtype}{char}\ \mbox{\hyperlink{structs__etat_a487aee143210b282d8c56af704576d9f}{perso\_selectionne}}[100];\ }
+\DoxyCodeLine{00057\ \ \ \ \ SDL\_Texture\ *\ \mbox{\hyperlink{structs__etat_afea4824246ae071f42afd756165062d9}{tex\_perso\_selectionne}};\ }
+\DoxyCodeLine{00058\ \ \ \ \ \mbox{\hyperlink{structt__texte}{t\_texte}}\ *\ \mbox{\hyperlink{structs__etat_ad7d401c95c747d5511f0d67994970ad3}{texte\_perso\_selectionne}};\ }
+\DoxyCodeLine{00059\ \ \ \ \ SDL\_Texture\ *\ \mbox{\hyperlink{structs__etat_af8cb98569b3069ab166d359e2af807b5}{tex\_barre\_vie}};\ }
+\DoxyCodeLine{00060\ \ \ \ \ SDL\_Texture\ *\ \mbox{\hyperlink{structs__etat_a0b8f81316d5ca7606e6e7fb7f2f25cd4}{tex\_barre\_energie}};\ }
+\DoxyCodeLine{00061\ \ \ \ \ \mbox{\hyperlink{structt__texte}{t\_texte}}\ *\ \mbox{\hyperlink{structs__etat_ac0137002bdce7bc079587e6ae3a93f0f}{texte\_avertissement}};\ }
+\DoxyCodeLine{00062\ \ \ \ \ SDL\_Renderer\ *\ \mbox{\hyperlink{structs__etat_a85e2213c29fd55bba19d83475d148df9}{rend}};\ }
+\DoxyCodeLine{00063\ \};}
+\DoxyCodeLine{00064\ }
+\DoxyCodeLine{00065\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{menu_8h_aad8895e65d833ce453be53c824ba134c}{action\_volume}}(\mbox{\hyperlink{structs__etat}{t\_etat}}\ *);}
+\DoxyCodeLine{00066\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{menu_8h_a1dea1826d63b3073512beac4fb90e9a4}{action\_fullscreen}}(\mbox{\hyperlink{structs__etat}{t\_etat}}\ *);}
+\DoxyCodeLine{00067\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{menu_8h_a4a46509848ff7703df286de1e5cb5b3b}{action\_home}}(\mbox{\hyperlink{structs__etat}{t\_etat}}\ *);}
+\DoxyCodeLine{00068\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{menu_8h_a7214db4790596b509ed4bdd155321c47}{action\_quitter}}(\mbox{\hyperlink{structs__etat}{t\_etat}}\ *);}
+\DoxyCodeLine{00069\ \textcolor{keywordtype}{void}\ action\_jouer(\mbox{\hyperlink{structs__etat}{t\_etat}}\ *);}
+\DoxyCodeLine{00070\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{menu_8h_a1fd34fef4cc0d7ab5ad8e13d40b8ce44}{action\_personnages}}(\mbox{\hyperlink{structs__etat}{t\_etat}}\ *);}
+\DoxyCodeLine{00071\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{menu_8h_a8f14361d66e2b852ecf6af231cc897c0}{action\_parametres}}(\mbox{\hyperlink{structs__etat}{t\_etat}}\ *);}
+\DoxyCodeLine{00072\ \textcolor{keywordtype}{void}\ action\_continue(\mbox{\hyperlink{structs__etat}{t\_etat}}\ *\ );}
+\DoxyCodeLine{00073\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{menu_8h_a05d9aa9814fb72d4c352b40fcd0a958c}{action\_retour}}(\mbox{\hyperlink{structs__etat}{t\_etat}}\ *);}
+\DoxyCodeLine{00074\ \textcolor{keywordtype}{void}\ action\_nulle(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00075\ }
+\DoxyCodeLine{00076\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{menu_8h_adf8deb0e1e218e9e9165b59ca8add279}{action\_perso\_ania}}(\mbox{\hyperlink{structs__etat}{t\_etat}}\ *);}
+\DoxyCodeLine{00077\ \textcolor{keywordtype}{void}\ action\_perso\_jack(\mbox{\hyperlink{structs__etat}{t\_etat}}\ *);}
+\DoxyCodeLine{00078\ \textcolor{keywordtype}{void}\ action\_perso\_matt(\mbox{\hyperlink{structs__etat}{t\_etat}}\ *);}
+\DoxyCodeLine{00079\ \textcolor{keywordtype}{void}\ action\_perso\_yohan(\mbox{\hyperlink{structs__etat}{t\_etat}}\ *);}
+\DoxyCodeLine{00080\ }
+\DoxyCodeLine{00081\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ MENU\_H}}
+
+\end{DoxyCode}

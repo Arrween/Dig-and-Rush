@@ -1,0 +1,106 @@
+\doxysection{Référence du fichier src/test\+\_\+unit.c}
+\hypertarget{test__unit_8c}{}\label{test__unit_8c}\index{src/test\_unit.c@{src/test\_unit.c}}
+
+
+Fichier contenant les tests des fonctions de gestion des ressources du jeu.  
+
+
+{\ttfamily \#include $<$CUnit/\+Basic.\+h$>$}\newline
+{\ttfamily \#include $<$SDL2/\+SDL.\+h$>$}\newline
+{\ttfamily \#include $<$SDL2/\+SDL\+\_\+image.\+h$>$}\newline
+{\ttfamily \#include $<$SDL2/\+SDL\+\_\+mixer.\+h$>$}\newline
+{\ttfamily \#include $<$SDL2/\+SDL\+\_\+ttf.\+h$>$}\newline
+{\ttfamily \#include "{}ressources.\+h"{}}\newline
+\doxysubsubsection*{Fonctions}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{test__unit_8c_aa7ea1bdab0841afb70bdd5a1d750fe13}{initialiser\+\_\+suite}} (void)
+\begin{DoxyCompactList}\small\item\em Initialisation de la suite de tests. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{test__unit_8c_a4c12f0f63eeecbf244391ac558238bf9}{nettoyer\+\_\+suite}} (void)
+\begin{DoxyCompactList}\small\item\em Nettoyage après l\textquotesingle{}exécution des tests. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{test__unit_8c_a3115b3431e90168ae23fe7f37873b40d}{test\+\_\+chargement\+\_\+ressources}} (void)
+\begin{DoxyCompactList}\small\item\em Test de chargement des ressources. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{test__unit_8c_aaa894579cea7b6a37a60841079d6f911}{test\+\_\+detruire\+\_\+ressources}} (void)
+\begin{DoxyCompactList}\small\item\em Test de destruction des ressources. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{test__unit_8c_ae66f6b31b5ad750f1fe042a706a4e3d4}{main}} ()
+\begin{DoxyCompactList}\small\item\em Fonction principale. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{test__unit_8c_a966da7a60c4ea3ba301e26ccc5efe452}\label{test__unit_8c_a966da7a60c4ea3ba301e26ccc5efe452} 
+SDL\+\_\+\+Renderer \texorpdfstring{$\ast$}{*} {\bfseries renderer} = NULL
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Description détaillée}
+Fichier contenant les tests des fonctions de gestion des ressources du jeu. 
+
+
+
+\doxysubsection{Documentation des fonctions}
+\Hypertarget{test__unit_8c_aa7ea1bdab0841afb70bdd5a1d750fe13}\label{test__unit_8c_aa7ea1bdab0841afb70bdd5a1d750fe13} 
+\index{test\_unit.c@{test\_unit.c}!initialiser\_suite@{initialiser\_suite}}
+\index{initialiser\_suite@{initialiser\_suite}!test\_unit.c@{test\_unit.c}}
+\doxysubsubsection{\texorpdfstring{initialiser\_suite()}{initialiser\_suite()}}
+{\footnotesize\ttfamily int initialiser\+\_\+suite (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Initialisation de la suite de tests. 
+
+Cette fonction initialise les bibliothèques SDL ainsi que le renderer nécessaire pour les tests nécessitant du rendu.
+
+\begin{DoxyReturn}{Renvoie}
+0 si l\textquotesingle{}initialisation réussit, -\/1 sinon. 
+\end{DoxyReturn}
+\Hypertarget{test__unit_8c_ae66f6b31b5ad750f1fe042a706a4e3d4}\label{test__unit_8c_ae66f6b31b5ad750f1fe042a706a4e3d4} 
+\index{test\_unit.c@{test\_unit.c}!main@{main}}
+\index{main@{main}!test\_unit.c@{test\_unit.c}}
+\doxysubsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily int main (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Fonction principale. 
+
+Cette fonction initialise les tests, ajoute les tests à une suite, exécute les tests et nettoie après leur exécution.
+
+\begin{DoxyReturn}{Renvoie}
+Le code d\textquotesingle{}erreur des tests. 
+\end{DoxyReturn}
+\Hypertarget{test__unit_8c_a4c12f0f63eeecbf244391ac558238bf9}\label{test__unit_8c_a4c12f0f63eeecbf244391ac558238bf9} 
+\index{test\_unit.c@{test\_unit.c}!nettoyer\_suite@{nettoyer\_suite}}
+\index{nettoyer\_suite@{nettoyer\_suite}!test\_unit.c@{test\_unit.c}}
+\doxysubsubsection{\texorpdfstring{nettoyer\_suite()}{nettoyer\_suite()}}
+{\footnotesize\ttfamily int nettoyer\+\_\+suite (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Nettoyage après l\textquotesingle{}exécution des tests. 
+
+Cette fonction nettoie les ressources SDL utilisées par les tests.
+
+\begin{DoxyReturn}{Renvoie}
+0 si le nettoyage réussit, -\/1 sinon. 
+\end{DoxyReturn}
+\Hypertarget{test__unit_8c_a3115b3431e90168ae23fe7f37873b40d}\label{test__unit_8c_a3115b3431e90168ae23fe7f37873b40d} 
+\index{test\_unit.c@{test\_unit.c}!test\_chargement\_ressources@{test\_chargement\_ressources}}
+\index{test\_chargement\_ressources@{test\_chargement\_ressources}!test\_unit.c@{test\_unit.c}}
+\doxysubsubsection{\texorpdfstring{test\_chargement\_ressources()}{test\_chargement\_ressources()}}
+{\footnotesize\ttfamily void test\+\_\+chargement\+\_\+ressources (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Test de chargement des ressources. 
+
+Cette fonction teste le chargement des différentes ressources du jeu. \Hypertarget{test__unit_8c_aaa894579cea7b6a37a60841079d6f911}\label{test__unit_8c_aaa894579cea7b6a37a60841079d6f911} 
+\index{test\_unit.c@{test\_unit.c}!test\_detruire\_ressources@{test\_detruire\_ressources}}
+\index{test\_detruire\_ressources@{test\_detruire\_ressources}!test\_unit.c@{test\_unit.c}}
+\doxysubsubsection{\texorpdfstring{test\_detruire\_ressources()}{test\_detruire\_ressources()}}
+{\footnotesize\ttfamily void test\+\_\+detruire\+\_\+ressources (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Test de destruction des ressources. 
+
+Cette fonction teste la destruction des ressources chargées par le jeu. 
