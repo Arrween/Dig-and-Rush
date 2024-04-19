@@ -1,0 +1,133 @@
+\doxysection{Référence du fichier src/entite\+\_\+perso.h}
+\hypertarget{entite__perso_8h}{}\label{entite__perso_8h}\index{src/entite\_perso.h@{src/entite\_perso.h}}
+
+
+Définitions des structures et fonctions liées aux personnages joueurs du jeu.  
+
+
+{\ttfamily \#include "{}entite.\+h"{}}\newline
+{\ttfamily \#include "{}texte.\+h"{}}\newline
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structs__perso}{s\+\_\+perso}}
+\begin{DoxyCompactList}\small\item\em Structure représentant un personnage joueur. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Fonctions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{entite_8h_a2cbf188682c05adae88dc39bdd7ef995}{t\+\_\+entite}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{entite__perso_8h_ae35f2d8954f5be03cef10f98a483e69e}{creer\+\_\+entite\+\_\+perso}} (char \texorpdfstring{$\ast$}{*}, float, float, float, float, int)
+\begin{DoxyCompactList}\small\item\em Crée une nouvelle structure d\textquotesingle{}entité personnage joueur avec les attributs spécifiés. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{entite__perso_8h_aea995843f8d82093fa0bbe3cdb67df9b}{detruire\+\_\+perso}} (\mbox{\hyperlink{structs__perso}{t\+\_\+perso}} \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*})
+\begin{DoxyCompactList}\small\item\em Détruit une structure de personnage joueur et libère la mémoire associée. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{entite__perso_8h_ad304a33af2753415efc1785431d448ab}{perso\+\_\+porter\+\_\+coup}} (\mbox{\hyperlink{entite_8h_a2cbf188682c05adae88dc39bdd7ef995}{t\+\_\+entite}} \texorpdfstring{$\ast$}{*}, int \texorpdfstring{$\ast$}{*}, \mbox{\hyperlink{structt__texte}{t\+\_\+texte}} \texorpdfstring{$\ast$}{*})
+\begin{DoxyCompactList}\small\item\em Porte un coup avec le personnage joueur. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{entite__perso_8h_aa724cf80b47dfab54d83dafb6ae6bfb8}{perso\+\_\+prendre\+\_\+coup}} (\mbox{\hyperlink{entite_8h_a2cbf188682c05adae88dc39bdd7ef995}{t\+\_\+entite}} \texorpdfstring{$\ast$}{*})
+\begin{DoxyCompactList}\small\item\em Gère le fait que le personnage joueur reçoit un coup. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{entite__perso_8h_ae8bf74e8bba0ed9fc70eb49b872561a4}{perso\+\_\+mourir}} (\mbox{\hyperlink{entite_8h_a2cbf188682c05adae88dc39bdd7ef995}{t\+\_\+entite}} \texorpdfstring{$\ast$}{*})
+\begin{DoxyCompactList}\small\item\em Gère la mort du personnage joueur. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Description détaillée}
+Définitions des structures et fonctions liées aux personnages joueurs du jeu. 
+
+
+
+\doxysubsection{Documentation des fonctions}
+\Hypertarget{entite__perso_8h_ae35f2d8954f5be03cef10f98a483e69e}\label{entite__perso_8h_ae35f2d8954f5be03cef10f98a483e69e} 
+\index{entite\_perso.h@{entite\_perso.h}!creer\_entite\_perso@{creer\_entite\_perso}}
+\index{creer\_entite\_perso@{creer\_entite\_perso}!entite\_perso.h@{entite\_perso.h}}
+\doxysubsubsection{\texorpdfstring{creer\_entite\_perso()}{creer\_entite\_perso()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{entite_8h_a2cbf188682c05adae88dc39bdd7ef995}{t\+\_\+entite}} \texorpdfstring{$\ast$}{*} creer\+\_\+entite\+\_\+perso (\begin{DoxyParamCaption}\item[{char \texorpdfstring{$\ast$}{*}}]{id,  }\item[{float}]{x,  }\item[{float}]{y,  }\item[{float}]{w,  }\item[{float}]{h,  }\item[{int}]{est\+\_\+relatif }\end{DoxyParamCaption})}
+
+
+
+Crée une nouvelle structure d\textquotesingle{}entité personnage joueur avec les attributs spécifiés. 
+
+
+\begin{DoxyParams}{Paramètres}
+{\em id} & Identifiant de l\textquotesingle{}entité personnage joueur. \\
+\hline
+{\em x} & Position en x de l\textquotesingle{}entité personnage joueur. \\
+\hline
+{\em y} & Position en y de l\textquotesingle{}entité personnage joueur. \\
+\hline
+{\em w} & Largeur de l\textquotesingle{}entité personnage joueur. \\
+\hline
+{\em h} & Hauteur de l\textquotesingle{}entité personnage joueur. \\
+\hline
+{\em est\+\_\+relatif} & 1 si les coordonnées sont relatives, 0 si elles sont absolues. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Renvoie}
+Pointeur vers la nouvelle structure d\textquotesingle{}entité personnage joueur créée, NULL en cas d\textquotesingle{}échec. 
+\end{DoxyReturn}
+\Hypertarget{entite__perso_8h_aea995843f8d82093fa0bbe3cdb67df9b}\label{entite__perso_8h_aea995843f8d82093fa0bbe3cdb67df9b} 
+\index{entite\_perso.h@{entite\_perso.h}!detruire\_perso@{detruire\_perso}}
+\index{detruire\_perso@{detruire\_perso}!entite\_perso.h@{entite\_perso.h}}
+\doxysubsubsection{\texorpdfstring{detruire\_perso()}{detruire\_perso()}}
+{\footnotesize\ttfamily void detruire\+\_\+perso (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structs__perso}{t\+\_\+perso}} \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{p }\end{DoxyParamCaption})}
+
+
+
+Détruit une structure de personnage joueur et libère la mémoire associée. 
+
+
+\begin{DoxyParams}{Paramètres}
+{\em p} & Pointeur vers le pointeur de la structure de personnage joueur à détruire. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{entite__perso_8h_ae8bf74e8bba0ed9fc70eb49b872561a4}\label{entite__perso_8h_ae8bf74e8bba0ed9fc70eb49b872561a4} 
+\index{entite\_perso.h@{entite\_perso.h}!perso\_mourir@{perso\_mourir}}
+\index{perso\_mourir@{perso\_mourir}!entite\_perso.h@{entite\_perso.h}}
+\doxysubsubsection{\texorpdfstring{perso\_mourir()}{perso\_mourir()}}
+{\footnotesize\ttfamily void perso\+\_\+mourir (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{entite_8h_a2cbf188682c05adae88dc39bdd7ef995}{t\+\_\+entite}} \texorpdfstring{$\ast$}{*}}]{perso }\end{DoxyParamCaption})}
+
+
+
+Gère la mort du personnage joueur. 
+
+Cette fonction est appelée lorsque le personnage joueur meurt. Elle change l\textquotesingle{}animation du personnage, le marque comme mort, et joue un son de mort.
+
+
+\begin{DoxyParams}{Paramètres}
+{\em perso} & Pointeur vers l\textquotesingle{}entité du personnage joueur. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{entite__perso_8h_ad304a33af2753415efc1785431d448ab}\label{entite__perso_8h_ad304a33af2753415efc1785431d448ab} 
+\index{entite\_perso.h@{entite\_perso.h}!perso\_porter\_coup@{perso\_porter\_coup}}
+\index{perso\_porter\_coup@{perso\_porter\_coup}!entite\_perso.h@{entite\_perso.h}}
+\doxysubsubsection{\texorpdfstring{perso\_porter\_coup()}{perso\_porter\_coup()}}
+{\footnotesize\ttfamily void perso\+\_\+porter\+\_\+coup (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{entite_8h_a2cbf188682c05adae88dc39bdd7ef995}{t\+\_\+entite}} \texorpdfstring{$\ast$}{*}}]{e,  }\item[{int \texorpdfstring{$\ast$}{*}}]{score,  }\item[{\mbox{\hyperlink{structt__texte}{t\+\_\+texte}} \texorpdfstring{$\ast$}{*}}]{texte\+\_\+score }\end{DoxyParamCaption})}
+
+
+
+Porte un coup avec le personnage joueur. 
+
+Cette fonction vérifie si le personnage joueur attaque un ennemi. Si c\textquotesingle{}est le cas, l\textquotesingle{}ennemi meurt, et le score est mis à jour. Ensuite, un son d\textquotesingle{}attaque est joué.
+
+
+\begin{DoxyParams}{Paramètres}
+{\em e} & Pointeur vers l\textquotesingle{}entité du personnage joueur. \\
+\hline
+{\em score} & Pointeur vers le score du joueur. \\
+\hline
+{\em texte\+\_\+score} & Pointeur vers la structure texte pour afficher le score. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{entite__perso_8h_aa724cf80b47dfab54d83dafb6ae6bfb8}\label{entite__perso_8h_aa724cf80b47dfab54d83dafb6ae6bfb8} 
+\index{entite\_perso.h@{entite\_perso.h}!perso\_prendre\_coup@{perso\_prendre\_coup}}
+\index{perso\_prendre\_coup@{perso\_prendre\_coup}!entite\_perso.h@{entite\_perso.h}}
+\doxysubsubsection{\texorpdfstring{perso\_prendre\_coup()}{perso\_prendre\_coup()}}
+{\footnotesize\ttfamily void perso\+\_\+prendre\+\_\+coup (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{entite_8h_a2cbf188682c05adae88dc39bdd7ef995}{t\+\_\+entite}} \texorpdfstring{$\ast$}{*}}]{perso }\end{DoxyParamCaption})}
+
+
+
+Gère le fait que le personnage joueur reçoit un coup. 
+
+Cette fonction est appelée lorsque le personnage joueur reçoit un coup. Elle diminue les points de vie du personnage joueur, le marque comme mort s\textquotesingle{}il n\textquotesingle{}a plus de points de vie, ou joue un son de blessure sinon.
+
+
+\begin{DoxyParams}{Paramètres}
+{\em perso} & Pointeur vers l\textquotesingle{}entité du personnage joueur. \\
+\hline
+\end{DoxyParams}

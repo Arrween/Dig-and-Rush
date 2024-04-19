@@ -1,0 +1,123 @@
+\doxysection{Référence du fichier src/entite\+\_\+pnj.h}
+\hypertarget{entite__pnj_8h}{}\label{entite__pnj_8h}\index{src/entite\_pnj.h@{src/entite\_pnj.h}}
+
+
+Définitions des structures et fonctions liées aux personnages non-\/joueurs du jeu.  
+
+
+{\ttfamily \#include "{}entite.\+h"{}}\newline
+{\ttfamily \#include "{}texte.\+h"{}}\newline
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structs__pnj}{s\+\_\+pnj}}
+\begin{DoxyCompactList}\small\item\em Structure représentant un PNJ (Personnage Non-\/\+Joueur). \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Fonctions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{entite_8h_a2cbf188682c05adae88dc39bdd7ef995}{t\+\_\+entite}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{entite__pnj_8h_a1fee6e1d45e87c1bb4f2c45478e6608f}{creer\+\_\+entite\+\_\+pnj\+\_\+depuis\+\_\+spritesheet}} (char \texorpdfstring{$\ast$}{*}, float, float, float, float, int)
+\begin{DoxyCompactList}\small\item\em Crée une nouvelle structure d\textquotesingle{}entité PNJ à partir d\textquotesingle{}une spritesheet avec les attributs spécifiés. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{entite_8h_a2cbf188682c05adae88dc39bdd7ef995}{t\+\_\+entite}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{entite__pnj_8h_a2cb541661db40a4010a0d38e74b9d52c}{creer\+\_\+entite\+\_\+pnj}} (char \texorpdfstring{$\ast$}{*}, float, float, float, float, int)
+\begin{DoxyCompactList}\small\item\em Crée une nouvelle structure d\textquotesingle{}entité PNJ avec les attributs spécifiés. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{entite__pnj_8h_a664decb3f1eb8e5213dd8b6ea79357b1}{detruire\+\_\+pnj}} (\mbox{\hyperlink{structs__pnj}{t\+\_\+pnj}} \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*})
+\begin{DoxyCompactList}\small\item\em Détruit une structure de PNJ et libère la mémoire associée. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{entite__pnj_8h_ae7266bb847ac4e0b7dffa072146e7ac7}{pnj\+\_\+mourir}} (\mbox{\hyperlink{entite_8h_a2cbf188682c05adae88dc39bdd7ef995}{t\+\_\+entite}} \texorpdfstring{$\ast$}{*}pnj, int \texorpdfstring{$\ast$}{*}score, \mbox{\hyperlink{structt__texte}{t\+\_\+texte}} \texorpdfstring{$\ast$}{*}texte\+\_\+score)
+\begin{DoxyCompactList}\small\item\em Fonction pour faire mourir un PNJ. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Description détaillée}
+Définitions des structures et fonctions liées aux personnages non-\/joueurs du jeu. 
+
+
+
+\doxysubsection{Documentation des fonctions}
+\Hypertarget{entite__pnj_8h_a2cb541661db40a4010a0d38e74b9d52c}\label{entite__pnj_8h_a2cb541661db40a4010a0d38e74b9d52c} 
+\index{entite\_pnj.h@{entite\_pnj.h}!creer\_entite\_pnj@{creer\_entite\_pnj}}
+\index{creer\_entite\_pnj@{creer\_entite\_pnj}!entite\_pnj.h@{entite\_pnj.h}}
+\doxysubsubsection{\texorpdfstring{creer\_entite\_pnj()}{creer\_entite\_pnj()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{entite_8h_a2cbf188682c05adae88dc39bdd7ef995}{t\+\_\+entite}} \texorpdfstring{$\ast$}{*} creer\+\_\+entite\+\_\+pnj (\begin{DoxyParamCaption}\item[{char \texorpdfstring{$\ast$}{*}}]{id,  }\item[{float}]{x,  }\item[{float}]{y,  }\item[{float}]{w,  }\item[{float}]{h,  }\item[{int}]{est\+\_\+relatif }\end{DoxyParamCaption})}
+
+
+
+Crée une nouvelle structure d\textquotesingle{}entité PNJ avec les attributs spécifiés. 
+
+
+\begin{DoxyParams}{Paramètres}
+{\em id} & Identifiant de l\textquotesingle{}entité PNJ. \\
+\hline
+{\em x} & Position en x de l\textquotesingle{}entité PNJ. \\
+\hline
+{\em y} & Position en y de l\textquotesingle{}entité PNJ. \\
+\hline
+{\em w} & Largeur de l\textquotesingle{}entité PNJ. \\
+\hline
+{\em h} & Hauteur de l\textquotesingle{}entité PNJ. \\
+\hline
+{\em est\+\_\+relatif} & 1 si les coordonnées sont relatives, 0 si elles sont absolues. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Renvoie}
+Pointeur vers la nouvelle structure d\textquotesingle{}entité PNJ créée, NULL en cas d\textquotesingle{}échec. 
+\end{DoxyReturn}
+\Hypertarget{entite__pnj_8h_a1fee6e1d45e87c1bb4f2c45478e6608f}\label{entite__pnj_8h_a1fee6e1d45e87c1bb4f2c45478e6608f} 
+\index{entite\_pnj.h@{entite\_pnj.h}!creer\_entite\_pnj\_depuis\_spritesheet@{creer\_entite\_pnj\_depuis\_spritesheet}}
+\index{creer\_entite\_pnj\_depuis\_spritesheet@{creer\_entite\_pnj\_depuis\_spritesheet}!entite\_pnj.h@{entite\_pnj.h}}
+\doxysubsubsection{\texorpdfstring{creer\_entite\_pnj\_depuis\_spritesheet()}{creer\_entite\_pnj\_depuis\_spritesheet()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{entite_8h_a2cbf188682c05adae88dc39bdd7ef995}{t\+\_\+entite}} \texorpdfstring{$\ast$}{*} creer\+\_\+entite\+\_\+pnj\+\_\+depuis\+\_\+spritesheet (\begin{DoxyParamCaption}\item[{char \texorpdfstring{$\ast$}{*}}]{id,  }\item[{float}]{x,  }\item[{float}]{y,  }\item[{float}]{w,  }\item[{float}]{h,  }\item[{int}]{est\+\_\+relatif }\end{DoxyParamCaption})}
+
+
+
+Crée une nouvelle structure d\textquotesingle{}entité PNJ à partir d\textquotesingle{}une spritesheet avec les attributs spécifiés. 
+
+
+\begin{DoxyParams}{Paramètres}
+{\em id} & Identifiant de l\textquotesingle{}entité PNJ. \\
+\hline
+{\em x} & Position en x de l\textquotesingle{}entité PNJ. \\
+\hline
+{\em y} & Position en y de l\textquotesingle{}entité PNJ. \\
+\hline
+{\em w} & Largeur de l\textquotesingle{}entité PNJ. \\
+\hline
+{\em h} & Hauteur de l\textquotesingle{}entité PNJ. \\
+\hline
+{\em est\+\_\+relatif} & 1 si les coordonnées sont relatives, 0 si elles sont absolues. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Renvoie}
+Pointeur vers la nouvelle structure d\textquotesingle{}entité PNJ créée, NULL en cas d\textquotesingle{}échec. 
+\end{DoxyReturn}
+\Hypertarget{entite__pnj_8h_a664decb3f1eb8e5213dd8b6ea79357b1}\label{entite__pnj_8h_a664decb3f1eb8e5213dd8b6ea79357b1} 
+\index{entite\_pnj.h@{entite\_pnj.h}!detruire\_pnj@{detruire\_pnj}}
+\index{detruire\_pnj@{detruire\_pnj}!entite\_pnj.h@{entite\_pnj.h}}
+\doxysubsubsection{\texorpdfstring{detruire\_pnj()}{detruire\_pnj()}}
+{\footnotesize\ttfamily void detruire\+\_\+pnj (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structs__pnj}{t\+\_\+pnj}} \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{p }\end{DoxyParamCaption})}
+
+
+
+Détruit une structure de PNJ et libère la mémoire associée. 
+
+
+\begin{DoxyParams}{Paramètres}
+{\em p} & Pointeur vers le pointeur de la structure de PNJ à détruire. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{entite__pnj_8h_ae7266bb847ac4e0b7dffa072146e7ac7}\label{entite__pnj_8h_ae7266bb847ac4e0b7dffa072146e7ac7} 
+\index{entite\_pnj.h@{entite\_pnj.h}!pnj\_mourir@{pnj\_mourir}}
+\index{pnj\_mourir@{pnj\_mourir}!entite\_pnj.h@{entite\_pnj.h}}
+\doxysubsubsection{\texorpdfstring{pnj\_mourir()}{pnj\_mourir()}}
+{\footnotesize\ttfamily void pnj\+\_\+mourir (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{entite_8h_a2cbf188682c05adae88dc39bdd7ef995}{t\+\_\+entite}} \texorpdfstring{$\ast$}{*}}]{pnj,  }\item[{int \texorpdfstring{$\ast$}{*}}]{score,  }\item[{\mbox{\hyperlink{structt__texte}{t\+\_\+texte}} \texorpdfstring{$\ast$}{*}}]{texte\+\_\+score }\end{DoxyParamCaption})}
+
+
+
+Fonction pour faire mourir un PNJ. 
+
+
+\begin{DoxyParams}{Paramètres}
+{\em pnj} & Pointeur vers l\textquotesingle{}entité du PNJ. \\
+\hline
+{\em score} & Pointeur vers le score. \\
+\hline
+{\em texte\+\_\+score} & Pointeur vers le texte du score. \\
+\hline
+\end{DoxyParams}

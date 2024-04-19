@@ -1,0 +1,134 @@
+\doxysection{Référence du fichier src/tour.c}
+\hypertarget{tour_8c}{}\label{tour_8c}\index{src/tour.c@{src/tour.c}}
+
+
+Implémentation des fonctions liées à la gestion de la tour.  
+
+
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \#include $<$SDL2/\+SDL.\+h$>$}\newline
+{\ttfamily \#include $<$SDL2/\+SDL\+\_\+image.\+h$>$}\newline
+{\ttfamily \#include $<$SDL2/\+SDL\+\_\+ttf.\+h$>$}\newline
+{\ttfamily \#include $<$time.\+h$>$}\newline
+{\ttfamily \#include "{}ressources.\+h"{}}\newline
+{\ttfamily \#include "{}tour.\+h"{}}\newline
+{\ttfamily \#include "{}constantes.\+h"{}}\newline
+{\ttfamily \#include "{}entite.\+h"{}}\newline
+{\ttfamily \#include "{}entite\+\_\+destructible.\+h"{}}\newline
+{\ttfamily \#include "{}entite\+\_\+bonus.\+h"{}}\newline
+{\ttfamily \#include "{}entite\+\_\+pnj.\+h"{}}\newline
+{\ttfamily \#include "{}entite\+\_\+perso.\+h"{}}\newline
+{\ttfamily \#include "{}nuit.\+h"{}}\newline
+{\ttfamily \#include "{}morceaux\+\_\+niveau.\+h"{}}\newline
+{\ttfamily \#include "{}listes.\+h"{}}\newline
+{\ttfamily \#include "{}texte.\+h"{}}\newline
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{tour_8c_a7d266eaa08d1831c88b403bab3da20ea}\label{tour_8c_a7d266eaa08d1831c88b403bab3da20ea} 
+\#define {\bfseries Y\+\_\+\+PREMIERE\+\_\+\+LIGNE}~80
+\item 
+\Hypertarget{tour_8c_ac6a020004ba454c3f6881db68a4e7c89}\label{tour_8c_ac6a020004ba454c3f6881db68a4e7c89} 
+\#define {\bfseries DELAI\+\_\+\+CREUSAGE}~18
+\item 
+\Hypertarget{tour_8c_a912732fd65cfec0c19466a315b8ef1a9}\label{tour_8c_a912732fd65cfec0c19466a315b8ef1a9} 
+\#define {\bfseries DELAI\+\_\+\+PERTE\+\_\+\+SCORE}~150
+\item 
+\Hypertarget{tour_8c_a9f24da81a695ffcaf0d472fe54e74f13}\label{tour_8c_a9f24da81a695ffcaf0d472fe54e74f13} 
+\#define {\bfseries DELAI\+\_\+\+JOUR}~750
+\item 
+\Hypertarget{tour_8c_a8351d810deafe63daf3700e1df7c624e}\label{tour_8c_a8351d810deafe63daf3700e1df7c624e} 
+\#define {\bfseries DELAI\+\_\+\+NUIT}~300
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Fonctions}
+\begin{DoxyCompactItemize}
+\item 
+SDL\+\_\+bool \mbox{\hyperlink{tour_8c_a4b782e0212726b369991d9a354ace74e}{Point\+In\+FRect}} (const SDL\+\_\+\+FPoint \texorpdfstring{$\ast$}{*}p, const SDL\+\_\+\+FRect \texorpdfstring{$\ast$}{*}r)
+\begin{DoxyCompactList}\small\item\em Fonction pour vérifier si un point est dans un rectangle à virgule flottante. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{tour_8c_ae161e7450474199932e8c62f543651d7}{verif\+\_\+collision}} (\mbox{\hyperlink{entite_8h_a2cbf188682c05adae88dc39bdd7ef995}{t\+\_\+entite}} \texorpdfstring{$\ast$}{*}e1, float \texorpdfstring{$\ast$}{*}correction\+\_\+defilement, int \texorpdfstring{$\ast$}{*}score, \mbox{\hyperlink{structt__texte}{t\+\_\+texte}} \texorpdfstring{$\ast$}{*}texte\+\_\+score)
+\begin{DoxyCompactList}\small\item\em vérifie les collisions d’une entité avec les obstacles \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{tour_8c_a490722e3929fc86cbe82cdc5b6dcb30e}{creuser}} (\mbox{\hyperlink{entite_8h_a2cbf188682c05adae88dc39bdd7ef995}{t\+\_\+entite}} \texorpdfstring{$\ast$}{*}a\+\_\+creuser)
+\begin{DoxyCompactList}\small\item\em Fonction pour gérer le creusage. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{tour_8c_a533f6bb52e21e87f55a0573cdf012873}{lire\+\_\+score}} (int nouveau\+\_\+score)
+\begin{DoxyCompactList}\small\item\em Lit le score depuis un fichier et le met à jour si nécessaire. \end{DoxyCompactList}\item 
+\Hypertarget{tour_8c_a3b6fc13b3ad9d30ba8211ce9bb015b0d}\label{tour_8c_a3b6fc13b3ad9d30ba8211ce9bb015b0d} 
+int {\bfseries boucle\+\_\+jeu} (SDL\+\_\+\+Renderer \texorpdfstring{$\ast$}{*}rend, char \texorpdfstring{$\ast$}{*}nom\+\_\+perso)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Description détaillée}
+Implémentation des fonctions liées à la gestion de la tour. 
+
+
+
+\doxysubsection{Documentation des fonctions}
+\Hypertarget{tour_8c_a490722e3929fc86cbe82cdc5b6dcb30e}\label{tour_8c_a490722e3929fc86cbe82cdc5b6dcb30e} 
+\index{tour.c@{tour.c}!creuser@{creuser}}
+\index{creuser@{creuser}!tour.c@{tour.c}}
+\doxysubsubsection{\texorpdfstring{creuser()}{creuser()}}
+{\footnotesize\ttfamily void creuser (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{entite_8h_a2cbf188682c05adae88dc39bdd7ef995}{t\+\_\+entite}} \texorpdfstring{$\ast$}{*}}]{a\+\_\+creuser }\end{DoxyParamCaption})}
+
+
+
+Fonction pour gérer le creusage. 
+
+
+\begin{DoxyParams}{Paramètres}
+{\em a\+\_\+creuser} & Entité à creuser. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{tour_8c_a533f6bb52e21e87f55a0573cdf012873}\label{tour_8c_a533f6bb52e21e87f55a0573cdf012873} 
+\index{tour.c@{tour.c}!lire\_score@{lire\_score}}
+\index{lire\_score@{lire\_score}!tour.c@{tour.c}}
+\doxysubsubsection{\texorpdfstring{lire\_score()}{lire\_score()}}
+{\footnotesize\ttfamily int lire\+\_\+score (\begin{DoxyParamCaption}\item[{int}]{nouveau\+\_\+score }\end{DoxyParamCaption})}
+
+
+
+Lit le score depuis un fichier et le met à jour si nécessaire. 
+
+
+\begin{DoxyParams}{Paramètres}
+{\em nouveau\+\_\+score} & Le nouveau score à comparer. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Renvoie}
+1 si un nouveau record est enregistré, -\/1 si le record n\textquotesingle{}est pas battu, 0 si premier score enregistré. 
+\end{DoxyReturn}
+\Hypertarget{tour_8c_a4b782e0212726b369991d9a354ace74e}\label{tour_8c_a4b782e0212726b369991d9a354ace74e} 
+\index{tour.c@{tour.c}!PointInFRect@{PointInFRect}}
+\index{PointInFRect@{PointInFRect}!tour.c@{tour.c}}
+\doxysubsubsection{\texorpdfstring{PointInFRect()}{PointInFRect()}}
+{\footnotesize\ttfamily SDL\+\_\+bool Point\+In\+FRect (\begin{DoxyParamCaption}\item[{const SDL\+\_\+\+FPoint \texorpdfstring{$\ast$}{*}}]{p,  }\item[{const SDL\+\_\+\+FRect \texorpdfstring{$\ast$}{*}}]{r }\end{DoxyParamCaption})}
+
+
+
+Fonction pour vérifier si un point est dans un rectangle à virgule flottante. 
+
+
+\begin{DoxyParams}{Paramètres}
+{\em p} & Le point à vérifier. \\
+\hline
+{\em r} & Le rectangle dans lequel vérifier. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Renvoie}
+SDL\+\_\+\+TRUE si le point est dans le rectangle, sinon SDL\+\_\+\+FALSE. 
+\end{DoxyReturn}
+\Hypertarget{tour_8c_ae161e7450474199932e8c62f543651d7}\label{tour_8c_ae161e7450474199932e8c62f543651d7} 
+\index{tour.c@{tour.c}!verif\_collision@{verif\_collision}}
+\index{verif\_collision@{verif\_collision}!tour.c@{tour.c}}
+\doxysubsubsection{\texorpdfstring{verif\_collision()}{verif\_collision()}}
+{\footnotesize\ttfamily void verif\+\_\+collision (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{entite_8h_a2cbf188682c05adae88dc39bdd7ef995}{t\+\_\+entite}} \texorpdfstring{$\ast$}{*}}]{e1,  }\item[{float \texorpdfstring{$\ast$}{*}}]{correction\+\_\+defilement,  }\item[{int \texorpdfstring{$\ast$}{*}}]{score,  }\item[{\mbox{\hyperlink{structt__texte}{t\+\_\+texte}} \texorpdfstring{$\ast$}{*}}]{texte\+\_\+score }\end{DoxyParamCaption})}
+
+
+
+vérifie les collisions d’une entité avec les obstacles 
+
+
+\begin{DoxyParams}{Paramètres}
+{\em e1} & entité possiblement en collision \\
+\hline
+{\em correction\+\_\+defilement} & valeur à retourner si {\ttfamily e1} est le personnage joueur \\
+\hline
+\end{DoxyParams}

@@ -1,0 +1,121 @@
+\doxysection{Référence de la structure s\+\_\+etat}
+\hypertarget{structs__etat}{}\label{structs__etat}\index{s\_etat@{s\_etat}}
+
+
+Structure représentant l\textquotesingle{}état du menu.  
+
+
+
+
+{\ttfamily \#include $<$menu.\+h$>$}
+
+\doxysubsubsection*{Attributs publics}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{structs__etat_aaead14826d9f85bf13fbeab85809c484}{doit\+\_\+quitter}}
+\item 
+int \mbox{\hyperlink{structs__etat_afadc8892ed1a31cb35d3495b0a036296}{est\+\_\+fullscreen}}
+\item 
+int \mbox{\hyperlink{structs__etat_a26484d6a91b2a15c2cdf0e5703239557}{i\+\_\+menu}}
+\item 
+\mbox{\hyperlink{structt__bouton}{t\+\_\+bouton}} \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structs__etat_a4724972a794b76faef2d69f73b6ae918}{boutons}}
+\item 
+SDL\+\_\+\+Window \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structs__etat_a86e56ce23bae9bcd8f8fb0af4e9571c4}{fenetre}}
+\item 
+char \mbox{\hyperlink{structs__etat_a487aee143210b282d8c56af704576d9f}{perso\+\_\+selectionne}} \mbox{[}100\mbox{]}
+\item 
+SDL\+\_\+\+Texture \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structs__etat_afea4824246ae071f42afd756165062d9}{tex\+\_\+perso\+\_\+selectionne}}
+\item 
+\mbox{\hyperlink{structt__texte}{t\+\_\+texte}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structs__etat_ad7d401c95c747d5511f0d67994970ad3}{texte\+\_\+perso\+\_\+selectionne}}
+\item 
+SDL\+\_\+\+Texture \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structs__etat_af8cb98569b3069ab166d359e2af807b5}{tex\+\_\+barre\+\_\+vie}}
+\item 
+SDL\+\_\+\+Texture \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structs__etat_a0b8f81316d5ca7606e6e7fb7f2f25cd4}{tex\+\_\+barre\+\_\+energie}}
+\item 
+\mbox{\hyperlink{structt__texte}{t\+\_\+texte}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structs__etat_ac0137002bdce7bc079587e6ae3a93f0f}{texte\+\_\+avertissement}}
+\item 
+SDL\+\_\+\+Renderer \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structs__etat_a85e2213c29fd55bba19d83475d148df9}{rend}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Description détaillée}
+Structure représentant l\textquotesingle{}état du menu. 
+
+\doxysubsection{Documentation des données membres}
+\Hypertarget{structs__etat_a4724972a794b76faef2d69f73b6ae918}\label{structs__etat_a4724972a794b76faef2d69f73b6ae918} 
+\index{s\_etat@{s\_etat}!boutons@{boutons}}
+\index{boutons@{boutons}!s\_etat@{s\_etat}}
+\doxysubsubsection{\texorpdfstring{boutons}{boutons}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structt__bouton}{t\+\_\+bouton}}\texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*} s\+\_\+etat\+::boutons}
+
+Tableau de pointeurs vers les boutons du menu. \Hypertarget{structs__etat_aaead14826d9f85bf13fbeab85809c484}\label{structs__etat_aaead14826d9f85bf13fbeab85809c484} 
+\index{s\_etat@{s\_etat}!doit\_quitter@{doit\_quitter}}
+\index{doit\_quitter@{doit\_quitter}!s\_etat@{s\_etat}}
+\doxysubsubsection{\texorpdfstring{doit\_quitter}{doit\_quitter}}
+{\footnotesize\ttfamily int s\+\_\+etat\+::doit\+\_\+quitter}
+
+Indique si le menu doit être quitté. \Hypertarget{structs__etat_afadc8892ed1a31cb35d3495b0a036296}\label{structs__etat_afadc8892ed1a31cb35d3495b0a036296} 
+\index{s\_etat@{s\_etat}!est\_fullscreen@{est\_fullscreen}}
+\index{est\_fullscreen@{est\_fullscreen}!s\_etat@{s\_etat}}
+\doxysubsubsection{\texorpdfstring{est\_fullscreen}{est\_fullscreen}}
+{\footnotesize\ttfamily int s\+\_\+etat\+::est\+\_\+fullscreen}
+
+Indique si le menu est en mode plein écran. \Hypertarget{structs__etat_a86e56ce23bae9bcd8f8fb0af4e9571c4}\label{structs__etat_a86e56ce23bae9bcd8f8fb0af4e9571c4} 
+\index{s\_etat@{s\_etat}!fenetre@{fenetre}}
+\index{fenetre@{fenetre}!s\_etat@{s\_etat}}
+\doxysubsubsection{\texorpdfstring{fenetre}{fenetre}}
+{\footnotesize\ttfamily SDL\+\_\+\+Window\texorpdfstring{$\ast$}{*} s\+\_\+etat\+::fenetre}
+
+Pointeur vers la fenêtre SDL du menu. \Hypertarget{structs__etat_a26484d6a91b2a15c2cdf0e5703239557}\label{structs__etat_a26484d6a91b2a15c2cdf0e5703239557} 
+\index{s\_etat@{s\_etat}!i\_menu@{i\_menu}}
+\index{i\_menu@{i\_menu}!s\_etat@{s\_etat}}
+\doxysubsubsection{\texorpdfstring{i\_menu}{i\_menu}}
+{\footnotesize\ttfamily int s\+\_\+etat\+::i\+\_\+menu}
+
+Indice de la page de menu actuelle. \Hypertarget{structs__etat_a487aee143210b282d8c56af704576d9f}\label{structs__etat_a487aee143210b282d8c56af704576d9f} 
+\index{s\_etat@{s\_etat}!perso\_selectionne@{perso\_selectionne}}
+\index{perso\_selectionne@{perso\_selectionne}!s\_etat@{s\_etat}}
+\doxysubsubsection{\texorpdfstring{perso\_selectionne}{perso\_selectionne}}
+{\footnotesize\ttfamily char s\+\_\+etat\+::perso\+\_\+selectionne\mbox{[}100\mbox{]}}
+
+Nom du personnage sélectionné \Hypertarget{structs__etat_a85e2213c29fd55bba19d83475d148df9}\label{structs__etat_a85e2213c29fd55bba19d83475d148df9} 
+\index{s\_etat@{s\_etat}!rend@{rend}}
+\index{rend@{rend}!s\_etat@{s\_etat}}
+\doxysubsubsection{\texorpdfstring{rend}{rend}}
+{\footnotesize\ttfamily SDL\+\_\+\+Renderer\texorpdfstring{$\ast$}{*} s\+\_\+etat\+::rend}
+
+Renderer \Hypertarget{structs__etat_a0b8f81316d5ca7606e6e7fb7f2f25cd4}\label{structs__etat_a0b8f81316d5ca7606e6e7fb7f2f25cd4} 
+\index{s\_etat@{s\_etat}!tex\_barre\_energie@{tex\_barre\_energie}}
+\index{tex\_barre\_energie@{tex\_barre\_energie}!s\_etat@{s\_etat}}
+\doxysubsubsection{\texorpdfstring{tex\_barre\_energie}{tex\_barre\_energie}}
+{\footnotesize\ttfamily SDL\+\_\+\+Texture\texorpdfstring{$\ast$}{*} s\+\_\+etat\+::tex\+\_\+barre\+\_\+energie}
+
+Texture de la barre d\textquotesingle{}énergie \Hypertarget{structs__etat_af8cb98569b3069ab166d359e2af807b5}\label{structs__etat_af8cb98569b3069ab166d359e2af807b5} 
+\index{s\_etat@{s\_etat}!tex\_barre\_vie@{tex\_barre\_vie}}
+\index{tex\_barre\_vie@{tex\_barre\_vie}!s\_etat@{s\_etat}}
+\doxysubsubsection{\texorpdfstring{tex\_barre\_vie}{tex\_barre\_vie}}
+{\footnotesize\ttfamily SDL\+\_\+\+Texture\texorpdfstring{$\ast$}{*} s\+\_\+etat\+::tex\+\_\+barre\+\_\+vie}
+
+Texture de la barre de vie \Hypertarget{structs__etat_afea4824246ae071f42afd756165062d9}\label{structs__etat_afea4824246ae071f42afd756165062d9} 
+\index{s\_etat@{s\_etat}!tex\_perso\_selectionne@{tex\_perso\_selectionne}}
+\index{tex\_perso\_selectionne@{tex\_perso\_selectionne}!s\_etat@{s\_etat}}
+\doxysubsubsection{\texorpdfstring{tex\_perso\_selectionne}{tex\_perso\_selectionne}}
+{\footnotesize\ttfamily SDL\+\_\+\+Texture\texorpdfstring{$\ast$}{*} s\+\_\+etat\+::tex\+\_\+perso\+\_\+selectionne}
+
+Texture du personnage sélectionné \Hypertarget{structs__etat_ac0137002bdce7bc079587e6ae3a93f0f}\label{structs__etat_ac0137002bdce7bc079587e6ae3a93f0f} 
+\index{s\_etat@{s\_etat}!texte\_avertissement@{texte\_avertissement}}
+\index{texte\_avertissement@{texte\_avertissement}!s\_etat@{s\_etat}}
+\doxysubsubsection{\texorpdfstring{texte\_avertissement}{texte\_avertissement}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structt__texte}{t\+\_\+texte}}\texorpdfstring{$\ast$}{*} s\+\_\+etat\+::texte\+\_\+avertissement}
+
+Texte d\textquotesingle{}avertissement \Hypertarget{structs__etat_ad7d401c95c747d5511f0d67994970ad3}\label{structs__etat_ad7d401c95c747d5511f0d67994970ad3} 
+\index{s\_etat@{s\_etat}!texte\_perso\_selectionne@{texte\_perso\_selectionne}}
+\index{texte\_perso\_selectionne@{texte\_perso\_selectionne}!s\_etat@{s\_etat}}
+\doxysubsubsection{\texorpdfstring{texte\_perso\_selectionne}{texte\_perso\_selectionne}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structt__texte}{t\+\_\+texte}}\texorpdfstring{$\ast$}{*} s\+\_\+etat\+::texte\+\_\+perso\+\_\+selectionne}
+
+Texte du personnage sélectionné 
+
+La documentation de cette structure a été générée à partir du fichier suivant \+:\begin{DoxyCompactItemize}
+\item 
+src/\mbox{\hyperlink{menu_8h}{menu.\+h}}\end{DoxyCompactItemize}

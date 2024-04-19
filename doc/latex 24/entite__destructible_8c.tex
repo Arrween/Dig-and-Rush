@@ -1,0 +1,89 @@
+\doxysection{Référence du fichier src/entite\+\_\+destructible.c}
+\hypertarget{entite__destructible_8c}{}\label{entite__destructible_8c}\index{src/entite\_destructible.c@{src/entite\_destructible.c}}
+
+
+implémentation du caractère destructible d’une {\ttfamily t\+\_\+entite} (source)  
+
+
+{\ttfamily \#include $<$string.\+h$>$}\newline
+{\ttfamily \#include "{}entite\+\_\+destructible.\+h"{}}\newline
+{\ttfamily \#include "{}entite.\+h"{}}\newline
+{\ttfamily \#include "{}constantes.\+h"{}}\newline
+\doxysubsubsection*{Fonctions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{structs__destructible}{t\+\_\+destructible}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{entite__destructible_8c_a1a01f031176aea22a907dcc82d1c0888}{creer\+\_\+destructible}} (char \texorpdfstring{$\ast$}{*}id)
+\begin{DoxyCompactList}\small\item\em Alloue la mémoire pour un {\ttfamily t\+\_\+destructible} et initialise ses champs. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{entite_8h_a2cbf188682c05adae88dc39bdd7ef995}{t\+\_\+entite}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{entite__destructible_8c_af8a411cec0a7e3e8adc262322355ba7b}{creer\+\_\+entite\+\_\+destructible}} (char \texorpdfstring{$\ast$}{*}id, float x, float y, float w, float h, int est\+\_\+relatif)
+\begin{DoxyCompactList}\small\item\em Crée une nouvelle structure d\textquotesingle{}entité destructible avec les attributs spécifiés. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{entite__destructible_8c_ab65cde57eb9c75b64bb5ffd05d6560e6}{detruire\+\_\+destructible}} (\mbox{\hyperlink{structs__destructible}{t\+\_\+destructible}} \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}d)
+\begin{DoxyCompactList}\small\item\em Détruit une structure d\textquotesingle{}entité destructible et libère la mémoire associée. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Description détaillée}
+implémentation du caractère destructible d’une {\ttfamily t\+\_\+entite} (source) 
+
+
+
+\doxysubsection{Documentation des fonctions}
+\Hypertarget{entite__destructible_8c_a1a01f031176aea22a907dcc82d1c0888}\label{entite__destructible_8c_a1a01f031176aea22a907dcc82d1c0888} 
+\index{entite\_destructible.c@{entite\_destructible.c}!creer\_destructible@{creer\_destructible}}
+\index{creer\_destructible@{creer\_destructible}!entite\_destructible.c@{entite\_destructible.c}}
+\doxysubsubsection{\texorpdfstring{creer\_destructible()}{creer\_destructible()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structs__destructible}{t\+\_\+destructible}} \texorpdfstring{$\ast$}{*} creer\+\_\+destructible (\begin{DoxyParamCaption}\item[{char \texorpdfstring{$\ast$}{*}}]{id }\end{DoxyParamCaption})}
+
+
+
+Alloue la mémoire pour un {\ttfamily t\+\_\+destructible} et initialise ses champs. 
+
+
+\begin{DoxyParams}{Paramètres}
+{\em id} & Identifiant de ressource utilisé pour définir les valeurs par défaut. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Renvoie}
+pointeur vers le {\ttfamily t\+\_\+destructible} alloué et initialisé 
+\end{DoxyReturn}
+\Hypertarget{entite__destructible_8c_af8a411cec0a7e3e8adc262322355ba7b}\label{entite__destructible_8c_af8a411cec0a7e3e8adc262322355ba7b} 
+\index{entite\_destructible.c@{entite\_destructible.c}!creer\_entite\_destructible@{creer\_entite\_destructible}}
+\index{creer\_entite\_destructible@{creer\_entite\_destructible}!entite\_destructible.c@{entite\_destructible.c}}
+\doxysubsubsection{\texorpdfstring{creer\_entite\_destructible()}{creer\_entite\_destructible()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{entite_8h_a2cbf188682c05adae88dc39bdd7ef995}{t\+\_\+entite}} \texorpdfstring{$\ast$}{*} creer\+\_\+entite\+\_\+destructible (\begin{DoxyParamCaption}\item[{char \texorpdfstring{$\ast$}{*}}]{id,  }\item[{float}]{x,  }\item[{float}]{y,  }\item[{float}]{w,  }\item[{float}]{h,  }\item[{int}]{est\+\_\+relatif }\end{DoxyParamCaption})}
+
+
+
+Crée une nouvelle structure d\textquotesingle{}entité destructible avec les attributs spécifiés. 
+
+
+\begin{DoxyParams}{Paramètres}
+{\em id} & Identifiant de l\textquotesingle{}entité destructible. \\
+\hline
+{\em x} & Position en x de l\textquotesingle{}entité destructible. \\
+\hline
+{\em y} & Position en y de l\textquotesingle{}entité destructible. \\
+\hline
+{\em w} & Largeur de l\textquotesingle{}entité destructible. \\
+\hline
+{\em h} & Hauteur de l\textquotesingle{}entité destructible. \\
+\hline
+{\em est\+\_\+relatif} & 1 si les coordonnées sont relatives, 0 si elles sont absolues. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Renvoie}
+Pointeur vers la nouvelle structure d\textquotesingle{}entité créée. 
+\end{DoxyReturn}
+une entité destructible est aussi une entité obstacle\Hypertarget{entite__destructible_8c_ab65cde57eb9c75b64bb5ffd05d6560e6}\label{entite__destructible_8c_ab65cde57eb9c75b64bb5ffd05d6560e6} 
+\index{entite\_destructible.c@{entite\_destructible.c}!detruire\_destructible@{detruire\_destructible}}
+\index{detruire\_destructible@{detruire\_destructible}!entite\_destructible.c@{entite\_destructible.c}}
+\doxysubsubsection{\texorpdfstring{detruire\_destructible()}{detruire\_destructible()}}
+{\footnotesize\ttfamily void detruire\+\_\+destructible (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structs__destructible}{t\+\_\+destructible}} \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{d }\end{DoxyParamCaption})}
+
+
+
+Détruit une structure d\textquotesingle{}entité destructible et libère la mémoire associée. 
+
+
+\begin{DoxyParams}{Paramètres}
+{\em d} & Pointeur vers le pointeur de la structure d\textquotesingle{}entité destructible à détruire. \\
+\hline
+\end{DoxyParams}

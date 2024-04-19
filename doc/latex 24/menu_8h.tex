@@ -1,0 +1,217 @@
+\doxysection{Référence du fichier src/menu.h}
+\hypertarget{menu_8h}{}\label{menu_8h}\index{src/menu.h@{src/menu.h}}
+
+
+Fichier d\textquotesingle{}en-\/tête pour la gestion des menus.  
+
+
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$SDL2/\+SDL.\+h$>$}\newline
+{\ttfamily \#include $<$SDL2/\+SDL\+\_\+image.\+h$>$}\newline
+{\ttfamily \#include $<$SDL2/\+SDL\+\_\+ttf.\+h$>$}\newline
+{\ttfamily \#include "{}texte.\+h"{}}\newline
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structt__bouton}{t\+\_\+bouton}}
+\begin{DoxyCompactList}\small\item\em Structure représentant un bouton du menu. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structs__etat}{s\+\_\+etat}}
+\begin{DoxyCompactList}\small\item\em Structure représentant l\textquotesingle{}état du menu. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Définitions de type}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{menu_8h_af34414ac59f42ed76cf6a7f3dda45de7}\label{menu_8h_af34414ac59f42ed76cf6a7f3dda45de7} 
+typedef struct \mbox{\hyperlink{structs__etat}{s\+\_\+etat}} {\bfseries t\+\_\+etat}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Énumérations}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{menu_8h_adf764cbdea00d65edcd07bb9953ad2b7}\label{menu_8h_adf764cbdea00d65edcd07bb9953ad2b7} 
+enum \{ {\bfseries PAGE\+\_\+\+MENU}
+, {\bfseries PAGE\+\_\+\+MENU\+\_\+\+PERSONNAGES}
+, {\bfseries PAGE\+\_\+\+MENU\+\_\+\+PARAMETRES}
+ \}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Fonctions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{menu_8h_a43f3a04f66431d4d56ef75deac30b21a}\label{menu_8h_a43f3a04f66431d4d56ef75deac30b21a} 
+void {\bfseries initialiser\+\_\+sdl} ()
+\item 
+\Hypertarget{menu_8h_a8f2dc2e0d97a3d102f47e9ce1db1b6ad}\label{menu_8h_a8f2dc2e0d97a3d102f47e9ce1db1b6ad} 
+void {\bfseries initialiser\+\_\+sdl\+\_\+img} ()
+\item 
+\Hypertarget{menu_8h_a52cdf89cb645461493e2bde1b8e14573}\label{menu_8h_a52cdf89cb645461493e2bde1b8e14573} 
+void {\bfseries initialiser\+\_\+sdl\+\_\+ttf} ()
+\item 
+\Hypertarget{menu_8h_a00c6e045b5b1661727fb15fd02f57742}\label{menu_8h_a00c6e045b5b1661727fb15fd02f57742} 
+void {\bfseries initialiser\+\_\+sdl\+\_\+mixer} ()
+\item 
+\Hypertarget{menu_8h_a8fa159db95a293a7d0f0eb53ec3f0c4e}\label{menu_8h_a8fa159db95a293a7d0f0eb53ec3f0c4e} 
+SDL\+\_\+\+Window \texorpdfstring{$\ast$}{*} {\bfseries creation\+\_\+fenetre} ()
+\item 
+\Hypertarget{menu_8h_ac184c72cd4fb6c81f8daabf46343ade0}\label{menu_8h_ac184c72cd4fb6c81f8daabf46343ade0} 
+SDL\+\_\+\+Renderer \texorpdfstring{$\ast$}{*} {\bfseries creation\+\_\+renderer} (SDL\+\_\+\+Window \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}fenetre)
+\item 
+void \mbox{\hyperlink{menu_8h_aad8895e65d833ce453be53c824ba134c}{action\+\_\+volume}} (\mbox{\hyperlink{structs__etat}{t\+\_\+etat}} \texorpdfstring{$\ast$}{*})
+\begin{DoxyCompactList}\small\item\em Active/désactive le volume du jeu. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{menu_8h_a1dea1826d63b3073512beac4fb90e9a4}{action\+\_\+fullscreen}} (\mbox{\hyperlink{structs__etat}{t\+\_\+etat}} \texorpdfstring{$\ast$}{*})
+\begin{DoxyCompactList}\small\item\em Active/désactive le mode plein écran. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{menu_8h_a4a46509848ff7703df286de1e5cb5b3b}{action\+\_\+home}} (\mbox{\hyperlink{structs__etat}{t\+\_\+etat}} \texorpdfstring{$\ast$}{*})
+\begin{DoxyCompactList}\small\item\em Retourne au menu principal. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{menu_8h_a7214db4790596b509ed4bdd155321c47}{action\+\_\+quitter}} (\mbox{\hyperlink{structs__etat}{t\+\_\+etat}} \texorpdfstring{$\ast$}{*})
+\begin{DoxyCompactList}\small\item\em Quitte le jeu. \end{DoxyCompactList}\item 
+\Hypertarget{menu_8h_a85e26de1de8c689cd1818949bcf79ce4}\label{menu_8h_a85e26de1de8c689cd1818949bcf79ce4} 
+void {\bfseries action\+\_\+jouer} (\mbox{\hyperlink{structs__etat}{t\+\_\+etat}} \texorpdfstring{$\ast$}{*})
+\item 
+void \mbox{\hyperlink{menu_8h_a1fd34fef4cc0d7ab5ad8e13d40b8ce44}{action\+\_\+personnages}} (\mbox{\hyperlink{structs__etat}{t\+\_\+etat}} \texorpdfstring{$\ast$}{*})
+\begin{DoxyCompactList}\small\item\em Change le menu vers la page des personnages. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{menu_8h_a8f14361d66e2b852ecf6af231cc897c0}{action\+\_\+parametres}} (\mbox{\hyperlink{structs__etat}{t\+\_\+etat}} \texorpdfstring{$\ast$}{*})
+\begin{DoxyCompactList}\small\item\em Change le menu vers la page des paramètres. \end{DoxyCompactList}\item 
+\Hypertarget{menu_8h_aa68aa652bfd6c5157735e1b1f227a70e}\label{menu_8h_aa68aa652bfd6c5157735e1b1f227a70e} 
+void {\bfseries action\+\_\+continue} (\mbox{\hyperlink{structs__etat}{t\+\_\+etat}} \texorpdfstring{$\ast$}{*})
+\item 
+void \mbox{\hyperlink{menu_8h_a05d9aa9814fb72d4c352b40fcd0a958c}{action\+\_\+retour}} (\mbox{\hyperlink{structs__etat}{t\+\_\+etat}} \texorpdfstring{$\ast$}{*})
+\begin{DoxyCompactList}\small\item\em Revient en arrière dans le menu. \end{DoxyCompactList}\item 
+\Hypertarget{menu_8h_af0078a163b3fdbcb9b30d96144a1c8a2}\label{menu_8h_af0078a163b3fdbcb9b30d96144a1c8a2} 
+void {\bfseries action\+\_\+nulle} (void)
+\item 
+void \mbox{\hyperlink{menu_8h_adf8deb0e1e218e9e9165b59ca8add279}{action\+\_\+perso\+\_\+ania}} (\mbox{\hyperlink{structs__etat}{t\+\_\+etat}} \texorpdfstring{$\ast$}{*})
+\begin{DoxyCompactList}\small\item\em Fonction pour sélectionner ou désélectionner le personnage "{}\+Ania"{}. \end{DoxyCompactList}\item 
+\Hypertarget{menu_8h_a988663ae72ea13dd44d8057189a4c1a2}\label{menu_8h_a988663ae72ea13dd44d8057189a4c1a2} 
+void {\bfseries action\+\_\+perso\+\_\+jack} (\mbox{\hyperlink{structs__etat}{t\+\_\+etat}} \texorpdfstring{$\ast$}{*})
+\item 
+\Hypertarget{menu_8h_a9f66cef20829461c802a6befe16f6756}\label{menu_8h_a9f66cef20829461c802a6befe16f6756} 
+void {\bfseries action\+\_\+perso\+\_\+matt} (\mbox{\hyperlink{structs__etat}{t\+\_\+etat}} \texorpdfstring{$\ast$}{*})
+\item 
+\Hypertarget{menu_8h_a68f1f80e927ee7684864ef72e8b111b9}\label{menu_8h_a68f1f80e927ee7684864ef72e8b111b9} 
+void {\bfseries action\+\_\+perso\+\_\+yohan} (\mbox{\hyperlink{structs__etat}{t\+\_\+etat}} \texorpdfstring{$\ast$}{*})
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Description détaillée}
+Fichier d\textquotesingle{}en-\/tête pour la gestion des menus. 
+
+
+
+\doxysubsection{Documentation des fonctions}
+\Hypertarget{menu_8h_a1dea1826d63b3073512beac4fb90e9a4}\label{menu_8h_a1dea1826d63b3073512beac4fb90e9a4} 
+\index{menu.h@{menu.h}!action\_fullscreen@{action\_fullscreen}}
+\index{action\_fullscreen@{action\_fullscreen}!menu.h@{menu.h}}
+\doxysubsubsection{\texorpdfstring{action\_fullscreen()}{action\_fullscreen()}}
+{\footnotesize\ttfamily void action\+\_\+fullscreen (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structs__etat}{t\+\_\+etat}} \texorpdfstring{$\ast$}{*}}]{etat }\end{DoxyParamCaption})}
+
+
+
+Active/désactive le mode plein écran. 
+
+
+\begin{DoxyParams}{Paramètres}
+{\em etat} & État du menu. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{menu_8h_a4a46509848ff7703df286de1e5cb5b3b}\label{menu_8h_a4a46509848ff7703df286de1e5cb5b3b} 
+\index{menu.h@{menu.h}!action\_home@{action\_home}}
+\index{action\_home@{action\_home}!menu.h@{menu.h}}
+\doxysubsubsection{\texorpdfstring{action\_home()}{action\_home()}}
+{\footnotesize\ttfamily void action\+\_\+home (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structs__etat}{t\+\_\+etat}} \texorpdfstring{$\ast$}{*}}]{etat }\end{DoxyParamCaption})}
+
+
+
+Retourne au menu principal. 
+
+
+\begin{DoxyParams}{Paramètres}
+{\em etat} & État du menu. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{menu_8h_a8f14361d66e2b852ecf6af231cc897c0}\label{menu_8h_a8f14361d66e2b852ecf6af231cc897c0} 
+\index{menu.h@{menu.h}!action\_parametres@{action\_parametres}}
+\index{action\_parametres@{action\_parametres}!menu.h@{menu.h}}
+\doxysubsubsection{\texorpdfstring{action\_parametres()}{action\_parametres()}}
+{\footnotesize\ttfamily void action\+\_\+parametres (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structs__etat}{t\+\_\+etat}} \texorpdfstring{$\ast$}{*}}]{etat }\end{DoxyParamCaption})}
+
+
+
+Change le menu vers la page des paramètres. 
+
+
+\begin{DoxyParams}{Paramètres}
+{\em etat} & État du menu. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{menu_8h_adf8deb0e1e218e9e9165b59ca8add279}\label{menu_8h_adf8deb0e1e218e9e9165b59ca8add279} 
+\index{menu.h@{menu.h}!action\_perso\_ania@{action\_perso\_ania}}
+\index{action\_perso\_ania@{action\_perso\_ania}!menu.h@{menu.h}}
+\doxysubsubsection{\texorpdfstring{action\_perso\_ania()}{action\_perso\_ania()}}
+{\footnotesize\ttfamily void action\+\_\+perso\+\_\+ania (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structs__etat}{t\+\_\+etat}} \texorpdfstring{$\ast$}{*}}]{etat }\end{DoxyParamCaption})}
+
+
+
+Fonction pour sélectionner ou désélectionner le personnage "{}\+Ania"{}. 
+
+
+\begin{DoxyParams}{Paramètres}
+{\em etat} & Pointeur vers l\textquotesingle{}état du jeu. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{menu_8h_a1fd34fef4cc0d7ab5ad8e13d40b8ce44}\label{menu_8h_a1fd34fef4cc0d7ab5ad8e13d40b8ce44} 
+\index{menu.h@{menu.h}!action\_personnages@{action\_personnages}}
+\index{action\_personnages@{action\_personnages}!menu.h@{menu.h}}
+\doxysubsubsection{\texorpdfstring{action\_personnages()}{action\_personnages()}}
+{\footnotesize\ttfamily void action\+\_\+personnages (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structs__etat}{t\+\_\+etat}} \texorpdfstring{$\ast$}{*}}]{etat }\end{DoxyParamCaption})}
+
+
+
+Change le menu vers la page des personnages. 
+
+
+\begin{DoxyParams}{Paramètres}
+{\em etat} & État du menu. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{menu_8h_a7214db4790596b509ed4bdd155321c47}\label{menu_8h_a7214db4790596b509ed4bdd155321c47} 
+\index{menu.h@{menu.h}!action\_quitter@{action\_quitter}}
+\index{action\_quitter@{action\_quitter}!menu.h@{menu.h}}
+\doxysubsubsection{\texorpdfstring{action\_quitter()}{action\_quitter()}}
+{\footnotesize\ttfamily void action\+\_\+quitter (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structs__etat}{t\+\_\+etat}} \texorpdfstring{$\ast$}{*}}]{etat }\end{DoxyParamCaption})}
+
+
+
+Quitte le jeu. 
+
+
+\begin{DoxyParams}{Paramètres}
+{\em etat} & État du menu. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{menu_8h_a05d9aa9814fb72d4c352b40fcd0a958c}\label{menu_8h_a05d9aa9814fb72d4c352b40fcd0a958c} 
+\index{menu.h@{menu.h}!action\_retour@{action\_retour}}
+\index{action\_retour@{action\_retour}!menu.h@{menu.h}}
+\doxysubsubsection{\texorpdfstring{action\_retour()}{action\_retour()}}
+{\footnotesize\ttfamily void action\+\_\+retour (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structs__etat}{t\+\_\+etat}} \texorpdfstring{$\ast$}{*}}]{etat }\end{DoxyParamCaption})}
+
+
+
+Revient en arrière dans le menu. 
+
+
+\begin{DoxyParams}{Paramètres}
+{\em etat} & État du menu. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{menu_8h_aad8895e65d833ce453be53c824ba134c}\label{menu_8h_aad8895e65d833ce453be53c824ba134c} 
+\index{menu.h@{menu.h}!action\_volume@{action\_volume}}
+\index{action\_volume@{action\_volume}!menu.h@{menu.h}}
+\doxysubsubsection{\texorpdfstring{action\_volume()}{action\_volume()}}
+{\footnotesize\ttfamily void action\+\_\+volume (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structs__etat}{t\+\_\+etat}} \texorpdfstring{$\ast$}{*}}]{etat }\end{DoxyParamCaption})}
+
+
+
+Active/désactive le volume du jeu. 
+
+
+\begin{DoxyParams}{Paramètres}
+{\em etat} & État du menu. \\
+\hline
+\end{DoxyParams}

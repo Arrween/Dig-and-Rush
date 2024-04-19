@@ -158,7 +158,7 @@ int main() {
     t_bouton btn_perso_matt = { recuperer_texture("matt"),
             {(TAILLE_L - 165) / 2,
                 (TAILLE_H - 215) / 2,
-                80,
+                100,
                 100},
             action_perso_matt,
             "PERSO_MATT"
@@ -166,7 +166,7 @@ int main() {
     t_bouton btn_perso_jack = { recuperer_texture("jack"),
             {(TAILLE_L + 30) / 2,
                 (TAILLE_H - 215) / 2,
-                80,
+                100,
                 100},
             action_perso_jack,
             "PERSO_JACK"
@@ -174,7 +174,7 @@ int main() {
     t_bouton btn_perso_yohan = { recuperer_texture("yohan"),
             {(TAILLE_L - 165) / 2,
                 (TAILLE_H ) / 2,
-                80,
+                100,
                 100},
             action_perso_yohan,
             "PERSO_YOHAN"
@@ -182,7 +182,7 @@ int main() {
     t_bouton btn_perso_ania = { recuperer_texture("ania"),
             {(TAILLE_L + 30) / 2,
                 (TAILLE_H ) / 2,
-                80,
+                100,
                 100},
             action_perso_ania,
             "PERSO_ANIA"
@@ -207,7 +207,7 @@ int main() {
     SDL_Rect rect_perso_selectionne = {TAILLE_L * (.25 + .75/2), TAILLE_H * .175, TAILLE_L * .25, TAILLE_H * .5};
     SDL_Rect rect_barre_vie = {TAILLE_L * .15, TAILLE_H * .35, TAILLE_L * .2, TAILLE_H * .15};
     SDL_Rect rect_barre_energie = {TAILLE_L * .15, TAILLE_H * .5, TAILLE_L * .2, TAILLE_H * .15};
-    SDL_Rect rect_contour = {(TAILLE_L - 220) / 2, (TAILLE_H - 280) / 2, 220, 280};
+    SDL_Rect rect_contour = {(TAILLE_L - 320) / 2, (TAILLE_H - 280) / 2, 360, 300};
     SDL_Texture * tex_perso_selectionne = NULL;
     SDL_Texture * tex_barre_vie = NULL;
     SDL_Texture * tex_barre_energie = NULL;
@@ -237,6 +237,8 @@ int main() {
 
     int i_btn;
     t_bouton * btn;
+
+    
 
     while (!etat.doit_quitter) {
         while (SDL_PollEvent(&event)) {

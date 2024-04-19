@@ -1,0 +1,36 @@
+\doxysection{entite\+\_\+pnj.\+h}
+\hypertarget{entite__pnj_8h_source}{}\label{entite__pnj_8h_source}\index{src/entite\_pnj.h@{src/entite\_pnj.h}}
+\mbox{\hyperlink{entite__pnj_8h}{Aller à la documentation de ce fichier.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#ifndef\ ENTITE\_PNJ\_H}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#define\ ENTITE\_PNJ\_H}}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{entite_8h}{entite.h}}"{}}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{texte_8h}{texte.h}}"{}}}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00016\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structs__pnj}{s\_pnj}}\ \{}
+\DoxyCodeLine{00017\ \ \ \ \ \mbox{\hyperlink{structs__entite}{t\_entite}}\ *\ \mbox{\hyperlink{structs__pnj_aaf5f866f7d9656f7e01cd57652c04678}{parent}};\ }
+\DoxyCodeLine{00018\ \ \ \ \ void\ (*\mbox{\hyperlink{structs__pnj_a3a642623dd1b9c196f4499a2cf27ee52}{comportement}})\ (\mbox{\hyperlink{structs__entite}{t\_entite}}*,\ \mbox{\hyperlink{structs__entite}{t\_entite}}*);\ }
+\DoxyCodeLine{00019\ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{structs__pnj_a89c7d60ba2c20697e18d9b2770805fe7}{x\_patrouille\_g}};\ }
+\DoxyCodeLine{00020\ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{structs__pnj_a60dc977ebda5dcebd46947226cf45ced}{x\_patrouille\_d}};\ }
+\DoxyCodeLine{00021\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{structs__pnj_a553ec08d9be187b18ecff382da732597}{est\_mort}};\ }
+\DoxyCodeLine{00022\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{structs__pnj_a71347cd204d438ed8de88932187f8f84}{valeur\_vaincu}};\ }
+\DoxyCodeLine{00023\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{structs__pnj_ab8046b7b2698e954299952efed693a21}{est\_ecrasable}};\ }
+\DoxyCodeLine{00024\ \ \ \ \ SDL\_FRect\ \mbox{\hyperlink{structs__pnj_ae0a2e52198a5a71e2bc14f2c0d82413e}{hitbox\_attaque}};\ }
+\DoxyCodeLine{00025\ \ \ \ \ SDL\_FRect\ \mbox{\hyperlink{structs__pnj_acf5011a1d96a32e2f876c3f96b0206bf}{hitbox\_attaque\_gauche}};\ }
+\DoxyCodeLine{00026\ \ \ \ \ SDL\_FRect\ \mbox{\hyperlink{structs__pnj_a5bb164f4914525b0f5ee8757f9dd73c3}{hitbox\_attaque\_droite}};\ }
+\DoxyCodeLine{00028\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{structs__pnj_ade6fbe8a91ad4c6716cf7dfe9150d5b6}{doit\_afficher\_hitbox\_attaque}};\ }
+\DoxyCodeLine{00029\ \ \ \ \ \textcolor{keywordtype}{char}\ \mbox{\hyperlink{structs__pnj_a3227619f4fdb476cbba28bf92bf61001}{id\_son\_attaque}}[TAILLE\_MAX\_ID];\ }
+\DoxyCodeLine{00030\ \ \ \ \ \textcolor{keywordtype}{char}\ \mbox{\hyperlink{structs__pnj_abc138e52a0b2931602e62709d1412f66}{id\_son\_mort}}[TAILLE\_MAX\_ID];\ }
+\DoxyCodeLine{00031\ \};}
+\DoxyCodeLine{00032\ }
+\DoxyCodeLine{00033\ \mbox{\hyperlink{structs__entite}{t\_entite}}\ *\ \mbox{\hyperlink{entite__pnj_8h_a1fee6e1d45e87c1bb4f2c45478e6608f}{creer\_entite\_pnj\_depuis\_spritesheet}}(\textcolor{keywordtype}{char}*,\ \textcolor{keywordtype}{float},\ \textcolor{keywordtype}{float},\ \textcolor{keywordtype}{float},\ \textcolor{keywordtype}{float},\ \textcolor{keywordtype}{int});}
+\DoxyCodeLine{00034\ \mbox{\hyperlink{structs__entite}{t\_entite}}\ *\ \mbox{\hyperlink{entite__pnj_8h_a2cb541661db40a4010a0d38e74b9d52c}{creer\_entite\_pnj}}(\textcolor{keywordtype}{char}*,\ \textcolor{keywordtype}{float},\ \textcolor{keywordtype}{float},\ \textcolor{keywordtype}{float},\ \textcolor{keywordtype}{float},\ \textcolor{keywordtype}{int});}
+\DoxyCodeLine{00035\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{entite__pnj_8h_a664decb3f1eb8e5213dd8b6ea79357b1}{detruire\_pnj}}(\mbox{\hyperlink{structs__pnj}{t\_pnj}}**);}
+\DoxyCodeLine{00036\ }
+\DoxyCodeLine{00037\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{entite__pnj_8h_ae7266bb847ac4e0b7dffa072146e7ac7}{pnj\_mourir}}(\mbox{\hyperlink{structs__entite}{t\_entite}}\ *\ pnj,\ \textcolor{keywordtype}{int}\ *\ score,\ \mbox{\hyperlink{structt__texte}{t\_texte}}\ *\ texte\_score);}
+\DoxyCodeLine{00038\ }
+\DoxyCodeLine{00039\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}
