@@ -5,6 +5,7 @@
 % \usepackage[margin=3cm,tmargin=5cm,bmargin=3.5cm]{geometry}
 \usepackage{color}
 \usepackage[indent=.7cm]{parskip}
+\usepackage{booktabs}
 
 \usepackage{float} % forcer impérativement le placement d’un flottant (figure ou table)
 
@@ -59,7 +60,8 @@
 Pour pouvoir correctement compiler et lancer Dig\&Rush, il faut avoir les librairies suivantes installées : SDl2 (SDL\_ttf, SDL\_image, SDL\_mixer) et Cunit pour les tests unitaires. \\
 Version conseillée : 2.0.4 . \\
 Outils utilisés : GCC, make.
-\section{Installation : compilation et éxecution}
+\section{Installation}
+Voici les différentes instructions utiles à la compilation et l'éxecution de Dig\&Rush.
 \subsection{Réinitialiser les binaires}
 make clean
 \subsection{Compiler et éxecuter le jeu}
@@ -74,13 +76,75 @@ make docs\_doxy
 \subsection{Compiler laTEX}
 make docs
 
-\section{Utilisation : Commandes de jeu}
-Voici le manuel d'utilisation pour lancer et jouer à Dig\&Rush : 
+\section{Utilisation}
+Voici les instructions à suivre pour lancer et jouer à Dig\&Rush : 
 \begin{itemize}
-	\item Appuyer sur \textit{Continue}
+	\item Appuyer sur \texttt{Continue}
 	\item Choisir le personnage
-	\item Appuyer sur \textit{Play}
+	\item Appuyer sur \texttt{Play}
 \end{itemize}
 
-Autres options : Bouton \textit{paramètres} en haut à gauche, à sa droite un bouton pour activer/désactiver le \textit{volume} et bouton \textit{plein-écran} en haut à droite.
+Autres options : Bouton \texttt{paramètres} en haut à gauche, à sa droite un bouton pour activer/désactiver le \texttt{volume} et bouton \texttt{plein-écran} en haut à droite.
+
+\subsection{Commandes du jeu}
+Voici les commandes du jeu.
+\begin{table}[h]
+\centering
+\label{tab:commandes_jeu}
+\begin{tabular}{@{}clc@{}} % Centrer avec peu de marge autour
+\toprule % Ligne supérieure
+\textbf{Touche} & \textbf{Action} \\
+\midrule % Ligne médiane
+Z & Attaquer ou creuser à gauche ou à droite \\
+Q & Aller à gauche \\
+S & Creuser en bas \\
+D & Aller à droite \\
+\bottomrule % Ligne inférieure
+\end{tabular}
+\caption{Commandes du Jeu}
+\end{table}
+
+\subsection{Personnages}
+Le choix entre quatre personnages différents, aux caractéristiques spéciales, s'offre à vous.
+\begin{table}[h]
+\centering
+
+\label{tab:personnages}
+\begin{tabular}{|c|c|c|}
+\hline
+\textbf{Personnage} & \textbf{Vies} & \textbf{Vitesse} \\ \hline
+Arrween    & 3 & x2 \\ \hline
+Idlusen    & 3 & x1 \\ \hline
+Aoyhn      & 3 & x2 \\ \hline
+Stenfresh  & 2 & x2 \\ \hline
+\end{tabular}
+\caption{Caractéristiques des Personnages du Jeu}
+\end{table}
+
+\subsection{Ennemis}
+
+Le jeu comporte plusieurs types d'ennemis, chacun avec des comportements spécifiques et des méthodes d'élimination qui influencent la stratégie du joueur. Voici les détails des ennemis présents dans le jeu :
+
+\begin{itemize}
+    \item \textbf{Squelette} : Les squelettes patrouillent horizontalement sur leur plateforme. Lorsqu'ils rencontrent un vide ou un obstacle, ils font demi-tour. Ils attaquent à l'aide de leurs sabres. Le squelette peut être tué par un coup de pelle ou par écrasement lorsqu'il est attaqué d'en haut par le joueur. Chaque squelette éliminé rapporte 5 points.
+    
+    \item \textbf{Boule de feu} : Ces ennemis se déplacent également de manière horizontale mais ne changent de direction que lorsqu'ils rencontrent un obstacle. Ils infligent des dégâts d'explosion, ôtant une vie au joueur. Contrairement aux squelettes, les boules de feu ne peuvent être éliminées que par un coup de pelle. Abattre une boule de feu rapporte 10 points.
+    
+    \item \textbf{Oncle} : L'Oncle est un ennemi statique qui ne se déplace pas mais attaque le joueur lorsqu'il entre dans une certaine proximité. Il ôte une vie au contact et peut être tué soit par un coup de pelle, soit par écrasement. Éliminer l'Oncle rapporte 20 points.
+\end{itemize}
+
+Tous les ennemis dans le jeu attaquent dès qu'ils détectent la présence du joueur dans leur champ de vision ou leur proximité immédiate, augmentant ainsi le défi du jeu et la nécessité pour le joueur de rester vigilant et réactif.
+
+\subsection{Bonus}
+
+Le jeu inclut divers types de bonus qui peuvent être collectés par les joueurs pour les aider à progresser ou à améliorer leur score. Voici les détails des bonus disponibles :
+
+\begin{itemize}
+    \item \textbf{Pièces d'argent} : Collecter une pièce d'argent augmente le score du joueur de 5 points.
+
+    \item \textbf{Cœurs} : Les cœurs sont des bonus de vie qui restaurent une vie au joueur. Toutefois, ils ne sont effectifs que si le nombre de vies du joueur est inférieur à son nombre de vies maximal. Si le joueur a déjà atteint son nombre de vies initial, le cœur ne produit aucun effet. Ce mécanisme assure un équilibre dans le jeu en évitant que le joueur accumule un nombre excessif de vies.
+\end{itemize}
+
+Les bonus sont conçus pour ajouter une dimension stratégique au jeu, offrant aux joueurs des décisions à prendre concernant les risques et les récompenses. Les pièces encouragent une exploration minutieuse, tandis que les cœurs peuvent constituer une bouée de sauvetage dans des moments critiques, incitant les joueurs à maintenir leur santé à un niveau optimal pour maximiser leurs chances de survie.
+
 \end{document}
