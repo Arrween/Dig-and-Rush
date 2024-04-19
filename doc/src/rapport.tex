@@ -88,13 +88,13 @@ En annexe, se trouvera les tests unitaires et tentatives de débogage, les captu
 Le projet est un travail collaboratif, il faut donc en amont s’organiser et proposer les outils nécessaires afin d’optimiser le temps et la charge de travail.
 
 \subsection{Définition des tâches}
-Avant de commencer à coder, l’équipe a entamé une reflexion sur les différentes phases du projet et les tâches qui seraient susceptibles d’entrer dans ces phases. 
+Avant de commencer à coder, l’équipe a entamé une réflexion sur les différentes phases du projet et les tâches qui seraient susceptibles d’entrer dans ces phases. 
 En effet, citer exhaustivement les tâches permet d’avoir une estimation temporelle du projet. 
 Nous avons également pris en compte les attentes du corps enseignant.
 
 Sur le projet, sept phases principales sont détectées : la définition du projet, la planification, la conception et l'analyse, la phase de réalisation, la phase de documentation, le rapport du projet et la soutenance qui font partie de la phase de livraison.
 
-La définition du projet est l’étape pre-conception, elle permet de faire une esquisse du projet et ainsi se le représenter plus facilement. 
+La définition du projet est l’étape pré-conception, elle permet de faire une esquisse du projet et ainsi se le représenter plus facilement. 
 On y détermine les limites du projet. 
 La planification, qui sera évoquée dans la partie suivante, sert à se répartir les tâches. 
 La conception entre dans l’architecture du projet.
@@ -104,11 +104,11 @@ Le rapport et la soutenance sont réservés à la présentation du projet.
 
 \subsection{Répartition des tâches}
 À la suite de l’élaboration de la liste des tâches se fait leur répartition en fonction de deux critères. 
-Tout d’abord les choix et affinités de chacuns, en effet chaque personne du groupe a préféré certaines tâches plutôt que d’autres. 
+Tout d’abord les choix et affinités de chacun, en effet chaque personne du groupe a préféré certaines tâches plutôt que d’autres. 
 Ensuite, nous nous sommes répartis le reste des tâches en équilibrant afin que tout le monde ait à peu près le même temps de travail.
 
 Pour visualiser ces deux étapes précédentes l’équipe utilise l'outil du diagramme de Gantt. 
-Il s’agit d’un graphe qui représente les tâches étalées sur le temps. 
+Il s’agit d’un graphe qui représente les tâches étalées dans le temps. 
 Google Sheet est utilisé afin de pouvoir le mettre à jour et collaborer à distance.
 Sur le graphe sont présentes les tâches, les dates encadrant ces dernières et une représentation graphique de la durée de la tâche entre la semaine du 8 janvier 2024 et celle du 22 avril 2024.
 L’équipe adopte deux diagrammes de Gantt, un diagramme prévisionnel qui représente l’avancement idéal du projet et un diagramme réel qui est mis à jour régulièrement. 
@@ -173,7 +173,7 @@ Il y a cinq règles principales dans le jeu :
 \subsection{Graphismes}
 %  Rédigé par : Ania
 Les graphismes de \textit{Dig \& Rush} sont fortement inspirés du jeu mobile \textit{Once Upon a Tower}.
-Pour les menus (menu principal, menu de personnages, menu de paramètres, \dots), les couleurs  chaudes telles que le rouge et le orange, mixé à une pointe de violet nous semblaient plus adaptés à l'esprit combatif et dangereux du jeu. 
+Pour les menus (menu principal, menu de personnages, menu de paramètres), les couleurs  chaudes telles que le rouge et le orange, mixé à une pointe de violet nous semblaient plus adaptés à l'esprit combatif et dangereux du jeu. 
 En ce qui concerne l'interface, nous avons opté pour une palette de couleurs vivantes dans les tons bleu, vert et blanc pour attirer et retenir l'attention des joueurs.
 Une fois les couleurs définies, il nous restait à trouver les bonnes ressources libres de droit. Nous avons donc fini par opter pour des images d'intérieur médiéval pour les menus, un fond de ciel bleu pour l'interface de jeu et un fond uni blanc pour le fond de la tour.
 La tour est quant à elle entourée de murs de blocs de pierres.
@@ -196,7 +196,7 @@ Il y a deux catégories de personnages : les personnages qu’il est possible de
 Lorsque les ennemis rencontrent notre personnage ils se mettent à attaquer, ce qui tue le personnage ou non en fonction de ses points de vie. 
 Actuellement, il y a trois types d’ennemis : les squelettes, les boules de feu vivantes et l'oncle. 
 Ces trois PNJ ont deux portées d’attaques différentes, la boule de feu doit être davantage en contact avec le personnage pour attaquer.
-Les ennemis se déplacent de gauche à droite et inversement sur leurs niveaux sauf l'oncle, qui lui, est statique. 
+Les ennemis se déplacent de gauche à droite et inversement sur leurs niveaux sauf l'oncle qui est lui statique. 
 
 \begin{figure}[h]
 	\centering
@@ -206,7 +206,7 @@ Les ennemis se déplacent de gauche à droite et inversement sur leurs niveaux s
 \end{figure}
 
 Il y a quatre personnages jouables qui représentent chaque membre de l’équipe. 
-Ces derniers ont chacun une caractéristique spécifique (vie plus conséquente,vitesse accrue, ou aucun des deux). 
+Ces derniers ont chacun une caractéristique spécifique (vie plus conséquente, vitesse accrue ou aucun des deux). 
 Ils peuvent se diriger à gauche, à droite et vers le bas en fonction de la touche appuyée. 
 Les personnages jouables doivent également pouvoir creuser le sol et les murs. Il est donc nécessaire d’avoir des sprites qui possèdent ces animations de déplacement et de creusage.
 Pour ces derniers, nous avons utilisé un générateur de sprite où il était possible de personnaliser nos personnages. Nous les avons donc adaptés aux quatres membres. 
@@ -241,16 +241,16 @@ Premièrement, il y a la communication qui peut être compliquée au début du p
 
 Deuxièmement, il y a la gestion du temps, le projet est majoritairement dépendant de la date limite. C’est cette dernière qui permet d’implémenter en priorité certaines fonctionnalités selon le temps restant.
 
-Le jeu se base sur des graphismes, dans notre cas, on utilise la bibliothèque SDL pour gérer cet aspect. Il s’agit d’une bibliothèque dont nous avons peu ou pas connaissance pre-projet.
+Nous utilisons la bibliothèque SDL pour la gestion des graphismes du jeu. Or il s’agit d’une bibliothèque dont nous avons peu ou pas connaissance avant le projet.
 
 Chaque membre de l’équipe possède un système d’exploitation différent ce qui accroit les difficultés de portabilité pour développer en commun.
 
-Le jeu tournant autour d’un personnage et d’ennemis, la question de comment animer et les faire interagir différemment se pose. 
+Le jeu tournant autour d’un personnage et d’ennemis, la question de comment les animer et les faire interagir différemment se pose. 
 En effet, les personnages n’ont pas tous la même architecture de sprites :  les tailles,  les espaces entre chaque sprite, les animations et le nombre de sprites sont différents.
 
-La question de la licence se pose aussi pour la récupération des ressources graphiques et sonore.
+La question de la licence se pose aussi pour la récupération des ressources graphiques et sonores.
 
-Enfin, plusieurs structures de données composent le projet, une difficulté se pose sur le choix de ces dernières parmis les structures évoquées durant le cursus, comme les listes, les matrices, etc.
+Enfin, plusieurs structures de données composant le projet, une difficulté se pose sur le choix de ces dernières parmis les structures évoquées durant le cursus, comme les listes, les matrices, etc.
 Ce point sera évoqué dans la partie développement du projet.
 
 
