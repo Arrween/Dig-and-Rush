@@ -3,7 +3,6 @@
 
 #include <SDL2/SDL.h>
 #include "ressources.h"
-#include "selection_personnages.h"
 
 
 /** \brief Sens de déplacement d’une entité

@@ -5,7 +5,6 @@
 #include <time.h>
 
 #include "ressources.h"
-#include "selection_personnages.h"
 #include "tour.h"
 #include "constantes.h"
 #include "entite.h"
@@ -229,6 +228,8 @@ int boucle_jeu(SDL_Renderer * rend, char * nom_perso) {
     t_entite * fond_tour = creer_entite("fond_tour", 0, 0, 100, 100, VRAI);
     t_entite * fond_tour_2 = creer_entite("fond_tour", 0, 100, 100, 100, VRAI);
     t_entite * perso = creer_entite_perso(nom_perso, 40, 20, 15, 12, VRAI);
+
+    jouer_audio(CANAL_COQ, "coq", 0);
 
     generer_murs();
 

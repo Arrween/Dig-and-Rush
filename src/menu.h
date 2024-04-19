@@ -58,6 +58,8 @@ struct s_etat {
     t_texte * texte_perso_selectionne;
     SDL_Texture * tex_barre_vie;
     SDL_Texture * tex_barre_energie;
+    t_texte * texte_avertissement;
+    SDL_Renderer * rend;
 };
 
 void action_volume(t_etat *);

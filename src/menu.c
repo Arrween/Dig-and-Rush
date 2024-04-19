@@ -12,6 +12,7 @@
 #include "constantes.h"
 #include "ressources.h"
 #include "texte.h"
+#include "tour.h"
 
 // Fonction qui initialise la SDL
 void initialiser_sdl(){
@@ -84,14 +85,14 @@ SDL_Renderer * creation_renderer(SDL_Window ** fenetre){
  */
 void action_parametres(t_etat * etat) {
     etat->i_menu = PAGE_MENU_PARAMETRES;
-    jouer_audio(0, "confirmation", 0);
+    jouer_audio(CANAL_BTN_MENU, "confirmation", 0);
 }
 
 
 void action_option(t_etat * etat) {
     etat->i_menu = PAGE_MENU_PARAMETRES;
     etat->boutons[4]->texture = recuperer_texture("options"); 
-    jouer_audio(0, "confirmation", 0);
+    jouer_audio(CANAL_BTN_MENU, "confirmation", 0);
  
 }
 
@@ -120,7 +121,7 @@ void action_volume(t_etat * etat) {
  */
 void action_personnages(t_etat * etat) {
     etat->i_menu = PAGE_MENU_PERSONNAGES;
-    jouer_audio(0, "confirmation", 0);
+    jouer_audio(CANAL_BTN_MENU, "confirmation", 0);
 
 }
 
@@ -145,12 +146,18 @@ void action_fullscreen(t_etat * etat) {
  */
 void action_home(t_etat * etat) {
     etat->i_menu = PAGE_MENU;
-    jouer_audio(0, "confirmation", 0);
+    jouer_audio(CANAL_BTN_MENU, "confirmation", 0);
 
 }
 
 void action_jouer(t_etat * etat) {
-    etat->i_menu = PAGE_MENU_PERSONNAGES;
+    // etat->i_menu = PAGE_MENU_PERSONNAGES;
+    if (strcmp(etat->perso_selectionne, "") != 0)
+        etat->doit_quitter = boucle_jeu(etat->rend, etat->perso_selectionne);
+    else {
+        changer_texte(etat->texte_avertissement, "Please select a character!");
+        jouer_audio(CANAL_BTN_MENU, "erreur", 0);
+    }
 }
 
 /**
@@ -162,7 +169,7 @@ void action_retour(t_etat *etat) {
     if (etat->i_menu > 0) {
         etat->i_menu--; // Décrémenter l'index du menu pour revenir en arrière
     }
-    jouer_audio(0, "confirmation", 0);
+    jouer_audio(CANAL_BTN_MENU, "confirmation", 0);
 
 }
 
@@ -173,7 +180,7 @@ void action_retour(t_etat *etat) {
  */
 void action_quitter(t_etat * etat) {
     etat->doit_quitter = VRAI;
-    jouer_audio(0, "confirmation", 0);
+    jouer_audio(CANAL_BTN_MENU, "confirmation", 0);
 
 }
 
@@ -182,6 +189,8 @@ void action_nulle(void) {
 
 void action_perso_commun(t_etat * etat, char * nom_perso) {
     printf("Personnage sélectionné : %s\n", nom_perso);
+
+    changer_texte(etat->texte_avertissement, "");
 
     char id_son[100] = "accroche_";
     strcat(id_son, nom_perso);

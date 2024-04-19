@@ -215,6 +215,10 @@ int main() {
     SDL_Texture * tex_barre_energie = NULL;
     SDL_Texture * tex_contour = recuperer_texture("koba");
     t_texte * texte_perso_selectionne = creer_texte("police_defaut", 255, 0, 0, 255, TAILLE_L/2 + 215, TAILLE_H/2 - 215, 200, 50);
+    t_texte * texte_avertissement = creer_texte("police_defaut", 255, 255, 255, 255, btn_jouer.rect.x - 10,
+                                                                                     btn_jouer.rect.y + btn_jouer.rect.h + 5,
+                                                                                     btn_jouer.rect.w + 5,
+                                                                                     20);
 
     t_etat etat = {
         FAUX,
@@ -227,12 +231,13 @@ int main() {
         texte_perso_selectionne,
         tex_barre_vie,
         tex_barre_energie,
+        texte_avertissement,
+        rend,
     };
 
     jouer_audio(0, "musique_menu", -1);
 
     int i_btn;
-    int pause = 0;
     t_bouton * btn;
 
     while (!etat.doit_quitter) {
@@ -245,6 +250,7 @@ int main() {
                 case SDL_MOUSEBUTTONDOWN:
                     if (event.button.button == SDL_BUTTON_LEFT) {
                         SDL_Point pointeur = {event.button.x, event.button.y};
+
                         if (etat.i_menu == PAGE_MENU_PARAMETRES) {
                             if (SDL_PointInRect(&pointeur, &controlsRect)) {
                                 SDL_SetRenderDrawColor(rend, 255, 0, 0, 255); // Couleur rouge
@@ -260,26 +266,11 @@ int main() {
                                 
                             }
                         }
-                        for (i_btn = 0; (btn = menus[etat.i_menu][i_btn]); i_btn++) {
-                            if (SDL_PointInRect(&pointeur, &btn->rect)) {
-                                btn->action(&etat);
-                                printf("Bouton %s cliqué\n", btn->nom);
-                        
-                                if (btn == &btn_jouer) {
-                                    if (strcmp(etat.perso_selectionne, "") != 0) {
-                                        jouer_audio(CANAL_COQ, "coq", 0);
-                                        etat.doit_quitter = boucle_jeu(rend, etat.perso_selectionne);
-                                    }
-                                    else {
-                                        afficher_message(rend, "Please, select a character!");
 
-                                        SDL_RenderPresent(rend);
-
-                                        SDL_Delay(1000); 
-                                    }
-                                }
-                                break;
-                            }
+                        for (i_btn = 0; (btn = menus[etat.i_menu][i_btn]) && !SDL_PointInRect(&pointeur, &btn->rect); i_btn++);
+                        if (btn) {
+                            btn->action(&etat);
+                            printf("Bouton %s cliqué\n", btn->nom);
                         }
                     }
                     break;
@@ -291,23 +282,16 @@ int main() {
                             etat.doit_quitter = VRAI;
                             break;
                         case SDL_SCANCODE_A:
-                            jouer_audio(CANAL_COQ, "coq", 0);
                             etat.doit_quitter = boucle_jeu(rend, "matt");
                             break;
                         case SDL_SCANCODE_S:
-                            jouer_audio(CANAL_COQ, "coq", 0);
                             etat.doit_quitter = boucle_jeu(rend, "jack");
                             break;
                         case SDL_SCANCODE_D:
-                            jouer_audio(CANAL_COQ, "coq", 0);
                             etat.doit_quitter = boucle_jeu(rend, "yohan");
                             break;
                         case SDL_SCANCODE_W:
-                            jouer_audio(CANAL_COQ, "coq", 0);
                             etat.doit_quitter = boucle_jeu(rend, "ania");
-                            break;
-                        case SDLK_SPACE:
-                            pause = !pause;
                             break;
                         default:
                             break;
@@ -327,6 +311,7 @@ int main() {
             SDL_RenderCopy(rend, etat.tex_barre_energie, NULL, &rect_barre_energie);
             afficher_texte(rend, etat.texte_perso_selectionne);
             SDL_RenderCopy(rend, tex_contour, NULL, &rect_contour);
+            afficher_texte(rend, etat.texte_avertissement);
         }
         
         // Afficher les autres boutons du menu
@@ -335,16 +320,6 @@ int main() {
 
         SDL_RenderPresent(rend);
         SDL_Delay(1000 / FPS);
-
-        if (pause) {
-            printf("Pause\n");
-            // Afficher un message de pause ou un écran de pause
-            SDL_SetRenderDrawColor(rend, 255, 255, 255, 255); // Fond blanc pour la pause
-            SDL_RenderClear(rend);
-            // Afficher un message de pause, par exemple :
-            // SDL_RenderCopy(renderer, textureMessagePause, NULL, &destRectMessagePause);
-            SDL_RenderPresent(rend);
-        }
     }
 
 //
