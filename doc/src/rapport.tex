@@ -331,9 +331,29 @@ Il est alors possible d’accéder au même objet dans le reste du code par sa c
 
 \subsection{Moteur de Jeu}
 
-\subsection{Graphismes et Interface Utilisateur}
+\subsection{Graphismes et Interface Utilisateur} %Jacques
 % Techniques utilisées pour le rendu des sprites, des animations, et des environnements du jeu.
 % Mise en place de l'interface utilisateur, des menus, et des écrans de jeu.
+
+Dans la continuité du chargement des ressources et du moteur de jeu, la gestion des graphismes et de l'interface utilisateur est cruciale pour offrir une expérience de jeu immersive et fluide. Cette section se concentre sur la manière dont les ressources chargées sont utilisées pour créer une interface utilisateur attrayante et fonctionnelle.
+
+\subsubsection{Utilisation des ressources chargées}
+
+Une fois les ressources chargées à partir des fichiers de ressources à l'aide du module \texttt{ressources.c}, telles que les textures pour les boutons, les personnages, les barres de vie, etc., ces ressources sont accessibles via des tableaux de structures. Cette approche centralisée permet d'accéder facilement aux mêmes objets dans l'ensemble du code sans avoir à les recharger ou à ouvrir à nouveau les fichiers.
+
+\subsubsection{Affichage des éléments graphiques}
+
+La bibliothèque SDL est utilisée pour dessiner les éléments graphiques tels que les boutons, les personnages, etc., à l'écran via le renderer.
+\subsubsection{Interaction utilisateur}
+
+Les actions de l'utilisateur, telles que la sélection d'un personnage, la navigation dans les menus, etc., sont gérées à l'aide de fonctions spécifiques implémentées dans le module \texttt{menu.c}. Ces fonctions modifient l'état du jeu en fonction des actions de l'utilisateur et mettent à jour l'interface utilisateur en conséquence.
+
+\subsubsection{Intégration avec le moteur de jeu}
+
+L'interface utilisateur et les graphismes sont intégrés au moteur de jeu pour assurer une expérience de jeu cohérente. Par exemple, la sélection d'un personnage dans le menu peut influencer le déroulement du jeu une fois celui-ci lancé.
+
+En résumé, la gestion des graphismes et de l'interface utilisateur repose sur l'utilisation efficace des ressources chargées, l'affichage des éléments graphiques à l'écran, l'interaction avec l'utilisateur et l'intégration avec le moteur de jeu. Cette approche garantit une expérience de jeu immersive et engageante pour les joueurs.
+
 
 \subsection{Physique et mécaniques du jeu}
 % Comment les collisions sont-elles détectées et gérées ?
@@ -347,12 +367,13 @@ Il est alors possible d’accéder au même objet dans le reste du code par sa c
 % Rédaction : Jacques, Matthieu
 % Longueur : 1 page et demi
 
+%Jacques
 La conclusion de ce projet met en lumière les apprentissages, les défis surmontés et les perspectives pour l'avenir. Nous avons réussi à concrétiser notre vision du jeu \textit{Dig \& Rush} grâce à une collaboration efficace et à une répartition équilibrée des tâches. En utilisant des outils tels que Discord, Trello et Git, nous avons pu organiser notre travail de manière transparente et coordonnée, facilitant ainsi la communication et la gestion des versions du code.
-
+%Jacques
 Nos apprentissages au cours de ce projet ont été nombreux. Nous avons pu mettre en pratique les connaissances acquises au cours de notre formation en informatique, en particulier en ce qui concerne l'algorithmique et la programmation en langage C. La conception et le développement du jeu nous ont permis d'approfondir nos compétences dans divers domaines, tels que la gestion des ressources graphiques et sonores, ainsi que la résolution de problèmes liés au développement de jeux.
-
+%Jacques
 Cependant, notre parcours n'a pas été sans défis. Nous avons dû faire face à des difficultés techniques, telles que la gestion des ressources graphiques et sonores, ainsi que des problèmes de portabilité liés aux différences entre les systèmes d'exploitation de chaque membre de l'équipe. De plus, la gestion du temps et le respect des délais ont été des défis constants, nous obligeant parfois à reprioriser certaines fonctionnalités en fonction du temps restant.
-
+%Jacques
 Malgré ces défis, nous sommes fiers du résultat final. Nous avons réussi à créer un jeu fonctionnel et divertissant, qui reflète notre vision initiale de Dig \& Rush. Ce projet nous a apporté non seulement des compétences techniques et des connaissances pratiques, mais aussi une expérience précieuse en matière de travail d'équipe, de gestion de projet et de résolution de problèmes. Nous sommes convaincus que les enseignements tirés de ce projet nous seront utiles dans notre parcours professionnel futur, que ce soit dans le domaine du développement de jeux vidéo ou dans d'autres domaines de l'informatique.
 
 % Annexes
