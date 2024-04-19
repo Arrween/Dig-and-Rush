@@ -8,6 +8,8 @@
 
 \usepackage{float} % forcer impérativement le placement d’un flottant (figure ou table)
 
+\usepackage[title]{appendix}
+
 \newcommand\refsuscrite[1]{\textsuperscript{\ref{#1}}}
 
 \title{
@@ -328,7 +330,7 @@ La structure \texttt{t\_entite} concentre les attributs nécessaires aux fonctio
 \end{itemize}
 Une entité peut être créée avec un des rôles indiqué par les sous-structures mentionnées au dernier point au moyen d’un identifiant de ressource (une clé dans les tables de hachage des ressources). La sous-structure est alors initialisée par une fonction dans le module correspondant selon cet identifiant. Ainsi on attribue par exemple par défaut à tous les squelettes ennemis une vitesse de $\frac12$ pixel par frame, un comportement de patrouille, des effets sonores particuliers, etc.
 
-\subsection{Boucle de jeu}
+\subsection{Moteur de jeu}
 Le moteur de jeu est le cœur de notre programme, responsable de la gestion des logiques de jeu, des entrées des utilisateurs, du rendu graphique et des interactions entre les entités. Le moteur est principalement mis en œuvre dans le fichier \texttt{tour.c}, qui contient la boucle principale ainsi que les fonctions de gestion des collisions, des animations, et des événements.
 
 La boucle principale, implémentée dans la fonction \texttt{boucle\_jeu}, orchestre les divers aspects du jeu en exécutant plusieurs sous-fonctions critiques à chaque itération.
@@ -347,9 +349,15 @@ Les entités et les éléments du décor sont rendus sur l'écran en utilisant u
 
 \subsection{Simulation de chute}
 
-Le joueur est amené à descendre dans la tour, en creusant si nécessaire les blocs destructibles sur son passage.
+Le joueur est amené à descendre dans la tour en creusant si nécessaire les blocs destructibles sur son passage.
 En réalité, le personnage joueur se situe toujours à la même coordonnée verticale de la zone de jeu ; lorsqu’il n’a pas de collision vers le bas l’ensemble des autres entités défilent vers le haut de l’écran, simulant ainsi la chute.
 La valeur de ce défilement est suivie via une variable \texttt{repere\_defilement} qui, lorsqu’elle passe un certain seuil, déclenche la génération de la suite du parcours par la fonction \texttt{generer\_morceau\_niveau}, la destruction des entités passées au-dessus de la zone de jeu et l’alternance entre deux textures pour le fond de la tour.
+
+\subsection{Génération du parcours}
+La fonction de génération d’un nouveau morceau de parcours doit assurer que le joueur puisse se frayer un passage vers le bas.
+À cet effet, la zone de jeu est remplie alternativement de lignes vides et de lignes contenant une proportion aléatoire de cases vides, de blocs destructibles et indestructibles.
+Une contrainte d’un nombre maximum de cases indestructibles laisse toujours au moins une case pour passer.
+Les ennemis et bonus sont générés au-dessus des cases non vides, celles-ci ayant été repérées dans un tableau de booléens.
 
 \subsection{Gestion des collisions}
 
@@ -359,22 +367,26 @@ Les collisions sont essentielles au gameplay, impactant la navigation du joueur,
 
 Les animations des personnages et des ennemis sont gérées via une série de textures et de changements d'état déclenchés par les actions du joueur et par les événements du jeu. Le système de nuit, implémenté dans la fonction \texttt{transitionner\_nuit}, modifie l'éclairage et le fond pour simuler un cycle jour/nuit, affectant la visibilité et conséquemment la difficulté du jeu.
 
-\subsection{Audio}
+\subsection{Performances}
 
-Le son joue un rôle crucial dans l'ambiance et le feedback du jeu. Des effets sonores sont déclenchés lors des actions comme creuser, attaquer, ou collecter des bonus, en utilisant la gestion des canaux audio de SDL\_Mixer pour une expérience immersive.
+La performance est surveillée en mesurant le temps de traitement de chaque frame et en ajustant le délai entre chacune pour maintenir stable le taux de rafraîchissement tant que le temps de traitement n’excède pas sa limite.
 
-\subsection{Performances et Optimisation}
+\subsection{Perspectives}
 
-La performance est surveillée en mesurant le temps de traitement de chaque frame et en ajustant le délai entre chacune pour maintenir un taux de rafraîchissement stable.
+Nous évoquons pour conclure cette section les concepts que nous avons envisagés d’exploiter mais avons abandonné faute de temps :
+\begin{itemize}
+    \item le déclenchement des actions du personnage en fonction des événements est complexe à traiter et pourrait avantageusement utiliser une machine à états pour formaliser le comportement désiré et assainir le code ;
+    \item de la même manière, concevoir des comportements complexes pour les PNJ pourrait faire appel à ce concept ;
+    \item afin de favoriser une expérience de jeu équilibrée, nous aurions pu recourir aux calculs de probabilités pour calibrer la génération des ennemis et des bonus ;
+    \item dans cette même optique, nous aurions pu adapter les hitboxes et la vitesse des ennemis au temps de réaction moyen humain.
+\end{itemize}
 
-
-\newpage
 \section{Conclusion}
 % Rédaction : Jacques, Yohan
 % Longueur : 1 page et demi
 
-﻿Nous avons réussi à concrétiser notre vision du jeu Dig \& Rush grâce à une collaboration eﬀicace et à une répartition équilibrée des tâches. 
-En  utilisant des outils tels que Discord, Trello et Git, nous avons pu organiser notre travail de manière transparente et coordonnée, facilitant ainsi la communication et la gestion des versions du code.
+Nous avons réussi à concrétiser notre vision du jeu \textit{Dig \& Rush} grâce à une collaboration efficace et à une répartition équilibrée des tâches. 
+En utilisant des outils tels que Discord, Trello et Git, nous avons pu organiser notre travail de manière transparente et coordonnée, facilitant ainsi la communication et la gestion des versions du code.
 
 Nos apprentissages au cours de ce projet ont été nombreux. Nous avons pu mettre en pratique les connaissances acquises au cours de notre formation en informatique, en particulier en ce qui concerne l’algorithmique et la programmation en langage C. 
 La conception et le développement du jeu nous ont permis d’approfondir nos compétences sur divers sujets, tels que la gestion des ressources graphiques et sonores, ainsi que la résolution de problèmes liés au développement de jeux.
@@ -382,12 +394,12 @@ La conception et le développement du jeu nous ont permis d’approfondir nos co
 Cependant, notre parcours n’a pas été sans défis. Nous avons dû faire face à des diﬀicultés techniques, telles que les sujets précédemment cités, ainsi que des complications de portabilité liées aux différences entre les systèmes d’exploitation de chaque membre de l’équipe. De plus, la gestion du temps et le respect des délais ont été des défis constants, nous obligeant parfois à reprioriser certaines fonctionnalités en fonction du temps restant. 
 On peut noter par exemple l’abandon du mode multijoueur qui nous a semblé trop ambitieux à l’approche de la date limite. 
 
-À l’approche de la date de livraison, il nous a été diﬀicile de respecter la répartition des tâches exactement comme prévu sur le diagramme de Gantt prévisionnel. 
+À l’approche de la date de livraison, il nous a été diﬀicile de respecter la répartition des tâches exactement comme prévu sur le diagramme de Gantt prévisionnel.
 En effet, en réorganisant la répartition des membres plus eﬀicaces sur certaines tâches, cela nous a permis de respecter la majorité des délais. Il y a tout de même une perspective d’amélioration sur cette gestion du temps, notamment avec l’expérience qui sera acquise au fil de futurs projets.
 
 Les défis rencontrés durant l’exécution de ce projet ont été surmontés grâce à la collaboration et le partage des connaissances entre les membres de l’équipe.
 
-Malgré ces défis, nous ressortons avec un bilan positif. Nous avons réussi à créer un jeu fonctionnel et qui reflète notre vision initiale de Dig \& Rush. 
+Malgré ces défis, nous ressortons avec un bilan positif. Nous avons réussi à créer un jeu fonctionnel et qui reflète notre vision initiale de \textit{Dig \& Rush}. 
 Ce projet nous a apporté non seulement des compétences techniques et des connaissances pratiques, mais aussi une expérience précieuse en matière de travail d’équipe et de gestion de projet. 
 Nous sommes convaincus que les enseignements tirés de ce projet nous seront utiles dans notre parcours professionnel, que ce soit dans le domaine du développement, du jeu vidéo ou dans d’autres domaines de l’informatique.
 
@@ -395,7 +407,8 @@ Nous sommes convaincus que les enseignements tirés de ce projet nous seront uti
 
 % Annexes
 \newpage
-\appendix
+%\appendix
+\begin{appendices}
 
 \section{Lexique}
 
@@ -460,6 +473,8 @@ Etapes de débogage :
 \end{figure}
 Note : les instruction de débogage sont renseignées dans le manuel d'installation et d'utilisation fourni.
 
+\end{appendices}
+
 % Bibliographie
 % \newpage
 % \begin{thebibliography}{REF}
@@ -468,5 +483,6 @@ Note : les instruction de débogage sont renseignées dans le manuel d'installat
 %     \bibitem{wikibooks}\url{https://fr.wikibooks.org/wiki/LaTeX/Tableaux}
 %     \bibitem{zestedesavoir}\url{https://zestedesavoir.com/tutoriels/826/introduction-a-latex/1322_completer-vos-documents/images-tableaux-et-texte-preformate/#2-tableaux}
 % \end{thebibliography}
+
 
 \end{document}
