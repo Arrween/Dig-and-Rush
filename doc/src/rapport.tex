@@ -86,7 +86,7 @@ En annexe, se trouvera les tests unitaires et tentatives de débogage, les captu
 
 
 \subsection{Définition des tâches}
-Avant de commencer à coder, l’équipe a entamé une reflexion sur les différentes phases du projet et les tâches qui seraient susceptibles d’entrer dans ces phases. 
+Avant de commencer à coder, l’équipe a effectué un brainstorming afin de connaître toutes les phases du projet et les tâches qui seraient susceptibles d’entrer dans ces dernières. 
 En effet, citer exhaustivement les tâches permet d’avoir une estimation temporelle du projet. 
 Nous avons également pris en compte les attentes du corps enseignant.
 
@@ -237,7 +237,7 @@ Premièrement, il y a la communication qui peut être compliquée au début du p
 
 Deuxièmement, il y a la gestion du temps, le projet est majoritairement dépendant de la date limite. C’est cette dernière qui permet d’implémenter en priorité certaines fonctionnalités selon le temps restant.
 
-Le jeu se base sur des graphismes, dans notre cas, on utilise la bibliothèque SDL pour gérer cet aspect. Il s’agit d’une bibliothèque dont nous avons peu ou pas connaissance post projet.
+Le jeu se base sur des graphismes, dans notre cas, il est obligatoire d’utiliser la bibliothèque SDL. Il s’agit d’une bibliothèque dont nous avons peu ou pas connaissance post projet.
 
 Chaque membre de l’équipe possède un système d’exploitation différent ce qui accroit les difficultés de portabilité pour développer en commun.
 
@@ -330,78 +330,52 @@ Il est alors possible d’accéder au même objet dans le reste du code par sa c
 % ressources
 
 \subsection{Moteur de Jeu}
+Le moteur de jeu est le cœur du système de notre jeu, responsable de la gestion des logiques de jeu, des entrées des utilisateurs, du rendu graphique, et des interactions entre les entités. Le moteur est principalement mis en œuvre dans le fichier \texttt{tour.c}, qui contient la boucle principale du jeu ainsi que les fonctions de gestion des collisions, des animations, et des événements.
 
-\subsection{Graphismes et Interface Utilisateur} %Jacques
+La boucle principale de jeu, implémentée dans la fonction \texttt{boucle\_jeu}, orchestre les divers aspects du jeu en exécutant plusieurs sous-fonctions critiques à chaque itération. Voici les fonctions essentielles appelées durant chaque cycle de la boucle :
+
+\begin{itemize}
+    \item \textbf{Gestion des Événements :} La fonction intercepte et traite les événements SDL tels que les entrées clavier. Ces événements déterminent les actions des personnages, comme se déplacer à gauche ou à droite, creuser, ou attaquer.
+    
+    \item \textbf{Mise à jour des Entités :} Chaque entité dans le jeu, qu'il s'agisse d'un personnage joueur, d'un ennemi ou d'un bonus, est mise à jour en termes de position, d'état, et d'animation en fonction des interactions et des mouvements définis.
+    
+    \item \textbf{Détection et Gestion des Collisions :} La fonction \texttt{verif\_collision} est appelée pour détecter et gérer les interactions entre les entités, comme les collisions avec les obstacles ou les attaques entre le personnage et les ennemis.
+    
+    \item \textbf{Rendu Graphique :} Les entités et les éléments du décor sont rendus sur l'écran en utilisant SDL Renderer. Cela inclut le dessin des sprites, la mise à jour des animations, et l'application des effets visuels tels que la transition jour/nuit.
+\end{itemize}
+
+\subsection{Gestion des Collisions}
+
+Les collisions sont essentielles au gameplay, impactant la navigation du joueur, ses interactions avec l'environnement et les ennemis. La fonction \texttt{verif\_collision} vérifie les intersections entre les hitboxes des entités. Elle ajuste également la position des entités pour résoudre les chevauchements, ce qui empêche le personnage de passer à travers les murs ou de se superposer avec les ennemis.
+
+\subsection{Animations et Effets Visuels}
+
+Les animations des personnages et des ennemis sont gérées via une série de textures et de changements d'état déclenchés par les actions du joueur et par les événements du jeu. Le système de nuit, implémenté dans la fonction \texttt{transitionner\_nuit}, modifie l'éclairage et le fond pour simuler un cycle jour/nuit, affectant la visibilité et potentiellement le comportement des ennemis.
+
+\subsection{Audio}
+
+Le son joue un rôle crucial dans l'ambiance et le feedback du jeu. Des effets sonores sont déclenchés lors des actions comme creuser, attaquer, ou collecter des bonus, en utilisant la gestion des canaux audio de SDL\_Mixer pour une expérience immersive.
+
+\subsection{Performances et Optimisation}
+
+La performance est surveillée en mesurant le temps de traitement de chaque frame et en ajustant le délai entre les frames pour maintenir un taux de rafraîchissement stable. Ce contrôle aide à garantir que le jeu fonctionne de manière fluide sur différents systèmes.
+
+
+\subsection{Graphismes et Interface Utilisateur}
 % Techniques utilisées pour le rendu des sprites, des animations, et des environnements du jeu.
 % Mise en place de l'interface utilisateur, des menus, et des écrans de jeu.
 
-Dans la continuité du chargement des ressources et du moteur de jeu, la gestion des graphismes et de l'interface utilisateur est cruciale pour offrir une expérience de jeu immersive et fluide. Cette section se concentre sur la manière dont les ressources chargées sont utilisées pour créer une interface utilisateur attrayante et fonctionnelle.
-
-\subsubsection{Utilisation des ressources chargées}
-
-Une fois les ressources chargées à partir des fichiers de ressources à l'aide du module \texttt{ressources.c}, telles que les textures pour les boutons, les personnages, les barres de vie, etc., ces ressources sont accessibles via des tableaux de structures. Cette approche centralisée permet d'accéder facilement aux mêmes objets dans l'ensemble du code sans avoir à les recharger ou à ouvrir à nouveau les fichiers.
-
-\subsubsection{Affichage des éléments graphiques}
-
-La bibliothèque SDL est utilisée pour dessiner les éléments graphiques tels que les boutons, les personnages, etc., à l'écran via le renderer.
-\subsubsection{Interaction utilisateur}
-
-Les actions de l'utilisateur, telles que la sélection d'un personnage, la navigation dans les menus, etc., sont gérées à l'aide de fonctions spécifiques implémentées dans le module \texttt{menu.c}. Ces fonctions modifient l'état du jeu en fonction des actions de l'utilisateur et mettent à jour l'interface utilisateur en conséquence.
-
-\subsubsection{Intégration avec le moteur de jeu}
-
-L'interface utilisateur et les graphismes sont intégrés au moteur de jeu pour assurer une expérience de jeu cohérente. Par exemple, la sélection d'un personnage dans le menu peut influencer le déroulement du jeu une fois celui-ci lancé.
-
-En résumé, la gestion des graphismes et de l'interface utilisateur repose sur l'utilisation efficace des ressources chargées, l'affichage des éléments graphiques à l'écran, l'interaction avec l'utilisateur et l'intégration avec le moteur de jeu. Cette approche garantit une expérience de jeu immersive et engageante pour les joueurs.
-
-
-\subsection{Physique et mécaniques du jeu}%Jacques
+\subsection{Physique et mécaniques du jeu}
 % Comment les collisions sont-elles détectées et gérées ?
 % Implémentation des mécaniques (cf Conception)
 
-Les mécaniques sont des éléments essentiels à l'expérience de jeu, déterminant les interactions entre les différents éléments et les actions disponibles pour les joueurs. Cette section met l'accent sur la détection des collisions et l'implémentation des mécaniques spécifiques.
-
-\subsubsection{Détection et Gestion des Collisions}
-
-La détection des collisions est réalisée en utilisant des algorithmes appropriés pour vérifier si deux objets entrent en contact dans le jeu. Dans notre cas, les collisions sont détectées entre les personnages, les blocs de pierres, les blocs de terre et les ennemis. Lorsqu'une collision est détectée, des actions spécifiques sont déclenchées, telles que la destruction des blocs de terre, la réduction des points de vie des personnages, ou le déclenchement d'une attaque.
-
-\subsubsection{Implémentation des Mécaniques}
-
-Les mécaniques de jeu décrites comprennent la gestion des blocs de pierres et de terre, les interactions entre les personnages joueurs et les PNJ, ainsi que l'effet de transition entre le jour et la nuit. Les blocs de pierres servent à délimiter la tour et bloquer les mouvements du joueur, tandis que les blocs de terre peuvent être détruits par le joueur pour ouvrir un chemin. Les personnages joueurs peuvent creuser et attaquer les ennemis, tandis que les ennemis se déplacent horizontalement et attaquent le joueur lorsqu'ils sont détectés à proximité. L'effet de transition entre le jour et la nuit ajoute de la variété et de la difficulté au jeu.
-
-\subsubsection{Intégration des Sons}
-
-Chaque mécanique est accompagnée de sons appropriés pour renforcer l'immersion et l'expérience de jeu. Les sons incluent des effets sonores tels que des bruits de blessure, des sons d'attaque et des sons de mort pour les personnages masculins et féminins. Ces sons sont déclenchés en fonction des actions des joueurs et des ennemis, ajoutant ainsi une dimension audio à l'expérience de jeu.
-
-En résumé, l'implémentation des mécaniques de jeu, la détection des collisions et l'intégration des sons sont des aspects essentiels à la création d'une expérience de jeu immersive et engageante. Ces mécaniques permettent aux joueurs d'interagir avec l'univers du jeu de manière significative, tout en ajoutant des éléments audiovisuels qui enrichissent l'expérience globale.
-
-\subsection{Techniques d'optimisation}
-\newpage
 \section{Conclusion}
-% Rédaction : Jacques, Yohan
+% Rédaction : Jacques, Matthieu
 % Longueur : 1 page et demi
 
-﻿Nous avons réussi à concrétiser notre vision du jeu \textit{Dig \& Rush} grâce à une collaboration efficace et à une répartition équilibrée des tâches. 
-En utilisant des outils tels que Discord, Trello et Git, nous avons pu organiser notre travail de manière transparente et coordonnée, facilitant ainsi la communication et la gestion des versions du code.
+La conclusion de ce projet met en lumière les apprentissages, les défis surmontés et les perspectives pour l'avenir. Nous avons réussi à concrétiser notre vision du jeu \textit{Dig \& Rush} grâce à une collaboration efficace et à une répartition équilibrée des tâches. En utilisant des outils tels que Discord, Trello et Git, nous avons pu organiser notre travail de manière transparente et coordonnée, facilitant ainsi la communication et la gestion des versions du code.
 
-Nos apprentissages au cours de ce projet ont été nombreux. 
-Nous avons pu mettre en pratique les connaissances acquises au cours de notre formation en informatique, en particulier en ce qui concerne l'algorithmique et la programmation en langage C. 
-La conception et le développement du jeu nous ont permis d'approfondir nos compétences sur divers sujets, tels que la gestion des ressources graphiques et sonores, ainsi que la résolution de problèmes liés au développement de jeux.
 
-Cependant, notre parcours n'a pas été sans défis. 
-Nous avons dû faire face à des difficultés techniques, telles que les sujets précédemment cités, ainsi que des complications de portabilité liées aux différences entre les systèmes d'exploitation de chaque membre de l'équipe. 
-De plus, la gestion du temps et le respect des délais ont été des défis constants, nous obligeant parfois à reprioriser certaines fonctionnalités en fonction du temps restant. 
-On peut noter par exemple l’abandon du mode multijoueur qui nous a semblé trop ambitieux à l’approche de la date limite.
-
-À l’approche de la date de livraison, il nous a été difficile de respecter la répartition des tâches exactement comme prévu sur le diagramme de Gantt prévisionnel. 
-En effet, en réorganisant la répartition des membres plus efficaces sur certaines tâches, cela nous a  permis de respecter la majorité des délais. Il y a tout de même une perspective d’amélioration sur cette gestion du temps, notamment avec l’expérience qui sera acquise au fil de futurs projets.
-
-Les défis rencontrés durant l'exécution de ce projet ont été surmontés grâce à la collaboration et le partage des connaissances entre les membres de l’équipe.
-
-Malgré ces défis, nous ressortons avec un bilan positif. 
-Nous avons réussi à créer un jeu fonctionnel et qui reflète notre vision initiale de Dig \& Rush. 
-Ce projet nous a apporté non seulement des compétences techniques et des connaissances pratiques, mais aussi une expérience précieuse en matière de travail d'équipe et de gestion de projet. 
-Nous sommes convaincus que les enseignements tirés de ce projet nous seront utiles dans notre parcours professionnel, que ce soit dans le domaine du développement, du jeu vidéo ou dans d'autres domaines de l'informatique.
 
 % Annexes
 \newpage
