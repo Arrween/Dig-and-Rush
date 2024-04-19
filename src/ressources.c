@@ -209,6 +209,7 @@ struct chargement chargements_sons[] = {
     {"ressources/Audio/SFX/blessure_perso_f.mp3", "blessure_perso_f"},
     {"ressources/Audio/SFX/swing.mp3", "attaque_perso"},
     {"ressources/Audio/SFX/mort.mp3", "mort_perso"},
+    {"ressources/Audio/SFX/mort_grave.mp3", "mort_perso_grave"},
     {"ressources/Audio/SFX/mort_perso_f.mp3", "mort_perso_f"},
     {"ressources/Audio/SFX/explosion.mp3", "attaque_feu"},
     {"ressources/Audio/SFX/mort_feu.mp3", "mort_feu"},

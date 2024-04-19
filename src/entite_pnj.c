@@ -234,7 +234,7 @@ t_pnj * creer_pnj(char * id, t_entite * e) {
         nouv->comportement = comportement_patrouille_vol;
         nouv->valeur_vaincu = 10;
         nouv->est_ecrasable = FAUX;
-        nouv->parent->vitesse = 1./2;
+        nouv->parent->vitesse = .8;
         strcpy(nouv->id_son_attaque, "attaque_feu");
         strcpy(nouv->id_son_mort, "mort_feu");
         changer_hitbox(nouv->parent, &(nouv->parent->hitbox), 20, 30, 50, 55, VRAI);
@@ -248,7 +248,7 @@ t_pnj * creer_pnj(char * id, t_entite * e) {
         nouv->est_ecrasable = VRAI;
         nouv->parent->vitesse = 1./2;
         strcpy(nouv->id_son_attaque, "attaque_perso");
-        strcpy(nouv->id_son_mort, "mort_perso");
+        strcpy(nouv->id_son_mort, "mort_perso_grave");
         changer_hitbox(nouv->parent, &(nouv->parent->hitbox), 15, 30, 80, 70, VRAI);
         changer_hitbox(nouv->parent, &(nouv->hitbox_attaque), nouv->parent->hitbox.x,
                        nouv->parent->hitbox.y, nouv->parent->hitbox.w,
