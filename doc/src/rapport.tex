@@ -161,11 +161,11 @@ Il n’y a pas de fin au jeu, l’objectif est donc d’engranger le plus de poi
 % Rédaction : Yohan
 Il y a cinq règles principales dans le jeu :
 \begin{itemize}
-	\item Il faut creuser les blocs de terre pour descendre dans la tour et éviter les ennemis.
-	\item Il est possible d’éliminer les ennemis pour ajouter des points au score et éviter de se faire tuer.
-	\item Il faut éviter de subir des dégâts de la part des ennemis pour ne pas perdre de vie.
-	\item Il faut ramasser les bonus qui augmentent la vie ou le score.
-	\item Il faut chercher à avancer rapidement car les points se perdent au fil du temps.
+	\item il faut creuser les blocs de terre pour descendre dans la tour et éviter les ennemis ;
+	\item il est possible d’éliminer les ennemis pour ajouter des points au score et éviter de se faire tuer ;
+	\item il faut éviter de subir des dégâts de la part des ennemis pour ne pas perdre de vie ;
+	\item il faut ramasser les bonus qui augmentent la vie ou le score ;
+	\item il faut chercher à avancer rapidement car les points se perdent au fil du temps.
 \end{itemize}
 
 \subsection{Graphismes}
@@ -302,6 +302,11 @@ Les modules de code source ont été séparés comme présenté dans la table \r
     \label{table_archi}
 \end{table}
 
+\subsection{Chargement des ressources}
+
+Dans un souci de centralisation, le module \texttt{ressources.c} définit les tables de hachage \texttt{textures}, \texttt{spritesheets}, \texttt{sons}, \texttt{musiques} et \texttt{polices} remplies au lancement du programme avec les objets correspondants à partir des fichiers de ressources.
+Il est alors possible d’accéder au même objet dans le reste du code par sa clé, sans dupliquer la ressource et en évitant d’avoir à ouvrir à nouveau les fichiers.
+
 \subsection{Implémentation des structures de données}
 
 La majorité des éléments graphiques affichés en jeu est stockée dans une liste chainée de structures \texttt{t\_entite}.
@@ -319,40 +324,40 @@ La structure \texttt{t\_entite} concentre les attributs nécessaires aux fonctio
 	\item son déplacement dans la zone de jeu ;
 	\item la gestion de ses collisions avec d’autres entités, notamment au moyen d’une \textit{hitbox}\refsuscrite{def_hitbox} ;
 	\item son animation éventuelle au moyen de coordonnées dans une \textit{spritesheet}\refsuscrite{def_spritesheet} ;
-	\item des sous-structures \texttt{t\_obstacle}, \texttt{t\_destructible}, \texttt{t\_perso}, \texttt{t\_pnj} et \texttt{t\_bonus} renseignant le rôle spécialisé de l’entité, avec une valeur de pointeur nul si le rôle correspondant n’est pas pertinent.
+	\item le renseignement du rôle spécialisé de l’entité au moyen de sous-structures \texttt{t\_obstacle}, \texttt{t\_destructible}, \texttt{t\_perso}, \texttt{t\_pnj} et \texttt{t\_bonus}, avec une valeur de pointeur nul si le rôle correspondant n’est pas pertinent.
 \end{itemize}
-Une entité peut être créée avec un des rôles indiqué par les sous-structures mentionnées au dernier point au moyen d’un identifiant de ressource (une clé dans les tables de hachage des ressources). La sous-structure est alors initialisée par une fonction dans le module correspondant selon l’identifiant de ressource. Ainsi on attribue par exemple par défaut à tous les squelettes ennemis une vitesse de $\frac12$ pixel par frame, un comportement de patrouille, des effets sonores particuliers, etc.
+Une entité peut être créée avec un des rôles indiqué par les sous-structures mentionnées au dernier point au moyen d’un identifiant de ressource (une clé dans les tables de hachage des ressources). La sous-structure est alors initialisée par une fonction dans le module correspondant selon cet identifiant. Ainsi on attribue par exemple par défaut à tous les squelettes ennemis une vitesse de $\frac12$ pixel par frame, un comportement de patrouille, des effets sonores particuliers, etc.
 
+\subsection{Boucle de jeu}
+Le moteur de jeu est le cœur de notre programme, responsable de la gestion des logiques de jeu, des entrées des utilisateurs, du rendu graphique et des interactions entre les entités. Le moteur est principalement mis en œuvre dans le fichier \texttt{tour.c}, qui contient la boucle principale ainsi que les fonctions de gestion des collisions, des animations, et des événements.
 
-\subsection{Chargement des ressources}
+La boucle principale, implémentée dans la fonction \texttt{boucle\_jeu}, orchestre les divers aspects du jeu en exécutant plusieurs sous-fonctions critiques à chaque itération.
 
-Dans un souci de centralisation, le module \texttt{ressources.c} définit les tables de hachage \texttt{textures}, \texttt{spritesheets}, \texttt{sons}, \texttt{musiques} et \texttt{polices} remplies au lancement du programme avec les objets correspondants à partir des fichiers de ressources.
-Il est alors possible d’accéder au même objet dans le reste du code par sa clé, sans dupliquer la ressource et en évitant d’avoir à ouvrir à nouveau les fichiers.
-
-% ressources
-
-\subsection{Moteur de Jeu}
-Le moteur de jeu est le cœur du système de notre jeu, responsable de la gestion des logiques de jeu, des entrées des utilisateurs, du rendu graphique, et des interactions entre les entités. Le moteur est principalement mis en œuvre dans le fichier \texttt{tour.c}, qui contient la boucle principale du jeu ainsi que les fonctions de gestion des collisions, des animations, et des événements.
-
-La boucle principale de jeu, implémentée dans la fonction \texttt{boucle\_jeu}, orchestre les divers aspects du jeu en exécutant plusieurs sous-fonctions critiques à chaque itération. Voici les fonctions essentielles appelées durant chaque cycle de la boucle :
-
-\begin{itemize}
-    \item \textbf{Gestion des Événements :} La fonction intercepte et traite les événements SDL tels que les entrées clavier. Ces événements déterminent les actions des personnages, comme se déplacer à gauche ou à droite, creuser, ou attaquer.
+\subsubsection{Gestion des événements}
+La fonction intercepte et traite les événements SDL tels que les entrées clavier. Ces événements déterminent les actions des personnages, comme se déplacer à gauche ou à droite, creuser ou attaquer. Nous avons veillé dans la mesure du possible à considérer la priorité de chaque action en cas d’appuis simultanés sur plusieurs touches et selon l’ordre de relâchement.
     
-    \item \textbf{Mise à jour des Entités :} Chaque entité dans le jeu, qu'il s'agisse d'un personnage joueur, d'un ennemi ou d'un bonus, est mise à jour en termes de position, d'état, et d'animation en fonction des interactions et des mouvements définis.
+\subsubsection{Mise à jour des entités}
+Chaque entité dans le jeu, qu'il s'agisse d'un personnage joueur, d'un ennemi ou d'un bonus, est mise à jour en termes de position, d'état, et d'animation en fonction des interactions et des mouvements définis.
     
-    \item \textbf{Détection et Gestion des Collisions :} La fonction \texttt{verif\_collision} est appelée pour détecter et gérer les interactions entre les entités, comme les collisions avec les obstacles ou les attaques entre le personnage et les ennemis.
+\subsubsection{Détection et gestion des collisions}
+La fonction \texttt{verif\_collision} est appelée pour détecter et gérer les interactions entre les entités, comme les collisions avec les obstacles ou les attaques entre le personnage et les ennemis.
     
-    \item \textbf{Rendu Graphique :} Les entités et les éléments du décor sont rendus sur l'écran en utilisant SDL Renderer. Cela inclut le dessin des sprites, la mise à jour des animations, et l'application des effets visuels tels que la transition jour/nuit.
-\end{itemize}
+\subsubsection{Rendu graphique}
+Les entités et les éléments du décor sont rendus sur l'écran en utilisant une structure \texttt{SDL\_Renderer}. Cela inclut le dessin des sprites, la mise à jour des animations, et l'application des effets visuels tels que la transition jour/nuit.
 
-\subsection{Gestion des Collisions}
+\subsection{Simulation de chute}
+
+Le joueur est amené à descendre dans la tour, en creusant si nécessaire les blocs destructibles sur son passage.
+En réalité, le personnage joueur se situe toujours à la même coordonnée verticale de la zone de jeu ; lorsqu’il n’a pas de collision vers le bas l’ensemble des autres entités défilent vers le haut de l’écran, simulant ainsi la chute.
+La valeur de ce défilement est suivie via une variable \texttt{repere\_defilement} qui, lorsqu’elle passe un certain seuil, déclenche la génération de la suite du parcours par la fonction \texttt{generer\_morceau\_niveau}, la destruction des entités passées au-dessus de la zone de jeu et l’alternance entre deux textures pour le fond de la tour.
+
+\subsection{Gestion des collisions}
 
 Les collisions sont essentielles au gameplay, impactant la navigation du joueur, ses interactions avec l'environnement et les ennemis. La fonction \texttt{verif\_collision} vérifie les intersections entre les hitboxes des entités. Elle ajuste également la position des entités pour résoudre les chevauchements, ce qui empêche le personnage de passer à travers les murs ou de se superposer avec les ennemis.
 
-\subsection{Animations et Effets Visuels}
+\subsection{Animations et effets visuels}
 
-Les animations des personnages et des ennemis sont gérées via une série de textures et de changements d'état déclenchés par les actions du joueur et par les événements du jeu. Le système de nuit, implémenté dans la fonction \texttt{transitionner\_nuit}, modifie l'éclairage et le fond pour simuler un cycle jour/nuit, affectant la visibilité et potentiellement le comportement des ennemis.
+Les animations des personnages et des ennemis sont gérées via une série de textures et de changements d'état déclenchés par les actions du joueur et par les événements du jeu. Le système de nuit, implémenté dans la fonction \texttt{transitionner\_nuit}, modifie l'éclairage et le fond pour simuler un cycle jour/nuit, affectant la visibilité et conséquemment la difficulté du jeu.
 
 \subsection{Audio}
 
@@ -360,10 +365,10 @@ Le son joue un rôle crucial dans l'ambiance et le feedback du jeu. Des effets s
 
 \subsection{Performances et Optimisation}
 
-La performance est surveillée en mesurant le temps de traitement de chaque frame et en ajustant le délai entre les frames pour maintenir un taux de rafraîchissement stable. Ce contrôle aide à garantir que le jeu fonctionne de manière fluide sur différents systèmes.
+La performance est surveillée en mesurant le temps de traitement de chaque frame et en ajustant le délai entre chacune pour maintenir un taux de rafraîchissement stable.
 
 
-\subsection{Graphismes et Interface Utilisateur}
+\subsection{Graphismes et interface utilisateur}
 % Techniques utilisées pour le rendu des sprites, des animations, et des environnements du jeu.
 % Mise en place de l'interface utilisateur, des menus, et des écrans de jeu.
 
