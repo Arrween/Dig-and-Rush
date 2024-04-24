@@ -236,7 +236,7 @@ t_pnj * creer_pnj(char * id, t_entite * e) {
         strcpy(nouv->id_son_mort, "mort_squelette");
         changer_hitbox(nouv->parent, &(nouv->parent->hitbox), 30, 50, 40, 55, VRAI);
         // définir initialement sur la droite, sera modifié par la patrouille
-        changer_hitbox(nouv->parent, &(nouv->hitbox_attaque), 50, 70, 33, 20, VRAI);
+        changer_hitbox(nouv->parent, &(nouv->hitbox_attaque), 50, 70, 30, 20, VRAI);
     }
     else if (strcmp(id, "feu") == 0) {
         nouv->comportement = comportement_patrouille_vol;
@@ -257,10 +257,8 @@ t_pnj * creer_pnj(char * id, t_entite * e) {
         nouv->parent->vitesse = 1./2;
         strcpy(nouv->id_son_attaque, "attaque_perso");
         strcpy(nouv->id_son_mort, "mort_perso_grave");
-        changer_hitbox(nouv->parent, &(nouv->parent->hitbox), 15, 30, 80, 70, VRAI);
-        changer_hitbox(nouv->parent, &(nouv->hitbox_attaque), nouv->parent->hitbox.x,
-                       nouv->parent->hitbox.y, nouv->parent->hitbox.w,
-                       nouv->parent->hitbox.h, FAUX);
+        changer_hitbox(nouv->parent, &(nouv->parent->hitbox), 26, 22, 51, 73.4, VRAI);
+        changer_hitbox(nouv->parent, &(nouv->hitbox_attaque), 13, 30, 80, 50, VRAI);
     }
 
 

@@ -327,8 +327,8 @@ int boucle_jeu(SDL_Renderer * rend, char * nom_perso) {
                             while (!hors_liste(I_LISTE_ENTITES)) {
                                 t_entite * elem = liste_lire(I_LISTE_ENTITES);
                                 if (elem->pnj) {
-                                    elem->doit_afficher_hitbox = !elem->doit_afficher_hitbox;
-                                    elem->pnj->doit_afficher_hitbox_attaque = !elem->pnj->doit_afficher_hitbox_attaque;
+                                    elem->doit_afficher_hitbox = perso->doit_afficher_hitbox;
+                                    elem->pnj->doit_afficher_hitbox_attaque = perso->perso->doit_afficher_hitbox_attaque;
                                 }
                                 liste_suivant(I_LISTE_ENTITES);
                             }
