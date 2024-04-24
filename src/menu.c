@@ -95,15 +95,16 @@ void action_parametres(t_etat * etat) {
  * @param etat État du menu.
  */
 void action_volume(t_etat * etat) {
-    if (etat->boutons[1]->texture == recuperer_texture("bouton_volume_on")) {
-        etat->boutons[1]->texture = recuperer_texture("bouton_volume_off");
+    if (etat->boutons[1]->texture == recuperer_texture("bouton_volume_off")) {
+        etat->boutons[1]->texture = recuperer_texture("bouton_volume_on");
         Mix_VolumeMusic(0);
         Mix_Volume(-1, 0);
     }
     else {
-        etat->boutons[1]->texture = recuperer_texture("bouton_volume_on");
+        etat->boutons[1]->texture = recuperer_texture("bouton_volume_off");
         Mix_VolumeMusic(VOLUME_MUSIQUE_INI);
         Mix_Volume(-1, VOLUME_SONS_INI);
+        Mix_Volume(CANAL_MUS_NUIT, 0);
     }
 }
 

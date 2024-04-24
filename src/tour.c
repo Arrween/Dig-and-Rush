@@ -76,6 +76,8 @@ void verif_collision(t_entite * e1, float * correction_defilement, int * score, 
         if (e1 == e2
             || (!e2->est_obstacle && !e2->bonus && !(e2->pnj && e2->pnj->est_ecrasable)) 
             || (e2->pnj && e2->pnj->est_mort)
+            || (e1->pnj && e2->pnj)
+            || (e1->pnj && e2->bonus)
             || (e2->perso && e2->perso->est_mort)
             || (e2->pnj && e1->perso && e1->perso->temps_invu > 0)
             || (e2->pnj && e1->perso && e1->perso->est_mort)) {
@@ -327,8 +329,8 @@ int boucle_jeu(SDL_Renderer * rend, char * nom_perso) {
                             while (!hors_liste(I_LISTE_ENTITES)) {
                                 t_entite * elem = liste_lire(I_LISTE_ENTITES);
                                 if (elem->pnj) {
-                                    elem->doit_afficher_hitbox = !elem->doit_afficher_hitbox;
-                                    elem->pnj->doit_afficher_hitbox_attaque = !elem->pnj->doit_afficher_hitbox_attaque;
+                                    elem->doit_afficher_hitbox = perso->doit_afficher_hitbox;
+                                    elem->pnj->doit_afficher_hitbox_attaque = perso->perso->doit_afficher_hitbox_attaque;
                                 }
                                 liste_suivant(I_LISTE_ENTITES);
                             }

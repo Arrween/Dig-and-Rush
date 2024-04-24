@@ -116,8 +116,11 @@ void transitionner_nuit(t_nuit * nuit) {
         if (nuit->alpha >= nuit->max_alpha && nuit->rayon >= nuit->max_rayon)
             nuit->est_active_prec = FAUX;
 
-        Mix_Volume(CANAL_MUS_JOUR, nuit->volume_musique_jour);
-        Mix_Volume(CANAL_MUS_NUIT, nuit->max_musique - nuit->volume_musique_jour);
+        // ne change le volume que si le volume général n’est pas à zéro
+        if (Mix_Volume(-1, -1) != 0) {
+            Mix_Volume(CANAL_MUS_JOUR, nuit->volume_musique_jour);
+            Mix_Volume(CANAL_MUS_NUIT, nuit->max_musique - nuit->volume_musique_jour);
+        }
         SDL_SetTextureAlphaMod(nuit->texture_jour, nuit->alpha);
         SDL_SetTextureAlphaMod(nuit->texture_nuit, nuit->max_alpha - nuit->alpha);
 
@@ -132,8 +135,11 @@ void transitionner_nuit(t_nuit * nuit) {
         if (nuit->alpha <= nuit->min_alpha && nuit->rayon <= nuit->min_rayon)
             nuit->est_active_prec = VRAI;
 
-        Mix_Volume(CANAL_MUS_JOUR, nuit->volume_musique_jour);
-        Mix_Volume(CANAL_MUS_NUIT, nuit->max_musique - nuit->volume_musique_jour);
+        // ne change le volume que si le volume général n’est pas à zéro
+        if (Mix_Volume(-1, -1) != 0) {
+            Mix_Volume(CANAL_MUS_JOUR, nuit->volume_musique_jour);
+            Mix_Volume(CANAL_MUS_NUIT, nuit->max_musique - nuit->volume_musique_jour);
+        }
         SDL_SetTextureAlphaMod(nuit->texture_jour, nuit->alpha);
         SDL_SetTextureAlphaMod(nuit->texture_nuit, nuit->max_alpha - nuit->alpha);
 
