@@ -76,6 +76,8 @@ void verif_collision(t_entite * e1, float * correction_defilement, int * score, 
         if (e1 == e2
             || (!e2->est_obstacle && !e2->bonus && !(e2->pnj && e2->pnj->est_ecrasable)) 
             || (e2->pnj && e2->pnj->est_mort)
+            || (e1->pnj && e2->pnj)
+            || (e1->pnj && e2->bonus)
             || (e2->perso && e2->perso->est_mort)
             || (e2->pnj && e1->perso && e1->perso->temps_invu > 0)
             || (e2->pnj && e1->perso && e1->perso->est_mort)) {
