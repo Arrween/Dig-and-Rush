@@ -35,7 +35,13 @@ void generer_premiere_ligne(float y) {
     }
 }
 
-void generer_ennemi(float x, float y, int presences_blocs[]) {
+/**
+ * @brief Génère un ennemi sur un bloc aléatoire de la ligne y si ce dernier est présent.
+ * @param y Position verticale
+ * @param presence_blocs Tableau d'entiers.
+ * Le tableau d'entiers à l'indice i vaut VRAI s'il y a bien un bloc et FAUX sinon
+ */
+void generer_ennemi(float y, int presences_blocs[]) {
     int case_dispo;
     int alea_ennemi = rand() % 100;
     int alea_case = rand() % 8;
@@ -53,7 +59,13 @@ void generer_ennemi(float x, float y, int presences_blocs[]) {
     presences_blocs[case_dispo] = FAUX;
 }
 
-void generer_bonus(float x, float y, int presences_blocs[]) {
+/**
+ * @brief Génère un bonus sur un bloc aléatoire de la ligne y si ce dernier est présent.
+ * @param y Position verticale
+ * @param presence_blocs Tableau d'entiers.
+ * Le tableau d'entiers à l'indice i vaut VRAI s'il y a bien un bloc et FAUX sinon
+ */
+void generer_bonus(float y, int presences_blocs[]) {
     int case_dispo;
     int alea_bonus = rand() % 100;
     int alea_case = rand() % 8;
@@ -114,22 +126,22 @@ void generer_morceau_niveau(float repere_defilement){
         if (random < 25) {
             // présence bonus sur ligne sans ennemi
             if (rand() % 100 < 35)
-                generer_bonus(x, y, presences_blocs);
+                generer_bonus(y, presences_blocs);
         }
         // ligne avec un seul ennemi
         else if (random >= 25 && random < 90) {
-            generer_ennemi(x, y, presences_blocs);
+            generer_ennemi(y, presences_blocs);
             // présence bonus sur ligne avec un seul ennemi
             if (rand() % 100 < 30)
-                generer_bonus(x, y, presences_blocs);
+                generer_bonus(y, presences_blocs);
         }
         // ligne avec deux ennemis
         else if (random >= 90) {
-            generer_ennemi(x, y, presences_blocs);
-            generer_ennemi(x, y, presences_blocs);
+            generer_ennemi(y, presences_blocs);
+            generer_ennemi(y, presences_blocs);
             // présence bonus sur ligne avec deux ennemis
             if (rand() % 100 < 50)
-                generer_bonus(x, y, presences_blocs);
+                generer_bonus(y, presences_blocs);
         }
     }
 }
