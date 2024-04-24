@@ -69,7 +69,7 @@
 
 Les objectifs de ce projet en groupe sont de mettre en pratique nos connaissances acquises durant cette deuxième année de licence informatique, notamment en algorithmique en langage C.
 Ce projet permet également de nous introduire à la gestion de projet qui nous sera utile dans le monde professionnel. 
-Enfin, il permet de commencer à agir en groupe et en autonomie, deux points qui nous seront utiles en tant que professionnels.
+Enfin, il permet de commencer à agir en groupe et en autonomie, deux points également cruciaux pour la suite de notre parcours.
 
 Le principe du jeu \textit{Dig \& Rush} consiste, à l’instar du jeu mobile \textit{Once upon a tower} \footnote{\href{https://www.pomelogames.com/once-upon-a-tower}{Lien vers le site officiel.}}, à descendre dans une tour en creusant des blocs qui font office de sols. 
 Le joueur a pour outil une pelle qui lui permet de détruire les blocs. 
@@ -79,7 +79,7 @@ Attention, chaque tour est différente ! Cela permet d’explorer à chaque nouv
 
 Ce rapport se déroule en quatre parties. 
 L’organisation du projet, comment les tâches ont été définies et attribuées ; la conception, qui présentera nos choix de conception et les règles du jeu ; le développement avec les structures de données et les algorithmes ; enfin la conclusion qui mettra en avant nos remarques, nos points d’amélioration et ce que nous avons tiré de ce projet. 
-En annexe, se trouveront les tests unitaires, les tentatives de débogage et les sources.
+En annexe se trouveront les tests unitaires, les tentatives de débogage et les sources.
 
 \begin{figure}[H]
 	\centering
@@ -111,12 +111,12 @@ Le rapport et la soutenance sont réservés à la présentation du projet.
 
 \subsection{Répartition des tâches}
 À la suite de l’élaboration de la liste des tâches se fait leur répartition en fonction de deux critères. 
-Tout d’abord, les choix et affinités de chacun, en effet chaque personne du groupe a préféré certaines tâches plutôt que d’autres. 
+Tout d’abord, les choix et affinités de chacun : en effet chaque personne du groupe a préféré certaines tâches plutôt que d’autres. 
 Ensuite, nous nous sommes répartis le reste des tâches en équilibrant afin que tout le monde ait à peu près le même temps de travail.
 
-Pour visualiser ces deux étapes précédentes, l’équipe utilise l'outil du diagramme de Gantt\footnote{\href{https://github.com/idlusen/dig-and-rush/}{Diagrammes de Gantt dans le README.}}. 
+Pour visualiser ces deux précédentes étapes, l’équipe utilise l'outil du diagramme de Gantt\footnote{\href{https://github.com/idlusen/dig-and-rush/}{Diagrammes de Gantt dans le README.}}. 
 Il s’agit d’un graphe qui représente les tâches étalées dans le temps. 
-Google Sheet est utilisé afin de pouvoir le mettre à jour et collaborer à distance.
+Google Sheets est utilisé afin de pouvoir le mettre à jour et collaborer à distance.
 Sur le graphe sont présentes les tâches, les dates encadrant ces dernières et une représentation graphique de la durée de la tâche entre la semaine du 8 janvier 2024 et celle du 22 avril 2024.
 L’équipe adopte deux diagrammes de Gantt, un diagramme prévisionnel qui représente l’avancement idéal du projet et un diagramme réel qui est mis à jour régulièrement. 
 Ce dernier sert principalement à voir les tâches restantes en fonction de la date limite.
@@ -134,7 +134,7 @@ L'équipe utilise principalement le canal général pour suivre l’avancement d
 	\label{discord}
 \end{figure}
 
-Sur le mois d’avril un Trello est mis en place, il permet de voir plus facilement les tâches restantes et de les prioriser. 
+Au mois d’avril un Trello est mis en place pour permettre de voir plus facilement les tâches restantes et de les prioriser. 
 Dans ce Trello sont présentes huit listes pour : les ressources, les idées, ce qu’il faut faire mais qui n’est pas urgent, ce qu’il faut faire, les tâches en cours, celles terminées, les problèmes et enfin ce qu’il ne faut pas oublier. 
 Contrairement au diagramme de Gantt, il se concentre principalement sur les tâches liées au codage.
 
@@ -171,16 +171,16 @@ Il n’y a pas de fin au jeu, l’objectif est donc d’engranger le plus de poi
 Il y a cinq règles principales dans le jeu :
 \begin{itemize}
 	\item il faut creuser les blocs de terre pour descendre dans la tour et éviter les ennemis ;
-	\item il est possible d’éliminer les ennemis pour éviter qu’ils blessent le joueur et ajouter des points au score ;
+	\item il est possible d’éliminer les ennemis pour éviter qu’ils ne blessent le joueur et ajouter des points au score ;
 	\item il faut éviter de subir des dégâts de la part des ennemis pour ne pas perdre de vie ;
 	\item il est possible de ramasser des bonus qui augmentent la vie ou le score ;
-	\item il faut chercher à avancer rapidement car les points se perdent au fil du temps.
+	\item il faut chercher à avancer rapidement car les points diminuent au fil du temps.
 \end{itemize}
 
 \subsection{Graphismes}
 %  Rédigé par : Ania
 Les graphismes de \textit{Dig \& Rush} sont fortement inspirés du jeu mobile \textit{Once Upon a Tower}.
-Pour les menus (menu principal, menu de personnages, menu de paramètres), les couleurs  chaudes telles que le rouge et le orange, mixées à une pointe de violet nous semblaient plus adaptés à l'esprit combatif et dangereux du jeu. 
+Pour les menus (menu principal, menu de personnages, menu de paramètres), les couleurs  chaudes telles que le rouge et le orange, mixées à une pointe de violet, nous semblaient plus adaptées à l'esprit combatif et dangereux du jeu. 
 En ce qui concerne l'interface, nous avons opté pour une palette de couleurs vives dans les tons bleu, vert et blanc pour attirer et retenir l'attention du joueur.
 Une fois les couleurs définies, il nous restait à trouver les bonnes ressources libres de droit. Nous avons donc fini par opter pour des images d'intérieur médiéval pour les menus, un fond de ciel bleu pour l'interface de jeu et un fond uni blanc pour le fond de la tour.
 La tour est quant à elle entourée de murs de blocs de pierres.
@@ -193,7 +193,8 @@ La tour est quant à elle entourée de murs de blocs de pierres.
 
 \subsection{Niveaux}
 %  Rédigé par : Ania
-Les niveaux, avec le placement des blocs qui devait être aléatoire, était l'une des parties les plus complexes à concevoir. Il fallait en effet pour chaque ligne, une suite de blocs de pierres, de blocs de terre et de vides générés automatiquement tout en faisant attention à toujours laisser au moins une issue possible au joueur afin qu'il puisse avancer.
+La génération du pacours, avec le placement des blocs qui devait être aléatoire, était l'une des parties les plus complexes à concevoir.
+Il fallait en effet, pour chaque ligne, une suite de blocs de pierres, de blocs de terre et de vides générés automatiquement tout en faisant attention à toujours laisser au moins une issue possible au joueur afin qu'il puisse avancer.
 
 \subsection{Personnages}
 % Rédaction : Yohan
@@ -215,7 +216,7 @@ Les ennemis se déplacent de gauche à droite et inversement sur leurs niveaux s
 Il y a quatre personnages jouables qui représentent chaque membre de l’équipe. 
 Ces derniers ont chacun une caractéristique spécifique (vie plus conséquente, vitesse accrue ou aucun des deux). 
 Ils peuvent se diriger à gauche, à droite et vers le bas en fonction de la touche appuyée. 
-Les personnages jouables doivent également pouvoir creuser le sol et attaquer. Il est donc nécessaire d’avoir des sprites qui possèdent ces animations de déplacement, de creusage et d'attaques.
+Les personnages jouables doivent également pouvoir creuser le sol et attaquer. Il est donc nécessaire d’avoir des sprites qui possèdent ces animations de déplacement, de creusage et d'attaque.
 Pour ces derniers, nous avons utilisé un générateur de sprite où il était possible de personnaliser nos personnages. Nous les avons donc adaptés aux quatres membres. 
 Pour les ennemis, un autre site libre de droit est utilisé afin de différencier davantage le joueur des PNJ. En effet, les ennemis créés avec le générateur de sprite se confondaient excessivement avec l'arrière plan et le joueur.
 
@@ -239,12 +240,12 @@ Comme mentionné précédemment, notre jeu est composé d'une tour, de blocs de 
 \begin{itemize}
 	\item Les blocs de pierres délimitent la tour et les endroits par où le joueur ne peut pas passer.
 	\item Les blocs de terre sont destructibles et permettent donc de creuser un chemin pour le joueur, mais non pour le PNJ.
-	\item Les personnages joueur creusent et attaquent les ennemis pour les vaincre.
-	\item Les personnages non-joueur (ennemis) se déplacent sur un axe horizontal et attaquent le joueur dès qu'il est détecté à leur proximité.
+	\item Les personnages joueurs creusent et attaquent les ennemis pour les vaincre.
+	\item Les personnages non-joueurs (ennemis) se déplacent sur un axe horizontal et attaquent le joueur dès qu'il est détecté à leur proximité.
 	\item Effet d'ombre qui permet la transition entre le jour et la nuit pour varier la difficulté et rajouter du défi.
 \end{itemize}
 
-Chacune de ces mécaniques est agrémentée d'un son pour soit un joueur masculin ou féminin (son de blessure, d'attaque, de mort\dots).
+Chacune de ces mécaniques est agrémentée d’un son (douleur, attaque, mort…), éventuellement décliné en version féminine ou masculine selon le genre du personnage.
 
 \begin{figure}[H]
 	\centering
@@ -257,9 +258,12 @@ Chacune de ces mécaniques est agrémentée d'un son pour soit un joueur masculi
 \subsection{Analyse des difficultés}
 % Rédaction : Yohan
 Plusieurs difficultés apparaissent en amont et pendant le projet. 
-Premièrement, il y a la communication qui peut être compliquée au début du projet, chaque membre ne communique ni ne travaille de la même manière. Dans la communication il faut également intégrer la gestion des outils et leurs mises à jour afin que les autres membres puissent avancer, ne pas faire du travail redondant ou ne pas empiéter sur les tâches des autres. Cette difficulté s'atténue sur la durée.
+Premièrement, la communication peut être compliquée en début de projet : chaque membre ne communique ni ne travaille de la même manière.
+Il faut également intégrer à la communication la gestion des outils et leurs mises à jour afin que les autres membres puissent avancer et d’éviter le travail redondant et l’empiètement sur les tâches déjà entreprises.
+Cette difficulté s'atténue sur la durée.
 
-Deuxièmement, il y a la gestion du temps, le projet est majoritairement dépendant de la date limite. C’est cette dernière qui permet d’implémenter en priorité certaines fonctionnalités selon le temps restant.
+Deuxièmement, il y a la gestion du temps : le projet est majoritairement dépendant de la date limite.
+C’est cette dernière qui impose d’implémenter en priorité certaines fonctionnalités selon le temps restant.
 
 Nous utilisons la bibliothèque SDL pour la gestion des graphismes du jeu. Or il s’agit d’une bibliothèque dont nous avons peu ou pas connaissance avant le projet.
 
@@ -270,8 +274,8 @@ En effet, les personnages n’ont pas tous la même architecture de sprites :  l
 
 La question de la licence se pose aussi pour la récupération des ressources graphiques et sonores.
 
-Enfin, plusieurs structures de données composent le projet, une difficulté se pose sur le choix de ces dernières parmi les structures évoquées durant le cursus, comme les listes, les matrices, etc.
-Ce point sera évoqué dans la partie développement du projet.
+Enfin, plusieurs structures de données composant le projet, une difficulté se pose sur le choix de ces dernières parmi les structures évoquées durant le cursus, comme les listes, les matrices, etc.
+Ce point sera évoqué dans la partie développement du rapport.
 
 
 \section{Développement}
@@ -311,7 +315,7 @@ Les modules de code source ont été séparés comme présenté dans la table \r
 	\midrule
         \texttt{entite\_*.c}                & spécialisation des entités selon différents rôles (obstacle, obstacle destructible, PNJ, personnage joueur, bonus)  \\
 	\midrule
-	\texttt{nuit.c}			    & structure et fonctions implémentant une transition jour/nuit \\
+	\texttt{nuit.c}			    & structure et fonctions implémentant une transition entre le jour et la nuit \\
 	\midrule
 	\texttt{menu.c} 		    & fonctions d’initialisation des bibliothèques et d’actions déclenchées par les boutons de menu \\
 	\midrule
@@ -348,7 +352,7 @@ La structure \texttt{t\_entite} concentre les attributs nécessaires aux fonctio
 	\item son animation éventuelle au moyen de coordonnées dans une \textit{spritesheet}\refsuscrite{def_spritesheet} ;
 	\item le renseignement du rôle spécialisé de l’entité au moyen de sous-structures \texttt{t\_obstacle}, \texttt{t\_destructible}, \texttt{t\_perso}, \texttt{t\_pnj} et \texttt{t\_bonus}, avec une valeur de pointeur nul si le rôle correspondant n’est pas pertinent.
 \end{itemize}
-Une entité peut être créée avec un des rôles indiqué par les sous-structures mentionnées au dernier point au moyen d’un identifiant de ressource (une clé dans les tables de hachage des ressources). La sous-structure est alors initialisée par une fonction dans le module correspondant selon cet identifiant. Ainsi on attribue par exemple par défaut à tous les squelettes ennemis une vitesse de $\frac12$ pixel par frame, un comportement de patrouille, des effets sonores particuliers, etc.
+Une entité peut être créée avec un des rôles indiqué par les sous-structures mentionnées au dernier point au moyen d’un identifiant de ressource (une clé dans les tables de hachage des ressources). La sous-structure est alors initialisée par une fonction dans le module correspondant selon cet identifiant. Ainsi on attribue par exemple par défaut à tous les squelettes ennemis une vitesse de un demi pixel par frame, un comportement de patrouille, des effets sonores particuliers, etc.
 
 \subsection{Moteur de jeu}
 Le moteur de jeu est le cœur de notre programme, responsable de la gestion des logiques de jeu, des entrées des utilisateurs, du rendu graphique et des interactions entre les entités. Le moteur est principalement mis en œuvre dans le fichier \texttt{tour.c}, qui contient la boucle principale ainsi que les fonctions de gestion des collisions, des animations et des événements.
@@ -359,18 +363,18 @@ La boucle principale, implémentée dans la fonction \texttt{boucle\_jeu}, orche
 La fonction intercepte et traite les événements SDL tels que les entrées clavier. Ces événements déterminent les actions des personnages, comme se déplacer à gauche ou à droite, creuser ou attaquer. Nous avons veillé dans la mesure du possible à considérer la priorité de chaque action en cas d’appuis simultanés sur plusieurs touches et selon l’ordre de relâchement.
     
 \subsubsection{Mise à jour des entités}
-Chaque entité dans le jeu, qu'il s'agisse d'un personnage joueur, d'un ennemi ou d'un bonus, est mise à jour en termes de position, d'état, et d'animation en fonction des interactions et des mouvements définis.
+Chaque entité dans le jeu, qu'il s'agisse d'un personnage joueur, d'un ennemi ou d'un bonus, est mise à jour en termes de position, d'état et d'animation en fonction des interactions et des mouvements définis.
     
 \subsubsection{Détection et gestion des collisions}
 La fonction \texttt{verif\_collision} est appelée pour détecter et gérer les interactions entre les entités, comme les collisions avec les obstacles ou les attaques entre le personnage et les ennemis.
     
 \subsubsection{Rendu graphique}
-Les entités et les éléments du décor sont rendus sur l'écran en utilisant une structure \texttt{SDL\_Renderer}. Cela inclut le dessin des sprites, la mise à jour des animations, et l'application des effets visuels tels que la transition jour/nuit.
+Les entités et les éléments du décor sont rendus sur l'écran en utilisant une structure \texttt{SDL\_Renderer}. Cela inclut le dessin des sprites, la mise à jour des animations, et l'application des effets visuels tels que la transition entre le jour et la nuit.
 
 \subsection{Simulation de chute}
 
 Le joueur est amené à descendre dans la tour en creusant si nécessaire les blocs destructibles sur son passage.
-En réalité, le personnage joueur se situe toujours à la même coordonnée verticale de la zone de jeu ; lorsqu’il n’a pas de collision vers le bas, l’ensemble des autres entités défilent vers le haut de l’écran, simulant ainsi la chute.
+En réalité, le personnage joueur se situe toujours à la même coordonnée verticale de la zone de jeu ; lorsqu’il n’a pas de collision vers le bas, l’ensemble des autres entités défile vers le haut de l’écran, simulant ainsi la chute.
 La valeur de ce défilement est suivie via une variable \texttt{repere\_defilement} qui, lorsqu’elle passe un certain seuil, déclenche la génération de la suite du parcours par la fonction \texttt{generer\_morceau\_niveau}, la destruction des entités passées au-dessus de la zone de jeu et l’alternance entre deux textures pour le fond de la tour.
 
 \subsection{Génération du parcours}
@@ -381,11 +385,11 @@ Les ennemis et bonus sont générés au-dessus des cases non vides, celles-ci ay
 
 \subsection{Gestion des collisions}
 
-Les collisions sont essentielles au gameplay, impactant la navigation du joueur, ses interactions avec l'environnement et les ennemis. La fonction \texttt{verif\_collision} vérifie les intersections entre les hitboxes des entités. Elle ajuste également la position des entités pour résoudre les chevauchements, ce qui empêche le personnage de passer à travers les murs ou de se superposer avec les ennemis.
+Les collisions sont essentielles au gameplay, affectant la navigation du joueur, ses interactions avec l'environnement et les ennemis. La fonction \texttt{verif\_collision} vérifie les intersections entre les hitboxes des entités. Elle ajuste également la position des entités pour résoudre les chevauchements, ce qui empêche le personnage de passer à travers les murs ou de se superposer avec les ennemis.
 
 \subsection{Animations et effets visuels}
 
-Les animations des personnages et des ennemis sont gérées via une série de textures et de changements d'état déclenchés par les actions du joueur et par les événements du jeu. Le système de nuit, implémenté dans la fonction \texttt{transitionner\_nuit}, modifie l'éclairage et le fond pour simuler un cycle jour/nuit, affectant la visibilité et conséquemment la difficulté du jeu.
+Les animations des personnages et des ennemis sont gérées via une série de textures et de changements d'état déclenchés par les actions du joueur et par les événements du jeu. Le système de nuit, implémenté dans la fonction \texttt{transitionner\_nuit}, modifie l'éclairage et le fond pour simuler un cycle entre le jour et la nuit, affectant la visibilité et conséquemment la difficulté du jeu.
 
 \subsection{Performances}
 
@@ -412,7 +416,8 @@ Cependant, notre parcours n’a pas été sans défis. Nous avons dû faire face
 On peut noter par exemple l’abandon du mode multijoueur qui nous a semblé trop ambitieux à l’approche de la date limite. 
 
 À l’approche de la date de livraison, il nous a été diﬀicile de respecter la répartition des tâches exactement comme prévu sur le diagramme de Gantt prévisionnel.
-En effet, en réorganisant la répartition des membres plus eﬀicaces sur certaines tâches, cela nous a permis de respecter la majorité des délais. Il y a tout de même une perspective d’amélioration sur cette gestion du temps, notamment avec l’expérience qui sera acquise au fil de futurs projets.
+Réorganiser la répartition des tâches aux membres y étant le plus efficace nous a permis de respecter la majorité des délais.
+Il y a tout de même une perspective d’amélioration sur cette gestion du temps, notamment avec l’expérience qui sera acquise au fil de futurs projets.
 
 Les défis rencontrés durant l’exécution de ce projet ont été surmontés grâce à la collaboration et le partage des connaissances entre les membres de l’équipe.
 
@@ -494,7 +499,7 @@ La fonction en question (\texttt{generer\_ennemi(x,y)}) est déclarée et appel�
 	\item Poser un point d'arrêt (\texttt{(gdb) break src/morceaux\_niveau.c:generer\_ennemi}).
 	\item Appuyer sur \texttt{PLAY}.
 	\item On avance dans le jeu jusqu'à rencontrer le point d'arrêt.
-	\item On execute \textit{step} pour rentrer dans l'appel de fonction.
+	\item On exécute \textit{step} pour rentrer dans l'appel de fonction.
 	\item À l'aide des options de débogage telles que \texttt{print}, \texttt{display}, \texttt{next} et autres, nous avons constaté que l'algorithme de base n'était pas correct.
 \end{itemize}
 \begin{figure}[H]
@@ -503,7 +508,7 @@ La fonction en question (\texttt{generer\_ennemi(x,y)}) est déclarée et appel�
 	\caption{Exemple de débogage}
 	\label{débogage}
 \end{figure}
-Note : les instruction de débogage sont renseignées dans le manuel d'installation et d'utilisation fourni. \\
+Note : les instructions de débogage sont renseignées dans le manuel d'installation et d'utilisation fourni. \\
 
 \section{Sources}
 
@@ -511,17 +516,17 @@ Dans cet annexe, une liste des ressources externes utilisées dans le projet.
 
 \subsection{Graphismes}
 \begin{description}
-	\item[Personnages joueur :] \href{https://sanderfrenken.github.io/Universal-LPC-Spritesheet-Character-Generator/#?body=Body_color_light&head=Human_male_light}{Lien vers le site de création de personnages}
-	\item[Personnages non-joueur :] \href{https://craftpix.net/freebies/free-fantasy-enemies-pixel-art-sprite-pack/}{Lien vers les graphismes des personnages non-joueur}
-	\item[Arrières-plans du menu :] \href{https://fr.freepik.com/psd-gratuit/rendu-3d-illustration-chambre-royale_38612904.htm#query=jeux\%202d\%20medievale&position=3&from_view=keyword&track=ais&uuid=be1b354a-483d-48a5-867b-e3027182dea7}{Lien vers le site des images des menus}
-	\item[Arrières-plans de la tour :] \href{https://free-game-assets.itch.io/free-sky-with-clouds-background-pixel-art-set}{Lien vers le site des images de l'arrière-plan de la tour}.
+	\item[Personnages joueurs :] \href{https://sanderfrenken.github.io/Universal-LPC-Spritesheet-Character-Generator/#?body=Body_color_light&head=Human_male_light}{lien vers le site de création de personnages}
+	\item[Personnages non-joueurs :] \href{https://craftpix.net/freebies/free-fantasy-enemies-pixel-art-sprite-pack/}{lien vers les graphismes des personnages non-joueurs}
+	\item[Arrières-plans du menu :] \href{https://fr.freepik.com/psd-gratuit/rendu-3d-illustration-chambre-royale_38612904.htm#query=jeux\%202d\%20medievale&position=3&from_view=keyword&track=ais&uuid=be1b354a-483d-48a5-867b-e3027182dea7}{lien vers le site des images des menus}
+	\item[Arrières-plans de la tour :] \href{https://free-game-assets.itch.io/free-sky-with-clouds-background-pixel-art-set}{lien vers le site des images de l'arrière-plan de la tour}.
 \end{description}
 
 \subsection{Sons et musiques}
 \begin{description}
-	\item[Effets sonores :] \href{https://pixabay.com/fr/sound-effects/}{Lien vers les effets sonores}
-	\item[Musique de jour :] \href{https://www.jamendo.com/?language=fr}{Lien vers le site de musiques}
-	\item[Musique de nuit :] \href{https://www.udio.com/}{Lien vers un site d'intelligence artificielle générant des musiques}
+	\item[Effets sonores :] \href{https://pixabay.com/fr/sound-effects/}{lien vers les effets sonores}
+	\item[Musique de jour :] \href{https://www.jamendo.com/?language=fr}{lien vers le site de musiques}
+	\item[Musique de nuit :] \href{https://www.udio.com/}{lien vers un site d'intelligence artificielle générant des musiques}
 \end{description}
 
 \subsection{Documentation technique}
