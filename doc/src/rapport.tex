@@ -69,17 +69,17 @@
 
 Les objectifs de ce projet en groupe sont de mettre en pratique nos connaissances acquises durant cette deuxième année de licence informatique, notamment en algorithmique en langage C.
 Ce projet permet également de nous introduire à la gestion de projet qui nous sera utile dans le monde professionnel. 
-Enfin, il permet de commencer à agir en groupe et en autonomie, deux points qui nous seront également utiles en tant que professionnels.
+Enfin, il permet de commencer à agir en groupe et en autonomie, deux points qui nous seront utiles en tant que professionnels.
 
 Le principe du jeu \textit{Dig \& Rush} consiste, à l’instar du jeu mobile \textit{Once upon a tower} \footnote{\href{https://www.pomelogames.com/once-upon-a-tower}{Lien vers le site officiel.}}, à descendre dans une tour en creusant des blocs qui font office de sols. 
 Le joueur a pour outil une pelle qui lui permet de détruire les blocs. 
 Il faut en plus de cela éviter ou tuer les ennemis afin de progresser le plus rapidement dans la tour. 
-Si le personnage meurt la partie se termine. Le joueur a le choix entre plusieurs personnages qui ont chacun une particularité.
+Si le personnage meurt, la partie se termine. Le joueur a le choix entre plusieurs personnages qui ont chacun une particularité.
 Attention, chaque tour est différente ! Cela permet d’explorer à chaque nouvelle partie une nouvelle facette du jeu.
 
 Ce rapport se déroule en quatre parties. 
 L’organisation du projet, comment les tâches ont été définies et attribuées ; la conception, qui présentera nos choix de conception et les règles du jeu ; le développement avec les structures de données et les algorithmes ; enfin la conclusion qui mettra en avant nos remarques, nos points d’amélioration et ce que nous avons tiré de ce projet. 
-En annexe, se trouvera les tests unitaires et tentatives de débogage et les captures d’écran du jeu.
+En annexe, se trouveront les tests unitaires, les tentatives de débogage et les captures d’écran du jeu.
 
 \begin{figure}[H]
 	\centering
@@ -111,10 +111,10 @@ Le rapport et la soutenance sont réservés à la présentation du projet.
 
 \subsection{Répartition des tâches}
 À la suite de l’élaboration de la liste des tâches se fait leur répartition en fonction de deux critères. 
-Tout d’abord les choix et affinités de chacun, en effet chaque personne du groupe a préféré certaines tâches plutôt que d’autres. 
+Tout d’abord, les choix et affinités de chacun, en effet chaque personne du groupe a préféré certaines tâches plutôt que d’autres. 
 Ensuite, nous nous sommes répartis le reste des tâches en équilibrant afin que tout le monde ait à peu près le même temps de travail.
 
-Pour visualiser ces deux étapes précédentes l’équipe utilise l'outil du diagramme de Gantt. 
+Pour visualiser ces deux étapes précédentes, l’équipe utilise l'outil du diagramme de Gantt. 
 Il s’agit d’un graphe qui représente les tâches étalées dans le temps. 
 Google Sheet est utilisé afin de pouvoir le mettre à jour et collaborer à distance.
 Sur le graphe sont présentes les tâches, les dates encadrant ces dernières et une représentation graphique de la durée de la tâche entre la semaine du 8 janvier 2024 et celle du 22 avril 2024.
@@ -180,7 +180,7 @@ Il y a cinq règles principales dans le jeu :
 \subsection{Graphismes}
 %  Rédigé par : Ania
 Les graphismes de \textit{Dig \& Rush} sont fortement inspirés du jeu mobile \textit{Once Upon a Tower}.
-Pour les menus (menu principal, menu de personnages, menu de paramètres), les couleurs  chaudes telles que le rouge et le orange, mixé à une pointe de violet nous semblaient plus adaptés à l'esprit combatif et dangereux du jeu. 
+Pour les menus (menu principal, menu de personnages, menu de paramètres), les couleurs  chaudes telles que le rouge et le orange, mixés à une pointe de violet nous semblaient plus adaptés à l'esprit combatif et dangereux du jeu. 
 En ce qui concerne l'interface, nous avons opté pour une palette de couleurs vivantes dans les tons bleu, vert et blanc pour attirer et retenir l'attention des joueurs.
 Une fois les couleurs définies, il nous restait à trouver les bonnes ressources libres de droit. Nous avons donc fini par opter pour des images d'intérieur médiéval pour les menus, un fond de ciel bleu pour l'interface de jeu et un fond uni blanc pour le fond de la tour.
 La tour est quant à elle entourée de murs de blocs de pierres.
@@ -270,7 +270,7 @@ En effet, les personnages n’ont pas tous la même architecture de sprites :  l
 
 La question de la licence se pose aussi pour la récupération des ressources graphiques et sonores.
 
-Enfin, plusieurs structures de données composant le projet, une difficulté se pose sur le choix de ces dernières parmi les structures évoquées durant le cursus, comme les listes, les matrices, etc.
+Enfin, plusieurs structures de données composent le projet, une difficulté se pose sur le choix de ces dernières parmi les structures évoquées durant le cursus, comme les listes, les matrices, etc.
 Ce point sera évoqué dans la partie développement du projet.
 
 
@@ -351,7 +351,7 @@ La structure \texttt{t\_entite} concentre les attributs nécessaires aux fonctio
 Une entité peut être créée avec un des rôles indiqué par les sous-structures mentionnées au dernier point au moyen d’un identifiant de ressource (une clé dans les tables de hachage des ressources). La sous-structure est alors initialisée par une fonction dans le module correspondant selon cet identifiant. Ainsi on attribue par exemple par défaut à tous les squelettes ennemis une vitesse de $\frac12$ pixel par frame, un comportement de patrouille, des effets sonores particuliers, etc.
 
 \subsection{Moteur de jeu}
-Le moteur de jeu est le cœur de notre programme, responsable de la gestion des logiques de jeu, des entrées des utilisateurs, du rendu graphique et des interactions entre les entités. Le moteur est principalement mis en œuvre dans le fichier \texttt{tour.c}, qui contient la boucle principale ainsi que les fonctions de gestion des collisions, des animations, et des événements.
+Le moteur de jeu est le cœur de notre programme, responsable de la gestion des logiques de jeu, des entrées des utilisateurs, du rendu graphique et des interactions entre les entités. Le moteur est principalement mis en œuvre dans le fichier \texttt{tour.c}, qui contient la boucle principale ainsi que les fonctions de gestion des collisions, des animations et des événements.
 
 La boucle principale, implémentée dans la fonction \texttt{boucle\_jeu}, orchestre les divers aspects du jeu en exécutant plusieurs sous-fonctions critiques à chaque itération.
 
@@ -370,7 +370,7 @@ Les entités et les éléments du décor sont rendus sur l'écran en utilisant u
 \subsection{Simulation de chute}
 
 Le joueur est amené à descendre dans la tour en creusant si nécessaire les blocs destructibles sur son passage.
-En réalité, le personnage joueur se situe toujours à la même coordonnée verticale de la zone de jeu ; lorsqu’il n’a pas de collision vers le bas l’ensemble des autres entités défilent vers le haut de l’écran, simulant ainsi la chute.
+En réalité, le personnage joueur se situe toujours à la même coordonnée verticale de la zone de jeu ; lorsqu’il n’a pas de collision vers le bas, l’ensemble des autres entités défilent vers le haut de l’écran, simulant ainsi la chute.
 La valeur de ce défilement est suivie via une variable \texttt{repere\_defilement} qui, lorsqu’elle passe un certain seuil, déclenche la génération de la suite du parcours par la fonction \texttt{generer\_morceau\_niveau}, la destruction des entités passées au-dessus de la zone de jeu et l’alternance entre deux textures pour le fond de la tour.
 
 \subsection{Génération du parcours}
@@ -393,7 +393,7 @@ La performance est surveillée en mesurant le temps de traitement de chaque fram
 
 \subsection{Perspectives}
 
-Nous évoquons pour conclure cette section les concepts que nous avons envisagés d’exploiter mais avons abandonné faute de temps :
+Nous évoquons pour conclure cette section les concepts que nous avons envisagés d’exploiter mais avons abandonnés faute de temps :
 \begin{itemize}
     \item le déclenchement des actions du personnage en fonction des événements est complexe à traiter et pourrait avantageusement utiliser une machine à états pour formaliser le comportement désiré et assainir le code ;
     \item de la même manière, concevoir des comportements complexes pour les PNJ pourrait faire appel à ce concept ;
