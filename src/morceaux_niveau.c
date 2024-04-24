@@ -111,13 +111,13 @@ void generer_morceau_niveau(float repere_defilement){
         }
         random = rand() % 100;
         // ligne sans ennemi
-        if (random < 20) {
+        if (random < 25) {
             // présence bonus sur ligne sans ennemi
             if (rand() % 100 < 35)
                 generer_bonus(x, y, presences_blocs);
         }
         // ligne avec un seul ennemi
-        else if (random >= 35 && random < 90) {
+        else if (random >= 25 && random < 90) {
             generer_ennemi(x, y, presences_blocs);
             // présence bonus sur ligne avec un seul ennemi
             if (rand() % 100 < 30)
